@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import type { User } from '../../generated/prisma/client.js';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 const comparePassword: (data: string, hash: string) => Promise<boolean> = (
   bcrypt as {
@@ -15,6 +16,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async validateUser(
@@ -33,12 +35,106 @@ export class AuthService {
     return result;
   }
 
-  login(user: Omit<User, 'password'>) {
+  private getAccessToken(payload: {
+    email: string;
+    id: number;
+    isAdmin: boolean;
+  }): string {
+    return this.jwtService.sign(payload);
+  }
+
+  private getRefreshToken(payload: {
+    email: string;
+    id: number;
+    isAdmin: boolean;
+  }): string {
+    const refreshSecret =
+      this.configService.get<string>('JWT_REFRESH_SECRET') ??
+      'default-secret-change-in-production';
+
+    const refreshExpiresIn =
+      this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') ?? '7d';
+
+    return this.jwtService.sign(
+      { ...payload, type: 'refresh' },
+      {
+        secret: refreshSecret,
+        expiresIn: refreshExpiresIn as
+          | `${number}h`
+          | `${number}d`
+          | `${number}m`,
+      },
+    );
+  }
+
+  async login(user: Omit<User, 'password'>) {
     const payload = { email: user.email, id: user.id, isAdmin: user.isAdmin };
+
+    const accessToken = this.getAccessToken(payload);
+    const refreshToken = this.getRefreshToken(payload);
+
+    // Lưu tokens vào database
+    await this.usersService.updateTokens(user.id, accessToken, refreshToken);
 
     return {
       message: 'Đăng nhập thành công',
-      access_token: this.jwtService.sign(payload),
+      EC: 0,
+      data: {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      },
     };
+  }
+
+  async refreshTokens(refreshToken: string) {
+    const refreshSecret =
+      this.configService.get<string>('JWT_REFRESH_SECRET') ??
+      'default-secret-change-in-production';
+
+    try {
+      const decoded = await this.jwtService.verifyAsync<{
+        email: string;
+        id: number;
+        isAdmin: boolean;
+        type?: string;
+      }>(refreshToken, {
+        secret: refreshSecret,
+      });
+
+      if (decoded.type !== 'refresh') {
+        throw new UnauthorizedException('Refresh token không hợp lệ');
+      }
+
+      const user = await this.usersService.findOne(decoded.id);
+
+      const payload = {
+        email: user.email,
+        id: user.id,
+        isAdmin: user.isAdmin,
+      };
+
+      const newAccessToken = this.getAccessToken(payload);
+      const newRefreshToken = this.getRefreshToken(payload);
+
+      // Lưu tokens mới vào database
+      await this.usersService.updateTokens(
+        user.id,
+        newAccessToken,
+        newRefreshToken,
+      );
+
+      return {
+        message: 'Làm mới token thành công',
+        EC: 0,
+        data: {
+          access_token: newAccessToken,
+          refresh_token: newRefreshToken,
+        },
+      };
+    } catch {
+      throw new UnauthorizedException(
+        'Refresh token không hợp lệ hoặc đã hết hạn',
+      );
+    }
   }
 }

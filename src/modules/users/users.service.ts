@@ -158,4 +158,18 @@ export class UsersService {
 
     return result;
   }
+
+  async updateTokens(
+    id: number,
+    accessToken: string,
+    refreshToken: string,
+  ): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+  }
 }

@@ -10,7 +10,6 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto.js';
@@ -18,6 +17,8 @@ import { UpdateUserDto } from './dto/update-user.dto.js';
 import { UpdatePasswordDto } from './dto/update-password.dto.js';
 import { UpdateStatusDto } from './dto/update-status.dto.js';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { User } from 'src/common/decorators';
+import type { User as UserType } from '../../generated/prisma/client.js';
 
 @Controller('users')
 export class UsersController {
@@ -34,10 +35,17 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Get('me')
+  getCurrentUser(
+    @User()
+    user: Omit<UserType, 'password'>,
+  ) {
+    return user;
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Request() req: any) {
-    return req.user;
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 

@@ -17,10 +17,11 @@ import { JwtStategy } from 'src/middlewares/jwt.strategy';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const expiresIn = configService.get<string>('JWT_EXPIRES_IN') ?? '1h';
+        const expiresIn =
+          configService.get<string>('JWT_ACCESS_EXPIRES_IN') ?? '1h';
         return {
           secret:
-            configService.get<string>('JWT_SECRET') ??
+            configService.get<string>('JWT_ACCESS_SECRET') ??
             'default-secret-change-in-production',
           signOptions: {
             expiresIn: expiresIn as `${number}h` | `${number}d` | `${number}m`,
