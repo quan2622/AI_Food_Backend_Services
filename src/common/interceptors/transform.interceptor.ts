@@ -33,21 +33,21 @@ export class TransformInterceptor<T> implements NestInterceptor<
           context.getHandler(),
         );
 
-        // Nếu data đã có format chuẩn (từ service trả về)
         if (this.isFormattedResponse(data)) {
           return {
             statusCode: response.statusCode,
             message: customMessage || data.message || 'Success',
+            EC: data.EC || 0,
             data: data.data,
             timestamp: new Date().toISOString(),
             path: request.url,
           };
         }
 
-        // Format response tiêu chuẩn
         return {
           statusCode: response.statusCode,
           message: customMessage || 'Success',
+          EC: 0,
           data: data,
           timestamp: new Date().toISOString(),
           path: request.url,
@@ -58,7 +58,7 @@ export class TransformInterceptor<T> implements NestInterceptor<
 
   private isFormattedResponse(data: any): boolean {
     return (
-      data && typeof data === 'object' && 'message' in data && 'data' in data
+      data && typeof data === 'object' && 'EC' in data && 'message' in data
     );
   }
 }

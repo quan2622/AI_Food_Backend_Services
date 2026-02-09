@@ -3,7 +3,6 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { ApiErrorResponse } from '../interfaces/response.interface';
@@ -17,11 +16,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
 
+    const EC = this.getErrorCode(exceptionResponse, status);
+    const message = this.getErrorMessage(exceptionResponse);
+
     const errorResponse: ApiErrorResponse = {
       statusCode: status,
-      message: this.getErrorMessage(exceptionResponse),
+      message,
+      EC,
       error: exception.name,
-      errorCode: this.getErrorCode(exceptionResponse),
       timestamp: new Date().toISOString(),
       path: request.url,
     };
@@ -33,13 +35,39 @@ export class HttpExceptionFilter implements ExceptionFilter {
     if (typeof exceptionResponse === 'string') {
       return exceptionResponse;
     }
-    return exceptionResponse.message || 'Internal server error';
+
+    if (exceptionResponse.message) {
+      if (Array.isArray(exceptionResponse.message)) {
+        return exceptionResponse.message.join(', ');
+      }
+      return exceptionResponse.message;
+    }
+
+    return 'Internal server error';
   }
 
-  private getErrorCode(exceptionResponse: any): string | undefined {
-    if (typeof exceptionResponse === 'object' && exceptionResponse.errorCode) {
-      return exceptionResponse.errorCode;
+  private getErrorCode(exceptionResponse: any, status: number): number {
+    if (
+      exceptionResponse &&
+      typeof exceptionResponse === 'object' &&
+      'EC' in exceptionResponse
+    ) {
+      return (exceptionResponse as { EC: number }).EC;
     }
-    return undefined;
+
+    const errorCodeMap: Record<number, number> = {
+      400: 1, // Bad Request
+      401: 2, // Unauthorized
+      403: 3, // Forbidden
+      404: 4, // Not Found
+      409: 5, // Conflict
+      422: 6, // Unprocessable Entity
+      429: 7, // Too Many Requests
+      500: 99, // Internal Server Error
+      502: 98, // Bad Gateway
+      503: 97, // Service Unavailable
+    };
+
+    return errorCodeMap[status] || status;
   }
 }
