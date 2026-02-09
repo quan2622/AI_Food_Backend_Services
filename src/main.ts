@@ -1,8 +1,102 @@
-import { NestFactory } from '@nestjs/core';
+import {
+  BadRequestException,
+  Logger,
+  ValidationError,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { AppService } from './app.service';
+import { PrismaService } from './prisma/prisma.service';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { HttpExceptionFilter, TransformInterceptor } from './common';
+
+const logger = new Logger('Bootstrap');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.SERVER_PORT ?? 8080);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      exceptionFactory: (validationErrors: ValidationError[] = []) => {
+        return new BadRequestException(
+          validationErrors.map((error) => ({
+            [error.property]: Object.values(error.constraints ?? {}).join(', '),
+          })),
+        );
+      },
+    }),
+  );
+
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(new JwtAuthGuard(reflector));
+  app.useGlobalInterceptors(new TransformInterceptor(reflector));
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    credentials: true,
+  });
+
+  //version config
+  const apiPrefix = 'api';
+  const apiVersions = ['1', '2'];
+
+  app.setGlobalPrefix(apiPrefix);
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: apiVersions,
+  });
+
+  const port = Number(process.env.SERVER_PORT ?? 8080);
+  await app.listen(port);
+
+  const serverStatus = app.get(AppService).getServerStatus();
+  const dbStatus = await app.get(PrismaService).getConnectionStatus();
+
+  const line =
+    '====================================================================';
+
+  logger.log(line);
+  logger.log(
+    '||                        STARTING SERVER                         ||',
+  );
+  logger.log(line);
+
+  logger.log(
+    '||   SERVER STATUS                                                ||',
+  );
+  logger.log(
+    `||   • Port        : ${serverStatus.port.toString().padEnd(45)}||`,
+  );
+  logger.log(`||   • Node env    : ${serverStatus.nodeEnv.padEnd(45)}||`);
+  logger.log(`||   • Node version: ${serverStatus.nodeVersion.padEnd(45)}||`);
+  logger.log(`||   • API prefix  : ${`/${apiPrefix}`.padEnd(45)}||`);
+  logger.log(`||   • API version : ${apiVersions.join(', ').padEnd(45)}||`);
+
+  logger.log(
+    '||   DATABASE STATUS                                              ||',
+  );
+  if (dbStatus.connected) {
+    logger.log(`||   • Database    : connected${' '.repeat(36)}||`);
+  } else {
+    const errorMsg = (dbStatus.error ?? 'Unknown error').toString();
+    logger.error(
+      `||   • Database    : disconnected - ${errorMsg.padEnd(22)}||`,
+    );
+  }
+
+  logger.log(line);
 }
-bootstrap();
+void bootstrap();
