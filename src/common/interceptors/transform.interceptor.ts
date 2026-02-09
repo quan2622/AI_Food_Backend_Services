@@ -27,30 +27,34 @@ export class TransformInterceptor<T> implements NestInterceptor<
     const request = ctx.getRequest();
 
     return next.handle().pipe(
-      map((data) => {
+      map((data): ApiResponse<T> => {
         const customMessage = this.reflector.get<string>(
           RESPONSE_MESSAGE_KEY,
           context.getHandler(),
         );
 
+        const baseMetadata = {
+          statusCode: response.statusCode,
+          message: customMessage || 'Success',
+          EC: 0,
+          timestamp: new Date().toISOString(),
+          path: request.url,
+        };
+
         if (this.isFormattedResponse(data)) {
           return {
-            statusCode: response.statusCode,
-            message: customMessage || data.message || 'Success',
-            EC: data.EC || 0,
-            data: data.data,
-            timestamp: new Date().toISOString(),
-            path: request.url,
+            metadata: {
+              ...baseMetadata,
+              message: customMessage || data.message || 'Success',
+              EC: data.EC ?? 0,
+            },
+            data: data.data as T,
           };
         }
 
         return {
-          statusCode: response.statusCode,
-          message: customMessage || 'Success',
-          EC: 0,
-          data: data,
-          timestamp: new Date().toISOString(),
-          path: request.url,
+          metadata: baseMetadata,
+          data: data as T,
         };
       }),
     );

@@ -1,10 +1,12 @@
 export interface ApiResponse<T = any> {
-  statusCode: number;
-  message: string;
-  EC: number;
+  metadata: {
+    statusCode: number;
+    message: string;
+    EC: number;
+    timestamp?: string;
+    path?: string;
+  };
   data: T;
-  timestamp?: string;
-  path?: string;
 }
 
 export interface ApiErrorResponse {
