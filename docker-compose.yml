@@ -7,9 +7,11 @@ services:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: ai_food_db
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:
+
+# docker start postgres_db

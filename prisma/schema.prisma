@@ -28,6 +28,24 @@ model User {
   status       Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  userProfile  UserProfile?
 
   @@map("users")
+}
+
+model UserProfile {
+  id        Int      @id @default(autoincrement())
+  allergies String[]
+  age       Int
+  height    Float
+  weight    Float
+  bmi       Float
+  bmr       Float
+  tdee      Float
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_profiles")
 }
