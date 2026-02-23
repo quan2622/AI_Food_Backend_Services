@@ -172,4 +172,14 @@ export class UsersService {
       },
     });
   }
+
+  async clearTokens(id: number): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        accessToken: null,
+        refreshToken: null,
+      },
+    });
+  }
 }

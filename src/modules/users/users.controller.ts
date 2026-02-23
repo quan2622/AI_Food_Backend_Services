@@ -9,14 +9,12 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
-  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { UpdatePasswordDto } from './dto/update-password.dto.js';
 import { UpdateStatusDto } from './dto/update-status.dto.js';
-import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
 import { User } from '@/common/decorators';
 import type { User as UserType } from '@/generated/prisma/client.js';
 
@@ -43,7 +41,6 @@ export class UsersController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
