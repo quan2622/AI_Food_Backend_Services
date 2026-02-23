@@ -9,14 +9,11 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
-  UseGuards,
 } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('user-profiles')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
