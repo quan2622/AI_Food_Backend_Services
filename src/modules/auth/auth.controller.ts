@@ -16,8 +16,8 @@ import type {
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto.js';
 import { UsersService } from '../users/users.service';
-import type { User } from '../../generated/prisma/client.js';
-import { LocalAuthGuard } from '../../guards/local-auth.guard.js';
+import type { User } from '@/generated/prisma/client.js';
+import { LocalAuthGuard } from '@/guards/local-auth.guard.js';
 
 export interface RequestWithUser extends ExpressRequest {
   user: Omit<User, 'password'>;

@@ -16,9 +16,9 @@ import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { UpdatePasswordDto } from './dto/update-password.dto.js';
 import { UpdateStatusDto } from './dto/update-status.dto.js';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { User } from 'src/common/decorators';
-import type { User as UserType } from '../../generated/prisma/client.js';
+import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
+import { User } from '@/common/decorators';
+import type { User as UserType } from '@/generated/prisma/client.js';
 
 @Controller('users')
 export class UsersController {
