@@ -16,7 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto.js';
 import { UpdatePasswordDto } from './dto/update-password.dto.js';
 import { UpdateStatusDto } from './dto/update-status.dto.js';
 import { User } from '@/common/decorators';
-import type { User as UserType } from '@/generated/prisma/client.js';
+import type { UserAuthPayload } from '@/types/index.type';
 
 @Controller('users')
 export class UsersController {
@@ -36,7 +36,7 @@ export class UsersController {
   @Get('me')
   getCurrentUser(
     @User()
-    user: Omit<UserType, 'password'>,
+    user: UserAuthPayload,
   ) {
     return user;
   }

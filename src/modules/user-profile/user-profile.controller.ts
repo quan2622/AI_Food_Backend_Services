@@ -13,6 +13,8 @@ import {
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
+import { User } from 'src/common/decorators';
+import type { UserAuthPayload } from '@/types/index.type';
 
 @Controller('user-profiles')
 export class UserProfileController {
@@ -20,13 +22,21 @@ export class UserProfileController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUserProfileDto: CreateUserProfileDto) {
-    return this.userProfileService.create(createUserProfileDto);
+  create(
+    @User() user: UserAuthPayload,
+    @Body() createUserProfileDto: CreateUserProfileDto,
+  ) {
+    return this.userProfileService.create(user.id, createUserProfileDto);
+  }
+
+  @Get('all')
+  findAll() {
+    return this.userProfileService.findAll();
   }
 
   @Get()
-  findAll() {
-    return this.userProfileService.findAll();
+  getMyProfile(@User() user: UserAuthPayload) {
+    return this.userProfileService.findByUserId(user.id);
   }
 
   @Get('by-user/:userId')
@@ -39,12 +49,29 @@ export class UserProfileController {
     return this.userProfileService.findOne(id);
   }
 
+  @Patch()
+  updateMyProfile(
+    @User() user: UserAuthPayload,
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+  ) {
+    return this.userProfileService.updateByUserId(
+      user.id,
+      updateUserProfileDto,
+    );
+  }
+
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserProfileDto: UpdateUserProfileDto,
   ) {
     return this.userProfileService.update(id, updateUserProfileDto);
+  }
+
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  removeMyProfile(@User() user: UserAuthPayload) {
+    return this.userProfileService.removeByUserId(user.id);
   }
 
   @Delete(':id')

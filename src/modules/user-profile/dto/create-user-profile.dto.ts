@@ -10,13 +10,9 @@ import {
 } from 'class-validator';
 
 export class CreateUserProfileDto {
-  @IsInt({ message: 'userId phải là số nguyên' })
-  @IsPositive({ message: 'userId phải là số dương' })
-  userId: number;
-
   @IsInt({ message: 'Tuổi phải là số nguyên' })
   @Min(1, { message: 'Tuổi tối thiểu là 1' })
-  @Max(150, { message: 'Tuổi tối đa là 150' })
+  @Max(100, { message: 'Tuổi tối đa là 100' })
   age: number;
 
   @IsNumber({}, { message: 'Chiều cao không hợp lệ' })
