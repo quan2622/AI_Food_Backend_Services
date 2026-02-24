@@ -27,3 +27,13 @@ export type User = Prisma.UserModel
  * 
  */
 export type UserProfile = Prisma.UserProfileModel
+/**
+ * Model NutritionGoal
+ * 
+ */
+export type NutritionGoal = Prisma.NutritionGoalModel
+/**
+ * Model AllCode
+ * 
+ */
+export type AllCode = Prisma.AllCodeModel

@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserProfileModule } from './modules/user-profile/user-profile.module';
+import { NutritionGoalModule } from './modules/nutrition-goal/nutrition-goal.module';
+import { AllcodeModule } from './modules/allcode/allcode.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { UserProfileModule } from './modules/user-profile/user-profile.module';
     UsersModule,
     AuthModule,
     UserProfileModule,
+    NutritionGoalModule,
+    AllcodeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

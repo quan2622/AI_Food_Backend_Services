@@ -52,7 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  UserProfile: 'UserProfile'
+  UserProfile: 'UserProfile',
+  NutritionGoal: 'NutritionGoal',
+  AllCode: 'AllCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -105,6 +107,33 @@ export const UserProfileScalarFieldEnum = {
 } as const
 
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const NutritionGoalScalarFieldEnum = {
+  id: 'id',
+  goalType: 'goalType',
+  targetCaloriesPerDay: 'targetCaloriesPerDay',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NutritionGoalScalarFieldEnum = (typeof NutritionGoalScalarFieldEnum)[keyof typeof NutritionGoalScalarFieldEnum]
+
+
+export const AllCodeScalarFieldEnum = {
+  id: 'id',
+  keyMap: 'keyMap',
+  type: 'type',
+  value: 'value',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
 
 
 export const SortOrder = {

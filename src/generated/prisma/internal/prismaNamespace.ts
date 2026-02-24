@@ -385,7 +385,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  UserProfile: 'UserProfile'
+  UserProfile: 'UserProfile',
+  NutritionGoal: 'NutritionGoal',
+  AllCode: 'AllCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile"
+    modelProps: "user" | "userProfile" | "nutritionGoal" | "allCode"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +555,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NutritionGoal: {
+      payload: Prisma.$NutritionGoalPayload<ExtArgs>
+      fields: Prisma.NutritionGoalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NutritionGoalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NutritionGoalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        findFirst: {
+          args: Prisma.NutritionGoalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NutritionGoalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        findMany: {
+          args: Prisma.NutritionGoalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>[]
+        }
+        create: {
+          args: Prisma.NutritionGoalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        createMany: {
+          args: Prisma.NutritionGoalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NutritionGoalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>[]
+        }
+        delete: {
+          args: Prisma.NutritionGoalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        update: {
+          args: Prisma.NutritionGoalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        deleteMany: {
+          args: Prisma.NutritionGoalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NutritionGoalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NutritionGoalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>[]
+        }
+        upsert: {
+          args: Prisma.NutritionGoalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NutritionGoalPayload>
+        }
+        aggregate: {
+          args: Prisma.NutritionGoalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNutritionGoal>
+        }
+        groupBy: {
+          args: Prisma.NutritionGoalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NutritionGoalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NutritionGoalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NutritionGoalCountAggregateOutputType> | number
+        }
+      }
+    }
+    AllCode: {
+      payload: Prisma.$AllCodePayload<ExtArgs>
+      fields: Prisma.AllCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AllCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AllCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        findFirst: {
+          args: Prisma.AllCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AllCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        findMany: {
+          args: Prisma.AllCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        create: {
+          args: Prisma.AllCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        createMany: {
+          args: Prisma.AllCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AllCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        delete: {
+          args: Prisma.AllCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        update: {
+          args: Prisma.AllCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.AllCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AllCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AllCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.AllCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        aggregate: {
+          args: Prisma.AllCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAllCode>
+        }
+        groupBy: {
+          args: Prisma.AllCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AllCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AllCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AllCodeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -626,6 +776,33 @@ export const UserProfileScalarFieldEnum = {
 } as const
 
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const NutritionGoalScalarFieldEnum = {
+  id: 'id',
+  goalType: 'goalType',
+  targetCaloriesPerDay: 'targetCaloriesPerDay',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NutritionGoalScalarFieldEnum = (typeof NutritionGoalScalarFieldEnum)[keyof typeof NutritionGoalScalarFieldEnum]
+
+
+export const AllCodeScalarFieldEnum = {
+  id: 'id',
+  keyMap: 'keyMap',
+  type: 'type',
+  value: 'value',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -817,6 +994,8 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userProfile?: Prisma.UserProfileOmit
+  nutritionGoal?: Prisma.NutritionGoalOmit
+  allCode?: Prisma.AllCodeOmit
 }
 
 /* Types for Logging */

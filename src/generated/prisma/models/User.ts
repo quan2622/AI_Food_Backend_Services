@@ -281,6 +281,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
+  nutritionGoals?: Prisma.NutritionGoalListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -298,6 +299,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userProfile?: Prisma.UserProfileOrderByWithRelationInput
+  nutritionGoals?: Prisma.NutritionGoalOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -318,6 +320,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   userProfile?: Prisma.XOR<Prisma.UserProfileNullableScalarRelationFilter, Prisma.UserProfileWhereInput> | null
+  nutritionGoals?: Prisma.NutritionGoalListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -374,6 +377,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userProfile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  nutritionGoals?: Prisma.NutritionGoalCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -391,6 +395,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userProfile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  nutritionGoals?: Prisma.NutritionGoalUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -407,6 +412,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  nutritionGoals?: Prisma.NutritionGoalUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -424,6 +430,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userProfile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  nutritionGoals?: Prisma.NutritionGoalUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -576,6 +583,20 @@ export type UserUpdateOneRequiredWithoutUserProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserProfileInput, Prisma.UserUpdateWithoutUserProfileInput>, Prisma.UserUncheckedUpdateWithoutUserProfileInput>
 }
 
+export type UserCreateNestedOneWithoutNutritionGoalsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNutritionGoalsInput, Prisma.UserUncheckedCreateWithoutNutritionGoalsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNutritionGoalsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNutritionGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNutritionGoalsInput, Prisma.UserUncheckedCreateWithoutNutritionGoalsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNutritionGoalsInput
+  upsert?: Prisma.UserUpsertWithoutNutritionGoalsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNutritionGoalsInput, Prisma.UserUpdateWithoutNutritionGoalsInput>, Prisma.UserUncheckedUpdateWithoutNutritionGoalsInput>
+}
+
 export type UserCreateWithoutUserProfileInput = {
   email: string
   password: string
@@ -589,6 +610,7 @@ export type UserCreateWithoutUserProfileInput = {
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  nutritionGoals?: Prisma.NutritionGoalCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUserProfileInput = {
@@ -605,6 +627,7 @@ export type UserUncheckedCreateWithoutUserProfileInput = {
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  nutritionGoals?: Prisma.NutritionGoalUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUserProfileInput = {
@@ -636,6 +659,7 @@ export type UserUpdateWithoutUserProfileInput = {
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nutritionGoals?: Prisma.NutritionGoalUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserProfileInput = {
@@ -652,8 +676,120 @@ export type UserUncheckedUpdateWithoutUserProfileInput = {
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nutritionGoals?: Prisma.NutritionGoalUncheckedUpdateManyWithoutUserNestedInput
 }
 
+export type UserCreateWithoutNutritionGoalsInput = {
+  email: string
+  password: string
+  genderCode?: string | null
+  avatarUrl?: string | null
+  fullName: string
+  accessToken?: string | null
+  refreshToken?: string | null
+  birthOfDate?: Date | string | null
+  isAdmin?: boolean
+  status?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userProfile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNutritionGoalsInput = {
+  id?: number
+  email: string
+  password: string
+  genderCode?: string | null
+  avatarUrl?: string | null
+  fullName: string
+  accessToken?: string | null
+  refreshToken?: string | null
+  birthOfDate?: Date | string | null
+  isAdmin?: boolean
+  status?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userProfile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNutritionGoalsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNutritionGoalsInput, Prisma.UserUncheckedCreateWithoutNutritionGoalsInput>
+}
+
+export type UserUpsertWithoutNutritionGoalsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNutritionGoalsInput, Prisma.UserUncheckedUpdateWithoutNutritionGoalsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNutritionGoalsInput, Prisma.UserUncheckedCreateWithoutNutritionGoalsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNutritionGoalsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNutritionGoalsInput, Prisma.UserUncheckedUpdateWithoutNutritionGoalsInput>
+}
+
+export type UserUpdateWithoutNutritionGoalsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNutritionGoalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  nutritionGoals: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  nutritionGoals?: boolean | UserCountOutputTypeCountNutritionGoalsArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNutritionGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NutritionGoalWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -671,6 +807,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   userProfile?: boolean | Prisma.User$userProfileArgs<ExtArgs>
+  nutritionGoals?: boolean | Prisma.User$nutritionGoalsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -724,6 +862,8 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "genderCode" | "avatarUrl" | "fullName" | "accessToken" | "refreshToken" | "birthOfDate" | "isAdmin" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.User$userProfileArgs<ExtArgs>
+  nutritionGoals?: boolean | Prisma.User$nutritionGoalsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -732,6 +872,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     userProfile: Prisma.$UserProfilePayload<ExtArgs> | null
+    nutritionGoals: Prisma.$NutritionGoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1142,6 +1283,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   userProfile<T extends Prisma.User$userProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userProfileArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  nutritionGoals<T extends Prisma.User$nutritionGoalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$nutritionGoalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NutritionGoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1588,6 +1730,30 @@ export type User$userProfileArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.UserProfileInclude<ExtArgs> | null
   where?: Prisma.UserProfileWhereInput
+}
+
+/**
+ * User.nutritionGoals
+ */
+export type User$nutritionGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NutritionGoal
+   */
+  select?: Prisma.NutritionGoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NutritionGoal
+   */
+  omit?: Prisma.NutritionGoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NutritionGoalInclude<ExtArgs> | null
+  where?: Prisma.NutritionGoalWhereInput
+  orderBy?: Prisma.NutritionGoalOrderByWithRelationInput | Prisma.NutritionGoalOrderByWithRelationInput[]
+  cursor?: Prisma.NutritionGoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NutritionGoalScalarFieldEnum | Prisma.NutritionGoalScalarFieldEnum[]
 }
 
 /**
