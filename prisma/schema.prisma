@@ -76,3 +76,19 @@ model AllCode {
 
   @@map("all_codes")
 }
+
+model Food {
+  id          Int      @id @default(autoincrement())
+  foodName    String
+  description String?
+  category    String
+  imageUrl    String?
+  protein     Float    @default(0)
+  carbs       Float    @default(0)
+  fat         Float    @default(0)
+  calories    Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("foods")
+}

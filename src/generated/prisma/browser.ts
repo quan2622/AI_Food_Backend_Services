@@ -37,3 +37,8 @@ export type NutritionGoal = Prisma.NutritionGoalModel
  * 
  */
 export type AllCode = Prisma.AllCodeModel
+/**
+ * Model Food
+ * 
+ */
+export type Food = Prisma.FoodModel

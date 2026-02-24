@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserProfileModule } from './modules/user-profile/user-profile.module';
 import { NutritionGoalModule } from './modules/nutrition-goal/nutrition-goal.module';
 import { AllcodeModule } from './modules/allcode/allcode.module';
+import { FoodModule } from './modules/food/food.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AllcodeModule } from './modules/allcode/allcode.module';
     UserProfileModule,
     NutritionGoalModule,
     AllcodeModule,
+    FoodModule,
   ],
   controllers: [AppController],
   providers: [AppService],

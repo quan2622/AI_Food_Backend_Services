@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   UserProfile: 'UserProfile',
   NutritionGoal: 'NutritionGoal',
-  AllCode: 'AllCode'
+  AllCode: 'AllCode',
+  Food: 'Food'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -134,6 +135,23 @@ export const AllCodeScalarFieldEnum = {
 } as const
 
 export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
+
+
+export const FoodScalarFieldEnum = {
+  id: 'id',
+  foodName: 'foodName',
+  description: 'description',
+  category: 'category',
+  imageUrl: 'imageUrl',
+  protein: 'protein',
+  carbs: 'carbs',
+  fat: 'fat',
+  calories: 'calories',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
 
 
 export const SortOrder = {
