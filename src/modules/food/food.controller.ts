@@ -15,6 +15,8 @@ import {
 import { FoodService } from './food.service';
 import { CreateFoodDto } from './dto/create-food.dto.js';
 import { UpdateFoodDto } from './dto/update-food.dto.js';
+import { BulkDeleteFoodDto } from './dto/bulk-delete-food.dto.js';
+import { BulkCreateFoodDto } from './dto/bulk-create-food.dto.js';
 import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('foods')
@@ -30,12 +32,26 @@ export class FoodController {
   }
 
   @UseGuards(AdminGuard)
+  @Post('bulk')
+  @HttpCode(HttpStatus.CREATED)
+  createMany(@Body() dto: BulkCreateFoodDto) {
+    return this.foodService.createMany(dto.items);
+  }
+
+  @UseGuards(AdminGuard)
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateFoodDto: UpdateFoodDto,
   ) {
     return this.foodService.update(id, updateFoodDto);
+  }
+
+  @UseGuards(AdminGuard)
+  @Delete('bulk')
+  @HttpCode(HttpStatus.OK)
+  removeMany(@Body() dto: BulkDeleteFoodDto) {
+    return this.foodService.removeMany(dto.ids);
   }
 
   @UseGuards(AdminGuard)
