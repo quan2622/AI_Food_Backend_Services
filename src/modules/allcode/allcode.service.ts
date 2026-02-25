@@ -101,4 +101,12 @@ export class AllcodeService {
 
     await this.prisma.allCode.delete({ where: { id } });
   }
+
+  async removeMany(ids: number[]): Promise<{ deletedCount: number }> {
+    const result = await this.prisma.allCode.deleteMany({
+      where: { id: { in: ids } },
+    });
+
+    return { deletedCount: result.count };
+  }
 }

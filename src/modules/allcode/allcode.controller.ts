@@ -14,6 +14,7 @@ import {
 import { AllcodeService } from './allcode.service';
 import { CreateAllcodeDto } from './dto/create-allcode.dto.js';
 import { UpdateAllcodeDto } from './dto/update-allcode.dto.js';
+import { BulkDeleteAllCodeDto } from './dto/bulk-delete-allcode.dto';
 
 @Controller('allcodes')
 export class AllcodeController {
@@ -49,6 +50,12 @@ export class AllcodeController {
     @Body() updateAllcodeDto: UpdateAllcodeDto,
   ) {
     return this.allcodeService.update(id, updateAllcodeDto);
+  }
+
+  @Delete('bulk')
+  @HttpCode(HttpStatus.OK)
+  removeMany(@Body() dto: BulkDeleteAllCodeDto) {
+    return this.allcodeService.removeMany(dto.ids);
   }
 
   @Delete(':id')
