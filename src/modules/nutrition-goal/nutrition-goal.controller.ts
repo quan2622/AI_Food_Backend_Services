@@ -9,11 +9,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { NutritionGoalService } from './nutrition-goal.service';
 import { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
 import { UpdateNutritionGoalDto } from './dto/update-nutrition-goal.dto.js';
 import { User } from 'src/common/decorators';
+import { AdminGuard } from '@/guards/admin.guard';
+import { BulkDeleteNutritionGoalDto } from './dto/bulk-delete-nutrition-goal.dto.js';
 
 @Controller('nutrition-goals')
 export class NutritionGoalController {
@@ -28,6 +31,7 @@ export class NutritionGoalController {
     return this.nutritionGoalService.create(user.id, createNutritionGoalDto);
   }
 
+  @UseGuards(AdminGuard)
   @Get('all')
   findAll() {
     return this.nutritionGoalService.findAll();
@@ -54,6 +58,15 @@ export class NutritionGoalController {
       user.id,
       updateNutritionGoalDto,
     );
+  }
+
+  @Delete('bulk')
+  @HttpCode(HttpStatus.OK)
+  removeMany(
+    @User() user: { id: number },
+    @Body() dto: BulkDeleteNutritionGoalDto,
+  ) {
+    return this.nutritionGoalService.removeMany(dto.ids, user.id);
   }
 
   @Delete(':id')
