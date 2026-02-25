@@ -15,6 +15,7 @@ import { AllcodeService } from './allcode.service';
 import { CreateAllcodeDto } from './dto/create-allcode.dto.js';
 import { UpdateAllcodeDto } from './dto/update-allcode.dto.js';
 import { BulkDeleteAllCodeDto } from './dto/bulk-delete-allcode.dto';
+import { BulkCreateAllcodeDto } from './dto/bulk-create-allcode.dto.js';
 
 @Controller('allcodes')
 export class AllcodeController {
@@ -24,6 +25,12 @@ export class AllcodeController {
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createAllcodeDto: CreateAllcodeDto) {
     return this.allcodeService.create(createAllcodeDto);
+  }
+
+  @Post('bulk')
+  @HttpCode(HttpStatus.CREATED)
+  createMany(@Body() dto: BulkCreateAllcodeDto) {
+    return this.allcodeService.createMany(dto.items);
   }
 
   @Get()

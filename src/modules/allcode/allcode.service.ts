@@ -30,6 +30,22 @@ export class AllcodeService {
     });
   }
 
+  async createMany(
+    items: CreateAllcodeDto[],
+  ): Promise<{ createdCount: number }> {
+    const result = await this.prisma.allCode.createMany({
+      data: items.map((dto) => ({
+        keyMap: dto.keyMap,
+        type: dto.type,
+        value: dto.value,
+        description: dto.description,
+      })),
+      skipDuplicates: true, // bỏ qua keyMap đã tồn tại
+    });
+
+    return { createdCount: result.count };
+  }
+
   findAll(): Promise<AllCode[]> {
     return this.prisma.allCode.findMany({
       orderBy: { type: 'asc' },
