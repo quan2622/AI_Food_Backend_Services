@@ -55,7 +55,10 @@ export const ModelName = {
   UserProfile: 'UserProfile',
   NutritionGoal: 'NutritionGoal',
   AllCode: 'AllCode',
-  Food: 'Food'
+  Food: 'Food',
+  Meal: 'Meal',
+  MealItem: 'MealItem',
+  FoodImage: 'FoodImage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -152,6 +155,48 @@ export const FoodScalarFieldEnum = {
 } as const
 
 export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
+
+
+export const MealScalarFieldEnum = {
+  id: 'id',
+  mealType: 'mealType',
+  mealDateTime: 'mealDateTime',
+  totalCalories: 'totalCalories',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MealScalarFieldEnum = (typeof MealScalarFieldEnum)[keyof typeof MealScalarFieldEnum]
+
+
+export const MealItemScalarFieldEnum = {
+  id: 'id',
+  quantity: 'quantity',
+  calories: 'calories',
+  protein: 'protein',
+  carbs: 'carbs',
+  fat: 'fat',
+  foodId: 'foodId',
+  mealId: 'mealId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MealItemScalarFieldEnum = (typeof MealItemScalarFieldEnum)[keyof typeof MealItemScalarFieldEnum]
+
+
+export const FoodImageScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  fileSize: 'fileSize',
+  uploadedAt: 'uploadedAt',
+  mealId: 'mealId'
+} as const
+
+export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
 
 
 export const SortOrder = {

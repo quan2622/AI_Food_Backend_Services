@@ -30,6 +30,7 @@ model User {
   updatedAt    DateTime @updatedAt
   userProfile  UserProfile?
   nutritionGoals NutritionGoal[]
+  meals        Meal[]
 
   @@map("users")
 }
@@ -78,17 +79,63 @@ model AllCode {
 }
 
 model Food {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   foodName    String
   description String?
   category    String
   imageUrl    String?
-  protein     Float    @default(0)
-  carbs       Float    @default(0)
-  fat         Float    @default(0)
-  calories    Float    @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  protein     Float      @default(0)
+  carbs       Float      @default(0)
+  fat         Float      @default(0)
+  calories    Float      @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  mealItems   MealItem[]
 
   @@map("foods")
+}
+
+model Meal {
+  id            Int         @id @default(autoincrement())
+  mealType      String
+  mealDateTime  DateTime
+  totalCalories Float       @default(0)
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mealItems     MealItem[]
+  foodImages    FoodImage[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("meals")
+}
+
+model MealItem {
+  id       Int   @id @default(autoincrement())
+  quantity Float
+  calories Float @default(0)
+  protein  Float @default(0)
+  carbs    Float @default(0)
+  fat      Float @default(0)
+  foodId   Int
+  food     Food  @relation(fields: [foodId], references: [id], onDelete: Restrict)
+  mealId   Int
+  meal     Meal  @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("meal_items")
+}
+
+model FoodImage {
+  id         Int      @id @default(autoincrement())
+  imageUrl   String
+  fileName   String?
+  mimeType   String?
+  fileSize   Int?
+  uploadedAt DateTime @default(now())
+  mealId     Int
+  meal       Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+  @@map("food_images")
 }

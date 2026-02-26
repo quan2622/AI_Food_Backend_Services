@@ -42,3 +42,18 @@ export type AllCode = Prisma.AllCodeModel
  * 
  */
 export type Food = Prisma.FoodModel
+/**
+ * Model Meal
+ * 
+ */
+export type Meal = Prisma.MealModel
+/**
+ * Model MealItem
+ * 
+ */
+export type MealItem = Prisma.MealItemModel
+/**
+ * Model FoodImage
+ * 
+ */
+export type FoodImage = Prisma.FoodImageModel
