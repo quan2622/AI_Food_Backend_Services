@@ -58,7 +58,8 @@ export const ModelName = {
   Food: 'Food',
   Meal: 'Meal',
   MealItem: 'MealItem',
-  FoodImage: 'FoodImage'
+  FoodImage: 'FoodImage',
+  DailyLog: 'DailyLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -197,6 +198,25 @@ export const FoodImageScalarFieldEnum = {
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
+
+
+export const DailyLogScalarFieldEnum = {
+  id: 'id',
+  logDate: 'logDate',
+  totalCalories: 'totalCalories',
+  totalProtein: 'totalProtein',
+  totalCarbs: 'totalCarbs',
+  totalFat: 'totalFat',
+  targetCalories: 'targetCalories',
+  targetProtein: 'targetProtein',
+  targetCarbs: 'targetCarbs',
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
 
 
 export const SortOrder = {

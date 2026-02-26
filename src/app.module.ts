@@ -14,6 +14,7 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { MealModule } from './modules/meal/meal.module';
 import { MealItemModule } from './modules/meal-item/meal-item.module';
 import { FoodImageModule } from './modules/food-image/food-image.module';
+import { DailyLogModule } from './modules/daily-log/daily-log.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { FoodImageModule } from './modules/food-image/food-image.module';
     MealModule,
     MealItemModule,
     FoodImageModule,
+    DailyLogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

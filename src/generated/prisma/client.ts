@@ -77,3 +77,8 @@ export type MealItem = Prisma.MealItemModel
  * 
  */
 export type FoodImage = Prisma.FoodImageModel
+/**
+ * Model DailyLog
+ * 
+ */
+export type DailyLog = Prisma.DailyLogModel

@@ -391,7 +391,8 @@ export const ModelName = {
   Food: 'Food',
   Meal: 'Meal',
   MealItem: 'MealItem',
-  FoodImage: 'FoodImage'
+  FoodImage: 'FoodImage',
+  DailyLog: 'DailyLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "nutritionGoal" | "allCode" | "food" | "meal" | "mealItem" | "foodImage"
+    modelProps: "user" | "userProfile" | "nutritionGoal" | "allCode" | "food" | "meal" | "mealItem" | "foodImage" | "dailyLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DailyLog: {
+      payload: Prisma.$DailyLogPayload<ExtArgs>
+      fields: Prisma.DailyLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        findFirst: {
+          args: Prisma.DailyLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        findMany: {
+          args: Prisma.DailyLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        create: {
+          args: Prisma.DailyLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        createMany: {
+          args: Prisma.DailyLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        delete: {
+          args: Prisma.DailyLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        update: {
+          args: Prisma.DailyLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        aggregate: {
+          args: Prisma.DailyLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyLog>
+        }
+        groupBy: {
+          args: Prisma.DailyLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1162,6 +1237,25 @@ export const FoodImageScalarFieldEnum = {
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
+
+
+export const DailyLogScalarFieldEnum = {
+  id: 'id',
+  logDate: 'logDate',
+  totalCalories: 'totalCalories',
+  totalProtein: 'totalProtein',
+  totalCarbs: 'totalCarbs',
+  totalFat: 'totalFat',
+  targetCalories: 'targetCalories',
+  targetProtein: 'targetProtein',
+  targetCarbs: 'targetCarbs',
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1359,6 +1453,7 @@ export type GlobalOmitConfig = {
   meal?: Prisma.MealOmit
   mealItem?: Prisma.MealItemOmit
   foodImage?: Prisma.FoodImageOmit
+  dailyLog?: Prisma.DailyLogOmit
 }
 
 /* Types for Logging */
