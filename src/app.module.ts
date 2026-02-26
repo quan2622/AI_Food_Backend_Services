@@ -10,6 +10,10 @@ import { UserProfileModule } from './modules/user-profile/user-profile.module';
 import { NutritionGoalModule } from './modules/nutrition-goal/nutrition-goal.module';
 import { AllcodeModule } from './modules/allcode/allcode.module';
 import { FoodModule } from './modules/food/food.module';
+import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { MealModule } from './modules/meal/meal.module';
+import { MealItemModule } from './modules/meal-item/meal-item.module';
+import { FoodImageModule } from './modules/food-image/food-image.module';
 
 @Module({
   imports: [
@@ -23,6 +27,10 @@ import { FoodModule } from './modules/food/food.module';
     NutritionGoalModule,
     AllcodeModule,
     FoodModule,
+    CloudinaryModule,
+    MealModule,
+    MealItemModule,
+    FoodImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
