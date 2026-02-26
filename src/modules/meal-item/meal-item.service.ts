@@ -6,6 +6,7 @@ import {
 import { PrismaService } from '../../prisma/prisma.service';
 import type { CreateMealItemDto } from './dto/create-meal-item.dto.js';
 import type { UpdateMealItemDto } from './dto/update-meal-item.dto.js';
+import { DailyLogService } from '../daily-log/daily-log.service';
 
 // Nutrition per 100g formula
 const calcNutrition = (foodValue: number, quantity: number) =>
@@ -13,7 +14,10 @@ const calcNutrition = (foodValue: number, quantity: number) =>
 
 @Injectable()
 export class MealItemService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dailyLogService: DailyLogService,
+  ) {}
 
   async create(userId: number, dto: CreateMealItemDto) {
     // Kiểm tra meal tồn tại + ownership
@@ -65,6 +69,13 @@ export class MealItemService {
         data: { totalCalories: { increment: calories } },
       }),
     ]);
+
+    // Cập nhật DailyLog: cộng dồn dinh dưỡng của bữa ăn vào ngày tương ứng
+    await this.dailyLogService.addNutrition(
+      userId,
+      new Date(meal.mealDateTime as Date),
+      { calories, protein, carbs, fat },
+    );
 
     return mealItem;
   }
@@ -125,11 +136,14 @@ export class MealItemService {
 
     const newQ = dto.quantity;
     const oldCalories = item.calories;
+    const oldProtein = item.protein;
+    const oldCarbs = item.carbs;
+    const oldFat = item.fat;
 
-    const newCalories = calcNutrition(item.food.calories, newQ);
-    const newProtein = calcNutrition(item.food.protein, newQ);
-    const newCarbs = calcNutrition(item.food.carbs, newQ);
-    const newFat = calcNutrition(item.food.fat, newQ);
+    const newCalories = calcNutrition(Number(item.food.calories), newQ);
+    const newProtein = calcNutrition(Number(item.food.protein), newQ);
+    const newCarbs = calcNutrition(Number(item.food.carbs), newQ);
+    const newFat = calcNutrition(Number(item.food.fat), newQ);
     const calorieDiff = newCalories - oldCalories;
 
     const [updated] = await this.prisma.$transaction([
@@ -152,6 +166,21 @@ export class MealItemService {
       }),
     ]);
 
+    // Cập nhật DailyLog: trừ giá trị cũ rồi cộng giá trị mới
+    const mealDate = new Date(item.meal.mealDateTime as Date);
+    await this.dailyLogService.subtractNutrition(userId, mealDate, {
+      calories: Number(oldCalories),
+      protein: Number(oldProtein),
+      carbs: Number(oldCarbs),
+      fat: Number(oldFat),
+    });
+    await this.dailyLogService.addNutrition(userId, mealDate, {
+      calories: newCalories,
+      protein: newProtein,
+      carbs: newCarbs,
+      fat: newFat,
+    });
+
     return updated;
   }
 
@@ -171,5 +200,17 @@ export class MealItemService {
         data: { totalCalories: { decrement: item.calories } },
       }),
     ]);
+
+    // Cập nhật DailyLog: trừ dinh dưỡng của item vừa xóa
+    await this.dailyLogService.subtractNutrition(
+      userId,
+      new Date(item.meal.mealDateTime as Date),
+      {
+        calories: Number(item.calories),
+        protein: Number(item.protein),
+        carbs: Number(item.carbs),
+        fat: Number(item.fat),
+      },
+    );
   }
 }
