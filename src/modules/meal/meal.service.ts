@@ -32,22 +32,39 @@ export class MealService {
   }
 
   async create(userId: number, dto: CreateMealDto) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) throw new NotFoundException(`User #${userId} không tồn tại`);
+    // Kiểm tra DailyLog tồn tại và thuộc về user hiện tại
+    const dailyLog = await this.prisma.dailyLog.findUnique({
+      where: { id: dto.dailyLogId },
+    });
+    if (!dailyLog)
+      throw new NotFoundException(`DailyLog #${dto.dailyLogId} không tồn tại`);
+    if (dailyLog.userId !== userId)
+      throw new ForbiddenException(
+        'Bạn không có quyền thêm bữa ăn vào daily log này',
+      );
 
     return this.prisma.meal.create({
       data: {
-        userId,
+        dailyLogId: dto.dailyLogId,
         mealType: dto.mealType,
         mealDateTime: new Date(dto.mealDateTime),
       },
     });
   }
 
-  async findAllByUserId(userId: number) {
+  async findAllByDailyLogId(dailyLogId: number, userId: number) {
+    // Kiểm tra DailyLog tồn tại và thuộc về user hiện tại
+    const dailyLog = await this.prisma.dailyLog.findUnique({
+      where: { id: dailyLogId },
+    });
+    if (!dailyLog)
+      throw new NotFoundException(`DailyLog #${dailyLogId} không tồn tại`);
+    if (dailyLog.userId !== userId)
+      throw new ForbiddenException('Bạn không có quyền truy cập daily log này');
+
     const meals = await this.prisma.meal.findMany({
-      where: { userId },
-      orderBy: { mealDateTime: 'desc' },
+      where: { dailyLogId },
+      orderBy: { mealDateTime: 'asc' },
       include: {
         mealItems: {
           include: {
@@ -78,7 +95,13 @@ export class MealService {
     const meals = await this.prisma.meal.findMany({
       orderBy: { mealDateTime: 'desc' },
       include: {
-        user: { select: { id: true, fullName: true, email: true } },
+        dailyLog: {
+          select: {
+            id: true,
+            logDate: true,
+            userId: true,
+          },
+        },
         mealItems: {
           include: {
             food: {
@@ -108,7 +131,9 @@ export class MealService {
     const meal = await this.prisma.meal.findUnique({
       where: { id },
       include: {
-        user: { select: { id: true, fullName: true, email: true } },
+        dailyLog: {
+          select: { id: true, logDate: true, userId: true },
+        },
         mealItems: {
           include: {
             food: {
@@ -131,9 +156,12 @@ export class MealService {
   }
 
   async update(id: number, userId: number, dto: UpdateMealDto) {
-    const meal = await this.prisma.meal.findUnique({ where: { id } });
+    const meal = await this.prisma.meal.findUnique({
+      where: { id },
+      include: { dailyLog: { select: { userId: true } } },
+    });
     if (!meal) throw new NotFoundException(`Meal #${id} không tồn tại`);
-    if (meal.userId !== userId)
+    if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền chỉnh sửa bữa ăn này');
 
     return this.prisma.meal.update({
@@ -148,9 +176,12 @@ export class MealService {
   }
 
   async remove(id: number, userId: number): Promise<void> {
-    const meal = await this.prisma.meal.findUnique({ where: { id } });
+    const meal = await this.prisma.meal.findUnique({
+      where: { id },
+      include: { dailyLog: { select: { userId: true } } },
+    });
     if (!meal) throw new NotFoundException(`Meal #${id} không tồn tại`);
-    if (meal.userId !== userId)
+    if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa bữa ăn này');
 
     await this.prisma.meal.delete({ where: { id } });

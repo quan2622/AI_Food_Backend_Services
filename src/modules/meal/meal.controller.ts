@@ -27,9 +27,12 @@ export class MealController {
     return this.mealService.create(user.id, dto);
   }
 
-  @Get()
-  findMyMeals(@User() user: { id: number }) {
-    return this.mealService.findAllByUserId(user.id);
+  @Get('daily-log/:dailyLogId')
+  findByDailyLog(
+    @Param('dailyLogId', ParseIntPipe) dailyLogId: number,
+    @User() user: { id: number },
+  ) {
+    return this.mealService.findAllByDailyLogId(dailyLogId, user.id);
   }
 
   @UseGuards(AdminGuard)

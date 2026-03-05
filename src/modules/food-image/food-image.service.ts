@@ -21,9 +21,10 @@ export class FoodImageService {
   ) {
     const meal = await this.prisma.meal.findUnique({
       where: { id: dto.mealId },
+      include: { dailyLog: { select: { userId: true } } },
     });
     if (!meal) throw new NotFoundException(`Meal #${dto.mealId} không tồn tại`);
-    if (meal.userId !== userId)
+    if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException(
         'Bạn không có quyền thêm ảnh vào bữa ăn này',
       );
@@ -65,10 +66,12 @@ export class FoodImageService {
   async remove(id: number, userId: number): Promise<void> {
     const image = await this.prisma.foodImage.findUnique({
       where: { id },
-      include: { meal: true },
+      include: {
+        meal: { include: { dailyLog: { select: { userId: true } } } },
+      },
     });
     if (!image) throw new NotFoundException(`FoodImage #${id} không tồn tại`);
-    if (image.meal.userId !== userId)
+    if (image.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa ảnh này');
 
     await this.prisma.foodImage.delete({ where: { id } });
@@ -78,9 +81,12 @@ export class FoodImageService {
     mealId: number,
     userId: number,
   ): Promise<{ deletedCount: number }> {
-    const meal = await this.prisma.meal.findUnique({ where: { id: mealId } });
+    const meal = await this.prisma.meal.findUnique({
+      where: { id: mealId },
+      include: { dailyLog: { select: { userId: true } } },
+    });
     if (!meal) throw new NotFoundException(`Meal #${mealId} không tồn tại`);
-    if (meal.userId !== userId)
+    if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa ảnh của bữa ăn này');
 
     const result = await this.prisma.foodImage.deleteMany({

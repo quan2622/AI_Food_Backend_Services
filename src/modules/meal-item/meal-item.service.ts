@@ -20,12 +20,13 @@ export class MealItemService {
   ) {}
 
   async create(userId: number, dto: CreateMealItemDto) {
-    // Kiểm tra meal tồn tại + ownership
+    // Kiểm tra meal tồn tại + ownership qua dailyLog
     const meal = await this.prisma.meal.findUnique({
       where: { id: dto.mealId },
+      include: { dailyLog: { select: { userId: true } } },
     });
     if (!meal) throw new NotFoundException(`Meal #${dto.mealId} không tồn tại`);
-    if (meal.userId !== userId)
+    if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException(
         'Bạn không có quyền thêm item vào bữa ăn này',
       );
@@ -71,11 +72,12 @@ export class MealItemService {
     ]);
 
     // Cập nhật DailyLog: cộng dồn dinh dưỡng của bữa ăn vào ngày tương ứng
-    await this.dailyLogService.addNutrition(
-      userId,
-      new Date(meal.mealDateTime as Date),
-      { calories, protein, carbs, fat },
-    );
+    await this.dailyLogService.addNutrition(userId, meal.mealDateTime, {
+      calories,
+      protein,
+      carbs,
+      fat,
+    });
 
     return mealItem;
   }
@@ -115,6 +117,7 @@ export class MealItemService {
             mealType: true,
             mealDateTime: true,
             totalCalories: true,
+            dailyLogId: true,
           },
         },
       },
@@ -126,10 +129,15 @@ export class MealItemService {
   async update(id: number, userId: number, dto: UpdateMealItemDto) {
     const item = await this.prisma.mealItem.findUnique({
       where: { id },
-      include: { meal: true, food: true },
+      include: {
+        meal: {
+          include: { dailyLog: { select: { userId: true } } },
+        },
+        food: true,
+      },
     });
     if (!item) throw new NotFoundException(`MealItem #${id} không tồn tại`);
-    if (item.meal.userId !== userId)
+    if (item.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền cập nhật item này');
 
     if (dto.quantity == null) return item;
@@ -167,7 +175,7 @@ export class MealItemService {
     ]);
 
     // Cập nhật DailyLog: trừ giá trị cũ rồi cộng giá trị mới
-    const mealDate = new Date(item.meal.mealDateTime as Date);
+    const mealDate: Date = item.meal.mealDateTime as Date;
     await this.dailyLogService.subtractNutrition(userId, mealDate, {
       calories: Number(oldCalories),
       protein: Number(oldProtein),
@@ -187,10 +195,14 @@ export class MealItemService {
   async remove(id: number, userId: number): Promise<void> {
     const item = await this.prisma.mealItem.findUnique({
       where: { id },
-      include: { meal: true },
+      include: {
+        meal: {
+          include: { dailyLog: { select: { userId: true } } },
+        },
+      },
     });
     if (!item) throw new NotFoundException(`MealItem #${id} không tồn tại`);
-    if (item.meal.userId !== userId)
+    if (item.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa item này');
 
     await this.prisma.$transaction([
@@ -204,7 +216,7 @@ export class MealItemService {
     // Cập nhật DailyLog: trừ dinh dưỡng của item vừa xóa
     await this.dailyLogService.subtractNutrition(
       userId,
-      new Date(item.meal.mealDateTime as Date),
+      item.meal.mealDateTime,
       {
         calories: Number(item.calories),
         protein: Number(item.protein),

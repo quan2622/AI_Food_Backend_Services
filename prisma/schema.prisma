@@ -30,7 +30,7 @@ model User {
   updatedAt    DateTime @updatedAt
   userProfile  UserProfile?
   nutritionGoals NutritionGoal[]
-  meals        Meal[]
+
   dailyLogs    DailyLog[]
 
   @@map("users")
@@ -101,8 +101,8 @@ model Meal {
   mealType      String
   mealDateTime  DateTime
   totalCalories Float       @default(0)
-  userId        Int
-  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyLogId    Int
+  dailyLog      DailyLog    @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
   mealItems     MealItem[]
   foodImages    FoodImage[]
   createdAt     DateTime    @default(now())
@@ -154,6 +154,7 @@ model DailyLog {
   status         String   @default("BELOW")
   userId         Int
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  meals          Meal[]
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
