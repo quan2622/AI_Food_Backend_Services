@@ -63,6 +63,31 @@ export type AllCode = Prisma.AllCodeModel
  */
 export type Food = Prisma.FoodModel
 /**
+ * Model FoodCategory
+ * 
+ */
+export type FoodCategory = Prisma.FoodCategoryModel
+/**
+ * Model NutritionComponent
+ * 
+ */
+export type NutritionComponent = Prisma.NutritionComponentModel
+/**
+ * Model FoodNutrition
+ * 
+ */
+export type FoodNutrition = Prisma.FoodNutritionModel
+/**
+ * Model FoodNutritionValue
+ * 
+ */
+export type FoodNutritionValue = Prisma.FoodNutritionValueModel
+/**
+ * Model DishIngredient
+ * 
+ */
+export type DishIngredient = Prisma.DishIngredientModel
+/**
  * Model Meal
  * 
  */

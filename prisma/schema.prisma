@@ -84,16 +84,91 @@ model Food {
   foodName    String
   description String?
   category    String
+  categoryId  Int?
+  foodCategory FoodCategory? @relation(fields: [categoryId], references: [id])
+  foodType    String        @default("INGREDIENT")
   imageUrl    String?
-  protein     Float      @default(0)
-  carbs       Float      @default(0)
-  fat         Float      @default(0)
-  calories    Float      @default(0)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  protein     Float         @default(0)
+  carbs       Float         @default(0)
+  fat         Float         @default(0)
+  calories    Float         @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   mealItems   MealItem[]
 
+  nutritions       FoodNutrition[]
+  dishIngredients  DishIngredient[] @relation("DishHasIngredients")
+  usedAsIngredient DishIngredient[] @relation("IngredientUsedInDish")
+
   @@map("foods")
+}
+
+model FoodCategory {
+  id          Int            @id @default(autoincrement())
+  name        String         @unique
+  description String?
+  parentId    Int?
+  parent      FoodCategory?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children    FoodCategory[] @relation("CategoryTree")
+  foods       Food[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@map("food_categories")
+}
+
+model NutritionComponent {
+  id        Int                  @id @default(autoincrement())
+  name      String               @unique
+  unit      String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  values    FoodNutritionValue[]
+
+  @@map("nutrition_components")
+}
+
+model FoodNutrition {
+  id            Int                  @id @default(autoincrement())
+  servingSize   Float
+  servingUnit   String               @default("g")
+  source        String               @default("MANUAL")
+  isCalculated  Boolean              @default(false)
+  foodId        Int
+  food          Food                 @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  values        FoodNutritionValue[]
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@map("food_nutritions")
+}
+
+model FoodNutritionValue {
+  id          Int                @id @default(autoincrement())
+  value       Float
+  nutritionId Int
+  nutrition   FoodNutrition      @relation(fields: [nutritionId], references: [id], onDelete: Cascade)
+  componentId Int
+  component   NutritionComponent @relation(fields: [componentId], references: [id], onDelete: Restrict)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@unique([nutritionId, componentId])
+  @@map("food_nutrition_values")
+}
+
+model DishIngredient {
+  id             Int      @id @default(autoincrement())
+  quantityGrams  Float
+  dishId         Int
+  dish           Food     @relation("DishHasIngredients", fields: [dishId], references: [id], onDelete: Cascade)
+  ingredientId   Int
+  ingredient     Food     @relation("IngredientUsedInDish", fields: [ingredientId], references: [id], onDelete: Restrict)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([dishId, ingredientId])
+  @@map("dish_ingredients")
 }
 
 model Meal {

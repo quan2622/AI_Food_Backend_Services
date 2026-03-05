@@ -456,14 +456,6 @@ export type FoodImageUncheckedUpdateManyWithoutMealNestedInput = {
   deleteMany?: Prisma.FoodImageScalarWhereInput | Prisma.FoodImageScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type FoodImageCreateWithoutMealInput = {
   imageUrl: string
   fileName?: string | null
