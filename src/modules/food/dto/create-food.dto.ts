@@ -6,6 +6,8 @@ import {
   IsPositive,
   Min,
   MaxLength,
+  IsIn,
+  IsInt,
 } from 'class-validator';
 
 export class CreateFoodDto {
@@ -48,4 +50,16 @@ export class CreateFoodDto {
   @IsNumber({}, { message: 'Calories không hợp lệ' })
   @IsPositive({ message: 'Calories phải là số dương' })
   calories?: number;
+
+  @IsOptional()
+  @IsInt({ message: 'categoryId phải là số nguyên' })
+  @Min(1, { message: 'categoryId phải lớn hơn 0' })
+  categoryId?: number;
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['INGREDIENT', 'DISH', 'BRANDED'], {
+    message: 'foodType không hợp lệ',
+  })
+  foodType?: string;
 }

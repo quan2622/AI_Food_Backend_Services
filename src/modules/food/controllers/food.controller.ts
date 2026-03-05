@@ -1,23 +1,23 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Patch,
-  Delete,
   Body,
-  Param,
-  ParseIntPipe,
+  Controller,
+  Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { FoodService } from './food.service';
-import { CreateFoodDto } from './dto/create-food.dto.js';
-import { UpdateFoodDto } from './dto/update-food.dto.js';
-import { BulkDeleteFoodDto } from './dto/bulk-delete-food.dto.js';
-import { BulkCreateFoodDto } from './dto/bulk-create-food.dto.js';
-import { AdminGuard } from 'src/guards/admin.guard';
+import { FoodService } from '../services/food.service.js';
+import { CreateFoodDto } from '../dto/create-food.dto.js';
+import { UpdateFoodDto } from '../dto/update-food.dto.js';
+import { BulkDeleteFoodDto } from '../dto/bulk-delete-food.dto.js';
+import { BulkCreateFoodDto } from '../dto/bulk-create-food.dto.js';
+import { AdminGuard } from '../../../guards/admin.guard';
 
 @Controller('foods')
 export class FoodController {
@@ -75,3 +75,4 @@ export class FoodController {
     return this.foodService.findOne(id);
   }
 }
+

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
-import type { CreateFoodDto } from './dto/create-food.dto.js';
-import type { UpdateFoodDto } from './dto/update-food.dto.js';
+import { PrismaService } from '../../../prisma/prisma.service';
+import type { CreateFoodDto } from '../dto/create-food.dto.js';
+import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
 type FoodWithCategoryInfo = {
   id: number;
@@ -51,6 +51,8 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         category: dto.category,
+        categoryId: dto.categoryId ?? null,
+        foodType: dto.foodType ?? 'INGREDIENT',
         imageUrl: dto.imageUrl,
         protein: dto.protein ?? 0,
         carbs: dto.carbs ?? 0,
@@ -66,6 +68,8 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         category: dto.category,
+        categoryId: dto.categoryId ?? null,
+        foodType: dto.foodType ?? 'INGREDIENT',
         imageUrl: dto.imageUrl,
         protein: dto.protein ?? 0,
         carbs: dto.carbs ?? 0,
@@ -117,6 +121,8 @@ export class FoodService {
         ...(dto.foodName != null && { foodName: dto.foodName }),
         ...(dto.description !== undefined && { description: dto.description }),
         ...(dto.category != null && { category: dto.category }),
+        ...(dto.categoryId !== undefined && { categoryId: dto.categoryId ?? null }),
+        ...(dto.foodType != null && { foodType: dto.foodType }),
         ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
         ...(dto.protein != null && { protein: dto.protein }),
         ...(dto.carbs != null && { carbs: dto.carbs }),
@@ -144,3 +150,4 @@ export class FoodService {
     return { deletedCount: result.count };
   }
 }
+
