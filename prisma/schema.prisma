@@ -37,18 +37,20 @@ model User {
 }
 
 model UserProfile {
-  id        Int      @id @default(autoincrement())
-  allergies String[]
-  age       Int
-  height    Float
-  weight    Float
-  bmi       Float
-  bmr       Float
-  tdee      Float
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  allergies     String[]
+  age           Int
+  height        Float
+  weight        Float
+  bmi           Float
+  bmr           Float
+  tdee          Float
+  gender        String?
+  activityLevel String?
+  userId        Int      @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("user_profiles")
 }
@@ -57,6 +59,9 @@ model NutritionGoal {
   id                    Int      @id @default(autoincrement())
   goalType              String
   targetCaloriesPerDay  Float
+  targetProteinPerDay   Float    @default(0)
+  targetCarbsPerDay     Float    @default(0)
+  targetFatPerDay       Float    @default(0)
   startDate             DateTime
   endDate               DateTime
   userId                Int
@@ -83,7 +88,6 @@ model Food {
   id          Int        @id @default(autoincrement())
   foodName    String
   description String?
-  category    String
   categoryId  Int?
   foodCategory FoodCategory? @relation(fields: [categoryId], references: [id])
   foodType    String        @default("INGREDIENT")
@@ -91,6 +95,7 @@ model Food {
   protein     Float         @default(0)
   carbs       Float         @default(0)
   fat         Float         @default(0)
+  fiber       Float         @default(0)
   calories    Float         @default(0)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -175,11 +180,9 @@ model Meal {
   id            Int         @id @default(autoincrement())
   mealType      String
   mealDateTime  DateTime
-  totalCalories Float       @default(0)
   dailyLogId    Int
   dailyLog      DailyLog    @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
   mealItems     MealItem[]
-  foodImages    FoodImage[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
@@ -187,18 +190,20 @@ model Meal {
 }
 
 model MealItem {
-  id       Int   @id @default(autoincrement())
-  quantity Float
-  calories Float @default(0)
-  protein  Float @default(0)
-  carbs    Float @default(0)
-  fat      Float @default(0)
-  foodId   Int
-  food     Food  @relation(fields: [foodId], references: [id], onDelete: Restrict)
-  mealId   Int
-  meal     Meal  @relation(fields: [mealId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int         @id @default(autoincrement())
+  quantity   Float
+  calories   Float       @default(0)
+  protein    Float       @default(0)
+  carbs      Float       @default(0)
+  fat        Float       @default(0)
+  fiber      Float       @default(0)
+  foodId     Int
+  food       Food        @relation(fields: [foodId], references: [id], onDelete: Restrict)
+  mealId     Int
+  meal       Meal        @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  foodImages FoodImage[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@map("meal_items")
 }
@@ -210,8 +215,8 @@ model FoodImage {
   mimeType   String?
   fileSize   Int?
   uploadedAt DateTime @default(now())
-  mealId     Int
-  meal       Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  mealItemId Int
+  mealItem   MealItem @relation(fields: [mealItemId], references: [id], onDelete: Cascade)
 
   @@map("food_images")
 }
@@ -223,9 +228,12 @@ model DailyLog {
   totalProtein   Float    @default(0)
   totalCarbs     Float    @default(0)
   totalFat       Float    @default(0)
+  totalFiber     Float    @default(0)
   targetCalories Float    @default(0)
   targetProtein  Float    @default(0)
   targetCarbs    Float    @default(0)
+  targetFat      Float    @default(0)
+  targetFiber    Float    @default(0)
   status         String   @default("BELOW")
   userId         Int
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)

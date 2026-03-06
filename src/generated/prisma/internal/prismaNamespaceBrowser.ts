@@ -111,6 +111,8 @@ export const UserProfileScalarFieldEnum = {
   bmi: 'bmi',
   bmr: 'bmr',
   tdee: 'tdee',
+  gender: 'gender',
+  activityLevel: 'activityLevel',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -123,6 +125,9 @@ export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
   targetCaloriesPerDay: 'targetCaloriesPerDay',
+  targetProteinPerDay: 'targetProteinPerDay',
+  targetCarbsPerDay: 'targetCarbsPerDay',
+  targetFatPerDay: 'targetFatPerDay',
   startDate: 'startDate',
   endDate: 'endDate',
   userId: 'userId',
@@ -150,13 +155,13 @@ export const FoodScalarFieldEnum = {
   id: 'id',
   foodName: 'foodName',
   description: 'description',
-  category: 'category',
   categoryId: 'categoryId',
   foodType: 'foodType',
   imageUrl: 'imageUrl',
   protein: 'protein',
   carbs: 'carbs',
   fat: 'fat',
+  fiber: 'fiber',
   calories: 'calories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -230,7 +235,6 @@ export const MealScalarFieldEnum = {
   id: 'id',
   mealType: 'mealType',
   mealDateTime: 'mealDateTime',
-  totalCalories: 'totalCalories',
   dailyLogId: 'dailyLogId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -246,6 +250,7 @@ export const MealItemScalarFieldEnum = {
   protein: 'protein',
   carbs: 'carbs',
   fat: 'fat',
+  fiber: 'fiber',
   foodId: 'foodId',
   mealId: 'mealId',
   createdAt: 'createdAt',
@@ -262,7 +267,7 @@ export const FoodImageScalarFieldEnum = {
   mimeType: 'mimeType',
   fileSize: 'fileSize',
   uploadedAt: 'uploadedAt',
-  mealId: 'mealId'
+  mealItemId: 'mealItemId'
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
@@ -275,9 +280,12 @@ export const DailyLogScalarFieldEnum = {
   totalProtein: 'totalProtein',
   totalCarbs: 'totalCarbs',
   totalFat: 'totalFat',
+  totalFiber: 'totalFiber',
   targetCalories: 'targetCalories',
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',
+  targetFat: 'targetFat',
+  targetFiber: 'targetFiber',
   status: 'status',
   userId: 'userId',
   createdAt: 'createdAt',
