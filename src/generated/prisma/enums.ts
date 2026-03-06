@@ -9,7 +9,20 @@
 * 🟢 You can import this file directly.
 */
 
+export const MealType = {
+  BREAKFAST: 'BREAKFAST',
+  LUNCH: 'LUNCH',
+  DINNER: 'DINNER',
+  SNACK: 'SNACK'
+} as const
+
+export type MealType = (typeof MealType)[keyof typeof MealType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const StatusType = {
+  BELOW: 'BELOW',
+  EQUAL: 'EQUAL',
+  ABOVE: 'ABOVE'
+} as const
+
+export type StatusType = (typeof StatusType)[keyof typeof StatusType]

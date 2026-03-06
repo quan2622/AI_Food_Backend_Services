@@ -176,9 +176,16 @@ model DishIngredient {
   @@map("dish_ingredients")
 }
 
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+}
+
 model Meal {
   id            Int         @id @default(autoincrement())
-  mealType      String
+  mealType      MealType
   mealDateTime  DateTime
   dailyLogId    Int
   dailyLog      DailyLog    @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
@@ -221,6 +228,12 @@ model FoodImage {
   @@map("food_images")
 }
 
+enum StatusType {
+  BELOW
+  EQUAL
+  ABOVE
+}
+
 model DailyLog {
   id             Int      @id @default(autoincrement())
   logDate        DateTime @db.Date
@@ -234,7 +247,7 @@ model DailyLog {
   targetCarbs    Float    @default(0)
   targetFat      Float    @default(0)
   targetFiber    Float    @default(0)
-  status         String   @default("BELOW")
+  status         StatusType @default(BELOW)
   userId         Int
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   meals          Meal[]

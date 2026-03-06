@@ -41,8 +41,8 @@ export class MealItemService {
     const protein = calcNutrition(food.protein, dto.quantity);
     const carbs = calcNutrition(food.carbs, dto.quantity);
     const fat = calcNutrition(food.fat, dto.quantity);
+    const fiber = calcNutrition(food.fiber, dto.quantity);
 
-    // Transaction: tạo item + cập nhật totalCalories của Meal
     const [mealItem] = await this.prisma.$transaction([
       this.prisma.mealItem.create({
         data: {
@@ -53,6 +53,7 @@ export class MealItemService {
           protein,
           carbs,
           fat,
+          fiber,
         },
         include: {
           food: {
@@ -60,14 +61,10 @@ export class MealItemService {
               id: true,
               foodName: true,
               imageUrl: true,
-              category: true,
+              foodCategory: { select: { name: true } },
             },
           },
         },
-      }),
-      this.prisma.meal.update({
-        where: { id: dto.mealId },
-        data: { totalCalories: { increment: calories } },
       }),
     ]);
 
@@ -77,6 +74,7 @@ export class MealItemService {
       protein,
       carbs,
       fat,
+      fiber,
     });
 
     return mealItem;
@@ -90,7 +88,12 @@ export class MealItemService {
       where: { mealId },
       include: {
         food: {
-          select: { id: true, foodName: true, imageUrl: true, category: true },
+          select: {
+            id: true,
+            foodName: true,
+            imageUrl: true,
+            foodCategory: { select: { name: true } },
+          },
         },
       },
       orderBy: { createdAt: 'asc' },
@@ -109,6 +112,7 @@ export class MealItemService {
             protein: true,
             carbs: true,
             fat: true,
+            fiber: true,
           },
         },
         meal: {
@@ -116,7 +120,6 @@ export class MealItemService {
             id: true,
             mealType: true,
             mealDateTime: true,
-            totalCalories: true,
             dailyLogId: true,
           },
         },
@@ -147,11 +150,13 @@ export class MealItemService {
     const oldProtein = item.protein;
     const oldCarbs = item.carbs;
     const oldFat = item.fat;
+    const oldFiber = item.fiber;
 
     const newCalories = calcNutrition(Number(item.food.calories), newQ);
     const newProtein = calcNutrition(Number(item.food.protein), newQ);
     const newCarbs = calcNutrition(Number(item.food.carbs), newQ);
     const newFat = calcNutrition(Number(item.food.fat), newQ);
+    const newFiber = calcNutrition(Number(item.food.fiber), newQ);
     const calorieDiff = newCalories - oldCalories;
 
     const [updated] = await this.prisma.$transaction([
@@ -163,30 +168,29 @@ export class MealItemService {
           protein: newProtein,
           carbs: newCarbs,
           fat: newFat,
+          fiber: newFiber,
         },
         include: {
           food: { select: { id: true, foodName: true, imageUrl: true } },
         },
       }),
-      this.prisma.meal.update({
-        where: { id: item.mealId },
-        data: { totalCalories: { increment: calorieDiff } },
-      }),
     ]);
 
     // Cập nhật DailyLog: trừ giá trị cũ rồi cộng giá trị mới
-    const mealDate: Date = item.meal.mealDateTime as Date;
+    const mealDate = item.meal.mealDateTime;
     await this.dailyLogService.subtractNutrition(userId, mealDate, {
       calories: Number(oldCalories),
       protein: Number(oldProtein),
       carbs: Number(oldCarbs),
       fat: Number(oldFat),
+      fiber: Number(oldFiber),
     });
     await this.dailyLogService.addNutrition(userId, mealDate, {
       calories: newCalories,
       protein: newProtein,
       carbs: newCarbs,
       fat: newFat,
+      fiber: newFiber,
     });
 
     return updated;
@@ -207,10 +211,6 @@ export class MealItemService {
 
     await this.prisma.$transaction([
       this.prisma.mealItem.delete({ where: { id } }),
-      this.prisma.meal.update({
-        where: { id: item.mealId },
-        data: { totalCalories: { decrement: item.calories } },
-      }),
     ]);
 
     // Cập nhật DailyLog: trừ dinh dưỡng của item vừa xóa
@@ -222,6 +222,7 @@ export class MealItemService {
         protein: Number(item.protein),
         carbs: Number(item.carbs),
         fat: Number(item.fat),
+        fiber: Number(item.fiber),
       },
     );
   }

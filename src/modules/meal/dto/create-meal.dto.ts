@@ -1,21 +1,14 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsDateString,
-  MaxLength,
-  IsInt,
-  Min,
-} from 'class-validator';
+import { IsInt, Min, IsEnum, IsNotEmpty, IsDateString } from 'class-validator';
+import { MealType } from '../../../generated/prisma/enums';
 
 export class CreateMealDto {
   @IsInt()
   @Min(1)
   dailyLogId: number;
 
-  @IsString()
+  @IsEnum(MealType, { message: 'Loại bữa ăn không hợp lệ' })
   @IsNotEmpty({ message: 'Loại bữa ăn không được để trống' })
-  @MaxLength(100)
-  mealType: string;
+  mealType: MealType;
 
   @IsDateString({}, { message: 'mealDateTime không hợp lệ' })
   mealDateTime: string;

@@ -4,6 +4,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { MealType } from '../../generated/prisma/enums';
 import type { CreateMealDto } from './dto/create-meal.dto.js';
 import type { UpdateMealDto } from './dto/update-meal.dto.js';
 
@@ -12,11 +13,27 @@ export class MealService {
   constructor(private readonly prisma: PrismaService) {}
 
   // Lấy mealTypeInfo từ AllCode theo keyMap
-  private async enrichMealType<T extends { mealType: string }>(
+  private async enrichMealType<
+    T extends {
+      mealType: MealType;
+      mealItems?: {
+        calories: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+        fiber: number;
+      }[];
+    },
+  >(
     meals: T[],
   ): Promise<
     (T & {
       mealTypeInfo: { value: string; description: string | null } | null;
+      totalCalories: number;
+      totalProtein: number;
+      totalCarbs: number;
+      totalFat: number;
+      totalFiber: number;
     })[]
   > {
     const keyMaps = [...new Set(meals.map((m) => m.mealType))];
@@ -25,10 +42,47 @@ export class MealService {
       select: { keyMap: true, value: true, description: true },
     });
     const map = new Map(allCodes.map((a) => [a.keyMap, a]));
-    return meals.map((meal) => ({
-      ...meal,
-      mealTypeInfo: map.get(meal.mealType) ?? null,
-    }));
+
+    return meals.map((meal) => {
+      const totals = (meal.mealItems || []).reduce(
+        (acc, item) => ({
+          calories: acc.calories + (Number(item.calories) || 0),
+          protein: acc.protein + (Number(item.protein) || 0),
+          carbs: acc.carbs + (Number(item.carbs) || 0),
+          fat: acc.fat + (Number(item.fat) || 0),
+          fiber: acc.fiber + (Number(item.fiber) || 0),
+        }),
+        { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 },
+      );
+
+      return {
+        ...meal,
+        mealTypeInfo: map.get(meal.mealType) ?? null,
+        totalCalories: parseFloat(totals.calories.toFixed(4)),
+        totalProtein: parseFloat(totals.protein.toFixed(4)),
+        totalCarbs: parseFloat(totals.carbs.toFixed(4)),
+        totalFat: parseFloat(totals.fat.toFixed(4)),
+        totalFiber: parseFloat(totals.fiber.toFixed(4)),
+      };
+    });
+  }
+
+  private get mealInclude() {
+    return {
+      mealItems: {
+        include: {
+          food: {
+            select: {
+              id: true,
+              foodName: true,
+              calories: true,
+              imageUrl: true,
+              foodCategory: { select: { name: true } },
+            },
+          },
+        },
+      },
+    };
   }
 
   async create(userId: number, dto: CreateMealDto) {
@@ -43,13 +97,16 @@ export class MealService {
         'Bạn không có quyền thêm bữa ăn vào daily log này',
       );
 
-    return this.prisma.meal.create({
+    const meal = await this.prisma.meal.create({
       data: {
         dailyLogId: dto.dailyLogId,
         mealType: dto.mealType,
         mealDateTime: new Date(dto.mealDateTime),
       },
+      include: this.mealInclude,
     });
+    const [enriched] = await this.enrichMealType([meal]);
+    return enriched;
   }
 
   async findAllByDailyLogId(dailyLogId: number, userId: number) {
@@ -73,17 +130,9 @@ export class MealService {
                 id: true,
                 foodName: true,
                 imageUrl: true,
-                category: true,
+                foodCategory: { select: { name: true } },
               },
             },
-          },
-        },
-        foodImages: {
-          select: {
-            id: true,
-            imageUrl: true,
-            fileName: true,
-            uploadedAt: true,
           },
         },
       },
@@ -109,17 +158,9 @@ export class MealService {
                 id: true,
                 foodName: true,
                 imageUrl: true,
-                category: true,
+                foodCategory: { select: { name: true } },
               },
             },
-          },
-        },
-        foodImages: {
-          select: {
-            id: true,
-            imageUrl: true,
-            fileName: true,
-            uploadedAt: true,
           },
         },
       },
@@ -134,20 +175,7 @@ export class MealService {
         dailyLog: {
           select: { id: true, logDate: true, userId: true },
         },
-        mealItems: {
-          include: {
-            food: {
-              select: {
-                id: true,
-                foodName: true,
-                imageUrl: true,
-                category: true,
-                calories: true,
-              },
-            },
-          },
-        },
-        foodImages: true,
+        ...this.mealInclude,
       },
     });
     if (!meal) throw new NotFoundException(`Meal #${id} không tồn tại`);
@@ -164,7 +192,7 @@ export class MealService {
     if (meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền chỉnh sửa bữa ăn này');
 
-    return this.prisma.meal.update({
+    const updated = await this.prisma.meal.update({
       where: { id },
       data: {
         ...(dto.mealType != null && { mealType: dto.mealType }),
@@ -172,7 +200,10 @@ export class MealService {
           mealDateTime: new Date(dto.mealDateTime),
         }),
       },
+      include: this.mealInclude,
     });
+    const [enriched] = await this.enrichMealType([updated]);
+    return enriched;
   }
 
   async remove(id: number, userId: number): Promise<void> {

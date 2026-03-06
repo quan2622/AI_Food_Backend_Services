@@ -38,7 +38,7 @@ export type MealSumAggregateOutputType = {
 
 export type MealMinAggregateOutputType = {
   id: number | null
-  mealType: string | null
+  mealType: $Enums.MealType | null
   mealDateTime: Date | null
   dailyLogId: number | null
   createdAt: Date | null
@@ -47,7 +47,7 @@ export type MealMinAggregateOutputType = {
 
 export type MealMaxAggregateOutputType = {
   id: number | null
-  mealType: string | null
+  mealType: $Enums.MealType | null
   mealDateTime: Date | null
   dailyLogId: number | null
   createdAt: Date | null
@@ -191,7 +191,7 @@ export type MealGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type MealGroupByOutputType = {
   id: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date
   dailyLogId: number
   createdAt: Date
@@ -223,7 +223,7 @@ export type MealWhereInput = {
   OR?: Prisma.MealWhereInput[]
   NOT?: Prisma.MealWhereInput | Prisma.MealWhereInput[]
   id?: Prisma.IntFilter<"Meal"> | number
-  mealType?: Prisma.StringFilter<"Meal"> | string
+  mealType?: Prisma.EnumMealTypeFilter<"Meal"> | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFilter<"Meal"> | Date | string
   dailyLogId?: Prisma.IntFilter<"Meal"> | number
   createdAt?: Prisma.DateTimeFilter<"Meal"> | Date | string
@@ -248,7 +248,7 @@ export type MealWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MealWhereInput | Prisma.MealWhereInput[]
   OR?: Prisma.MealWhereInput[]
   NOT?: Prisma.MealWhereInput | Prisma.MealWhereInput[]
-  mealType?: Prisma.StringFilter<"Meal"> | string
+  mealType?: Prisma.EnumMealTypeFilter<"Meal"> | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFilter<"Meal"> | Date | string
   dailyLogId?: Prisma.IntFilter<"Meal"> | number
   createdAt?: Prisma.DateTimeFilter<"Meal"> | Date | string
@@ -276,7 +276,7 @@ export type MealScalarWhereWithAggregatesInput = {
   OR?: Prisma.MealScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MealScalarWhereWithAggregatesInput | Prisma.MealScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Meal"> | number
-  mealType?: Prisma.StringWithAggregatesFilter<"Meal"> | string
+  mealType?: Prisma.EnumMealTypeWithAggregatesFilter<"Meal"> | $Enums.MealType
   mealDateTime?: Prisma.DateTimeWithAggregatesFilter<"Meal"> | Date | string
   dailyLogId?: Prisma.IntWithAggregatesFilter<"Meal"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Meal"> | Date | string
@@ -284,7 +284,7 @@ export type MealScalarWhereWithAggregatesInput = {
 }
 
 export type MealCreateInput = {
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -294,7 +294,7 @@ export type MealCreateInput = {
 
 export type MealUncheckedCreateInput = {
   id?: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   dailyLogId: number
   createdAt?: Date | string
@@ -303,7 +303,7 @@ export type MealUncheckedCreateInput = {
 }
 
 export type MealUpdateInput = {
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,7 +313,7 @@ export type MealUpdateInput = {
 
 export type MealUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,7 +323,7 @@ export type MealUncheckedUpdateInput = {
 
 export type MealCreateManyInput = {
   id?: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   dailyLogId: number
   createdAt?: Date | string
@@ -331,7 +331,7 @@ export type MealCreateManyInput = {
 }
 
 export type MealUpdateManyMutationInput = {
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,7 +339,7 @@ export type MealUpdateManyMutationInput = {
 
 export type MealUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -396,6 +396,10 @@ export type MealListRelationFilter = {
 
 export type MealOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type EnumMealTypeFieldUpdateOperationsInput = {
+  set?: $Enums.MealType
 }
 
 export type MealCreateNestedOneWithoutMealItemsInput = {
@@ -455,7 +459,7 @@ export type MealUncheckedUpdateManyWithoutDailyLogNestedInput = {
 }
 
 export type MealCreateWithoutMealItemsInput = {
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -464,7 +468,7 @@ export type MealCreateWithoutMealItemsInput = {
 
 export type MealUncheckedCreateWithoutMealItemsInput = {
   id?: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   dailyLogId: number
   createdAt?: Date | string
@@ -488,7 +492,7 @@ export type MealUpdateToOneWithWhereWithoutMealItemsInput = {
 }
 
 export type MealUpdateWithoutMealItemsInput = {
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -497,7 +501,7 @@ export type MealUpdateWithoutMealItemsInput = {
 
 export type MealUncheckedUpdateWithoutMealItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -505,7 +509,7 @@ export type MealUncheckedUpdateWithoutMealItemsInput = {
 }
 
 export type MealCreateWithoutDailyLogInput = {
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -514,7 +518,7 @@ export type MealCreateWithoutDailyLogInput = {
 
 export type MealUncheckedCreateWithoutDailyLogInput = {
   id?: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -552,7 +556,7 @@ export type MealScalarWhereInput = {
   OR?: Prisma.MealScalarWhereInput[]
   NOT?: Prisma.MealScalarWhereInput | Prisma.MealScalarWhereInput[]
   id?: Prisma.IntFilter<"Meal"> | number
-  mealType?: Prisma.StringFilter<"Meal"> | string
+  mealType?: Prisma.EnumMealTypeFilter<"Meal"> | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFilter<"Meal"> | Date | string
   dailyLogId?: Prisma.IntFilter<"Meal"> | number
   createdAt?: Prisma.DateTimeFilter<"Meal"> | Date | string
@@ -561,14 +565,14 @@ export type MealScalarWhereInput = {
 
 export type MealCreateManyDailyLogInput = {
   id?: number
-  mealType: string
+  mealType: $Enums.MealType
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type MealUpdateWithoutDailyLogInput = {
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -577,7 +581,7 @@ export type MealUpdateWithoutDailyLogInput = {
 
 export type MealUncheckedUpdateWithoutDailyLogInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -586,7 +590,7 @@ export type MealUncheckedUpdateWithoutDailyLogInput = {
 
 export type MealUncheckedUpdateManyWithoutDailyLogInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
+  mealType?: Prisma.EnumMealTypeFieldUpdateOperationsInput | $Enums.MealType
   mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -685,7 +689,7 @@ export type $MealPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    mealType: string
+    mealType: $Enums.MealType
     mealDateTime: Date
     dailyLogId: number
     createdAt: Date
@@ -1116,7 +1120,7 @@ export interface Prisma__MealClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface MealFieldRefs {
   readonly id: Prisma.FieldRef<"Meal", 'Int'>
-  readonly mealType: Prisma.FieldRef<"Meal", 'String'>
+  readonly mealType: Prisma.FieldRef<"Meal", 'MealType'>
   readonly mealDateTime: Prisma.FieldRef<"Meal", 'DateTime'>
   readonly dailyLogId: Prisma.FieldRef<"Meal", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Meal", 'DateTime'>

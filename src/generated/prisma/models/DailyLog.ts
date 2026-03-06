@@ -32,9 +32,12 @@ export type DailyLogAvgAggregateOutputType = {
   totalProtein: number | null
   totalCarbs: number | null
   totalFat: number | null
+  totalFiber: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
+  targetFat: number | null
+  targetFiber: number | null
   userId: number | null
 }
 
@@ -44,9 +47,12 @@ export type DailyLogSumAggregateOutputType = {
   totalProtein: number | null
   totalCarbs: number | null
   totalFat: number | null
+  totalFiber: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
+  targetFat: number | null
+  targetFiber: number | null
   userId: number | null
 }
 
@@ -57,10 +63,13 @@ export type DailyLogMinAggregateOutputType = {
   totalProtein: number | null
   totalCarbs: number | null
   totalFat: number | null
+  totalFiber: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
-  status: string | null
+  targetFat: number | null
+  targetFiber: number | null
+  status: $Enums.StatusType | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -73,10 +82,13 @@ export type DailyLogMaxAggregateOutputType = {
   totalProtein: number | null
   totalCarbs: number | null
   totalFat: number | null
+  totalFiber: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
-  status: string | null
+  targetFat: number | null
+  targetFiber: number | null
+  status: $Enums.StatusType | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -89,9 +101,12 @@ export type DailyLogCountAggregateOutputType = {
   totalProtein: number
   totalCarbs: number
   totalFat: number
+  totalFiber: number
   targetCalories: number
   targetProtein: number
   targetCarbs: number
+  targetFat: number
+  targetFiber: number
   status: number
   userId: number
   createdAt: number
@@ -106,9 +121,12 @@ export type DailyLogAvgAggregateInputType = {
   totalProtein?: true
   totalCarbs?: true
   totalFat?: true
+  totalFiber?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
+  targetFat?: true
+  targetFiber?: true
   userId?: true
 }
 
@@ -118,9 +136,12 @@ export type DailyLogSumAggregateInputType = {
   totalProtein?: true
   totalCarbs?: true
   totalFat?: true
+  totalFiber?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
+  targetFat?: true
+  targetFiber?: true
   userId?: true
 }
 
@@ -131,9 +152,12 @@ export type DailyLogMinAggregateInputType = {
   totalProtein?: true
   totalCarbs?: true
   totalFat?: true
+  totalFiber?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
+  targetFat?: true
+  targetFiber?: true
   status?: true
   userId?: true
   createdAt?: true
@@ -147,9 +171,12 @@ export type DailyLogMaxAggregateInputType = {
   totalProtein?: true
   totalCarbs?: true
   totalFat?: true
+  totalFiber?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
+  targetFat?: true
+  targetFiber?: true
   status?: true
   userId?: true
   createdAt?: true
@@ -163,9 +190,12 @@ export type DailyLogCountAggregateInputType = {
   totalProtein?: true
   totalCarbs?: true
   totalFat?: true
+  totalFiber?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
+  targetFat?: true
+  targetFiber?: true
   status?: true
   userId?: true
   createdAt?: true
@@ -266,10 +296,13 @@ export type DailyLogGroupByOutputType = {
   totalProtein: number
   totalCarbs: number
   totalFat: number
+  totalFiber: number
   targetCalories: number
   targetProtein: number
   targetCarbs: number
-  status: string
+  targetFat: number
+  targetFiber: number
+  status: $Enums.StatusType
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -305,10 +338,13 @@ export type DailyLogWhereInput = {
   totalProtein?: Prisma.FloatFilter<"DailyLog"> | number
   totalCarbs?: Prisma.FloatFilter<"DailyLog"> | number
   totalFat?: Prisma.FloatFilter<"DailyLog"> | number
+  totalFiber?: Prisma.FloatFilter<"DailyLog"> | number
   targetCalories?: Prisma.FloatFilter<"DailyLog"> | number
   targetProtein?: Prisma.FloatFilter<"DailyLog"> | number
   targetCarbs?: Prisma.FloatFilter<"DailyLog"> | number
-  status?: Prisma.StringFilter<"DailyLog"> | string
+  targetFat?: Prisma.FloatFilter<"DailyLog"> | number
+  targetFiber?: Prisma.FloatFilter<"DailyLog"> | number
+  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -323,9 +359,12 @@ export type DailyLogOrderByWithRelationInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -345,10 +384,13 @@ export type DailyLogWhereUniqueInput = Prisma.AtLeast<{
   totalProtein?: Prisma.FloatFilter<"DailyLog"> | number
   totalCarbs?: Prisma.FloatFilter<"DailyLog"> | number
   totalFat?: Prisma.FloatFilter<"DailyLog"> | number
+  totalFiber?: Prisma.FloatFilter<"DailyLog"> | number
   targetCalories?: Prisma.FloatFilter<"DailyLog"> | number
   targetProtein?: Prisma.FloatFilter<"DailyLog"> | number
   targetCarbs?: Prisma.FloatFilter<"DailyLog"> | number
-  status?: Prisma.StringFilter<"DailyLog"> | string
+  targetFat?: Prisma.FloatFilter<"DailyLog"> | number
+  targetFiber?: Prisma.FloatFilter<"DailyLog"> | number
+  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -363,9 +405,12 @@ export type DailyLogOrderByWithAggregationInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -387,10 +432,13 @@ export type DailyLogScalarWhereWithAggregatesInput = {
   totalProtein?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
   totalCarbs?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
   totalFat?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
+  totalFiber?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
   targetCalories?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
   targetProtein?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
   targetCarbs?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
-  status?: Prisma.StringWithAggregatesFilter<"DailyLog"> | string
+  targetFat?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
+  targetFiber?: Prisma.FloatWithAggregatesFilter<"DailyLog"> | number
+  status?: Prisma.EnumStatusTypeWithAggregatesFilter<"DailyLog"> | $Enums.StatusType
   userId?: Prisma.IntWithAggregatesFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLog"> | Date | string
@@ -402,10 +450,13 @@ export type DailyLogCreateInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
@@ -419,10 +470,13 @@ export type DailyLogUncheckedCreateInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -435,10 +489,13 @@ export type DailyLogUpdateInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
@@ -452,10 +509,13 @@ export type DailyLogUncheckedUpdateInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -469,10 +529,13 @@ export type DailyLogCreateManyInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -484,10 +547,13 @@ export type DailyLogUpdateManyMutationInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -499,10 +565,13 @@ export type DailyLogUncheckedUpdateManyInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -535,9 +604,12 @@ export type DailyLogCountOrderByAggregateInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -550,9 +622,12 @@ export type DailyLogAvgOrderByAggregateInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -563,9 +638,12 @@ export type DailyLogMaxOrderByAggregateInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -579,9 +657,12 @@ export type DailyLogMinOrderByAggregateInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -594,9 +675,12 @@ export type DailyLogSumOrderByAggregateInput = {
   totalProtein?: Prisma.SortOrder
   totalCarbs?: Prisma.SortOrder
   totalFat?: Prisma.SortOrder
+  totalFiber?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -656,16 +740,23 @@ export type DailyLogUpdateOneRequiredWithoutMealsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DailyLogUpdateToOneWithWhereWithoutMealsInput, Prisma.DailyLogUpdateWithoutMealsInput>, Prisma.DailyLogUncheckedUpdateWithoutMealsInput>
 }
 
+export type EnumStatusTypeFieldUpdateOperationsInput = {
+  set?: $Enums.StatusType
+}
+
 export type DailyLogCreateWithoutUserInput = {
   logDate: Date | string
   totalCalories?: number
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   createdAt?: Date | string
   updatedAt?: Date | string
   meals?: Prisma.MealCreateNestedManyWithoutDailyLogInput
@@ -678,10 +769,13 @@ export type DailyLogUncheckedCreateWithoutUserInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   createdAt?: Date | string
   updatedAt?: Date | string
   meals?: Prisma.MealUncheckedCreateNestedManyWithoutDailyLogInput
@@ -723,10 +817,13 @@ export type DailyLogScalarWhereInput = {
   totalProtein?: Prisma.FloatFilter<"DailyLog"> | number
   totalCarbs?: Prisma.FloatFilter<"DailyLog"> | number
   totalFat?: Prisma.FloatFilter<"DailyLog"> | number
+  totalFiber?: Prisma.FloatFilter<"DailyLog"> | number
   targetCalories?: Prisma.FloatFilter<"DailyLog"> | number
   targetProtein?: Prisma.FloatFilter<"DailyLog"> | number
   targetCarbs?: Prisma.FloatFilter<"DailyLog"> | number
-  status?: Prisma.StringFilter<"DailyLog"> | string
+  targetFat?: Prisma.FloatFilter<"DailyLog"> | number
+  targetFiber?: Prisma.FloatFilter<"DailyLog"> | number
+  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -738,10 +835,13 @@ export type DailyLogCreateWithoutMealsInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
@@ -754,10 +854,13 @@ export type DailyLogUncheckedCreateWithoutMealsInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -785,10 +888,13 @@ export type DailyLogUpdateWithoutMealsInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
@@ -801,10 +907,13 @@ export type DailyLogUncheckedUpdateWithoutMealsInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -817,10 +926,13 @@ export type DailyLogCreateManyUserInput = {
   totalProtein?: number
   totalCarbs?: number
   totalFat?: number
+  totalFiber?: number
   targetCalories?: number
   targetProtein?: number
   targetCarbs?: number
-  status?: string
+  targetFat?: number
+  targetFiber?: number
+  status?: $Enums.StatusType
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -831,10 +943,13 @@ export type DailyLogUpdateWithoutUserInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meals?: Prisma.MealUpdateManyWithoutDailyLogNestedInput
@@ -847,10 +962,13 @@ export type DailyLogUncheckedUpdateWithoutUserInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meals?: Prisma.MealUncheckedUpdateManyWithoutDailyLogNestedInput
@@ -863,10 +981,13 @@ export type DailyLogUncheckedUpdateManyWithoutUserInput = {
   totalProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   totalCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   totalFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -909,9 +1030,12 @@ export type DailyLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   totalProtein?: boolean
   totalCarbs?: boolean
   totalFat?: boolean
+  totalFiber?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
+  targetFat?: boolean
+  targetFiber?: boolean
   status?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -928,9 +1052,12 @@ export type DailyLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   totalProtein?: boolean
   totalCarbs?: boolean
   totalFat?: boolean
+  totalFiber?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
+  targetFat?: boolean
+  targetFiber?: boolean
   status?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -945,9 +1072,12 @@ export type DailyLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   totalProtein?: boolean
   totalCarbs?: boolean
   totalFat?: boolean
+  totalFiber?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
+  targetFat?: boolean
+  targetFiber?: boolean
   status?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -962,16 +1092,19 @@ export type DailyLogSelectScalar = {
   totalProtein?: boolean
   totalCarbs?: boolean
   totalFat?: boolean
+  totalFiber?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
+  targetFat?: boolean
+  targetFiber?: boolean
   status?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DailyLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "logDate" | "totalCalories" | "totalProtein" | "totalCarbs" | "totalFat" | "targetCalories" | "targetProtein" | "targetCarbs" | "status" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyLog"]>
+export type DailyLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "logDate" | "totalCalories" | "totalProtein" | "totalCarbs" | "totalFat" | "totalFiber" | "targetCalories" | "targetProtein" | "targetCarbs" | "targetFat" | "targetFiber" | "status" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyLog"]>
 export type DailyLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   meals?: boolean | Prisma.DailyLog$mealsArgs<ExtArgs>
@@ -997,10 +1130,13 @@ export type $DailyLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     totalProtein: number
     totalCarbs: number
     totalFat: number
+    totalFiber: number
     targetCalories: number
     targetProtein: number
     targetCarbs: number
-    status: string
+    targetFat: number
+    targetFiber: number
+    status: $Enums.StatusType
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -1435,10 +1571,13 @@ export interface DailyLogFieldRefs {
   readonly totalProtein: Prisma.FieldRef<"DailyLog", 'Float'>
   readonly totalCarbs: Prisma.FieldRef<"DailyLog", 'Float'>
   readonly totalFat: Prisma.FieldRef<"DailyLog", 'Float'>
+  readonly totalFiber: Prisma.FieldRef<"DailyLog", 'Float'>
   readonly targetCalories: Prisma.FieldRef<"DailyLog", 'Float'>
   readonly targetProtein: Prisma.FieldRef<"DailyLog", 'Float'>
   readonly targetCarbs: Prisma.FieldRef<"DailyLog", 'Float'>
-  readonly status: Prisma.FieldRef<"DailyLog", 'String'>
+  readonly targetFat: Prisma.FieldRef<"DailyLog", 'Float'>
+  readonly targetFiber: Prisma.FieldRef<"DailyLog", 'Float'>
+  readonly status: Prisma.FieldRef<"DailyLog", 'StatusType'>
   readonly userId: Prisma.FieldRef<"DailyLog", 'Int'>
   readonly createdAt: Prisma.FieldRef<"DailyLog", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DailyLog", 'DateTime'>

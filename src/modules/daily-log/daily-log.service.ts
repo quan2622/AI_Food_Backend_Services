@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { StatusType } from '../../generated/prisma/enums';
 
 // Tolerance (calo) để coi là "MET" mục tiêu
 const MET_TOLERANCE = 50;
@@ -10,6 +11,7 @@ export interface NutritionDelta {
   protein: number;
   carbs: number;
   fat: number;
+  fiber: number;
 }
 
 @Injectable()
@@ -19,11 +21,14 @@ export class DailyLogService {
   // ─── Private helpers ─────────────────────────────────────────────────────────
 
   /** Tính status dựa trên totalCalories so với targetCalories (±50 calo) */
-  private calcStatus(totalCalories: number, targetCalories: number): string {
-    if (targetCalories <= 0) return 'BELOW';
+  private calcStatus(
+    totalCalories: number,
+    targetCalories: number,
+  ): StatusType {
+    if (targetCalories <= 0) return StatusType.BELOW;
     const diff = totalCalories - targetCalories;
-    if (Math.abs(diff) <= MET_TOLERANCE) return 'MET';
-    return diff > 0 ? 'ABOVE' : 'BELOW';
+    if (Math.abs(diff) <= MET_TOLERANCE) return StatusType.EQUAL;
+    return diff > 0 ? StatusType.ABOVE : StatusType.BELOW;
   }
 
   /** Chuẩn hoá Date về đầu ngày UTC (chỉ giữ phần date) */
@@ -44,8 +49,9 @@ export class DailyLogService {
     targetCalories: number;
     targetProtein: number;
     targetCarbs: number;
+    targetFat: number;
+    targetFiber: number;
   }> {
-    // NutritionGoal hiện tại chỉ lưu targetCaloriesPerDay nên protein/carbs = 0
     const goal = await this.prisma.nutritionGoal.findFirst({
       where: {
         userId,
@@ -57,8 +63,10 @@ export class DailyLogService {
 
     return {
       targetCalories: goal?.targetCaloriesPerDay ?? 0,
-      targetProtein: 0,
-      targetCarbs: 0,
+      targetProtein: goal?.targetProteinPerDay ?? 0,
+      targetCarbs: goal?.targetCarbsPerDay ?? 0,
+      targetFat: goal?.targetFatPerDay ?? 0,
+      targetFiber: 0, // Fiber goal chưa có trong NutritionGoal → mặc định 0
     };
   }
 
@@ -85,7 +93,9 @@ export class DailyLogService {
         targetCalories: targets.targetCalories,
         targetProtein: targets.targetProtein,
         targetCarbs: targets.targetCarbs,
-        status: 'BELOW',
+        targetFat: targets.targetFat,
+        targetFiber: targets.targetFiber,
+        status: StatusType.BELOW,
       },
     });
   }
@@ -109,9 +119,12 @@ export class DailyLogService {
         totalProtein: delta.protein,
         totalCarbs: delta.carbs,
         totalFat: delta.fat,
+        totalFiber: delta.fiber,
         targetCalories: targets.targetCalories,
         targetProtein: targets.targetProtein,
         targetCarbs: targets.targetCarbs,
+        targetFat: targets.targetFat,
+        targetFiber: targets.targetFiber,
         status: this.calcStatus(delta.calories, targets.targetCalories),
       },
       update: {
@@ -119,6 +132,7 @@ export class DailyLogService {
         totalProtein: { increment: delta.protein },
         totalCarbs: { increment: delta.carbs },
         totalFat: { increment: delta.fat },
+        totalFiber: { increment: delta.fiber },
       },
     });
 
@@ -155,6 +169,7 @@ export class DailyLogService {
         totalProtein: { decrement: delta.protein },
         totalCarbs: { decrement: delta.carbs },
         totalFat: { decrement: delta.fat },
+        totalFiber: { decrement: delta.fiber },
       },
     });
 
