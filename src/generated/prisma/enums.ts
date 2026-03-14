@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const GoalType = {
+  LOSE_WEIGHT: 'LOSE_WEIGHT',
+  MAINTAIN_WEIGHT: 'MAINTAIN_WEIGHT',
+  GAIN_WEIGHT: 'GAIN_WEIGHT'
+} as const
+
+export type GoalType = (typeof GoalType)[keyof typeof GoalType]
+
+
 export const MealType = {
   BREAKFAST: 'BREAKFAST',
   LUNCH: 'LUNCH',

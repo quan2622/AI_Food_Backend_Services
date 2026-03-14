@@ -21,15 +21,15 @@ export class CreateFoodDto {
   @MaxLength(1000)
   description?: string;
 
-  @IsString()
-  @IsNotEmpty({ message: 'Danh mục không được để trống' })
-  @MaxLength(100)
-  category: string;
-
   @IsOptional()
   @IsString()
   @MaxLength(500)
   imageUrl?: string;
+
+  @IsOptional()
+  @IsNumber({}, { message: 'Fiber không hợp lệ' })
+  @Min(0)
+  fiber?: number;
 
   @IsOptional()
   @IsNumber({}, { message: 'Protein không hợp lệ' })

@@ -63,9 +63,9 @@ export class FoodController {
 
   // ──── All authenticated users ────────────────────────────────────────────
   @Get()
-  findAll(@Query('category') category?: string) {
-    if (category) {
-      return this.foodService.findByCategory(category);
+  findAll(@Query('categoryId', ParseIntPipe) categoryId?: number) {
+    if (categoryId != null) {
+      return this.foodService.findByCategoryId(categoryId);
     }
     return this.foodService.findAll();
   }

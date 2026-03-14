@@ -32,6 +32,7 @@ export type FoodAvgAggregateOutputType = {
   protein: number | null
   carbs: number | null
   fat: number | null
+  fiber: number | null
   calories: number | null
 }
 
@@ -41,6 +42,7 @@ export type FoodSumAggregateOutputType = {
   protein: number | null
   carbs: number | null
   fat: number | null
+  fiber: number | null
   calories: number | null
 }
 
@@ -48,13 +50,13 @@ export type FoodMinAggregateOutputType = {
   id: number | null
   foodName: string | null
   description: string | null
-  category: string | null
   categoryId: number | null
   foodType: string | null
   imageUrl: string | null
   protein: number | null
   carbs: number | null
   fat: number | null
+  fiber: number | null
   calories: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,13 +66,13 @@ export type FoodMaxAggregateOutputType = {
   id: number | null
   foodName: string | null
   description: string | null
-  category: string | null
   categoryId: number | null
   foodType: string | null
   imageUrl: string | null
   protein: number | null
   carbs: number | null
   fat: number | null
+  fiber: number | null
   calories: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -80,13 +82,13 @@ export type FoodCountAggregateOutputType = {
   id: number
   foodName: number
   description: number
-  category: number
   categoryId: number
   foodType: number
   imageUrl: number
   protein: number
   carbs: number
   fat: number
+  fiber: number
   calories: number
   createdAt: number
   updatedAt: number
@@ -100,6 +102,7 @@ export type FoodAvgAggregateInputType = {
   protein?: true
   carbs?: true
   fat?: true
+  fiber?: true
   calories?: true
 }
 
@@ -109,6 +112,7 @@ export type FoodSumAggregateInputType = {
   protein?: true
   carbs?: true
   fat?: true
+  fiber?: true
   calories?: true
 }
 
@@ -116,13 +120,13 @@ export type FoodMinAggregateInputType = {
   id?: true
   foodName?: true
   description?: true
-  category?: true
   categoryId?: true
   foodType?: true
   imageUrl?: true
   protein?: true
   carbs?: true
   fat?: true
+  fiber?: true
   calories?: true
   createdAt?: true
   updatedAt?: true
@@ -132,13 +136,13 @@ export type FoodMaxAggregateInputType = {
   id?: true
   foodName?: true
   description?: true
-  category?: true
   categoryId?: true
   foodType?: true
   imageUrl?: true
   protein?: true
   carbs?: true
   fat?: true
+  fiber?: true
   calories?: true
   createdAt?: true
   updatedAt?: true
@@ -148,13 +152,13 @@ export type FoodCountAggregateInputType = {
   id?: true
   foodName?: true
   description?: true
-  category?: true
   categoryId?: true
   foodType?: true
   imageUrl?: true
   protein?: true
   carbs?: true
   fat?: true
+  fiber?: true
   calories?: true
   createdAt?: true
   updatedAt?: true
@@ -251,13 +255,13 @@ export type FoodGroupByOutputType = {
   id: number
   foodName: string
   description: string | null
-  category: string
   categoryId: number | null
   foodType: string
   imageUrl: string | null
   protein: number
   carbs: number
   fat: number
+  fiber: number
   calories: number
   createdAt: Date
   updatedAt: Date
@@ -290,13 +294,13 @@ export type FoodWhereInput = {
   id?: Prisma.IntFilter<"Food"> | number
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
-  category?: Prisma.StringFilter<"Food"> | string
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
   foodType?: Prisma.StringFilter<"Food"> | string
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
   fat?: Prisma.FloatFilter<"Food"> | number
+  fiber?: Prisma.FloatFilter<"Food"> | number
   calories?: Prisma.FloatFilter<"Food"> | number
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
@@ -311,13 +315,13 @@ export type FoodOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   foodName?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  category?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   foodType?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -335,13 +339,13 @@ export type FoodWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FoodWhereInput | Prisma.FoodWhereInput[]
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
-  category?: Prisma.StringFilter<"Food"> | string
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
   foodType?: Prisma.StringFilter<"Food"> | string
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
   fat?: Prisma.FloatFilter<"Food"> | number
+  fiber?: Prisma.FloatFilter<"Food"> | number
   calories?: Prisma.FloatFilter<"Food"> | number
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
@@ -356,13 +360,13 @@ export type FoodOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   foodName?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  category?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   foodType?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -380,13 +384,13 @@ export type FoodScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Food"> | number
   foodName?: Prisma.StringWithAggregatesFilter<"Food"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
-  category?: Prisma.StringWithAggregatesFilter<"Food"> | string
   categoryId?: Prisma.IntNullableWithAggregatesFilter<"Food"> | number | null
   foodType?: Prisma.StringWithAggregatesFilter<"Food"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
   protein?: Prisma.FloatWithAggregatesFilter<"Food"> | number
   carbs?: Prisma.FloatWithAggregatesFilter<"Food"> | number
   fat?: Prisma.FloatWithAggregatesFilter<"Food"> | number
+  fiber?: Prisma.FloatWithAggregatesFilter<"Food"> | number
   calories?: Prisma.FloatWithAggregatesFilter<"Food"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Food"> | Date | string
@@ -395,12 +399,12 @@ export type FoodScalarWhereWithAggregatesInput = {
 export type FoodCreateInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -415,13 +419,13 @@ export type FoodUncheckedCreateInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -434,12 +438,12 @@ export type FoodUncheckedCreateInput = {
 export type FoodUpdateInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -454,13 +458,13 @@ export type FoodUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -474,13 +478,13 @@ export type FoodCreateManyInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -489,12 +493,12 @@ export type FoodCreateManyInput = {
 export type FoodUpdateManyMutationInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -504,13 +508,13 @@ export type FoodUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -520,13 +524,13 @@ export type FoodCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   foodName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   foodType?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -538,6 +542,7 @@ export type FoodAvgOrderByAggregateInput = {
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
 }
 
@@ -545,13 +550,13 @@ export type FoodMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   foodName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   foodType?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -561,13 +566,13 @@ export type FoodMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   foodName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   foodType?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -579,6 +584,7 @@ export type FoodSumOrderByAggregateInput = {
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
   fat?: Prisma.SortOrder
+  fiber?: Prisma.SortOrder
   calories?: Prisma.SortOrder
 }
 
@@ -706,12 +712,12 @@ export type FoodUpdateOneRequiredWithoutMealItemsNestedInput = {
 export type FoodCreateWithoutFoodCategoryInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -725,12 +731,12 @@ export type FoodUncheckedCreateWithoutFoodCategoryInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -773,13 +779,13 @@ export type FoodScalarWhereInput = {
   id?: Prisma.IntFilter<"Food"> | number
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
-  category?: Prisma.StringFilter<"Food"> | string
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
   foodType?: Prisma.StringFilter<"Food"> | string
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
   fat?: Prisma.FloatFilter<"Food"> | number
+  fiber?: Prisma.FloatFilter<"Food"> | number
   calories?: Prisma.FloatFilter<"Food"> | number
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
@@ -788,12 +794,12 @@ export type FoodScalarWhereInput = {
 export type FoodCreateWithoutNutritionsInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -807,13 +813,13 @@ export type FoodUncheckedCreateWithoutNutritionsInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -841,12 +847,12 @@ export type FoodUpdateToOneWithWhereWithoutNutritionsInput = {
 export type FoodUpdateWithoutNutritionsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -860,13 +866,13 @@ export type FoodUncheckedUpdateWithoutNutritionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -878,12 +884,12 @@ export type FoodUncheckedUpdateWithoutNutritionsInput = {
 export type FoodCreateWithoutDishIngredientsInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -897,13 +903,13 @@ export type FoodUncheckedCreateWithoutDishIngredientsInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -920,12 +926,12 @@ export type FoodCreateOrConnectWithoutDishIngredientsInput = {
 export type FoodCreateWithoutUsedAsIngredientInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -939,13 +945,13 @@ export type FoodUncheckedCreateWithoutUsedAsIngredientInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -973,12 +979,12 @@ export type FoodUpdateToOneWithWhereWithoutDishIngredientsInput = {
 export type FoodUpdateWithoutDishIngredientsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -992,13 +998,13 @@ export type FoodUncheckedUpdateWithoutDishIngredientsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1021,12 +1027,12 @@ export type FoodUpdateToOneWithWhereWithoutUsedAsIngredientInput = {
 export type FoodUpdateWithoutUsedAsIngredientInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1040,13 +1046,13 @@ export type FoodUncheckedUpdateWithoutUsedAsIngredientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1058,12 +1064,12 @@ export type FoodUncheckedUpdateWithoutUsedAsIngredientInput = {
 export type FoodCreateWithoutMealItemsInput = {
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1077,13 +1083,13 @@ export type FoodUncheckedCreateWithoutMealItemsInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   categoryId?: number | null
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1111,12 +1117,12 @@ export type FoodUpdateToOneWithWhereWithoutMealItemsInput = {
 export type FoodUpdateWithoutMealItemsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1130,13 +1136,13 @@ export type FoodUncheckedUpdateWithoutMealItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1149,12 +1155,12 @@ export type FoodCreateManyFoodCategoryInput = {
   id?: number
   foodName: string
   description?: string | null
-  category: string
   foodType?: string
   imageUrl?: string | null
   protein?: number
   carbs?: number
   fat?: number
+  fiber?: number
   calories?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1163,12 +1169,12 @@ export type FoodCreateManyFoodCategoryInput = {
 export type FoodUpdateWithoutFoodCategoryInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1182,12 +1188,12 @@ export type FoodUncheckedUpdateWithoutFoodCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1201,12 +1207,12 @@ export type FoodUncheckedUpdateManyWithoutFoodCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.StringFieldUpdateOperationsInput | string
   foodType?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
   fat?: Prisma.FloatFieldUpdateOperationsInput | number
+  fiber?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1274,13 +1280,13 @@ export type FoodSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   foodName?: boolean
   description?: boolean
-  category?: boolean
   categoryId?: boolean
   foodType?: boolean
   imageUrl?: boolean
   protein?: boolean
   carbs?: boolean
   fat?: boolean
+  fiber?: boolean
   calories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1296,13 +1302,13 @@ export type FoodSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   foodName?: boolean
   description?: boolean
-  category?: boolean
   categoryId?: boolean
   foodType?: boolean
   imageUrl?: boolean
   protein?: boolean
   carbs?: boolean
   fat?: boolean
+  fiber?: boolean
   calories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1313,13 +1319,13 @@ export type FoodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   foodName?: boolean
   description?: boolean
-  category?: boolean
   categoryId?: boolean
   foodType?: boolean
   imageUrl?: boolean
   protein?: boolean
   carbs?: boolean
   fat?: boolean
+  fiber?: boolean
   calories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1330,19 +1336,19 @@ export type FoodSelectScalar = {
   id?: boolean
   foodName?: boolean
   description?: boolean
-  category?: boolean
   categoryId?: boolean
   foodType?: boolean
   imageUrl?: boolean
   protein?: boolean
   carbs?: boolean
   fat?: boolean
+  fiber?: boolean
   calories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FoodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "foodName" | "description" | "category" | "categoryId" | "foodType" | "imageUrl" | "protein" | "carbs" | "fat" | "calories" | "createdAt" | "updatedAt", ExtArgs["result"]["food"]>
+export type FoodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "foodName" | "description" | "categoryId" | "foodType" | "imageUrl" | "protein" | "carbs" | "fat" | "fiber" | "calories" | "createdAt" | "updatedAt", ExtArgs["result"]["food"]>
 export type FoodInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   foodCategory?: boolean | Prisma.Food$foodCategoryArgs<ExtArgs>
   mealItems?: boolean | Prisma.Food$mealItemsArgs<ExtArgs>
@@ -1371,13 +1377,13 @@ export type $FoodPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: number
     foodName: string
     description: string | null
-    category: string
     categoryId: number | null
     foodType: string
     imageUrl: string | null
     protein: number
     carbs: number
     fat: number
+    fiber: number
     calories: number
     createdAt: Date
     updatedAt: Date
@@ -1812,13 +1818,13 @@ export interface FoodFieldRefs {
   readonly id: Prisma.FieldRef<"Food", 'Int'>
   readonly foodName: Prisma.FieldRef<"Food", 'String'>
   readonly description: Prisma.FieldRef<"Food", 'String'>
-  readonly category: Prisma.FieldRef<"Food", 'String'>
   readonly categoryId: Prisma.FieldRef<"Food", 'Int'>
   readonly foodType: Prisma.FieldRef<"Food", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Food", 'String'>
   readonly protein: Prisma.FieldRef<"Food", 'Float'>
   readonly carbs: Prisma.FieldRef<"Food", 'Float'>
   readonly fat: Prisma.FieldRef<"Food", 'Float'>
+  readonly fiber: Prisma.FieldRef<"Food", 'Float'>
   readonly calories: Prisma.FieldRef<"Food", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Food", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Food", 'DateTime'>

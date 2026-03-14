@@ -35,12 +35,10 @@ export class FoodImageController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          // // Tối đa 5MB
           new MaxFileSizeValidator({
             maxSize: 5 * 1024 * 1024,
             message: 'Ảnh không được vượt quá 5MB',
           }),
-          // Chỉ chấp nhận jpg, png, webp
           new FileTypeValidator({
             fileType: /^image\/(jpeg|png|webp)$/,
           }),
@@ -53,9 +51,9 @@ export class FoodImageController {
     return this.foodImageService.create(user.id, dto, image);
   }
 
-  @Get('meal/:mealId')
-  findAllByMealId(@Param('mealId', ParseIntPipe) mealId: number) {
-    return this.foodImageService.findAllByMealId(mealId);
+  @Get('meal-items/:mealItemId')
+  findAllByMealItemId(@Param('mealItemId', ParseIntPipe) mealItemId: number) {
+    return this.foodImageService.findAllByMealItemId(mealItemId);
   }
 
   @Get(':id')
@@ -63,13 +61,13 @@ export class FoodImageController {
     return this.foodImageService.findOne(id);
   }
 
-  @Delete('meal/:mealId')
+  @Delete('meal-items/:mealItemId')
   @HttpCode(HttpStatus.OK)
-  removeAllByMealId(
-    @Param('mealId', ParseIntPipe) mealId: number,
+  removeAllByMealItemId(
+    @Param('mealItemId', ParseIntPipe) mealItemId: number,
     @User() user: { id: number },
   ) {
-    return this.foodImageService.removeAllByMealId(mealId, user.id);
+    return this.foodImageService.removeAllByMealItemId(mealItemId, user.id);
   }
 
   @Delete(':id')

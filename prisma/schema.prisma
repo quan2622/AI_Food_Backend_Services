@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -15,23 +15,23 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  password     String
-  genderCode   String?
-  avatarUrl    String?
-  fullName     String
-  accessToken  String?  @db.Text
-  refreshToken String?  @db.Text
-  birthOfDate  DateTime?
-  isAdmin      Boolean  @default(false)
-  status       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  userProfile  UserProfile?
+  id             Int             @id @default(autoincrement())
+  email          String          @unique
+  password       String
+  genderCode     String?
+  avatarUrl      String?
+  fullName       String
+  accessToken    String?         @db.Text
+  refreshToken   String?         @db.Text
+  birthOfDate    DateTime?
+  isAdmin        Boolean         @default(false)
+  status         Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  userProfile    UserProfile?
   nutritionGoals NutritionGoal[]
 
-  dailyLogs    DailyLog[]
+  dailyLogs DailyLog[]
 
   @@map("users")
 }
@@ -55,19 +55,25 @@ model UserProfile {
   @@map("user_profiles")
 }
 
+enum GoalType {
+  LOSE_WEIGHT
+  MAINTAIN_WEIGHT
+  GAIN_WEIGHT
+}
+
 model NutritionGoal {
-  id                    Int      @id @default(autoincrement())
-  goalType              String
-  targetCaloriesPerDay  Float
-  targetProteinPerDay   Float    @default(0)
-  targetCarbsPerDay     Float    @default(0)
-  targetFatPerDay       Float    @default(0)
-  startDate             DateTime
-  endDate               DateTime
-  userId                Int
-  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                   Int      @id @default(autoincrement())
+  goalType             GoalType
+  targetCaloriesPerDay String
+  targetProtein        String
+  targetCarbs          String
+  targetFat            String
+  startDay             DateTime
+  endDate              DateTime
+  userId               Int
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   @@map("nutrition_goals")
 }
@@ -85,21 +91,21 @@ model AllCode {
 }
 
 model Food {
-  id          Int        @id @default(autoincrement())
-  foodName    String
-  description String?
-  categoryId  Int?
+  id           Int           @id @default(autoincrement())
+  foodName     String
+  description  String?
+  categoryId   Int?
   foodCategory FoodCategory? @relation(fields: [categoryId], references: [id])
-  foodType    String        @default("INGREDIENT")
-  imageUrl    String?
-  protein     Float         @default(0)
-  carbs       Float         @default(0)
-  fat         Float         @default(0)
-  fiber       Float         @default(0)
-  calories    Float         @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  mealItems   MealItem[]
+  foodType     String        @default("INGREDIENT")
+  imageUrl     String?
+  protein      Float         @default(0)
+  carbs        Float         @default(0)
+  fat          Float         @default(0)
+  fiber        Float         @default(0)
+  calories     Float         @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  mealItems    MealItem[]
 
   nutritions       FoodNutrition[]
   dishIngredients  DishIngredient[] @relation("DishHasIngredients")
@@ -134,16 +140,16 @@ model NutritionComponent {
 }
 
 model FoodNutrition {
-  id            Int                  @id @default(autoincrement())
-  servingSize   Float
-  servingUnit   String               @default("g")
-  source        String               @default("MANUAL")
-  isCalculated  Boolean              @default(false)
-  foodId        Int
-  food          Food                 @relation(fields: [foodId], references: [id], onDelete: Cascade)
-  values        FoodNutritionValue[]
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
+  id           Int                  @id @default(autoincrement())
+  servingSize  Float
+  servingUnit  String               @default("g")
+  source       String               @default("MANUAL")
+  isCalculated Boolean              @default(false)
+  foodId       Int
+  food         Food                 @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  values       FoodNutritionValue[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
 
   @@map("food_nutritions")
 }
@@ -163,14 +169,14 @@ model FoodNutritionValue {
 }
 
 model DishIngredient {
-  id             Int      @id @default(autoincrement())
-  quantityGrams  Float
-  dishId         Int
-  dish           Food     @relation("DishHasIngredients", fields: [dishId], references: [id], onDelete: Cascade)
-  ingredientId   Int
-  ingredient     Food     @relation("IngredientUsedInDish", fields: [ingredientId], references: [id], onDelete: Restrict)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  quantityGrams Float
+  dishId        Int
+  dish          Food     @relation("DishHasIngredients", fields: [dishId], references: [id], onDelete: Cascade)
+  ingredientId  Int
+  ingredient    Food     @relation("IngredientUsedInDish", fields: [ingredientId], references: [id], onDelete: Restrict)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@unique([dishId, ingredientId])
   @@map("dish_ingredients")
@@ -184,14 +190,14 @@ enum MealType {
 }
 
 model Meal {
-  id            Int         @id @default(autoincrement())
-  mealType      MealType
-  mealDateTime  DateTime
-  dailyLogId    Int
-  dailyLog      DailyLog    @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
-  mealItems     MealItem[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id           Int        @id @default(autoincrement())
+  mealType     MealType
+  mealDateTime DateTime
+  dailyLogId   Int
+  dailyLog     DailyLog   @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
+  mealItems    MealItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 
   @@map("meals")
 }
@@ -235,24 +241,24 @@ enum StatusType {
 }
 
 model DailyLog {
-  id             Int      @id @default(autoincrement())
-  logDate        DateTime @db.Date
-  totalCalories  Float    @default(0)
-  totalProtein   Float    @default(0)
-  totalCarbs     Float    @default(0)
-  totalFat       Float    @default(0)
-  totalFiber     Float    @default(0)
-  targetCalories Float    @default(0)
-  targetProtein  Float    @default(0)
-  targetCarbs    Float    @default(0)
-  targetFat      Float    @default(0)
-  targetFiber    Float    @default(0)
+  id             Int        @id @default(autoincrement())
+  logDate        DateTime   @db.Date
+  totalCalories  Float      @default(0)
+  totalProtein   Float      @default(0)
+  totalCarbs     Float      @default(0)
+  totalFat       Float      @default(0)
+  totalFiber     Float      @default(0)
+  targetCalories Float      @default(0)
+  targetProtein  Float      @default(0)
+  targetCarbs    Float      @default(0)
+  targetFat      Float      @default(0)
+  targetFiber    Float      @default(0)
   status         StatusType @default(BELOW)
   userId         Int
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   meals          Meal[]
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@unique([userId, logDate])
   @@map("daily_logs")

@@ -19,35 +19,41 @@ export class FoodImageService {
     dto: CreateFoodImageDto,
     image: Express.Multer.File,
   ) {
-    const meal = await this.prisma.meal.findUnique({
-      where: { id: dto.mealId },
-      include: { dailyLog: { select: { userId: true } } },
+    const mealItem = await this.prisma.mealItem.findUnique({
+      where: { id: dto.mealItemId },
+      include: {
+        meal: { include: { dailyLog: { select: { userId: true } } } },
+      },
     });
-    if (!meal) throw new NotFoundException(`Meal #${dto.mealId} không tồn tại`);
-    if (meal.dailyLog.userId !== userId)
+    if (!mealItem)
+      throw new NotFoundException(`MealItem #${dto.mealItemId} không tồn tại`);
+    if (mealItem.meal.dailyLog.userId !== userId)
       throw new ForbiddenException(
-        'Bạn không có quyền thêm ảnh vào bữa ăn này',
+        'Bạn không có quyền thêm ảnh vào meal item này',
       );
 
     const { url } = await this.cloudinaryService.uploadFile(image);
 
     return this.prisma.foodImage.create({
       data: {
-        mealId: dto.mealId,
+        mealItemId: dto.mealItemId,
         imageUrl: url,
-        fileName: image.originalname, // lấy từ file thực tế
-        mimeType: image.mimetype, // lấy từ file thực tế
-        fileSize: image.size, // lấy từ file thực tế
+        fileName: image.originalname,
+        mimeType: image.mimetype,
+        fileSize: image.size,
       },
     });
   }
 
-  async findAllByMealId(mealId: number) {
-    const meal = await this.prisma.meal.findUnique({ where: { id: mealId } });
-    if (!meal) throw new NotFoundException(`Meal #${mealId} không tồn tại`);
+  async findAllByMealItemId(mealItemId: number) {
+    const mealItem = await this.prisma.mealItem.findUnique({
+      where: { id: mealItemId },
+    });
+    if (!mealItem)
+      throw new NotFoundException(`MealItem #${mealItemId} không tồn tại`);
 
     return this.prisma.foodImage.findMany({
-      where: { mealId },
+      where: { mealItemId },
       orderBy: { uploadedAt: 'desc' },
     });
   }
@@ -56,7 +62,15 @@ export class FoodImageService {
     const image = await this.prisma.foodImage.findUnique({
       where: { id },
       include: {
-        meal: { select: { id: true, mealType: true, mealDateTime: true } },
+        mealItem: {
+          select: {
+            id: true,
+            quantity: true,
+            meal: {
+              select: { id: true, mealType: true, mealDateTime: true },
+            },
+          },
+        },
       },
     });
     if (!image) throw new NotFoundException(`FoodImage #${id} không tồn tại`);
@@ -67,30 +81,39 @@ export class FoodImageService {
     const image = await this.prisma.foodImage.findUnique({
       where: { id },
       include: {
-        meal: { include: { dailyLog: { select: { userId: true } } } },
+        mealItem: {
+          include: {
+            meal: { include: { dailyLog: { select: { userId: true } } } },
+          },
+        },
       },
     });
     if (!image) throw new NotFoundException(`FoodImage #${id} không tồn tại`);
-    if (image.meal.dailyLog.userId !== userId)
+    if (image.mealItem.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa ảnh này');
 
     await this.prisma.foodImage.delete({ where: { id } });
   }
 
-  async removeAllByMealId(
-    mealId: number,
+  async removeAllByMealItemId(
+    mealItemId: number,
     userId: number,
   ): Promise<{ deletedCount: number }> {
-    const meal = await this.prisma.meal.findUnique({
-      where: { id: mealId },
-      include: { dailyLog: { select: { userId: true } } },
+    const mealItem = await this.prisma.mealItem.findUnique({
+      where: { id: mealItemId },
+      include: {
+        meal: { include: { dailyLog: { select: { userId: true } } } },
+      },
     });
-    if (!meal) throw new NotFoundException(`Meal #${mealId} không tồn tại`);
-    if (meal.dailyLog.userId !== userId)
-      throw new ForbiddenException('Bạn không có quyền xóa ảnh của bữa ăn này');
+    if (!mealItem)
+      throw new NotFoundException(`MealItem #${mealItemId} không tồn tại`);
+    if (mealItem.meal.dailyLog.userId !== userId)
+      throw new ForbiddenException(
+        'Bạn không có quyền xóa ảnh của meal item này',
+      );
 
     const result = await this.prisma.foodImage.deleteMany({
-      where: { mealId },
+      where: { mealItemId },
     });
     return { deletedCount: result.count };
   }

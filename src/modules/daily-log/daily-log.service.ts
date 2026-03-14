@@ -55,17 +55,17 @@ export class DailyLogService {
     const goal = await this.prisma.nutritionGoal.findFirst({
       where: {
         userId,
-        startDate: { lte: date },
+        startDay: { lte: date },
         endDate: { gte: date },
       },
       orderBy: { createdAt: 'desc' },
     });
 
     return {
-      targetCalories: goal?.targetCaloriesPerDay ?? 0,
-      targetProtein: goal?.targetProteinPerDay ?? 0,
-      targetCarbs: goal?.targetCarbsPerDay ?? 0,
-      targetFat: goal?.targetFatPerDay ?? 0,
+      targetCalories: parseFloat(goal?.targetCaloriesPerDay ?? '0') || 0,
+      targetProtein: parseFloat(goal?.targetProtein ?? '0') || 0,
+      targetCarbs: parseFloat(goal?.targetCarbs ?? '0') || 0,
+      targetFat: parseFloat(goal?.targetFat ?? '0') || 0,
       targetFiber: 0, // Fiber goal chưa có trong NutritionGoal → mặc định 0
     };
   }

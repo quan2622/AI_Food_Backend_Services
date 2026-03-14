@@ -8,6 +8,15 @@ import type { UserProfile } from '../../generated/prisma/client.js';
 import type { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import type { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
 
+/** Hệ số hoạt động TDEE */
+const ACTIVITY_FACTORS: Record<string, number> = {
+  SEDENTARY: 1.2,
+  LIGHT: 1.375,
+  MODERATE: 1.55,
+  ACTIVE: 1.725,
+  VERY_ACTIVE: 1.9,
+};
+
 @Injectable()
 export class UserProfileService {
   constructor(private readonly prisma: PrismaService) {}
@@ -17,29 +26,37 @@ export class UserProfileService {
     return parseFloat((weight / (heightInMeters * heightInMeters)).toFixed(2));
   }
 
-  // Mifflin-St Jeor equation (mặc định giới tính nam)
-  private calculateBmr(weight: number, height: number, age: number): number {
-    return parseFloat((10 * weight + 6.25 * height - 5 * age + 5).toFixed(2));
+  /**
+   * Mifflin-St Jeor equation
+   * Nam:  BMR = 10W + 6.25H − 5A + 5
+   * Nữ:   BMR = 10W + 6.25H − 5A − 161
+   */
+  private calculateBmr(
+    weight: number,
+    height: number,
+    age: number,
+    gender?: string,
+  ): number {
+    const base = 10 * weight + 6.25 * height - 5 * age;
+    const offset = gender === 'FEMALE' ? -161 : 5; // default MALE
+    return parseFloat((base + offset).toFixed(2));
   }
 
-  // TDEE = BMR × hệ số hoạt động vừa phải (1.55)
-  private calculateTdee(bmr: number): number {
-    return parseFloat((bmr * 1.55).toFixed(2));
+  /** TDEE = BMR × hệ số hoạt động */
+  private calculateTdee(bmr: number, activityLevel?: string): number {
+    const factor = ACTIVITY_FACTORS[activityLevel ?? ''] ?? 1.55;
+    return parseFloat((bmr * factor).toFixed(2));
   }
 
   async create(
     userId: number,
     dto: CreateUserProfileDto,
   ): Promise<UserProfile> {
-    // Kiểm tra user tồn tại
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException(`User #${userId} không tồn tại`);
     }
 
-    // Kiểm tra profile đã tồn tại chưa
     const existing = await this.prisma.userProfile.findUnique({
       where: { userId },
     });
@@ -48,8 +65,8 @@ export class UserProfileService {
     }
 
     const bmi = this.calculateBmi(dto.weight, dto.height);
-    const bmr = this.calculateBmr(dto.weight, dto.height, dto.age);
-    const tdee = this.calculateTdee(bmr);
+    const bmr = this.calculateBmr(dto.weight, dto.height, dto.age, dto.gender);
+    const tdee = this.calculateTdee(bmr, dto.activityLevel);
 
     return this.prisma.userProfile.create({
       data: {
@@ -58,6 +75,8 @@ export class UserProfileService {
         height: dto.height,
         weight: dto.weight,
         allergies: dto.allergies ?? [],
+        gender: dto.gender ?? null,
+        activityLevel: dto.activityLevel ?? null,
         bmi,
         bmr,
         tdee,
@@ -109,10 +128,13 @@ export class UserProfileService {
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
+    const newGender = dto.gender ?? profile.gender ?? undefined;
+    const newActivityLevel =
+      dto.activityLevel ?? profile.activityLevel ?? undefined;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
-    const bmr = this.calculateBmr(newWeight, newHeight, newAge);
-    const tdee = this.calculateTdee(bmr);
+    const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
+    const tdee = this.calculateTdee(bmr, newActivityLevel);
 
     return this.prisma.userProfile.update({
       where: { id },
@@ -121,6 +143,10 @@ export class UserProfileService {
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.allergies !== undefined && { allergies: dto.allergies }),
+        ...(dto.gender !== undefined && { gender: dto.gender }),
+        ...(dto.activityLevel !== undefined && {
+          activityLevel: dto.activityLevel,
+        }),
         bmi,
         bmr,
         tdee,
@@ -159,10 +185,13 @@ export class UserProfileService {
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
+    const newGender = dto.gender ?? profile.gender ?? undefined;
+    const newActivityLevel =
+      dto.activityLevel ?? profile.activityLevel ?? undefined;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
-    const bmr = this.calculateBmr(newWeight, newHeight, newAge);
-    const tdee = this.calculateTdee(bmr);
+    const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
+    const tdee = this.calculateTdee(bmr, newActivityLevel);
 
     return this.prisma.userProfile.update({
       where: { userId },
@@ -171,6 +200,10 @@ export class UserProfileService {
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.allergies !== undefined && { allergies: dto.allergies }),
+        ...(dto.gender !== undefined && { gender: dto.gender }),
+        ...(dto.activityLevel !== undefined && {
+          activityLevel: dto.activityLevel,
+        }),
         bmi,
         bmr,
         tdee,

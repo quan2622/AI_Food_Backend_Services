@@ -1534,10 +1534,10 @@ export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
   targetCaloriesPerDay: 'targetCaloriesPerDay',
-  targetProteinPerDay: 'targetProteinPerDay',
-  targetCarbsPerDay: 'targetCarbsPerDay',
-  targetFatPerDay: 'targetFatPerDay',
-  startDate: 'startDate',
+  targetProtein: 'targetProtein',
+  targetCarbs: 'targetCarbs',
+  targetFat: 'targetFat',
+  startDay: 'startDay',
   endDate: 'endDate',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -1794,6 +1794,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'GoalType'
+ */
+export type EnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalType'>
+    
+
+
+/**
+ * Reference to a field of type 'GoalType[]'
+ */
+export type ListEnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalType[]'>
     
 
 

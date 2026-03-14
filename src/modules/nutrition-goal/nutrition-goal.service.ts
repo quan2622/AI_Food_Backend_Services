@@ -3,13 +3,18 @@ import { PrismaService } from '../../prisma/prisma.service';
 import type { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
 import type { UpdateNutritionGoalDto } from './dto/update-nutrition-goal.dto.js';
 
+import { GoalType } from '../../generated/prisma/enums.js';
+
 // Type trả về đã được enrich thêm goalTypeInfo từ AllCode
 type NutritionGoalWithGoalTypeInfo = {
   id: number;
-  goalType: string;
+  goalType: GoalType;
   goalTypeInfo: { value: string; description: string | null } | null;
-  targetCaloriesPerDay: number;
-  startDate: Date;
+  targetCaloriesPerDay: string;
+  targetProtein: string;
+  targetCarbs: string;
+  targetFat: string;
+  startDay: Date;
   endDate: Date;
   userId: number;
   createdAt: Date;
@@ -22,14 +27,14 @@ export class NutritionGoalService {
   constructor(private readonly prisma: PrismaService) {}
 
   // Enrich goalType với value từ AllCode theo keyMap
-  private async enrichGoalType<T extends { goalType: string }>(
+  private async enrichGoalType<T extends { goalType: GoalType }>(
     goals: T[],
   ): Promise<
     (T & {
       goalTypeInfo: { value: string; description: string | null } | null;
     })[]
   > {
-    const keyMaps = [...new Set(goals.map((g) => g.goalType))];
+    const keyMaps = [...new Set(goals.map((g) => g.goalType as string))];
 
     const allCodes = await this.prisma.allCode.findMany({
       where: { keyMap: { in: keyMaps } },
@@ -55,7 +60,10 @@ export class NutritionGoalService {
         userId,
         goalType: dto.goalType,
         targetCaloriesPerDay: dto.targetCaloriesPerDay,
-        startDate: new Date(dto.startDate),
+        targetProtein: dto.targetProtein,
+        targetCarbs: dto.targetCarbs,
+        targetFat: dto.targetFat,
+        startDay: new Date(dto.startDay),
         endDate: new Date(dto.endDate),
       },
     });
@@ -117,7 +125,16 @@ export class NutritionGoalService {
         ...(dto.targetCaloriesPerDay != null && {
           targetCaloriesPerDay: dto.targetCaloriesPerDay,
         }),
-        ...(dto.startDate != null && { startDate: new Date(dto.startDate) }),
+        ...(dto.targetProtein != null && {
+          targetProtein: dto.targetProtein,
+        }),
+        ...(dto.targetCarbs != null && {
+          targetCarbs: dto.targetCarbs,
+        }),
+        ...(dto.targetFat != null && {
+          targetFat: dto.targetFat,
+        }),
+        ...(dto.startDay != null && { startDay: new Date(dto.startDay) }),
         ...(dto.endDate != null && { endDate: new Date(dto.endDate) }),
       },
     });

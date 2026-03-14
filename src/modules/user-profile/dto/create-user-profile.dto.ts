@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsPositive,
   IsArray,
+  IsIn,
   IsString,
   Min,
   Max,
@@ -27,4 +28,17 @@ export class CreateUserProfileDto {
   @IsArray({ message: 'Danh sách dị ứng phải là mảng' })
   @IsString({ each: true, message: 'Mỗi dị ứng phải là chuỗi' })
   allergies?: string[];
+
+  @IsOptional()
+  @IsIn(['MALE', 'FEMALE', 'OTHER'], {
+    message: 'gender phải là MALE, FEMALE hoặc OTHER',
+  })
+  gender?: string;
+
+  @IsOptional()
+  @IsIn(['SEDENTARY', 'LIGHT', 'MODERATE', 'ACTIVE', 'VERY_ACTIVE'], {
+    message:
+      'activityLevel phải là SEDENTARY, LIGHT, MODERATE, ACTIVE hoặc VERY_ACTIVE',
+  })
+  activityLevel?: string;
 }
