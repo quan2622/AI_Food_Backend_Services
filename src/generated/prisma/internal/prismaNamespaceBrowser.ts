@@ -64,7 +64,11 @@ export const ModelName = {
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
-  DailyLog: 'DailyLog'
+  DailyLog: 'DailyLog',
+  UserAllergy: 'UserAllergy',
+  Report: 'Report',
+  AIModel: 'AIModel',
+  AITrainingJob: 'AITrainingJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -104,7 +108,6 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const UserProfileScalarFieldEnum = {
   id: 'id',
-  allergies: 'allergies',
   age: 'age',
   height: 'height',
   weight: 'weight',
@@ -293,6 +296,56 @@ export const DailyLogScalarFieldEnum = {
 } as const
 
 export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
+
+
+export const UserAllergyScalarFieldEnum = {
+  id: 'id',
+  severity: 'severity',
+  note: 'note',
+  userProfileId: 'userProfileId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  reportType: 'reportType',
+  generalAt: 'generalAt',
+  timeRangeStart: 'timeRangeStart',
+  timeRangeEnd: 'timeRangeEnd',
+  data: 'data',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const AIModelScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  accuracy: 'accuracy',
+  loss: 'loss',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AIModelScalarFieldEnum = (typeof AIModelScalarFieldEnum)[keyof typeof AIModelScalarFieldEnum]
+
+
+export const AITrainingJobScalarFieldEnum = {
+  id: 'id',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  status: 'status',
+  modelId: 'modelId'
+} as const
+
+export type AITrainingJobScalarFieldEnum = (typeof AITrainingJobScalarFieldEnum)[keyof typeof AITrainingJobScalarFieldEnum]
 
 
 export const SortOrder = {

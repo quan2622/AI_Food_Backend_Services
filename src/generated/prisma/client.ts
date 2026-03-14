@@ -107,3 +107,23 @@ export type FoodImage = Prisma.FoodImageModel
  * 
  */
 export type DailyLog = Prisma.DailyLogModel
+/**
+ * Model UserAllergy
+ * 
+ */
+export type UserAllergy = Prisma.UserAllergyModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
+/**
+ * Model AIModel
+ * 
+ */
+export type AIModel = Prisma.AIModelModel
+/**
+ * Model AITrainingJob
+ * 
+ */
+export type AITrainingJob = Prisma.AITrainingJobModel

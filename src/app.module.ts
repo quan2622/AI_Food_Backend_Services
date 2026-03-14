@@ -15,6 +15,10 @@ import { MealModule } from './modules/meal/meal.module';
 import { MealItemModule } from './modules/meal-item/meal-item.module';
 import { FoodImageModule } from './modules/food-image/food-image.module';
 import { DailyLogModule } from './modules/daily-log/daily-log.module';
+import { UserAllergyModule } from './modules/user-allergy/user-allergy.module';
+import { ReportModule } from './modules/report/report.module';
+import { AiModelModule } from './modules/ai-model/ai-model.module';
+import { AiTrainingJobModule } from './modules/ai-training-job/ai-training-job.module';
 
 @Module({
   imports: [
@@ -33,6 +37,10 @@ import { DailyLogModule } from './modules/daily-log/daily-log.module';
     MealItemModule,
     FoodImageModule,
     DailyLogModule,
+    UserAllergyModule,
+    ReportModule,
+    AiModelModule,
+    AiTrainingJobModule,
   ],
   controllers: [AppController],
   providers: [AppService],

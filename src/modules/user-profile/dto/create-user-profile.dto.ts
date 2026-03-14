@@ -8,7 +8,21 @@ import {
   IsString,
   Min,
   Max,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+import type { SeverityType } from '../../../generated/prisma/client.js';
+
+export class AllergyInputDto {
+  @IsIn(['MILD', 'MODERATE', 'SEVERE'], {
+    message: 'Mức độ phải là MILD, MODERATE hoặc SEVERE',
+  })
+  severity: SeverityType;
+
+  @IsOptional()
+  @IsString({ message: 'Ghi chú phải là chuỗi' })
+  note?: string;
+}
 
 export class CreateUserProfileDto {
   @IsInt({ message: 'Tuổi phải là số nguyên' })
@@ -26,8 +40,9 @@ export class CreateUserProfileDto {
 
   @IsOptional()
   @IsArray({ message: 'Danh sách dị ứng phải là mảng' })
-  @IsString({ each: true, message: 'Mỗi dị ứng phải là chuỗi' })
-  allergies?: string[];
+  @ValidateNested({ each: true })
+  @Type(() => AllergyInputDto)
+  allergies?: AllergyInputDto[];
 
   @IsOptional()
   @IsIn(['MALE', 'FEMALE', 'OTHER'], {

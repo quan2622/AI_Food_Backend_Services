@@ -397,7 +397,11 @@ export const ModelName = {
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
-  DailyLog: 'DailyLog'
+  DailyLog: 'DailyLog',
+  UserAllergy: 'UserAllergy',
+  Report: 'Report',
+  AIModel: 'AIModel',
+  AITrainingJob: 'AITrainingJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "nutritionGoal" | "allCode" | "food" | "foodCategory" | "nutritionComponent" | "foodNutrition" | "foodNutritionValue" | "dishIngredient" | "meal" | "mealItem" | "foodImage" | "dailyLog"
+    modelProps: "user" | "userProfile" | "nutritionGoal" | "allCode" | "food" | "foodCategory" | "nutritionComponent" | "foodNutrition" | "foodNutritionValue" | "dishIngredient" | "meal" | "mealItem" | "foodImage" | "dailyLog" | "userAllergy" | "report" | "aIModel" | "aITrainingJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1453,6 +1457,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserAllergy: {
+      payload: Prisma.$UserAllergyPayload<ExtArgs>
+      fields: Prisma.UserAllergyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserAllergyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserAllergyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        findFirst: {
+          args: Prisma.UserAllergyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserAllergyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        findMany: {
+          args: Prisma.UserAllergyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
+        }
+        create: {
+          args: Prisma.UserAllergyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        createMany: {
+          args: Prisma.UserAllergyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserAllergyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
+        }
+        delete: {
+          args: Prisma.UserAllergyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        update: {
+          args: Prisma.UserAllergyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserAllergyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserAllergyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserAllergyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserAllergyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAllergyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserAllergy>
+        }
+        groupBy: {
+          args: Prisma.UserAllergyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAllergyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserAllergyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAllergyCountAggregateOutputType> | number
+        }
+      }
+    }
+    Report: {
+      payload: Prisma.$ReportPayload<ExtArgs>
+      fields: Prisma.ReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        findFirst: {
+          args: Prisma.ReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        findMany: {
+          args: Prisma.ReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>[]
+        }
+        create: {
+          args: Prisma.ReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        createMany: {
+          args: Prisma.ReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>[]
+        }
+        delete: {
+          args: Prisma.ReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        update: {
+          args: Prisma.ReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportPayload>
+        }
+        aggregate: {
+          args: Prisma.ReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReport>
+        }
+        groupBy: {
+          args: Prisma.ReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportCountAggregateOutputType> | number
+        }
+      }
+    }
+    AIModel: {
+      payload: Prisma.$AIModelPayload<ExtArgs>
+      fields: Prisma.AIModelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AIModelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AIModelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        findFirst: {
+          args: Prisma.AIModelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AIModelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        findMany: {
+          args: Prisma.AIModelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>[]
+        }
+        create: {
+          args: Prisma.AIModelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        createMany: {
+          args: Prisma.AIModelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AIModelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>[]
+        }
+        delete: {
+          args: Prisma.AIModelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        update: {
+          args: Prisma.AIModelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        deleteMany: {
+          args: Prisma.AIModelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AIModelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AIModelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>[]
+        }
+        upsert: {
+          args: Prisma.AIModelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIModelPayload>
+        }
+        aggregate: {
+          args: Prisma.AIModelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAIModel>
+        }
+        groupBy: {
+          args: Prisma.AIModelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AIModelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AIModelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AIModelCountAggregateOutputType> | number
+        }
+      }
+    }
+    AITrainingJob: {
+      payload: Prisma.$AITrainingJobPayload<ExtArgs>
+      fields: Prisma.AITrainingJobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AITrainingJobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AITrainingJobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        findFirst: {
+          args: Prisma.AITrainingJobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AITrainingJobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        findMany: {
+          args: Prisma.AITrainingJobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>[]
+        }
+        create: {
+          args: Prisma.AITrainingJobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        createMany: {
+          args: Prisma.AITrainingJobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AITrainingJobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>[]
+        }
+        delete: {
+          args: Prisma.AITrainingJobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        update: {
+          args: Prisma.AITrainingJobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        deleteMany: {
+          args: Prisma.AITrainingJobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AITrainingJobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AITrainingJobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>[]
+        }
+        upsert: {
+          args: Prisma.AITrainingJobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AITrainingJobPayload>
+        }
+        aggregate: {
+          args: Prisma.AITrainingJobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAITrainingJob>
+        }
+        groupBy: {
+          args: Prisma.AITrainingJobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AITrainingJobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AITrainingJobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AITrainingJobCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1513,7 +1813,6 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const UserProfileScalarFieldEnum = {
   id: 'id',
-  allergies: 'allergies',
   age: 'age',
   height: 'height',
   weight: 'weight',
@@ -1704,6 +2003,56 @@ export const DailyLogScalarFieldEnum = {
 export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
 
 
+export const UserAllergyScalarFieldEnum = {
+  id: 'id',
+  severity: 'severity',
+  note: 'note',
+  userProfileId: 'userProfileId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  reportType: 'reportType',
+  generalAt: 'generalAt',
+  timeRangeStart: 'timeRangeStart',
+  timeRangeEnd: 'timeRangeEnd',
+  data: 'data',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const AIModelScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  accuracy: 'accuracy',
+  loss: 'loss',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AIModelScalarFieldEnum = (typeof AIModelScalarFieldEnum)[keyof typeof AIModelScalarFieldEnum]
+
+
+export const AITrainingJobScalarFieldEnum = {
+  id: 'id',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  status: 'status',
+  modelId: 'modelId'
+} as const
+
+export type AITrainingJobScalarFieldEnum = (typeof AITrainingJobScalarFieldEnum)[keyof typeof AITrainingJobScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1812,6 +2161,20 @@ export type ListEnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'FoodType'
+ */
+export type EnumFoodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodType'>
+    
+
+
+/**
+ * Reference to a field of type 'FoodType[]'
+ */
+export type ListEnumFoodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodType[]'>
+    
+
+
+/**
  * Reference to a field of type 'MealType'
  */
 export type EnumMealTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MealType'>
@@ -1836,6 +2199,48 @@ export type EnumStatusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'StatusType[]'
  */
 export type ListEnumStatusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SeverityType'
+ */
+export type EnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType'>
+    
+
+
+/**
+ * Reference to a field of type 'SeverityType[]'
+ */
+export type ListEnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReportType'
+ */
+export type EnumReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportType'>
+    
+
+
+/**
+ * Reference to a field of type 'ReportType[]'
+ */
+export type ListEnumReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 /**
@@ -1947,6 +2352,10 @@ export type GlobalOmitConfig = {
   mealItem?: Prisma.MealItemOmit
   foodImage?: Prisma.FoodImageOmit
   dailyLog?: Prisma.DailyLogOmit
+  userAllergy?: Prisma.UserAllergyOmit
+  report?: Prisma.ReportOmit
+  aIModel?: Prisma.AIModelOmit
+  aITrainingJob?: Prisma.AITrainingJobOmit
 }
 
 /* Types for Logging */

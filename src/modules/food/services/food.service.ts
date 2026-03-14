@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
+import { FoodType, Prisma } from '../../../generated/prisma/client.js';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
@@ -13,7 +14,7 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         categoryId: dto.categoryId ?? null,
-        foodType: dto.foodType ?? 'INGREDIENT',
+        foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
         protein: dto.protein ?? 0,
         carbs: dto.carbs ?? 0,
@@ -30,7 +31,7 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         categoryId: dto.categoryId ?? null,
-        foodType: dto.foodType ?? 'INGREDIENT',
+        foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
         protein: dto.protein ?? 0,
         carbs: dto.carbs ?? 0,
@@ -87,7 +88,7 @@ export class FoodService {
         ...(dto.fat != null && { fat: dto.fat }),
         ...(dto.fiber != null && { fiber: dto.fiber }),
         ...(dto.calories != null && { calories: dto.calories }),
-      },
+      } as Prisma.FoodUncheckedUpdateInput,
     });
   }
 

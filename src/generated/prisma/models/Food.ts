@@ -51,7 +51,7 @@ export type FoodMinAggregateOutputType = {
   foodName: string | null
   description: string | null
   categoryId: number | null
-  foodType: string | null
+  foodType: $Enums.FoodType | null
   imageUrl: string | null
   protein: number | null
   carbs: number | null
@@ -67,7 +67,7 @@ export type FoodMaxAggregateOutputType = {
   foodName: string | null
   description: string | null
   categoryId: number | null
-  foodType: string | null
+  foodType: $Enums.FoodType | null
   imageUrl: string | null
   protein: number | null
   carbs: number | null
@@ -256,7 +256,7 @@ export type FoodGroupByOutputType = {
   foodName: string
   description: string | null
   categoryId: number | null
-  foodType: string
+  foodType: $Enums.FoodType
   imageUrl: string | null
   protein: number
   carbs: number
@@ -295,7 +295,7 @@ export type FoodWhereInput = {
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
-  foodType?: Prisma.StringFilter<"Food"> | string
+  foodType?: Prisma.EnumFoodTypeFilter<"Food"> | $Enums.FoodType
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
@@ -340,7 +340,7 @@ export type FoodWhereUniqueInput = Prisma.AtLeast<{
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
-  foodType?: Prisma.StringFilter<"Food"> | string
+  foodType?: Prisma.EnumFoodTypeFilter<"Food"> | $Enums.FoodType
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
@@ -385,7 +385,7 @@ export type FoodScalarWhereWithAggregatesInput = {
   foodName?: Prisma.StringWithAggregatesFilter<"Food"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableWithAggregatesFilter<"Food"> | number | null
-  foodType?: Prisma.StringWithAggregatesFilter<"Food"> | string
+  foodType?: Prisma.EnumFoodTypeWithAggregatesFilter<"Food"> | $Enums.FoodType
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
   protein?: Prisma.FloatWithAggregatesFilter<"Food"> | number
   carbs?: Prisma.FloatWithAggregatesFilter<"Food"> | number
@@ -399,7 +399,7 @@ export type FoodScalarWhereWithAggregatesInput = {
 export type FoodCreateInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -420,7 +420,7 @@ export type FoodUncheckedCreateInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -438,7 +438,7 @@ export type FoodUncheckedCreateInput = {
 export type FoodUpdateInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -459,7 +459,7 @@ export type FoodUncheckedUpdateInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -479,7 +479,7 @@ export type FoodCreateManyInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -493,7 +493,7 @@ export type FoodCreateManyInput = {
 export type FoodUpdateManyMutationInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -509,7 +509,7 @@ export type FoodUncheckedUpdateManyInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -601,6 +601,10 @@ export type FoodOrderByRelationAggregateInput = {
 export type FoodScalarRelationFilter = {
   is?: Prisma.FoodWhereInput
   isNot?: Prisma.FoodWhereInput
+}
+
+export type EnumFoodTypeFieldUpdateOperationsInput = {
+  set?: $Enums.FoodType
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -712,7 +716,7 @@ export type FoodUpdateOneRequiredWithoutMealItemsNestedInput = {
 export type FoodCreateWithoutFoodCategoryInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -731,7 +735,7 @@ export type FoodUncheckedCreateWithoutFoodCategoryInput = {
   id?: number
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -780,7 +784,7 @@ export type FoodScalarWhereInput = {
   foodName?: Prisma.StringFilter<"Food"> | string
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
-  foodType?: Prisma.StringFilter<"Food"> | string
+  foodType?: Prisma.EnumFoodTypeFilter<"Food"> | $Enums.FoodType
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   protein?: Prisma.FloatFilter<"Food"> | number
   carbs?: Prisma.FloatFilter<"Food"> | number
@@ -794,7 +798,7 @@ export type FoodScalarWhereInput = {
 export type FoodCreateWithoutNutritionsInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -814,7 +818,7 @@ export type FoodUncheckedCreateWithoutNutritionsInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -847,7 +851,7 @@ export type FoodUpdateToOneWithWhereWithoutNutritionsInput = {
 export type FoodUpdateWithoutNutritionsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -867,7 +871,7 @@ export type FoodUncheckedUpdateWithoutNutritionsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -884,7 +888,7 @@ export type FoodUncheckedUpdateWithoutNutritionsInput = {
 export type FoodCreateWithoutDishIngredientsInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -904,7 +908,7 @@ export type FoodUncheckedCreateWithoutDishIngredientsInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -926,7 +930,7 @@ export type FoodCreateOrConnectWithoutDishIngredientsInput = {
 export type FoodCreateWithoutUsedAsIngredientInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -946,7 +950,7 @@ export type FoodUncheckedCreateWithoutUsedAsIngredientInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -979,7 +983,7 @@ export type FoodUpdateToOneWithWhereWithoutDishIngredientsInput = {
 export type FoodUpdateWithoutDishIngredientsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -999,7 +1003,7 @@ export type FoodUncheckedUpdateWithoutDishIngredientsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1027,7 +1031,7 @@ export type FoodUpdateToOneWithWhereWithoutUsedAsIngredientInput = {
 export type FoodUpdateWithoutUsedAsIngredientInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1047,7 +1051,7 @@ export type FoodUncheckedUpdateWithoutUsedAsIngredientInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1064,7 +1068,7 @@ export type FoodUncheckedUpdateWithoutUsedAsIngredientInput = {
 export type FoodCreateWithoutMealItemsInput = {
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -1084,7 +1088,7 @@ export type FoodUncheckedCreateWithoutMealItemsInput = {
   foodName: string
   description?: string | null
   categoryId?: number | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -1117,7 +1121,7 @@ export type FoodUpdateToOneWithWhereWithoutMealItemsInput = {
 export type FoodUpdateWithoutMealItemsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1137,7 +1141,7 @@ export type FoodUncheckedUpdateWithoutMealItemsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1155,7 +1159,7 @@ export type FoodCreateManyFoodCategoryInput = {
   id?: number
   foodName: string
   description?: string | null
-  foodType?: string
+  foodType?: $Enums.FoodType
   imageUrl?: string | null
   protein?: number
   carbs?: number
@@ -1169,7 +1173,7 @@ export type FoodCreateManyFoodCategoryInput = {
 export type FoodUpdateWithoutFoodCategoryInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1188,7 +1192,7 @@ export type FoodUncheckedUpdateWithoutFoodCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1207,7 +1211,7 @@ export type FoodUncheckedUpdateManyWithoutFoodCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  foodType?: Prisma.StringFieldUpdateOperationsInput | string
+  foodType?: Prisma.EnumFoodTypeFieldUpdateOperationsInput | $Enums.FoodType
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1378,7 +1382,7 @@ export type $FoodPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     foodName: string
     description: string | null
     categoryId: number | null
-    foodType: string
+    foodType: $Enums.FoodType
     imageUrl: string | null
     protein: number
     carbs: number
@@ -1819,7 +1823,7 @@ export interface FoodFieldRefs {
   readonly foodName: Prisma.FieldRef<"Food", 'String'>
   readonly description: Prisma.FieldRef<"Food", 'String'>
   readonly categoryId: Prisma.FieldRef<"Food", 'Int'>
-  readonly foodType: Prisma.FieldRef<"Food", 'String'>
+  readonly foodType: Prisma.FieldRef<"Food", 'FoodType'>
   readonly imageUrl: Prisma.FieldRef<"Food", 'String'>
   readonly protein: Prisma.FieldRef<"Food", 'Float'>
   readonly carbs: Prisma.FieldRef<"Food", 'Float'>

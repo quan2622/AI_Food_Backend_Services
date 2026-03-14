@@ -74,7 +74,13 @@ export class UserProfileService {
         age: dto.age,
         height: dto.height,
         weight: dto.weight,
-        allergies: dto.allergies ?? [],
+        allergies: {
+          create:
+            dto.allergies?.map((a) => ({
+              severity: a.severity,
+              note: a.note,
+            })) ?? [],
+        },
         gender: dto.gender ?? null,
         activityLevel: dto.activityLevel ?? null,
         bmi,
@@ -86,14 +92,20 @@ export class UserProfileService {
 
   async findAll(): Promise<UserProfile[]> {
     return this.prisma.userProfile.findMany({
-      include: { user: { select: { id: true, fullName: true, email: true } } },
+      include: {
+        user: { select: { id: true, fullName: true, email: true } },
+        allergies: true,
+      },
     });
   }
 
   async findOne(id: number): Promise<UserProfile> {
     const profile = await this.prisma.userProfile.findUnique({
       where: { id },
-      include: { user: { select: { id: true, fullName: true, email: true } } },
+      include: {
+        user: { select: { id: true, fullName: true, email: true } },
+        allergies: true,
+      },
     });
 
     if (!profile) {
@@ -106,7 +118,10 @@ export class UserProfileService {
   async findByUserId(userId: number): Promise<UserProfile> {
     const profile = await this.prisma.userProfile.findUnique({
       where: { userId },
-      include: { user: { select: { id: true, fullName: true, email: true } } },
+      include: {
+        user: { select: { id: true, fullName: true, email: true } },
+        allergies: true,
+      },
     });
 
     if (!profile) {
@@ -142,7 +157,15 @@ export class UserProfileService {
         ...(dto.age != null && { age: dto.age }),
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
-        ...(dto.allergies !== undefined && { allergies: dto.allergies }),
+        ...(dto.allergies !== undefined && {
+          allergies: {
+            deleteMany: {},
+            create: dto.allergies.map((a) => ({
+              severity: a.severity,
+              note: a.note,
+            })),
+          },
+        }),
         ...(dto.gender !== undefined && { gender: dto.gender }),
         ...(dto.activityLevel !== undefined && {
           activityLevel: dto.activityLevel,
@@ -199,7 +222,15 @@ export class UserProfileService {
         ...(dto.age != null && { age: dto.age }),
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
-        ...(dto.allergies !== undefined && { allergies: dto.allergies }),
+        ...(dto.allergies !== undefined && {
+          allergies: {
+            deleteMany: {},
+            create: dto.allergies.map((a) => ({
+              severity: a.severity,
+              note: a.note,
+            })),
+          },
+        }),
         ...(dto.gender !== undefined && { gender: dto.gender }),
         ...(dto.activityLevel !== undefined && {
           activityLevel: dto.activityLevel,

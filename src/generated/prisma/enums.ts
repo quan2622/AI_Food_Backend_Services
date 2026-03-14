@@ -35,3 +35,31 @@ export const StatusType = {
 } as const
 
 export type StatusType = (typeof StatusType)[keyof typeof StatusType]
+
+
+export const SeverityType = {
+  MILD: 'MILD',
+  MODERATE: 'MODERATE',
+  SEVERE: 'SEVERE'
+} as const
+
+export type SeverityType = (typeof SeverityType)[keyof typeof SeverityType]
+
+
+export const ReportType = {
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type ReportType = (typeof ReportType)[keyof typeof ReportType]
+
+
+export const FoodType = {
+  INGREDIENT: 'INGREDIENT',
+  DISH: 'DISH',
+  BRANDED: 'BRANDED'
+} as const
+
+export type FoodType = (typeof FoodType)[keyof typeof FoodType]
