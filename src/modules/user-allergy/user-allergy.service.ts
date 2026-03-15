@@ -8,10 +8,10 @@ export class UserAllergyService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateUserAllergyDto) {
-    const profile = await this.prisma.userProfile.findUnique({
-      where: { id: dto.userProfileId },
+    const user = await this.prisma.user.findUnique({
+      where: { id: dto.userId },
     });
-    if (!profile) throw new NotFoundException(`UserProfile #${dto.userProfileId} không tồn tại`);
+    if (!user) throw new NotFoundException(`User #${dto.userId} không tồn tại`);
 
     const allergen = await this.prisma.allergen.findUnique({
       where: { id: dto.allergenId },
@@ -20,17 +20,17 @@ export class UserAllergyService {
 
     const existing = await this.prisma.userAllergy.findFirst({
       where: {
-        userProfileId: dto.userProfileId,
+        userId: dto.userId,
         allergenId: dto.allergenId,
       },
     });
     if (existing) {
-      throw new ConflictException('Dị ứng này đã được thêm vào profile của bạn');
+      throw new ConflictException('Dị ứng này đã được thêm vào tài khoản của bạn');
     }
 
     return this.prisma.userAllergy.create({
       data: {
-        userProfileId: dto.userProfileId,
+        userId: dto.userId,
         allergenId: dto.allergenId,
         severity: dto.severity,
         note: dto.note,
@@ -39,9 +39,9 @@ export class UserAllergyService {
     });
   }
 
-  findAllByUserProfile(userProfileId: number) {
+  findAllByUserId(userId: number) {
     return this.prisma.userAllergy.findMany({
-      where: { userProfileId },
+      where: { userId },
       include: { allergen: true },
       orderBy: { createdAt: 'desc' },
     });

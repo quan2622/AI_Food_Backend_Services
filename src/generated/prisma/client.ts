@@ -68,6 +68,11 @@ export type AllCode = Prisma.AllCodeModel
  */
 export type Allergen = Prisma.AllergenModel
 /**
+ * Model Ingredient
+ * 
+ */
+export type Ingredient = Prisma.IngredientModel
+/**
  * Model FoodCategory
  * 
  */
@@ -79,7 +84,7 @@ export type FoodCategory = Prisma.FoodCategoryModel
 export type Food = Prisma.FoodModel
 /**
  * Model IngredientNutrition
- * Represents a specific nutritional profile for a food (e.g., per 100g serving).
+ * Represents a specific nutritional profile for an ingredient (e.g., per 100g serving).
  */
 export type IngredientNutrition = Prisma.IngredientNutritionModel
 /**
@@ -94,12 +99,12 @@ export type Nutrient = Prisma.NutrientModel
 export type NutritionValue = Prisma.NutritionValueModel
 /**
  * Model FoodIngredient
- * Represents the composition of a DISH food (which ingredients it contains).
+ * Represents the composition of a Food (which ingredients it contains).
  */
 export type FoodIngredient = Prisma.FoodIngredientModel
 /**
  * Model IngredientAllergen
- * Represents the relationship between an Ingredient (Food) and an Allergen.
+ * Represents the relationship between an Ingredient and an Allergen.
  */
 export type IngredientAllergen = Prisma.IngredientAllergenModel
 /**

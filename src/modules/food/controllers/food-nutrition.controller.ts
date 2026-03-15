@@ -47,18 +47,24 @@ export class FoodNutritionController {
     return this.foodNutritionService.removeComponent(id);
   }
 
-  // FoodNutrition
-  @Get('foods/:foodId/nutritions')
-  findByFoodId(@Param('foodId', ParseIntPipe) foodId: number) {
-    return this.foodNutritionService.findByFoodId(foodId);
+  // IngredientNutrition (per Ingredient)
+  @Get('ingredients/:ingredientId/nutritions')
+  findByIngredientId(@Param('ingredientId', ParseIntPipe) ingredientId: number) {
+    return this.foodNutritionService.findByIngredientId(ingredientId);
   }
 
-  @Post('foods/:foodId/nutritions')
+  @Post('ingredients/:ingredientId/nutritions')
   createNutrition(
-    @Param('foodId', ParseIntPipe) foodId: number,
+    @Param('ingredientId', ParseIntPipe) ingredientId: number,
     @Body() dto: CreateFoodNutritionDto,
   ) {
-    return this.foodNutritionService.createNutrition(foodId, dto);
+    return this.foodNutritionService.createNutrition(ingredientId, dto);
+  }
+
+  // Nutritions for all ingredients in a food (aggregated view)
+  @Get('foods/:foodId/nutritions')
+  getNutritionForFood(@Param('foodId', ParseIntPipe) foodId: number) {
+    return this.foodNutritionService.getNutritionForFoodIngredients(foodId);
   }
 
   @Get('foods/:foodId/nutritions/:id')
@@ -87,9 +93,5 @@ export class FoodNutritionController {
     return this.foodNutritionService.upsertValues(id, dto);
   }
 
-  @Post('foods/:foodId/nutritions/calculate')
-  calculateFromIngredients(@Param('foodId', ParseIntPipe) foodId: number) {
-    return this.foodNutritionService.calculateFromIngredients(foodId);
-  }
 }
 

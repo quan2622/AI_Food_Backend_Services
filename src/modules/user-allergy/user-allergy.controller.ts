@@ -21,9 +21,9 @@ export class UserAllergyController {
     return this.userAllergyService.create(dto);
   }
 
-  @Get('profile/:profileId')
-  findAll(@Param('profileId', ParseIntPipe) profileId: number) {
-    return this.userAllergyService.findAllByUserProfile(profileId);
+  @Get('user/:userId')
+  findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userAllergyService.findAllByUserId(userId);
   }
 
   @Get(':id')

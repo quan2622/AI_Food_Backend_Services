@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model IngredientAllergen
- * Represents the relationship between an Ingredient (Food) and an Allergen.
+ * Represents the relationship between an Ingredient and an Allergen.
  */
 export type IngredientAllergenModel = runtime.Types.Result.DefaultSelection<Prisma.$IngredientAllergenPayload>
 
@@ -224,7 +224,7 @@ export type IngredientAllergenWhereInput = {
   allergenId?: Prisma.IntFilter<"IngredientAllergen"> | number
   createdAt?: Prisma.DateTimeFilter<"IngredientAllergen"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IngredientAllergen"> | Date | string
-  ingredient?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
+  ingredient?: Prisma.XOR<Prisma.IngredientScalarRelationFilter, Prisma.IngredientWhereInput>
   allergen?: Prisma.XOR<Prisma.AllergenScalarRelationFilter, Prisma.AllergenWhereInput>
 }
 
@@ -234,7 +234,7 @@ export type IngredientAllergenOrderByWithRelationInput = {
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ingredient?: Prisma.FoodOrderByWithRelationInput
+  ingredient?: Prisma.IngredientOrderByWithRelationInput
   allergen?: Prisma.AllergenOrderByWithRelationInput
 }
 
@@ -248,7 +248,7 @@ export type IngredientAllergenWhereUniqueInput = Prisma.AtLeast<{
   allergenId?: Prisma.IntFilter<"IngredientAllergen"> | number
   createdAt?: Prisma.DateTimeFilter<"IngredientAllergen"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IngredientAllergen"> | Date | string
-  ingredient?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
+  ingredient?: Prisma.XOR<Prisma.IngredientScalarRelationFilter, Prisma.IngredientWhereInput>
   allergen?: Prisma.XOR<Prisma.AllergenScalarRelationFilter, Prisma.AllergenWhereInput>
 }, "id" | "ingredientId_allergenId">
 
@@ -279,7 +279,7 @@ export type IngredientAllergenScalarWhereWithAggregatesInput = {
 export type IngredientAllergenCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  ingredient: Prisma.FoodCreateNestedOneWithoutIngredientAllergensInput
+  ingredient: Prisma.IngredientCreateNestedOneWithoutIngredientAllergensInput
   allergen: Prisma.AllergenCreateNestedOneWithoutIngredientAllergensInput
 }
 
@@ -294,7 +294,7 @@ export type IngredientAllergenUncheckedCreateInput = {
 export type IngredientAllergenUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ingredient?: Prisma.FoodUpdateOneRequiredWithoutIngredientAllergensNestedInput
+  ingredient?: Prisma.IngredientUpdateOneRequiredWithoutIngredientAllergensNestedInput
   allergen?: Prisma.AllergenUpdateOneRequiredWithoutIngredientAllergensNestedInput
 }
 
@@ -465,7 +465,7 @@ export type IngredientAllergenUncheckedUpdateManyWithoutIngredientNestedInput = 
 export type IngredientAllergenCreateWithoutAllergenInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
-  ingredient: Prisma.FoodCreateNestedOneWithoutIngredientAllergensInput
+  ingredient: Prisma.IngredientCreateNestedOneWithoutIngredientAllergensInput
 }
 
 export type IngredientAllergenUncheckedCreateWithoutAllergenInput = {
@@ -561,7 +561,7 @@ export type IngredientAllergenCreateManyAllergenInput = {
 export type IngredientAllergenUpdateWithoutAllergenInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ingredient?: Prisma.FoodUpdateOneRequiredWithoutIngredientAllergensNestedInput
+  ingredient?: Prisma.IngredientUpdateOneRequiredWithoutIngredientAllergensNestedInput
 }
 
 export type IngredientAllergenUncheckedUpdateWithoutAllergenInput = {
@@ -613,7 +613,7 @@ export type IngredientAllergenSelect<ExtArgs extends runtime.Types.Extensions.In
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ingredientAllergen"]>
 
@@ -623,7 +623,7 @@ export type IngredientAllergenSelectCreateManyAndReturn<ExtArgs extends runtime.
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ingredientAllergen"]>
 
@@ -633,7 +633,7 @@ export type IngredientAllergenSelectUpdateManyAndReturn<ExtArgs extends runtime.
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ingredientAllergen"]>
 
@@ -647,22 +647,22 @@ export type IngredientAllergenSelectScalar = {
 
 export type IngredientAllergenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ingredientId" | "allergenId" | "createdAt" | "updatedAt", ExtArgs["result"]["ingredientAllergen"]>
 export type IngredientAllergenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 export type IngredientAllergenIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 export type IngredientAllergenIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 
 export type $IngredientAllergenPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "IngredientAllergen"
   objects: {
-    ingredient: Prisma.$FoodPayload<ExtArgs>
+    ingredient: Prisma.$IngredientPayload<ExtArgs>
     allergen: Prisma.$AllergenPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1065,7 +1065,7 @@ readonly fields: IngredientAllergenFieldRefs;
  */
 export interface Prisma__IngredientAllergenClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  ingredient<T extends Prisma.FoodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FoodDefaultArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  ingredient<T extends Prisma.IngredientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IngredientDefaultArgs<ExtArgs>>): Prisma.Prisma__IngredientClient<runtime.Types.Result.GetResult<Prisma.$IngredientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   allergen<T extends Prisma.AllergenDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AllergenDefaultArgs<ExtArgs>>): Prisma.Prisma__AllergenClient<runtime.Types.Result.GetResult<Prisma.$AllergenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

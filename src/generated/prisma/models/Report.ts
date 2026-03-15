@@ -42,6 +42,7 @@ export type ReportMinAggregateOutputType = {
   generatedAt: Date | null
   timeRangeStart: Date | null
   timeRangeEnd: Date | null
+  data: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +54,7 @@ export type ReportMaxAggregateOutputType = {
   generatedAt: Date | null
   timeRangeStart: Date | null
   timeRangeEnd: Date | null
+  data: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -88,6 +90,7 @@ export type ReportMinAggregateInputType = {
   generatedAt?: true
   timeRangeStart?: true
   timeRangeEnd?: true
+  data?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +102,7 @@ export type ReportMaxAggregateInputType = {
   generatedAt?: true
   timeRangeStart?: true
   timeRangeEnd?: true
+  data?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -209,7 +213,7 @@ export type ReportGroupByOutputType = {
   generatedAt: Date
   timeRangeStart: Date
   timeRangeEnd: Date
-  data: runtime.JsonValue
+  data: string
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -244,7 +248,7 @@ export type ReportWhereInput = {
   generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.JsonFilter<"Report">
+  data?: Prisma.StringFilter<"Report"> | string
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -273,7 +277,7 @@ export type ReportWhereUniqueInput = Prisma.AtLeast<{
   generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.JsonFilter<"Report">
+  data?: Prisma.StringFilter<"Report"> | string
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -306,7 +310,7 @@ export type ReportScalarWhereWithAggregatesInput = {
   generatedAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
-  data?: Prisma.JsonWithAggregatesFilter<"Report">
+  data?: Prisma.StringWithAggregatesFilter<"Report"> | string
   userId?: Prisma.IntWithAggregatesFilter<"Report"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
@@ -317,7 +321,7 @@ export type ReportCreateInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReportsInput
@@ -329,7 +333,7 @@ export type ReportUncheckedCreateInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,7 +344,7 @@ export type ReportUpdateInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
@@ -352,7 +356,7 @@ export type ReportUncheckedUpdateInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,7 +368,7 @@ export type ReportCreateManyInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -375,7 +379,7 @@ export type ReportUpdateManyMutationInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,7 +390,7 @@ export type ReportUncheckedUpdateManyInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -425,6 +429,7 @@ export type ReportMaxOrderByAggregateInput = {
   generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
+  data?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -436,6 +441,7 @@ export type ReportMinOrderByAggregateInput = {
   generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
+  data?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -497,7 +503,7 @@ export type ReportCreateWithoutUserInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -508,7 +514,7 @@ export type ReportUncheckedCreateWithoutUserInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -548,7 +554,7 @@ export type ReportScalarWhereInput = {
   generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.JsonFilter<"Report">
+  data?: Prisma.StringFilter<"Report"> | string
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -560,7 +566,7 @@ export type ReportCreateManyUserInput = {
   generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -570,7 +576,7 @@ export type ReportUpdateWithoutUserInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -581,7 +587,7 @@ export type ReportUncheckedUpdateWithoutUserInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -592,7 +598,7 @@ export type ReportUncheckedUpdateManyWithoutUserInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  data?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -672,7 +678,7 @@ export type $ReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     generatedAt: Date
     timeRangeStart: Date
     timeRangeEnd: Date
-    data: runtime.JsonValue
+    data: string
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -1105,7 +1111,7 @@ export interface ReportFieldRefs {
   readonly generatedAt: Prisma.FieldRef<"Report", 'DateTime'>
   readonly timeRangeStart: Prisma.FieldRef<"Report", 'DateTime'>
   readonly timeRangeEnd: Prisma.FieldRef<"Report", 'DateTime'>
-  readonly data: Prisma.FieldRef<"Report", 'Json'>
+  readonly data: Prisma.FieldRef<"Report", 'String'>
   readonly userId: Prisma.FieldRef<"Report", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Report", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Report", 'DateTime'>

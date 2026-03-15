@@ -390,6 +390,7 @@ export const ModelName = {
   NutritionGoal: 'NutritionGoal',
   AllCode: 'AllCode',
   Allergen: 'Allergen',
+  Ingredient: 'Ingredient',
   FoodCategory: 'FoodCategory',
   Food: 'Food',
   IngredientNutrition: 'IngredientNutrition',
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "userAllergy" | "nutritionGoal" | "allCode" | "allergen" | "foodCategory" | "food" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "report" | "aIModel" | "aITrainingJob"
+    modelProps: "user" | "userProfile" | "userAllergy" | "nutritionGoal" | "allCode" | "allergen" | "ingredient" | "foodCategory" | "food" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "report" | "aIModel" | "aITrainingJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -864,6 +865,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AllergenCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AllergenCountAggregateOutputType> | number
+        }
+      }
+    }
+    Ingredient: {
+      payload: Prisma.$IngredientPayload<ExtArgs>
+      fields: Prisma.IngredientFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IngredientFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IngredientFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        findFirst: {
+          args: Prisma.IngredientFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IngredientFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        findMany: {
+          args: Prisma.IngredientFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>[]
+        }
+        create: {
+          args: Prisma.IngredientCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        createMany: {
+          args: Prisma.IngredientCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IngredientCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>[]
+        }
+        delete: {
+          args: Prisma.IngredientDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        update: {
+          args: Prisma.IngredientUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        deleteMany: {
+          args: Prisma.IngredientDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IngredientUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IngredientUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>[]
+        }
+        upsert: {
+          args: Prisma.IngredientUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IngredientPayload>
+        }
+        aggregate: {
+          args: Prisma.IngredientAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIngredient>
+        }
+        groupBy: {
+          args: Prisma.IngredientGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IngredientGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IngredientCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IngredientCountAggregateOutputType> | number
         }
       }
     }
@@ -1946,11 +2021,12 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
+  genderCode: 'genderCode',
   avatarUrl: 'avatarUrl',
   fullName: 'fullName',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  dateOfBirth: 'dateOfBirth',
+  birthOfDate: 'birthOfDate',
   isAdmin: 'isAdmin',
   status: 'status',
   createdAt: 'createdAt',
@@ -1982,7 +2058,7 @@ export const UserAllergyScalarFieldEnum = {
   id: 'id',
   severity: 'severity',
   note: 'note',
-  userProfileId: 'userProfileId',
+  userId: 'userId',
   allergenId: 'allergenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2032,6 +2108,18 @@ export const AllergenScalarFieldEnum = {
 export type AllergenScalarFieldEnum = (typeof AllergenScalarFieldEnum)[keyof typeof AllergenScalarFieldEnum]
 
 
+export const IngredientScalarFieldEnum = {
+  id: 'id',
+  ingredientName: 'ingredientName',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IngredientScalarFieldEnum = (typeof IngredientScalarFieldEnum)[keyof typeof IngredientScalarFieldEnum]
+
+
 export const FoodCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -2063,7 +2151,7 @@ export const IngredientNutritionScalarFieldEnum = {
   servingUnit: 'servingUnit',
   source: 'source',
   isCalculated: 'isCalculated',
-  foodId: 'foodId',
+  ingredientId: 'ingredientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2093,7 +2181,7 @@ export type NutritionValueScalarFieldEnum = (typeof NutritionValueScalarFieldEnu
 export const FoodIngredientScalarFieldEnum = {
   id: 'id',
   quantityGrams: 'quantityGrams',
-  dishId: 'dishId',
+  foodId: 'foodId',
   ingredientId: 'ingredientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2215,13 +2303,6 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -2236,15 +2317,6 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2415,20 +2487,6 @@ export type ListEnumReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -2542,6 +2600,7 @@ export type GlobalOmitConfig = {
   nutritionGoal?: Prisma.NutritionGoalOmit
   allCode?: Prisma.AllCodeOmit
   allergen?: Prisma.AllergenOmit
+  ingredient?: Prisma.IngredientOmit
   foodCategory?: Prisma.FoodCategoryOmit
   food?: Prisma.FoodOmit
   ingredientNutrition?: Prisma.IngredientNutritionOmit

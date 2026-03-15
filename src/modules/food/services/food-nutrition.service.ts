@@ -50,11 +50,11 @@ export class FoodNutritionService {
     await this.prisma.nutrient.delete({ where: { id } });
   }
 
-  // ─── IngredientNutrition (formerly FoodNutrition) ─────────────────────────
+  // ─── IngredientNutrition (per Ingredient) ───────────────────────────────────
 
-  findByFoodId(foodId: number) {
+  findByIngredientId(ingredientId: number) {
     return this.prisma.ingredientNutrition.findMany({
-      where: { foodId },
+      where: { ingredientId },
       include: {
         values: {
           include: { nutrient: true },
@@ -81,15 +81,15 @@ export class FoodNutritionService {
     return nutrition;
   }
 
-  async createNutrition(foodId: number, dto: CreateFoodNutritionDto) {
-    const food = await this.prisma.food.findUnique({ where: { id: foodId } });
-    if (!food) {
-      throw new NotFoundException(`Food #${foodId} không tồn tại`);
+  async createNutrition(ingredientId: number, dto: CreateFoodNutritionDto) {
+    const ingredient = await this.prisma.ingredient.findUnique({ where: { id: ingredientId } });
+    if (!ingredient) {
+      throw new NotFoundException(`Ingredient #${ingredientId} không tồn tại`);
     }
 
     return this.prisma.ingredientNutrition.create({
       data: {
-        foodId,
+        ingredientId,
         servingSize: dto.servingSize,
         servingUnit: dto.servingUnit,
         source: dto.source,
@@ -154,12 +154,25 @@ export class FoodNutritionService {
     return this.findOneNutrition(nutritionId);
   }
 
-  async calculateFromIngredients(foodId: number) {
-    const food = await this.prisma.food.findUnique({ where: { id: foodId } });
+  async getNutritionForFoodIngredients(foodId: number) {
+    const food = await this.prisma.food.findUnique({
+      where: { id: foodId },
+      include: { foodIngredients: { include: { ingredient: true } } },
+    });
     if (!food) {
       throw new NotFoundException(`Food #${foodId} không tồn tại`);
     }
 
-    return this.findByFoodId(foodId);
+    const ingredientIds = food.foodIngredients.map((fi) => fi.ingredientId);
+    if (ingredientIds.length === 0) return [];
+
+    return this.prisma.ingredientNutrition.findMany({
+      where: { ingredientId: { in: ingredientIds } },
+      include: {
+        ingredient: true,
+        values: { include: { nutrient: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 }

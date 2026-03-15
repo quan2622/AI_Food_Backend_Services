@@ -20,7 +20,7 @@ export class DishIngredientService {
   async findByDish(dishId: number) {
     await this.validateDishType(dishId);
     return this.prisma.foodIngredient.findMany({
-      where: { dishId },
+      where: { foodId: dishId },
       include: {
         ingredient: true,
       },
@@ -31,7 +31,7 @@ export class DishIngredientService {
   async addIngredient(dishId: number, dto: CreateDishIngredientDto) {
     await this.validateDishType(dishId);
 
-    const ingredient = await this.prisma.food.findUnique({
+    const ingredient = await this.prisma.ingredient.findUnique({
       where: { id: dto.ingredientId },
     });
     if (!ingredient) {
@@ -40,7 +40,7 @@ export class DishIngredientService {
 
     return this.prisma.foodIngredient.create({
       data: {
-        dishId,
+        foodId: dishId,
         ingredientId: dto.ingredientId,
         quantityGrams: dto.quantityGrams,
       },

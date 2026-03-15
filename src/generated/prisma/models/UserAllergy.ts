@@ -28,13 +28,13 @@ export type AggregateUserAllergy = {
 
 export type UserAllergyAvgAggregateOutputType = {
   id: number | null
-  userProfileId: number | null
+  userId: number | null
   allergenId: number | null
 }
 
 export type UserAllergySumAggregateOutputType = {
   id: number | null
-  userProfileId: number | null
+  userId: number | null
   allergenId: number | null
 }
 
@@ -42,7 +42,7 @@ export type UserAllergyMinAggregateOutputType = {
   id: number | null
   severity: $Enums.SeverityType | null
   note: string | null
-  userProfileId: number | null
+  userId: number | null
   allergenId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,7 +52,7 @@ export type UserAllergyMaxAggregateOutputType = {
   id: number | null
   severity: $Enums.SeverityType | null
   note: string | null
-  userProfileId: number | null
+  userId: number | null
   allergenId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -62,7 +62,7 @@ export type UserAllergyCountAggregateOutputType = {
   id: number
   severity: number
   note: number
-  userProfileId: number
+  userId: number
   allergenId: number
   createdAt: number
   updatedAt: number
@@ -72,13 +72,13 @@ export type UserAllergyCountAggregateOutputType = {
 
 export type UserAllergyAvgAggregateInputType = {
   id?: true
-  userProfileId?: true
+  userId?: true
   allergenId?: true
 }
 
 export type UserAllergySumAggregateInputType = {
   id?: true
-  userProfileId?: true
+  userId?: true
   allergenId?: true
 }
 
@@ -86,7 +86,7 @@ export type UserAllergyMinAggregateInputType = {
   id?: true
   severity?: true
   note?: true
-  userProfileId?: true
+  userId?: true
   allergenId?: true
   createdAt?: true
   updatedAt?: true
@@ -96,7 +96,7 @@ export type UserAllergyMaxAggregateInputType = {
   id?: true
   severity?: true
   note?: true
-  userProfileId?: true
+  userId?: true
   allergenId?: true
   createdAt?: true
   updatedAt?: true
@@ -106,7 +106,7 @@ export type UserAllergyCountAggregateInputType = {
   id?: true
   severity?: true
   note?: true
-  userProfileId?: true
+  userId?: true
   allergenId?: true
   createdAt?: true
   updatedAt?: true
@@ -203,7 +203,7 @@ export type UserAllergyGroupByOutputType = {
   id: number
   severity: $Enums.SeverityType
   note: string | null
-  userProfileId: number
+  userId: number
   allergenId: number
   createdAt: Date
   updatedAt: Date
@@ -236,11 +236,11 @@ export type UserAllergyWhereInput = {
   id?: Prisma.IntFilter<"UserAllergy"> | number
   severity?: Prisma.EnumSeverityTypeFilter<"UserAllergy"> | $Enums.SeverityType
   note?: Prisma.StringNullableFilter<"UserAllergy"> | string | null
-  userProfileId?: Prisma.IntFilter<"UserAllergy"> | number
+  userId?: Prisma.IntFilter<"UserAllergy"> | number
   allergenId?: Prisma.IntFilter<"UserAllergy"> | number
   createdAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
-  userProfile?: Prisma.XOR<Prisma.UserProfileScalarRelationFilter, Prisma.UserProfileWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   allergen?: Prisma.XOR<Prisma.AllergenScalarRelationFilter, Prisma.AllergenWhereInput>
 }
 
@@ -248,35 +248,35 @@ export type UserAllergyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   severity?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userProfile?: Prisma.UserProfileOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
   allergen?: Prisma.AllergenOrderByWithRelationInput
 }
 
 export type UserAllergyWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userProfileId_allergenId?: Prisma.UserAllergyUserProfileIdAllergenIdCompoundUniqueInput
+  userId_allergenId?: Prisma.UserAllergyUserIdAllergenIdCompoundUniqueInput
   AND?: Prisma.UserAllergyWhereInput | Prisma.UserAllergyWhereInput[]
   OR?: Prisma.UserAllergyWhereInput[]
   NOT?: Prisma.UserAllergyWhereInput | Prisma.UserAllergyWhereInput[]
   severity?: Prisma.EnumSeverityTypeFilter<"UserAllergy"> | $Enums.SeverityType
   note?: Prisma.StringNullableFilter<"UserAllergy"> | string | null
-  userProfileId?: Prisma.IntFilter<"UserAllergy"> | number
+  userId?: Prisma.IntFilter<"UserAllergy"> | number
   allergenId?: Prisma.IntFilter<"UserAllergy"> | number
   createdAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
-  userProfile?: Prisma.XOR<Prisma.UserProfileScalarRelationFilter, Prisma.UserProfileWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   allergen?: Prisma.XOR<Prisma.AllergenScalarRelationFilter, Prisma.AllergenWhereInput>
-}, "id" | "userProfileId_allergenId">
+}, "id" | "userId_allergenId">
 
 export type UserAllergyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   severity?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -294,7 +294,7 @@ export type UserAllergyScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"UserAllergy"> | number
   severity?: Prisma.EnumSeverityTypeWithAggregatesFilter<"UserAllergy"> | $Enums.SeverityType
   note?: Prisma.StringNullableWithAggregatesFilter<"UserAllergy"> | string | null
-  userProfileId?: Prisma.IntWithAggregatesFilter<"UserAllergy"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"UserAllergy"> | number
   allergenId?: Prisma.IntWithAggregatesFilter<"UserAllergy"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserAllergy"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserAllergy"> | Date | string
@@ -305,7 +305,7 @@ export type UserAllergyCreateInput = {
   note?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userProfile: Prisma.UserProfileCreateNestedOneWithoutAllergiesInput
+  user: Prisma.UserCreateNestedOneWithoutAllergiesInput
   allergen: Prisma.AllergenCreateNestedOneWithoutUserAllergiesInput
 }
 
@@ -313,7 +313,7 @@ export type UserAllergyUncheckedCreateInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
-  userProfileId: number
+  userId: number
   allergenId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -324,7 +324,7 @@ export type UserAllergyUpdateInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userProfile?: Prisma.UserProfileUpdateOneRequiredWithoutAllergiesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAllergiesNestedInput
   allergen?: Prisma.AllergenUpdateOneRequiredWithoutUserAllergiesNestedInput
 }
 
@@ -332,7 +332,7 @@ export type UserAllergyUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userProfileId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   allergenId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,7 +342,7 @@ export type UserAllergyCreateManyInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
-  userProfileId: number
+  userId: number
   allergenId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -359,7 +359,7 @@ export type UserAllergyUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userProfileId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   allergenId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,8 +375,8 @@ export type UserAllergyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UserAllergyUserProfileIdAllergenIdCompoundUniqueInput = {
-  userProfileId: number
+export type UserAllergyUserIdAllergenIdCompoundUniqueInput = {
+  userId: number
   allergenId: number
 }
 
@@ -384,7 +384,7 @@ export type UserAllergyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   severity?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -392,7 +392,7 @@ export type UserAllergyCountOrderByAggregateInput = {
 
 export type UserAllergyAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
 }
 
@@ -400,7 +400,7 @@ export type UserAllergyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   severity?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -410,7 +410,7 @@ export type UserAllergyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   severity?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -418,49 +418,49 @@ export type UserAllergyMinOrderByAggregateInput = {
 
 export type UserAllergySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userProfileId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   allergenId?: Prisma.SortOrder
 }
 
-export type UserAllergyCreateNestedManyWithoutUserProfileInput = {
-  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput> | Prisma.UserAllergyCreateWithoutUserProfileInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput[]
-  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput | Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput[]
-  createMany?: Prisma.UserAllergyCreateManyUserProfileInputEnvelope
+export type UserAllergyCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput> | Prisma.UserAllergyCreateWithoutUserInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserInput | Prisma.UserAllergyCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.UserAllergyCreateManyUserInputEnvelope
   connect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
 }
 
-export type UserAllergyUncheckedCreateNestedManyWithoutUserProfileInput = {
-  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput> | Prisma.UserAllergyCreateWithoutUserProfileInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput[]
-  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput | Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput[]
-  createMany?: Prisma.UserAllergyCreateManyUserProfileInputEnvelope
+export type UserAllergyUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput> | Prisma.UserAllergyCreateWithoutUserInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserInput | Prisma.UserAllergyCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.UserAllergyCreateManyUserInputEnvelope
   connect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
 }
 
-export type UserAllergyUpdateManyWithoutUserProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput> | Prisma.UserAllergyCreateWithoutUserProfileInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput[]
-  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput | Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput[]
-  upsert?: Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserProfileInput | Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserProfileInput[]
-  createMany?: Prisma.UserAllergyCreateManyUserProfileInputEnvelope
+export type UserAllergyUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput> | Prisma.UserAllergyCreateWithoutUserInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserInput | Prisma.UserAllergyCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserInput | Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.UserAllergyCreateManyUserInputEnvelope
   set?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   disconnect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   delete?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   connect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
-  update?: Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserProfileInput | Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserProfileInput[]
-  updateMany?: Prisma.UserAllergyUpdateManyWithWhereWithoutUserProfileInput | Prisma.UserAllergyUpdateManyWithWhereWithoutUserProfileInput[]
+  update?: Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserInput | Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.UserAllergyUpdateManyWithWhereWithoutUserInput | Prisma.UserAllergyUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.UserAllergyScalarWhereInput | Prisma.UserAllergyScalarWhereInput[]
 }
 
-export type UserAllergyUncheckedUpdateManyWithoutUserProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput> | Prisma.UserAllergyCreateWithoutUserProfileInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput[]
-  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput | Prisma.UserAllergyCreateOrConnectWithoutUserProfileInput[]
-  upsert?: Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserProfileInput | Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserProfileInput[]
-  createMany?: Prisma.UserAllergyCreateManyUserProfileInputEnvelope
+export type UserAllergyUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput> | Prisma.UserAllergyCreateWithoutUserInput[] | Prisma.UserAllergyUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAllergyCreateOrConnectWithoutUserInput | Prisma.UserAllergyCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserInput | Prisma.UserAllergyUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.UserAllergyCreateManyUserInputEnvelope
   set?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   disconnect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   delete?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
   connect?: Prisma.UserAllergyWhereUniqueInput | Prisma.UserAllergyWhereUniqueInput[]
-  update?: Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserProfileInput | Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserProfileInput[]
-  updateMany?: Prisma.UserAllergyUpdateManyWithWhereWithoutUserProfileInput | Prisma.UserAllergyUpdateManyWithWhereWithoutUserProfileInput[]
+  update?: Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserInput | Prisma.UserAllergyUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.UserAllergyUpdateManyWithWhereWithoutUserInput | Prisma.UserAllergyUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.UserAllergyScalarWhereInput | Prisma.UserAllergyScalarWhereInput[]
 }
 
@@ -510,7 +510,7 @@ export type UserAllergyUncheckedUpdateManyWithoutAllergenNestedInput = {
   deleteMany?: Prisma.UserAllergyScalarWhereInput | Prisma.UserAllergyScalarWhereInput[]
 }
 
-export type UserAllergyCreateWithoutUserProfileInput = {
+export type UserAllergyCreateWithoutUserInput = {
   severity: $Enums.SeverityType
   note?: string | null
   createdAt?: Date | string
@@ -518,7 +518,7 @@ export type UserAllergyCreateWithoutUserProfileInput = {
   allergen: Prisma.AllergenCreateNestedOneWithoutUserAllergiesInput
 }
 
-export type UserAllergyUncheckedCreateWithoutUserProfileInput = {
+export type UserAllergyUncheckedCreateWithoutUserInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
@@ -527,30 +527,30 @@ export type UserAllergyUncheckedCreateWithoutUserProfileInput = {
   updatedAt?: Date | string
 }
 
-export type UserAllergyCreateOrConnectWithoutUserProfileInput = {
+export type UserAllergyCreateOrConnectWithoutUserInput = {
   where: Prisma.UserAllergyWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput>
+  create: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput>
 }
 
-export type UserAllergyCreateManyUserProfileInputEnvelope = {
-  data: Prisma.UserAllergyCreateManyUserProfileInput | Prisma.UserAllergyCreateManyUserProfileInput[]
+export type UserAllergyCreateManyUserInputEnvelope = {
+  data: Prisma.UserAllergyCreateManyUserInput | Prisma.UserAllergyCreateManyUserInput[]
   skipDuplicates?: boolean
 }
 
-export type UserAllergyUpsertWithWhereUniqueWithoutUserProfileInput = {
+export type UserAllergyUpsertWithWhereUniqueWithoutUserInput = {
   where: Prisma.UserAllergyWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserAllergyUpdateWithoutUserProfileInput, Prisma.UserAllergyUncheckedUpdateWithoutUserProfileInput>
-  create: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserProfileInput, Prisma.UserAllergyUncheckedCreateWithoutUserProfileInput>
+  update: Prisma.XOR<Prisma.UserAllergyUpdateWithoutUserInput, Prisma.UserAllergyUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.UserAllergyCreateWithoutUserInput, Prisma.UserAllergyUncheckedCreateWithoutUserInput>
 }
 
-export type UserAllergyUpdateWithWhereUniqueWithoutUserProfileInput = {
+export type UserAllergyUpdateWithWhereUniqueWithoutUserInput = {
   where: Prisma.UserAllergyWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserAllergyUpdateWithoutUserProfileInput, Prisma.UserAllergyUncheckedUpdateWithoutUserProfileInput>
+  data: Prisma.XOR<Prisma.UserAllergyUpdateWithoutUserInput, Prisma.UserAllergyUncheckedUpdateWithoutUserInput>
 }
 
-export type UserAllergyUpdateManyWithWhereWithoutUserProfileInput = {
+export type UserAllergyUpdateManyWithWhereWithoutUserInput = {
   where: Prisma.UserAllergyScalarWhereInput
-  data: Prisma.XOR<Prisma.UserAllergyUpdateManyMutationInput, Prisma.UserAllergyUncheckedUpdateManyWithoutUserProfileInput>
+  data: Prisma.XOR<Prisma.UserAllergyUpdateManyMutationInput, Prisma.UserAllergyUncheckedUpdateManyWithoutUserInput>
 }
 
 export type UserAllergyScalarWhereInput = {
@@ -560,7 +560,7 @@ export type UserAllergyScalarWhereInput = {
   id?: Prisma.IntFilter<"UserAllergy"> | number
   severity?: Prisma.EnumSeverityTypeFilter<"UserAllergy"> | $Enums.SeverityType
   note?: Prisma.StringNullableFilter<"UserAllergy"> | string | null
-  userProfileId?: Prisma.IntFilter<"UserAllergy"> | number
+  userId?: Prisma.IntFilter<"UserAllergy"> | number
   allergenId?: Prisma.IntFilter<"UserAllergy"> | number
   createdAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserAllergy"> | Date | string
@@ -571,14 +571,14 @@ export type UserAllergyCreateWithoutAllergenInput = {
   note?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  userProfile: Prisma.UserProfileCreateNestedOneWithoutAllergiesInput
+  user: Prisma.UserCreateNestedOneWithoutAllergiesInput
 }
 
 export type UserAllergyUncheckedCreateWithoutAllergenInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
-  userProfileId: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -609,7 +609,7 @@ export type UserAllergyUpdateManyWithWhereWithoutAllergenInput = {
   data: Prisma.XOR<Prisma.UserAllergyUpdateManyMutationInput, Prisma.UserAllergyUncheckedUpdateManyWithoutAllergenInput>
 }
 
-export type UserAllergyCreateManyUserProfileInput = {
+export type UserAllergyCreateManyUserInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
@@ -618,7 +618,7 @@ export type UserAllergyCreateManyUserProfileInput = {
   updatedAt?: Date | string
 }
 
-export type UserAllergyUpdateWithoutUserProfileInput = {
+export type UserAllergyUpdateWithoutUserInput = {
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -626,7 +626,7 @@ export type UserAllergyUpdateWithoutUserProfileInput = {
   allergen?: Prisma.AllergenUpdateOneRequiredWithoutUserAllergiesNestedInput
 }
 
-export type UserAllergyUncheckedUpdateWithoutUserProfileInput = {
+export type UserAllergyUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -635,7 +635,7 @@ export type UserAllergyUncheckedUpdateWithoutUserProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type UserAllergyUncheckedUpdateManyWithoutUserProfileInput = {
+export type UserAllergyUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -648,7 +648,7 @@ export type UserAllergyCreateManyAllergenInput = {
   id?: number
   severity: $Enums.SeverityType
   note?: string | null
-  userProfileId: number
+  userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -658,14 +658,14 @@ export type UserAllergyUpdateWithoutAllergenInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userProfile?: Prisma.UserProfileUpdateOneRequiredWithoutAllergiesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutAllergiesNestedInput
 }
 
 export type UserAllergyUncheckedUpdateWithoutAllergenInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userProfileId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -674,7 +674,7 @@ export type UserAllergyUncheckedUpdateManyWithoutAllergenInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   severity?: Prisma.EnumSeverityTypeFieldUpdateOperationsInput | $Enums.SeverityType
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userProfileId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -685,11 +685,11 @@ export type UserAllergySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   severity?: boolean
   note?: boolean
-  userProfileId?: boolean
+  userId?: boolean
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAllergy"]>
 
@@ -697,11 +697,11 @@ export type UserAllergySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   severity?: boolean
   note?: boolean
-  userProfileId?: boolean
+  userId?: boolean
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAllergy"]>
 
@@ -709,11 +709,11 @@ export type UserAllergySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   severity?: boolean
   note?: boolean
-  userProfileId?: boolean
+  userId?: boolean
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAllergy"]>
 
@@ -721,37 +721,37 @@ export type UserAllergySelectScalar = {
   id?: boolean
   severity?: boolean
   note?: boolean
-  userProfileId?: boolean
+  userId?: boolean
   allergenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserAllergyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "severity" | "note" | "userProfileId" | "allergenId" | "createdAt" | "updatedAt", ExtArgs["result"]["userAllergy"]>
+export type UserAllergyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "severity" | "note" | "userId" | "allergenId" | "createdAt" | "updatedAt", ExtArgs["result"]["userAllergy"]>
 export type UserAllergyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 export type UserAllergyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 export type UserAllergyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userProfile?: boolean | Prisma.UserProfileDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   allergen?: boolean | Prisma.AllergenDefaultArgs<ExtArgs>
 }
 
 export type $UserAllergyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserAllergy"
   objects: {
-    userProfile: Prisma.$UserProfilePayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
     allergen: Prisma.$AllergenPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     severity: $Enums.SeverityType
     note: string | null
-    userProfileId: number
+    userId: number
     allergenId: number
     createdAt: Date
     updatedAt: Date
@@ -1149,7 +1149,7 @@ readonly fields: UserAllergyFieldRefs;
  */
 export interface Prisma__UserAllergyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  userProfile<T extends Prisma.UserProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__UserProfileClient<runtime.Types.Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   allergen<T extends Prisma.AllergenDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AllergenDefaultArgs<ExtArgs>>): Prisma.Prisma__AllergenClient<runtime.Types.Result.GetResult<Prisma.$AllergenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1183,7 +1183,7 @@ export interface UserAllergyFieldRefs {
   readonly id: Prisma.FieldRef<"UserAllergy", 'Int'>
   readonly severity: Prisma.FieldRef<"UserAllergy", 'SeverityType'>
   readonly note: Prisma.FieldRef<"UserAllergy", 'String'>
-  readonly userProfileId: Prisma.FieldRef<"UserAllergy", 'Int'>
+  readonly userId: Prisma.FieldRef<"UserAllergy", 'Int'>
   readonly allergenId: Prisma.FieldRef<"UserAllergy", 'Int'>
   readonly createdAt: Prisma.FieldRef<"UserAllergy", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserAllergy", 'DateTime'>

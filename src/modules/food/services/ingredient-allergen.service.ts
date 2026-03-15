@@ -2,7 +2,6 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-  BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import type { CreateIngredientAllergenDto } from '../dto/ingredient-allergen/create-ingredient-allergen.dto.js';
@@ -12,14 +11,11 @@ export class IngredientAllergenService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateIngredientAllergenDto) {
-    const food = await this.prisma.food.findUnique({
+    const ingredient = await this.prisma.ingredient.findUnique({
       where: { id: dto.ingredientId },
     });
-    if (!food) {
-      throw new NotFoundException(`Food #${dto.ingredientId} không tồn tại`);
-    }
-    if (food.foodType !== 'INGREDIENT') {
-      throw new BadRequestException('Food phải có phân loại là INGREDIENT');
+    if (!ingredient) {
+      throw new NotFoundException(`Ingredient #${dto.ingredientId} không tồn tại`);
     }
 
     const allergen = await this.prisma.allergen.findUnique({

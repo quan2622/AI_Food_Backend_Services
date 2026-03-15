@@ -301,7 +301,6 @@ export type UserProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  allergies?: Prisma.UserAllergyListRelationFilter
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -318,7 +317,6 @@ export type UserProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  allergies?: Prisma.UserAllergyOrderByRelationAggregateInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -338,7 +336,6 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  allergies?: Prisma.UserAllergyListRelationFilter
 }, "id" | "userId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -391,7 +388,6 @@ export type UserProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserProfileInput
-  allergies?: Prisma.UserAllergyCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -407,7 +403,6 @@ export type UserProfileUncheckedCreateInput = {
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  allergies?: Prisma.UserAllergyUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUpdateInput = {
@@ -422,7 +417,6 @@ export type UserProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserProfileNestedInput
-  allergies?: Prisma.UserAllergyUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -438,7 +432,6 @@ export type UserProfileUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  allergies?: Prisma.UserAllergyUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileCreateManyInput = {
@@ -556,11 +549,6 @@ export type UserProfileSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
 }
 
-export type UserProfileScalarRelationFilter = {
-  is?: Prisma.UserProfileWhereInput
-  isNot?: Prisma.UserProfileWhereInput
-}
-
 export type UserProfileCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.UserProfileCreateWithoutUserInput, Prisma.UserProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutUserInput
@@ -601,20 +589,6 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserProfileCreateNestedOneWithoutAllergiesInput = {
-  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutAllergiesInput, Prisma.UserProfileUncheckedCreateWithoutAllergiesInput>
-  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutAllergiesInput
-  connect?: Prisma.UserProfileWhereUniqueInput
-}
-
-export type UserProfileUpdateOneRequiredWithoutAllergiesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutAllergiesInput, Prisma.UserProfileUncheckedCreateWithoutAllergiesInput>
-  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutAllergiesInput
-  upsert?: Prisma.UserProfileUpsertWithoutAllergiesInput
-  connect?: Prisma.UserProfileWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserProfileUpdateToOneWithWhereWithoutAllergiesInput, Prisma.UserProfileUpdateWithoutAllergiesInput>, Prisma.UserProfileUncheckedUpdateWithoutAllergiesInput>
-}
-
 export type UserProfileCreateWithoutUserInput = {
   age: number
   height: number
@@ -626,7 +600,6 @@ export type UserProfileCreateWithoutUserInput = {
   activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  allergies?: Prisma.UserAllergyCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileUncheckedCreateWithoutUserInput = {
@@ -641,7 +614,6 @@ export type UserProfileUncheckedCreateWithoutUserInput = {
   activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  allergies?: Prisma.UserAllergyUncheckedCreateNestedManyWithoutUserProfileInput
 }
 
 export type UserProfileCreateOrConnectWithoutUserInput = {
@@ -671,7 +643,6 @@ export type UserProfileUpdateWithoutUserInput = {
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  allergies?: Prisma.UserAllergyUpdateManyWithoutUserProfileNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUserInput = {
@@ -686,112 +657,8 @@ export type UserProfileUncheckedUpdateWithoutUserInput = {
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  allergies?: Prisma.UserAllergyUncheckedUpdateManyWithoutUserProfileNestedInput
 }
 
-export type UserProfileCreateWithoutAllergiesInput = {
-  age: number
-  height: number
-  weight: number
-  bmi: number
-  bmr: number
-  tdee: number
-  gender?: string | null
-  activityLevel?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutUserProfileInput
-}
-
-export type UserProfileUncheckedCreateWithoutAllergiesInput = {
-  id?: number
-  age: number
-  height: number
-  weight: number
-  bmi: number
-  bmr: number
-  tdee: number
-  gender?: string | null
-  activityLevel?: string | null
-  userId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type UserProfileCreateOrConnectWithoutAllergiesInput = {
-  where: Prisma.UserProfileWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserProfileCreateWithoutAllergiesInput, Prisma.UserProfileUncheckedCreateWithoutAllergiesInput>
-}
-
-export type UserProfileUpsertWithoutAllergiesInput = {
-  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutAllergiesInput, Prisma.UserProfileUncheckedUpdateWithoutAllergiesInput>
-  create: Prisma.XOR<Prisma.UserProfileCreateWithoutAllergiesInput, Prisma.UserProfileUncheckedCreateWithoutAllergiesInput>
-  where?: Prisma.UserProfileWhereInput
-}
-
-export type UserProfileUpdateToOneWithWhereWithoutAllergiesInput = {
-  where?: Prisma.UserProfileWhereInput
-  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutAllergiesInput, Prisma.UserProfileUncheckedUpdateWithoutAllergiesInput>
-}
-
-export type UserProfileUpdateWithoutAllergiesInput = {
-  age?: Prisma.IntFieldUpdateOperationsInput | number
-  height?: Prisma.FloatFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  bmi?: Prisma.FloatFieldUpdateOperationsInput | number
-  bmr?: Prisma.FloatFieldUpdateOperationsInput | number
-  tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutUserProfileNestedInput
-}
-
-export type UserProfileUncheckedUpdateWithoutAllergiesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  age?: Prisma.IntFieldUpdateOperationsInput | number
-  height?: Prisma.FloatFieldUpdateOperationsInput | number
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  bmi?: Prisma.FloatFieldUpdateOperationsInput | number
-  bmr?: Prisma.FloatFieldUpdateOperationsInput | number
-  tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type UserProfileCountOutputType
- */
-
-export type UserProfileCountOutputType = {
-  allergies: number
-}
-
-export type UserProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  allergies?: boolean | UserProfileCountOutputTypeCountAllergiesArgs
-}
-
-/**
- * UserProfileCountOutputType without action
- */
-export type UserProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserProfileCountOutputType
-   */
-  select?: Prisma.UserProfileCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserProfileCountOutputType without action
- */
-export type UserProfileCountOutputTypeCountAllergiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserAllergyWhereInput
-}
 
 
 export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -808,8 +675,6 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  allergies?: boolean | Prisma.UserProfile$allergiesArgs<ExtArgs>
-  _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
 export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -862,8 +727,6 @@ export type UserProfileSelectScalar = {
 export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "age" | "height" | "weight" | "bmi" | "bmr" | "tdee" | "gender" | "activityLevel" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  allergies?: boolean | Prisma.UserProfile$allergiesArgs<ExtArgs>
-  _count?: boolean | Prisma.UserProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -876,7 +739,6 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "UserProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    allergies: Prisma.$UserAllergyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1286,7 +1148,6 @@ readonly fields: UserProfileFieldRefs;
 export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  allergies<T extends Prisma.UserProfile$allergiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$allergiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAllergyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1721,30 +1582,6 @@ export type UserProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many UserProfiles to delete.
    */
   limit?: number
-}
-
-/**
- * UserProfile.allergies
- */
-export type UserProfile$allergiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserAllergy
-   */
-  select?: Prisma.UserAllergySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UserAllergy
-   */
-  omit?: Prisma.UserAllergyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserAllergyInclude<ExtArgs> | null
-  where?: Prisma.UserAllergyWhereInput
-  orderBy?: Prisma.UserAllergyOrderByWithRelationInput | Prisma.UserAllergyOrderByWithRelationInput[]
-  cursor?: Prisma.UserAllergyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserAllergyScalarFieldEnum | Prisma.UserAllergyScalarFieldEnum[]
 }
 
 /**

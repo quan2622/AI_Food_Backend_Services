@@ -36,8 +36,9 @@ export class UsersService {
         email: dto.email,
         password: hashedPassword,
         fullName: dto.fullName,
+        genderCode: dto.genderCode,
         avatarUrl: dto.avatarUrl,
-        dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : undefined,
+        birthOfDate: dto.birthOfDate ? new Date(dto.birthOfDate) : undefined,
         isAdmin: dto.isAdmin ?? false,
       },
     });
@@ -89,9 +90,10 @@ export class UsersService {
     const data: Parameters<PrismaService['user']['update']>[0]['data'] = {
       ...(dto.email != null && { email: dto.email }),
       ...(dto.fullName != null && { fullName: dto.fullName }),
+      ...(dto.genderCode !== undefined && { genderCode: dto.genderCode }),
       ...(dto.avatarUrl !== undefined && { avatarUrl: dto.avatarUrl }),
       ...(dto.birthOfDate !== undefined && {
-        dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
+        birthOfDate: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
       }),
       ...(dto.isAdmin !== undefined && { isAdmin: dto.isAdmin }),
     };

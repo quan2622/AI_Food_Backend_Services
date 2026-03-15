@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model FoodIngredient
- * Represents the composition of a DISH food (which ingredients it contains).
+ * Represents the composition of a Food (which ingredients it contains).
  */
 export type FoodIngredientModel = runtime.Types.Result.DefaultSelection<Prisma.$FoodIngredientPayload>
 
@@ -29,21 +29,21 @@ export type AggregateFoodIngredient = {
 export type FoodIngredientAvgAggregateOutputType = {
   id: number | null
   quantityGrams: number | null
-  dishId: number | null
+  foodId: number | null
   ingredientId: number | null
 }
 
 export type FoodIngredientSumAggregateOutputType = {
   id: number | null
   quantityGrams: number | null
-  dishId: number | null
+  foodId: number | null
   ingredientId: number | null
 }
 
 export type FoodIngredientMinAggregateOutputType = {
   id: number | null
   quantityGrams: number | null
-  dishId: number | null
+  foodId: number | null
   ingredientId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,7 +52,7 @@ export type FoodIngredientMinAggregateOutputType = {
 export type FoodIngredientMaxAggregateOutputType = {
   id: number | null
   quantityGrams: number | null
-  dishId: number | null
+  foodId: number | null
   ingredientId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,7 +61,7 @@ export type FoodIngredientMaxAggregateOutputType = {
 export type FoodIngredientCountAggregateOutputType = {
   id: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   ingredientId: number
   createdAt: number
   updatedAt: number
@@ -72,21 +72,21 @@ export type FoodIngredientCountAggregateOutputType = {
 export type FoodIngredientAvgAggregateInputType = {
   id?: true
   quantityGrams?: true
-  dishId?: true
+  foodId?: true
   ingredientId?: true
 }
 
 export type FoodIngredientSumAggregateInputType = {
   id?: true
   quantityGrams?: true
-  dishId?: true
+  foodId?: true
   ingredientId?: true
 }
 
 export type FoodIngredientMinAggregateInputType = {
   id?: true
   quantityGrams?: true
-  dishId?: true
+  foodId?: true
   ingredientId?: true
   createdAt?: true
   updatedAt?: true
@@ -95,7 +95,7 @@ export type FoodIngredientMinAggregateInputType = {
 export type FoodIngredientMaxAggregateInputType = {
   id?: true
   quantityGrams?: true
-  dishId?: true
+  foodId?: true
   ingredientId?: true
   createdAt?: true
   updatedAt?: true
@@ -104,7 +104,7 @@ export type FoodIngredientMaxAggregateInputType = {
 export type FoodIngredientCountAggregateInputType = {
   id?: true
   quantityGrams?: true
-  dishId?: true
+  foodId?: true
   ingredientId?: true
   createdAt?: true
   updatedAt?: true
@@ -200,7 +200,7 @@ export type FoodIngredientGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type FoodIngredientGroupByOutputType = {
   id: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   ingredientId: number
   createdAt: Date
   updatedAt: Date
@@ -232,44 +232,44 @@ export type FoodIngredientWhereInput = {
   NOT?: Prisma.FoodIngredientWhereInput | Prisma.FoodIngredientWhereInput[]
   id?: Prisma.IntFilter<"FoodIngredient"> | number
   quantityGrams?: Prisma.FloatFilter<"FoodIngredient"> | number
-  dishId?: Prisma.IntFilter<"FoodIngredient"> | number
+  foodId?: Prisma.IntFilter<"FoodIngredient"> | number
   ingredientId?: Prisma.IntFilter<"FoodIngredient"> | number
   createdAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
-  dish?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
-  ingredient?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
+  food?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
+  ingredient?: Prisma.XOR<Prisma.IngredientScalarRelationFilter, Prisma.IngredientWhereInput>
 }
 
 export type FoodIngredientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  dish?: Prisma.FoodOrderByWithRelationInput
-  ingredient?: Prisma.FoodOrderByWithRelationInput
+  food?: Prisma.FoodOrderByWithRelationInput
+  ingredient?: Prisma.IngredientOrderByWithRelationInput
 }
 
 export type FoodIngredientWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  dishId_ingredientId?: Prisma.FoodIngredientDishIdIngredientIdCompoundUniqueInput
+  foodId_ingredientId?: Prisma.FoodIngredientFoodIdIngredientIdCompoundUniqueInput
   AND?: Prisma.FoodIngredientWhereInput | Prisma.FoodIngredientWhereInput[]
   OR?: Prisma.FoodIngredientWhereInput[]
   NOT?: Prisma.FoodIngredientWhereInput | Prisma.FoodIngredientWhereInput[]
   quantityGrams?: Prisma.FloatFilter<"FoodIngredient"> | number
-  dishId?: Prisma.IntFilter<"FoodIngredient"> | number
+  foodId?: Prisma.IntFilter<"FoodIngredient"> | number
   ingredientId?: Prisma.IntFilter<"FoodIngredient"> | number
   createdAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
-  dish?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
-  ingredient?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
-}, "id" | "dishId_ingredientId">
+  food?: Prisma.XOR<Prisma.FoodScalarRelationFilter, Prisma.FoodWhereInput>
+  ingredient?: Prisma.XOR<Prisma.IngredientScalarRelationFilter, Prisma.IngredientWhereInput>
+}, "id" | "foodId_ingredientId">
 
 export type FoodIngredientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -286,7 +286,7 @@ export type FoodIngredientScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FoodIngredientScalarWhereWithAggregatesInput | Prisma.FoodIngredientScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"FoodIngredient"> | number
   quantityGrams?: Prisma.FloatWithAggregatesFilter<"FoodIngredient"> | number
-  dishId?: Prisma.IntWithAggregatesFilter<"FoodIngredient"> | number
+  foodId?: Prisma.IntWithAggregatesFilter<"FoodIngredient"> | number
   ingredientId?: Prisma.IntWithAggregatesFilter<"FoodIngredient"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FoodIngredient"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FoodIngredient"> | Date | string
@@ -296,14 +296,14 @@ export type FoodIngredientCreateInput = {
   quantityGrams: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  dish: Prisma.FoodCreateNestedOneWithoutDishIngredientsInput
-  ingredient: Prisma.FoodCreateNestedOneWithoutUsedAsIngredientInput
+  food: Prisma.FoodCreateNestedOneWithoutFoodIngredientsInput
+  ingredient: Prisma.IngredientCreateNestedOneWithoutFoodIngredientsInput
 }
 
 export type FoodIngredientUncheckedCreateInput = {
   id?: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   ingredientId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -313,14 +313,14 @@ export type FoodIngredientUpdateInput = {
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dish?: Prisma.FoodUpdateOneRequiredWithoutDishIngredientsNestedInput
-  ingredient?: Prisma.FoodUpdateOneRequiredWithoutUsedAsIngredientNestedInput
+  food?: Prisma.FoodUpdateOneRequiredWithoutFoodIngredientsNestedInput
+  ingredient?: Prisma.IngredientUpdateOneRequiredWithoutFoodIngredientsNestedInput
 }
 
 export type FoodIngredientUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  dishId?: Prisma.IntFieldUpdateOperationsInput | number
+  foodId?: Prisma.IntFieldUpdateOperationsInput | number
   ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -329,7 +329,7 @@ export type FoodIngredientUncheckedUpdateInput = {
 export type FoodIngredientCreateManyInput = {
   id?: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   ingredientId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -344,7 +344,7 @@ export type FoodIngredientUpdateManyMutationInput = {
 export type FoodIngredientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  dishId?: Prisma.IntFieldUpdateOperationsInput | number
+  foodId?: Prisma.IntFieldUpdateOperationsInput | number
   ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,15 +360,15 @@ export type FoodIngredientOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type FoodIngredientDishIdIngredientIdCompoundUniqueInput = {
-  dishId: number
+export type FoodIngredientFoodIdIngredientIdCompoundUniqueInput = {
+  foodId: number
   ingredientId: number
 }
 
 export type FoodIngredientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -377,14 +377,14 @@ export type FoodIngredientCountOrderByAggregateInput = {
 export type FoodIngredientAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
 }
 
 export type FoodIngredientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -393,7 +393,7 @@ export type FoodIngredientMaxOrderByAggregateInput = {
 export type FoodIngredientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -402,15 +402,8 @@ export type FoodIngredientMinOrderByAggregateInput = {
 export type FoodIngredientSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantityGrams?: Prisma.SortOrder
-  dishId?: Prisma.SortOrder
+  foodId?: Prisma.SortOrder
   ingredientId?: Prisma.SortOrder
-}
-
-export type FoodIngredientCreateNestedManyWithoutDishInput = {
-  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput> | Prisma.FoodIngredientCreateWithoutDishInput[] | Prisma.FoodIngredientUncheckedCreateWithoutDishInput[]
-  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutDishInput | Prisma.FoodIngredientCreateOrConnectWithoutDishInput[]
-  createMany?: Prisma.FoodIngredientCreateManyDishInputEnvelope
-  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
 }
 
 export type FoodIngredientCreateNestedManyWithoutIngredientInput = {
@@ -420,32 +413,11 @@ export type FoodIngredientCreateNestedManyWithoutIngredientInput = {
   connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
 }
 
-export type FoodIngredientUncheckedCreateNestedManyWithoutDishInput = {
-  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput> | Prisma.FoodIngredientCreateWithoutDishInput[] | Prisma.FoodIngredientUncheckedCreateWithoutDishInput[]
-  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutDishInput | Prisma.FoodIngredientCreateOrConnectWithoutDishInput[]
-  createMany?: Prisma.FoodIngredientCreateManyDishInputEnvelope
-  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-}
-
 export type FoodIngredientUncheckedCreateNestedManyWithoutIngredientInput = {
   create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutIngredientInput, Prisma.FoodIngredientUncheckedCreateWithoutIngredientInput> | Prisma.FoodIngredientCreateWithoutIngredientInput[] | Prisma.FoodIngredientUncheckedCreateWithoutIngredientInput[]
   connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutIngredientInput | Prisma.FoodIngredientCreateOrConnectWithoutIngredientInput[]
   createMany?: Prisma.FoodIngredientCreateManyIngredientInputEnvelope
   connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-}
-
-export type FoodIngredientUpdateManyWithoutDishNestedInput = {
-  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput> | Prisma.FoodIngredientCreateWithoutDishInput[] | Prisma.FoodIngredientUncheckedCreateWithoutDishInput[]
-  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutDishInput | Prisma.FoodIngredientCreateOrConnectWithoutDishInput[]
-  upsert?: Prisma.FoodIngredientUpsertWithWhereUniqueWithoutDishInput | Prisma.FoodIngredientUpsertWithWhereUniqueWithoutDishInput[]
-  createMany?: Prisma.FoodIngredientCreateManyDishInputEnvelope
-  set?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  disconnect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  delete?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  update?: Prisma.FoodIngredientUpdateWithWhereUniqueWithoutDishInput | Prisma.FoodIngredientUpdateWithWhereUniqueWithoutDishInput[]
-  updateMany?: Prisma.FoodIngredientUpdateManyWithWhereWithoutDishInput | Prisma.FoodIngredientUpdateManyWithWhereWithoutDishInput[]
-  deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
 }
 
 export type FoodIngredientUpdateManyWithoutIngredientNestedInput = {
@@ -459,20 +431,6 @@ export type FoodIngredientUpdateManyWithoutIngredientNestedInput = {
   connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
   update?: Prisma.FoodIngredientUpdateWithWhereUniqueWithoutIngredientInput | Prisma.FoodIngredientUpdateWithWhereUniqueWithoutIngredientInput[]
   updateMany?: Prisma.FoodIngredientUpdateManyWithWhereWithoutIngredientInput | Prisma.FoodIngredientUpdateManyWithWhereWithoutIngredientInput[]
-  deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
-}
-
-export type FoodIngredientUncheckedUpdateManyWithoutDishNestedInput = {
-  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput> | Prisma.FoodIngredientCreateWithoutDishInput[] | Prisma.FoodIngredientUncheckedCreateWithoutDishInput[]
-  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutDishInput | Prisma.FoodIngredientCreateOrConnectWithoutDishInput[]
-  upsert?: Prisma.FoodIngredientUpsertWithWhereUniqueWithoutDishInput | Prisma.FoodIngredientUpsertWithWhereUniqueWithoutDishInput[]
-  createMany?: Prisma.FoodIngredientCreateManyDishInputEnvelope
-  set?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  disconnect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  delete?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
-  update?: Prisma.FoodIngredientUpdateWithWhereUniqueWithoutDishInput | Prisma.FoodIngredientUpdateWithWhereUniqueWithoutDishInput[]
-  updateMany?: Prisma.FoodIngredientUpdateManyWithWhereWithoutDishInput | Prisma.FoodIngredientUpdateManyWithWhereWithoutDishInput[]
   deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
 }
 
@@ -490,42 +448,59 @@ export type FoodIngredientUncheckedUpdateManyWithoutIngredientNestedInput = {
   deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
 }
 
-export type FoodIngredientCreateWithoutDishInput = {
-  quantityGrams: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  ingredient: Prisma.FoodCreateNestedOneWithoutUsedAsIngredientInput
+export type FoodIngredientCreateNestedManyWithoutFoodInput = {
+  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput> | Prisma.FoodIngredientCreateWithoutFoodInput[] | Prisma.FoodIngredientUncheckedCreateWithoutFoodInput[]
+  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutFoodInput | Prisma.FoodIngredientCreateOrConnectWithoutFoodInput[]
+  createMany?: Prisma.FoodIngredientCreateManyFoodInputEnvelope
+  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
 }
 
-export type FoodIngredientUncheckedCreateWithoutDishInput = {
-  id?: number
-  quantityGrams: number
-  ingredientId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
+export type FoodIngredientUncheckedCreateNestedManyWithoutFoodInput = {
+  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput> | Prisma.FoodIngredientCreateWithoutFoodInput[] | Prisma.FoodIngredientUncheckedCreateWithoutFoodInput[]
+  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutFoodInput | Prisma.FoodIngredientCreateOrConnectWithoutFoodInput[]
+  createMany?: Prisma.FoodIngredientCreateManyFoodInputEnvelope
+  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
 }
 
-export type FoodIngredientCreateOrConnectWithoutDishInput = {
-  where: Prisma.FoodIngredientWhereUniqueInput
-  create: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput>
+export type FoodIngredientUpdateManyWithoutFoodNestedInput = {
+  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput> | Prisma.FoodIngredientCreateWithoutFoodInput[] | Prisma.FoodIngredientUncheckedCreateWithoutFoodInput[]
+  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutFoodInput | Prisma.FoodIngredientCreateOrConnectWithoutFoodInput[]
+  upsert?: Prisma.FoodIngredientUpsertWithWhereUniqueWithoutFoodInput | Prisma.FoodIngredientUpsertWithWhereUniqueWithoutFoodInput[]
+  createMany?: Prisma.FoodIngredientCreateManyFoodInputEnvelope
+  set?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  disconnect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  delete?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  update?: Prisma.FoodIngredientUpdateWithWhereUniqueWithoutFoodInput | Prisma.FoodIngredientUpdateWithWhereUniqueWithoutFoodInput[]
+  updateMany?: Prisma.FoodIngredientUpdateManyWithWhereWithoutFoodInput | Prisma.FoodIngredientUpdateManyWithWhereWithoutFoodInput[]
+  deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
 }
 
-export type FoodIngredientCreateManyDishInputEnvelope = {
-  data: Prisma.FoodIngredientCreateManyDishInput | Prisma.FoodIngredientCreateManyDishInput[]
-  skipDuplicates?: boolean
+export type FoodIngredientUncheckedUpdateManyWithoutFoodNestedInput = {
+  create?: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput> | Prisma.FoodIngredientCreateWithoutFoodInput[] | Prisma.FoodIngredientUncheckedCreateWithoutFoodInput[]
+  connectOrCreate?: Prisma.FoodIngredientCreateOrConnectWithoutFoodInput | Prisma.FoodIngredientCreateOrConnectWithoutFoodInput[]
+  upsert?: Prisma.FoodIngredientUpsertWithWhereUniqueWithoutFoodInput | Prisma.FoodIngredientUpsertWithWhereUniqueWithoutFoodInput[]
+  createMany?: Prisma.FoodIngredientCreateManyFoodInputEnvelope
+  set?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  disconnect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  delete?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  connect?: Prisma.FoodIngredientWhereUniqueInput | Prisma.FoodIngredientWhereUniqueInput[]
+  update?: Prisma.FoodIngredientUpdateWithWhereUniqueWithoutFoodInput | Prisma.FoodIngredientUpdateWithWhereUniqueWithoutFoodInput[]
+  updateMany?: Prisma.FoodIngredientUpdateManyWithWhereWithoutFoodInput | Prisma.FoodIngredientUpdateManyWithWhereWithoutFoodInput[]
+  deleteMany?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
 }
 
 export type FoodIngredientCreateWithoutIngredientInput = {
   quantityGrams: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  dish: Prisma.FoodCreateNestedOneWithoutDishIngredientsInput
+  food: Prisma.FoodCreateNestedOneWithoutFoodIngredientsInput
 }
 
 export type FoodIngredientUncheckedCreateWithoutIngredientInput = {
   id?: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -538,34 +513,6 @@ export type FoodIngredientCreateOrConnectWithoutIngredientInput = {
 export type FoodIngredientCreateManyIngredientInputEnvelope = {
   data: Prisma.FoodIngredientCreateManyIngredientInput | Prisma.FoodIngredientCreateManyIngredientInput[]
   skipDuplicates?: boolean
-}
-
-export type FoodIngredientUpsertWithWhereUniqueWithoutDishInput = {
-  where: Prisma.FoodIngredientWhereUniqueInput
-  update: Prisma.XOR<Prisma.FoodIngredientUpdateWithoutDishInput, Prisma.FoodIngredientUncheckedUpdateWithoutDishInput>
-  create: Prisma.XOR<Prisma.FoodIngredientCreateWithoutDishInput, Prisma.FoodIngredientUncheckedCreateWithoutDishInput>
-}
-
-export type FoodIngredientUpdateWithWhereUniqueWithoutDishInput = {
-  where: Prisma.FoodIngredientWhereUniqueInput
-  data: Prisma.XOR<Prisma.FoodIngredientUpdateWithoutDishInput, Prisma.FoodIngredientUncheckedUpdateWithoutDishInput>
-}
-
-export type FoodIngredientUpdateManyWithWhereWithoutDishInput = {
-  where: Prisma.FoodIngredientScalarWhereInput
-  data: Prisma.XOR<Prisma.FoodIngredientUpdateManyMutationInput, Prisma.FoodIngredientUncheckedUpdateManyWithoutDishInput>
-}
-
-export type FoodIngredientScalarWhereInput = {
-  AND?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
-  OR?: Prisma.FoodIngredientScalarWhereInput[]
-  NOT?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
-  id?: Prisma.IntFilter<"FoodIngredient"> | number
-  quantityGrams?: Prisma.FloatFilter<"FoodIngredient"> | number
-  dishId?: Prisma.IntFilter<"FoodIngredient"> | number
-  ingredientId?: Prisma.IntFilter<"FoodIngredient"> | number
-  createdAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
 }
 
 export type FoodIngredientUpsertWithWhereUniqueWithoutIngredientInput = {
@@ -584,7 +531,26 @@ export type FoodIngredientUpdateManyWithWhereWithoutIngredientInput = {
   data: Prisma.XOR<Prisma.FoodIngredientUpdateManyMutationInput, Prisma.FoodIngredientUncheckedUpdateManyWithoutIngredientInput>
 }
 
-export type FoodIngredientCreateManyDishInput = {
+export type FoodIngredientScalarWhereInput = {
+  AND?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
+  OR?: Prisma.FoodIngredientScalarWhereInput[]
+  NOT?: Prisma.FoodIngredientScalarWhereInput | Prisma.FoodIngredientScalarWhereInput[]
+  id?: Prisma.IntFilter<"FoodIngredient"> | number
+  quantityGrams?: Prisma.FloatFilter<"FoodIngredient"> | number
+  foodId?: Prisma.IntFilter<"FoodIngredient"> | number
+  ingredientId?: Prisma.IntFilter<"FoodIngredient"> | number
+  createdAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"FoodIngredient"> | Date | string
+}
+
+export type FoodIngredientCreateWithoutFoodInput = {
+  quantityGrams: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ingredient: Prisma.IngredientCreateNestedOneWithoutFoodIngredientsInput
+}
+
+export type FoodIngredientUncheckedCreateWithoutFoodInput = {
   id?: number
   quantityGrams: number
   ingredientId: number
@@ -592,48 +558,51 @@ export type FoodIngredientCreateManyDishInput = {
   updatedAt?: Date | string
 }
 
+export type FoodIngredientCreateOrConnectWithoutFoodInput = {
+  where: Prisma.FoodIngredientWhereUniqueInput
+  create: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput>
+}
+
+export type FoodIngredientCreateManyFoodInputEnvelope = {
+  data: Prisma.FoodIngredientCreateManyFoodInput | Prisma.FoodIngredientCreateManyFoodInput[]
+  skipDuplicates?: boolean
+}
+
+export type FoodIngredientUpsertWithWhereUniqueWithoutFoodInput = {
+  where: Prisma.FoodIngredientWhereUniqueInput
+  update: Prisma.XOR<Prisma.FoodIngredientUpdateWithoutFoodInput, Prisma.FoodIngredientUncheckedUpdateWithoutFoodInput>
+  create: Prisma.XOR<Prisma.FoodIngredientCreateWithoutFoodInput, Prisma.FoodIngredientUncheckedCreateWithoutFoodInput>
+}
+
+export type FoodIngredientUpdateWithWhereUniqueWithoutFoodInput = {
+  where: Prisma.FoodIngredientWhereUniqueInput
+  data: Prisma.XOR<Prisma.FoodIngredientUpdateWithoutFoodInput, Prisma.FoodIngredientUncheckedUpdateWithoutFoodInput>
+}
+
+export type FoodIngredientUpdateManyWithWhereWithoutFoodInput = {
+  where: Prisma.FoodIngredientScalarWhereInput
+  data: Prisma.XOR<Prisma.FoodIngredientUpdateManyMutationInput, Prisma.FoodIngredientUncheckedUpdateManyWithoutFoodInput>
+}
+
 export type FoodIngredientCreateManyIngredientInput = {
   id?: number
   quantityGrams: number
-  dishId: number
+  foodId: number
   createdAt?: Date | string
   updatedAt?: Date | string
-}
-
-export type FoodIngredientUpdateWithoutDishInput = {
-  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ingredient?: Prisma.FoodUpdateOneRequiredWithoutUsedAsIngredientNestedInput
-}
-
-export type FoodIngredientUncheckedUpdateWithoutDishInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type FoodIngredientUncheckedUpdateManyWithoutDishInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FoodIngredientUpdateWithoutIngredientInput = {
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dish?: Prisma.FoodUpdateOneRequiredWithoutDishIngredientsNestedInput
+  food?: Prisma.FoodUpdateOneRequiredWithoutFoodIngredientsNestedInput
 }
 
 export type FoodIngredientUncheckedUpdateWithoutIngredientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  dishId?: Prisma.IntFieldUpdateOperationsInput | number
+  foodId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -641,7 +610,38 @@ export type FoodIngredientUncheckedUpdateWithoutIngredientInput = {
 export type FoodIngredientUncheckedUpdateManyWithoutIngredientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
-  dishId?: Prisma.IntFieldUpdateOperationsInput | number
+  foodId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FoodIngredientCreateManyFoodInput = {
+  id?: number
+  quantityGrams: number
+  ingredientId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FoodIngredientUpdateWithoutFoodInput = {
+  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ingredient?: Prisma.IngredientUpdateOneRequiredWithoutFoodIngredientsNestedInput
+}
+
+export type FoodIngredientUncheckedUpdateWithoutFoodInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
+  ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FoodIngredientUncheckedUpdateManyWithoutFoodInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityGrams?: Prisma.FloatFieldUpdateOperationsInput | number
+  ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -651,69 +651,69 @@ export type FoodIngredientUncheckedUpdateManyWithoutIngredientInput = {
 export type FoodIngredientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantityGrams?: boolean
-  dishId?: boolean
+  foodId?: boolean
   ingredientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["foodIngredient"]>
 
 export type FoodIngredientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantityGrams?: boolean
-  dishId?: boolean
+  foodId?: boolean
   ingredientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["foodIngredient"]>
 
 export type FoodIngredientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantityGrams?: boolean
-  dishId?: boolean
+  foodId?: boolean
   ingredientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["foodIngredient"]>
 
 export type FoodIngredientSelectScalar = {
   id?: boolean
   quantityGrams?: boolean
-  dishId?: boolean
+  foodId?: boolean
   ingredientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FoodIngredientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantityGrams" | "dishId" | "ingredientId" | "createdAt" | "updatedAt", ExtArgs["result"]["foodIngredient"]>
+export type FoodIngredientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantityGrams" | "foodId" | "ingredientId" | "createdAt" | "updatedAt", ExtArgs["result"]["foodIngredient"]>
 export type FoodIngredientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }
 export type FoodIngredientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }
 export type FoodIngredientIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dish?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
-  ingredient?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
+  ingredient?: boolean | Prisma.IngredientDefaultArgs<ExtArgs>
 }
 
 export type $FoodIngredientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FoodIngredient"
   objects: {
-    dish: Prisma.$FoodPayload<ExtArgs>
-    ingredient: Prisma.$FoodPayload<ExtArgs>
+    food: Prisma.$FoodPayload<ExtArgs>
+    ingredient: Prisma.$IngredientPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     quantityGrams: number
-    dishId: number
+    foodId: number
     ingredientId: number
     createdAt: Date
     updatedAt: Date
@@ -1111,8 +1111,8 @@ readonly fields: FoodIngredientFieldRefs;
  */
 export interface Prisma__FoodIngredientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dish<T extends Prisma.FoodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FoodDefaultArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  ingredient<T extends Prisma.FoodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FoodDefaultArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  food<T extends Prisma.FoodDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FoodDefaultArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  ingredient<T extends Prisma.IngredientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IngredientDefaultArgs<ExtArgs>>): Prisma.Prisma__IngredientClient<runtime.Types.Result.GetResult<Prisma.$IngredientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1144,7 +1144,7 @@ export interface Prisma__FoodIngredientClient<T, Null = never, ExtArgs extends r
 export interface FoodIngredientFieldRefs {
   readonly id: Prisma.FieldRef<"FoodIngredient", 'Int'>
   readonly quantityGrams: Prisma.FieldRef<"FoodIngredient", 'Float'>
-  readonly dishId: Prisma.FieldRef<"FoodIngredient", 'Int'>
+  readonly foodId: Prisma.FieldRef<"FoodIngredient", 'Int'>
   readonly ingredientId: Prisma.FieldRef<"FoodIngredient", 'Int'>
   readonly createdAt: Prisma.FieldRef<"FoodIngredient", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"FoodIngredient", 'DateTime'>

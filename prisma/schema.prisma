@@ -17,9 +17,9 @@ datasource db {
 // ─── Enums ──────────────────────────────────────────────────────────────────
 
 enum GoalType {
-  LOSE_WEIGHT
-  MAINTAIN_WEIGHT
-  GAIN_WEIGHT
+  LOSE
+  GAIN
+  MAINTAIN
 }
 
 enum MealType {
@@ -31,21 +31,21 @@ enum MealType {
 
 enum StatusType {
   BELOW
-  EQUAL
+  MET
   ABOVE
 }
 
 enum SeverityType {
-  MILD
-  MODERATE
-  SEVERE
+  LOW
+  MEDIUM
+  HIGH
+  LIFE_THREATENING
 }
 
 enum ReportType {
-  WEEKLY
-  MONTHLY
-  YEARLY
-  CUSTOM
+  UPLOAD_COUNT
+  POPULAR_FOOD
+  TRAFFIC
 }
 
 enum FoodType {
@@ -77,15 +77,17 @@ model User {
   updatedAt      DateTime        @updatedAt
 
   userProfile    UserProfile?
+  allergies      UserAllergy[]
   nutritionGoals NutritionGoal[]
   dailyLogs      DailyLog[]
   reports        Report[]
+  foodImages     FoodImage[]
 
   @@map("users")
 }
 
 model UserProfile {
-  id            Int           @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   age           Int
   height        Float
   weight        Float
@@ -94,28 +96,26 @@ model UserProfile {
   tdee          Float
   gender        String?
   activityLevel String?
-  userId        Int           @unique
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-
-  allergies     UserAllergy[]
+  userId        Int     @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("user_profiles")
 }
 
 model UserAllergy {
-  id            Int          @id @default(autoincrement())
-  severity      SeverityType
-  note          String?      @db.Text
-  userProfileId Int
-  userProfile   UserProfile  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
-  allergenId    Int
-  allergen      Allergen     @relation(fields: [allergenId], references: [id], onDelete: Restrict)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id         Int          @id @default(autoincrement())
+  severity   SeverityType
+  note       String?      @db.Text
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  allergenId Int
+  allergen   Allergen     @relation(fields: [allergenId], references: [id], onDelete: Restrict)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 
-  @@unique([userProfileId, allergenId])
+  @@unique([userId, allergenId])
   @@map("user_allergies")
 }
 
@@ -155,10 +155,25 @@ model Allergen {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  userAllergies        UserAllergy[]
+  userAllergies       UserAllergy[]
   ingredientAllergens  IngredientAllergen[]
 
   @@map("allergens")
+}
+
+model Ingredient {
+  id             Int                    @id @default(autoincrement())
+  ingredientName String
+  description    String?
+  imageUrl       String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  foodIngredients      FoodIngredient[]
+  ingredientNutritions IngredientNutrition[]
+  ingredientAllergens IngredientAllergen[]
+
+  @@map("ingredients")
 }
 
 // ─── Food Domain ────────────────────────────────────────────────────────────
@@ -181,36 +196,33 @@ model Food {
   foodName     String
   description  String?
   imageUrl     String?
-  foodType     FoodType         @default(INGREDIENT)
+  foodType     FoodType         @default(DISH)
   categoryId   Int?
   foodCategory FoodCategory?    @relation(fields: [categoryId], references: [id])
   isActive     Boolean          @default(true)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
 
-  mealItems              MealItem[]
-  ingredientNutritions   IngredientNutrition[]
-  dishIngredients        FoodIngredient[]      @relation("DishHasIngredients")
-  usedAsIngredient       FoodIngredient[]      @relation("IngredientUsedInDish")
-  ingredientAllergens    IngredientAllergen[]
+  mealItems       MealItem[]
+  foodIngredients FoodIngredient[]
 
   @@index([foodName])
   @@map("foods")
 }
 
-/// Represents a specific nutritional profile for a food (e.g., per 100g serving).
+/// Represents a specific nutritional profile for an ingredient (e.g., per 100g serving).
 model IngredientNutrition {
-  id           Int            @id @default(autoincrement())
+  id           Int               @id @default(autoincrement())
   servingSize  Float
-  servingUnit  String         @default("g")
-  source       SourceType     @default(MANUAL)
-  isCalculated Boolean        @default(false)
-  foodId       Int
-  food         Food           @relation(fields: [foodId], references: [id], onDelete: Cascade)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  servingUnit  String            @default("g")
+  source       SourceType        @default(MANUAL)
+  isCalculated Boolean           @default(false)
+  ingredientId Int
+  ingredient   Ingredient        @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
-  values       NutritionValue[]
+  values NutritionValue[]
 
   @@map("ingredient_nutritions")
 }
@@ -239,30 +251,30 @@ model NutritionValue {
   @@map("nutrition_values")
 }
 
-/// Represents the composition of a DISH food (which ingredients it contains).
+/// Represents the composition of a Food (which ingredients it contains).
 model FoodIngredient {
-  id            Int      @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   quantityGrams Float
-  dishId        Int
-  dish          Food     @relation("DishHasIngredients", fields: [dishId], references: [id], onDelete: Cascade)
-  ingredientId  Int
-  ingredient    Food     @relation("IngredientUsedInDish", fields: [ingredientId], references: [id], onDelete: Restrict)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  foodId        Int
+  food          Food       @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  ingredientId Int
+  ingredient    Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
-  @@unique([dishId, ingredientId])
+  @@unique([foodId, ingredientId])
   @@map("food_ingredients")
 }
 
-/// Represents the relationship between an Ingredient (Food) and an Allergen.
+/// Represents the relationship between an Ingredient and an Allergen.
 model IngredientAllergen {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   ingredientId Int
-  ingredient   Food     @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   allergenId   Int
-  allergen     Allergen @relation(fields: [allergenId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  allergen     Allergen  @relation(fields: [allergenId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@unique([ingredientId, allergenId])
   @@map("ingredient_allergens")
@@ -295,6 +307,7 @@ model Meal {
   updatedAt    DateTime   @updatedAt
 
   mealItems    MealItem[]
+  foodImages   FoodImage[]
 
   @@map("meals")
 }
@@ -314,8 +327,6 @@ model MealItem {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 
-  foodImages FoodImage[]
-
   @@map("meal_items")
 }
 
@@ -326,8 +337,10 @@ model FoodImage {
   mimeType   String?
   fileSize   Int?
   uploadedAt DateTime @default(now())
-  mealItemId Int
-  mealItem   MealItem @relation(fields: [mealItemId], references: [id], onDelete: Cascade)
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mealId     Int
+  meal       Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
 
   @@map("food_images")
 }
@@ -340,7 +353,7 @@ model Report {
   generatedAt    DateTime
   timeRangeStart DateTime
   timeRangeEnd   DateTime
-  data           Json
+  data           String     @db.Text
   userId         Int
   user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt      DateTime   @default(now())
