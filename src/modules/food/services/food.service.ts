@@ -24,7 +24,6 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         categoryId: dto.categoryId ?? null,
-        foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
       })),
       skipDuplicates: true,
@@ -68,7 +67,9 @@ export class FoodService {
       data: {
         ...(dto.foodName != null && { foodName: dto.foodName }),
         ...(dto.description !== undefined && { description: dto.description }),
-        ...(dto.categoryId !== undefined && { categoryId: dto.categoryId ?? null }),
+        ...(dto.categoryId !== undefined && {
+          categoryId: dto.categoryId ?? null,
+        }),
         ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
       },
     });

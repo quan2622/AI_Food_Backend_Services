@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { FoodType } from '../../../generated/prisma/enums.js';
 import { CreateDishIngredientDto } from '../dto/dish-ingredient/create-dish-ingredient.dto.js';
 import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingredient.dto.js';
 
@@ -8,18 +7,7 @@ import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingr
 export class DishIngredientService {
   constructor(private readonly prisma: PrismaService) {}
 
-  private async validateDishType(foodId: number) {
-    const food = await this.prisma.food.findUnique({ where: { id: foodId } });
-    if (!food) {
-      throw new NotFoundException(`Food #${foodId} không tồn tại`);
-    }
-    if (food.foodType !== FoodType.DISH) {
-      throw new BadRequestException('Food phải có foodType = DISH');
-    }
-  }
-
   async findByDish(dishId: number) {
-    await this.validateDishType(dishId);
     return this.prisma.foodIngredient.findMany({
       where: { foodId: dishId },
       include: {
@@ -30,8 +18,6 @@ export class DishIngredientService {
   }
 
   async addIngredient(dishId: number, dto: CreateDishIngredientDto) {
-    await this.validateDishType(dishId);
-
     const ingredient = await this.prisma.ingredient.findUnique({
       where: { id: dto.ingredientId },
     });
