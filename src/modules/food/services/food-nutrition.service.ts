@@ -4,6 +4,7 @@ import { CreateNutritionComponentDto } from '../dto/food-nutrition/create-nutrit
 import { CreateFoodNutritionDto } from '../dto/food-nutrition/create-food-nutrition.dto.js';
 import { UpdateFoodNutritionDto } from '../dto/food-nutrition/update-food-nutrition.dto.js';
 import { UpsertNutritionValueDto } from '../dto/food-nutrition/upsert-nutrition-value.dto.js';
+import { UnitType } from '../../../generated/prisma/enums.js';
 
 @Injectable()
 export class FoodNutritionService {

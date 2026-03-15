@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { UnitType } from '../../../../generated/prisma/enums.js';
 
 export class CreateNutritionComponentDto {
   @IsString()
@@ -6,9 +7,8 @@ export class CreateNutritionComponentDto {
   @MaxLength(255)
   name: string;
 
-  @IsString()
+  @IsEnum(UnitType, { message: 'Đơn vị không hợp lệ' })
   @IsNotEmpty({ message: 'Đơn vị không được để trống' })
-  @MaxLength(50)
-  unit: string;
+  unit: UnitType;
 }
 

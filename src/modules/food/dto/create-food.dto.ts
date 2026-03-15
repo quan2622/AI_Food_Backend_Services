@@ -1,4 +1,3 @@
-import { FoodType } from '../../../generated/prisma/client.js';
 import {
   IsString,
   IsNotEmpty,
@@ -29,10 +28,4 @@ export class CreateFoodDto {
   @IsInt({ message: 'categoryId phải là số nguyên' })
   @Min(1, { message: 'categoryId phải lớn hơn 0' })
   categoryId?: number;
-
-  @IsOptional()
-  @IsIn(['INGREDIENT', 'DISH', 'BRANDED'], {
-    message: 'foodType không hợp lệ',
-  })
-  foodType?: FoodType;
 }

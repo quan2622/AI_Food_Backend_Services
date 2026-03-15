@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { FoodType } from '../../../generated/prisma/client.js';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
@@ -14,7 +13,6 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         categoryId: dto.categoryId ?? null,
-        foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
       },
     });
@@ -71,7 +69,6 @@ export class FoodService {
         ...(dto.foodName != null && { foodName: dto.foodName }),
         ...(dto.description !== undefined && { description: dto.description }),
         ...(dto.categoryId !== undefined && { categoryId: dto.categoryId ?? null }),
-        ...(dto.foodType != null && { foodType: dto.foodType }),
         ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
       },
     });

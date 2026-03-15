@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
+import { FoodType } from '../../../generated/prisma/enums.js';
 import { CreateDishIngredientDto } from '../dto/dish-ingredient/create-dish-ingredient.dto.js';
 import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingredient.dto.js';
 
@@ -12,7 +13,7 @@ export class DishIngredientService {
     if (!food) {
       throw new NotFoundException(`Food #${foodId} không tồn tại`);
     }
-    if (food.foodType !== 'DISH') {
+    if (food.foodType !== FoodType.DISH) {
       throw new BadRequestException('Food phải có foodType = DISH');
     }
   }
