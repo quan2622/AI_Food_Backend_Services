@@ -28,21 +28,29 @@ export type AggregateNutritionGoal = {
 
 export type NutritionGoalAvgAggregateOutputType = {
   id: number | null
+  targetCaloriesPerDay: number | null
+  targetProtein: number | null
+  targetCarbs: number | null
+  targetFat: number | null
   userId: number | null
 }
 
 export type NutritionGoalSumAggregateOutputType = {
   id: number | null
+  targetCaloriesPerDay: number | null
+  targetProtein: number | null
+  targetCarbs: number | null
+  targetFat: number | null
   userId: number | null
 }
 
 export type NutritionGoalMinAggregateOutputType = {
   id: number | null
   goalType: $Enums.GoalType | null
-  targetCaloriesPerDay: string | null
-  targetProtein: string | null
-  targetCarbs: string | null
-  targetFat: string | null
+  targetCaloriesPerDay: number | null
+  targetProtein: number | null
+  targetCarbs: number | null
+  targetFat: number | null
   startDay: Date | null
   endDate: Date | null
   userId: number | null
@@ -53,10 +61,10 @@ export type NutritionGoalMinAggregateOutputType = {
 export type NutritionGoalMaxAggregateOutputType = {
   id: number | null
   goalType: $Enums.GoalType | null
-  targetCaloriesPerDay: string | null
-  targetProtein: string | null
-  targetCarbs: string | null
-  targetFat: string | null
+  targetCaloriesPerDay: number | null
+  targetProtein: number | null
+  targetCarbs: number | null
+  targetFat: number | null
   startDay: Date | null
   endDate: Date | null
   userId: number | null
@@ -82,11 +90,19 @@ export type NutritionGoalCountAggregateOutputType = {
 
 export type NutritionGoalAvgAggregateInputType = {
   id?: true
+  targetCaloriesPerDay?: true
+  targetProtein?: true
+  targetCarbs?: true
+  targetFat?: true
   userId?: true
 }
 
 export type NutritionGoalSumAggregateInputType = {
   id?: true
+  targetCaloriesPerDay?: true
+  targetProtein?: true
+  targetCarbs?: true
+  targetFat?: true
   userId?: true
 }
 
@@ -222,10 +238,10 @@ export type NutritionGoalGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type NutritionGoalGroupByOutputType = {
   id: number
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date
   endDate: Date
   userId: number
@@ -259,10 +275,10 @@ export type NutritionGoalWhereInput = {
   NOT?: Prisma.NutritionGoalWhereInput | Prisma.NutritionGoalWhereInput[]
   id?: Prisma.IntFilter<"NutritionGoal"> | number
   goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetProtein?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetCarbs?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetFat?: Prisma.StringFilter<"NutritionGoal"> | string
+  targetCaloriesPerDay?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -292,10 +308,10 @@ export type NutritionGoalWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.NutritionGoalWhereInput[]
   NOT?: Prisma.NutritionGoalWhereInput | Prisma.NutritionGoalWhereInput[]
   goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetProtein?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetCarbs?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetFat?: Prisma.StringFilter<"NutritionGoal"> | string
+  targetCaloriesPerDay?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -329,10 +345,10 @@ export type NutritionGoalScalarWhereWithAggregatesInput = {
   NOT?: Prisma.NutritionGoalScalarWhereWithAggregatesInput | Prisma.NutritionGoalScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"NutritionGoal"> | number
   goalType?: Prisma.EnumGoalTypeWithAggregatesFilter<"NutritionGoal"> | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringWithAggregatesFilter<"NutritionGoal"> | string
-  targetProtein?: Prisma.StringWithAggregatesFilter<"NutritionGoal"> | string
-  targetCarbs?: Prisma.StringWithAggregatesFilter<"NutritionGoal"> | string
-  targetFat?: Prisma.StringWithAggregatesFilter<"NutritionGoal"> | string
+  targetCaloriesPerDay?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
+  targetProtein?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
+  targetCarbs?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
+  targetFat?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeWithAggregatesFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"NutritionGoal"> | number
@@ -342,10 +358,10 @@ export type NutritionGoalScalarWhereWithAggregatesInput = {
 
 export type NutritionGoalCreateInput = {
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -356,10 +372,10 @@ export type NutritionGoalCreateInput = {
 export type NutritionGoalUncheckedCreateInput = {
   id?: number
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   userId: number
@@ -369,10 +385,10 @@ export type NutritionGoalUncheckedCreateInput = {
 
 export type NutritionGoalUpdateInput = {
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,10 +399,10 @@ export type NutritionGoalUpdateInput = {
 export type NutritionGoalUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -397,10 +413,10 @@ export type NutritionGoalUncheckedUpdateInput = {
 export type NutritionGoalCreateManyInput = {
   id?: number
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   userId: number
@@ -410,10 +426,10 @@ export type NutritionGoalCreateManyInput = {
 
 export type NutritionGoalUpdateManyMutationInput = {
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -423,10 +439,10 @@ export type NutritionGoalUpdateManyMutationInput = {
 export type NutritionGoalUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -460,6 +476,10 @@ export type NutritionGoalCountOrderByAggregateInput = {
 
 export type NutritionGoalAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  targetCaloriesPerDay?: Prisma.SortOrder
+  targetProtein?: Prisma.SortOrder
+  targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -493,6 +513,10 @@ export type NutritionGoalMinOrderByAggregateInput = {
 
 export type NutritionGoalSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  targetCaloriesPerDay?: Prisma.SortOrder
+  targetProtein?: Prisma.SortOrder
+  targetCarbs?: Prisma.SortOrder
+  targetFat?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -544,10 +568,10 @@ export type EnumGoalTypeFieldUpdateOperationsInput = {
 
 export type NutritionGoalCreateWithoutUserInput = {
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -557,10 +581,10 @@ export type NutritionGoalCreateWithoutUserInput = {
 export type NutritionGoalUncheckedCreateWithoutUserInput = {
   id?: number
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -599,10 +623,10 @@ export type NutritionGoalScalarWhereInput = {
   NOT?: Prisma.NutritionGoalScalarWhereInput | Prisma.NutritionGoalScalarWhereInput[]
   id?: Prisma.IntFilter<"NutritionGoal"> | number
   goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetProtein?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetCarbs?: Prisma.StringFilter<"NutritionGoal"> | string
-  targetFat?: Prisma.StringFilter<"NutritionGoal"> | string
+  targetCaloriesPerDay?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -613,10 +637,10 @@ export type NutritionGoalScalarWhereInput = {
 export type NutritionGoalCreateManyUserInput = {
   id?: number
   goalType: $Enums.GoalType
-  targetCaloriesPerDay: string
-  targetProtein: string
-  targetCarbs: string
-  targetFat: string
+  targetCaloriesPerDay: number
+  targetProtein: number
+  targetCarbs: number
+  targetFat: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -625,10 +649,10 @@ export type NutritionGoalCreateManyUserInput = {
 
 export type NutritionGoalUpdateWithoutUserInput = {
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -638,10 +662,10 @@ export type NutritionGoalUpdateWithoutUserInput = {
 export type NutritionGoalUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -651,10 +675,10 @@ export type NutritionGoalUncheckedUpdateWithoutUserInput = {
 export type NutritionGoalUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
-  targetCaloriesPerDay?: Prisma.StringFieldUpdateOperationsInput | string
-  targetProtein?: Prisma.StringFieldUpdateOperationsInput | string
-  targetCarbs?: Prisma.StringFieldUpdateOperationsInput | string
-  targetFat?: Prisma.StringFieldUpdateOperationsInput | string
+  targetCaloriesPerDay?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -741,10 +765,10 @@ export type $NutritionGoalPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     goalType: $Enums.GoalType
-    targetCaloriesPerDay: string
-    targetProtein: string
-    targetCarbs: string
-    targetFat: string
+    targetCaloriesPerDay: number
+    targetProtein: number
+    targetCarbs: number
+    targetFat: number
     startDay: Date
     endDate: Date
     userId: number
@@ -1176,10 +1200,10 @@ export interface Prisma__NutritionGoalClient<T, Null = never, ExtArgs extends ru
 export interface NutritionGoalFieldRefs {
   readonly id: Prisma.FieldRef<"NutritionGoal", 'Int'>
   readonly goalType: Prisma.FieldRef<"NutritionGoal", 'GoalType'>
-  readonly targetCaloriesPerDay: Prisma.FieldRef<"NutritionGoal", 'String'>
-  readonly targetProtein: Prisma.FieldRef<"NutritionGoal", 'String'>
-  readonly targetCarbs: Prisma.FieldRef<"NutritionGoal", 'String'>
-  readonly targetFat: Prisma.FieldRef<"NutritionGoal", 'String'>
+  readonly targetCaloriesPerDay: Prisma.FieldRef<"NutritionGoal", 'Float'>
+  readonly targetProtein: Prisma.FieldRef<"NutritionGoal", 'Float'>
+  readonly targetCarbs: Prisma.FieldRef<"NutritionGoal", 'Float'>
+  readonly targetFat: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly startDay: Prisma.FieldRef<"NutritionGoal", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"NutritionGoal", 'DateTime'>
   readonly userId: Prisma.FieldRef<"NutritionGoal", 'Int'>

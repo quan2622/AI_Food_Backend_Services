@@ -2,9 +2,9 @@ import { IsArray, IsInt, IsNumber, Min, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class NutritionValueItemDto {
-  @IsInt({ message: 'componentId phải là số nguyên' })
-  @Min(1, { message: 'componentId phải lớn hơn 0' })
-  componentId: number;
+  @IsInt({ message: 'nutrientId phải là số nguyên' })
+  @Min(1, { message: 'nutrientId phải lớn hơn 0' })
+  nutrientId: number;
 
   @IsNumber({}, { message: 'value không hợp lệ' })
   value: number;
@@ -16,4 +16,3 @@ export class UpsertNutritionValueDto {
   @Type(() => NutritionValueItemDto)
   values: NutritionValueItemDto[];
 }
-

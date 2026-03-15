@@ -10,10 +10,10 @@ type NutritionGoalWithGoalTypeInfo = {
   id: number;
   goalType: GoalType;
   goalTypeInfo: { value: string; description: string | null } | null;
-  targetCaloriesPerDay: string;
-  targetProtein: string;
-  targetCarbs: string;
-  targetFat: string;
+  targetCaloriesPerDay: number;
+  targetProtein: number;
+  targetCarbs: number;
+  targetFat: number;
   startDay: Date;
   endDate: Date;
   userId: number;

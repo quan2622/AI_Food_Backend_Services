@@ -2,34 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StatusType } from '../../generated/prisma/enums';
 
-// Tolerance (calo) để coi là "MET" mục tiêu
-const MET_TOLERANCE = 50;
-
-/** Delta dinh dưỡng dùng khi cộng/trừ vào DailyLog */
-export interface NutritionDelta {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  fiber: number;
-}
-
 @Injectable()
 export class DailyLogService {
   constructor(private readonly prisma: PrismaService) {}
 
-  // ─── Private helpers ─────────────────────────────────────────────────────────
-
-  /** Tính status dựa trên totalCalories so với targetCalories (±50 calo) */
-  private calcStatus(
-    totalCalories: number,
-    targetCalories: number,
-  ): StatusType {
-    if (targetCalories <= 0) return StatusType.BELOW;
-    const diff = totalCalories - targetCalories;
-    if (Math.abs(diff) <= MET_TOLERANCE) return StatusType.EQUAL;
-    return diff > 0 ? StatusType.ABOVE : StatusType.BELOW;
-  }
+  // ─── Private helpers ──────────────────────────────────────────────────────
 
   /** Chuẩn hoá Date về đầu ngày UTC (chỉ giữ phần date) */
   private toDateOnly(date: Date): Date {
@@ -38,43 +15,11 @@ export class DailyLogService {
     );
   }
 
-  /**
-   * Lấy NutritionGoal đang active của user tại một ngày cụ thể.
-   * Dùng để copy target khi tạo DailyLog mới.
-   */
-  private async getActiveGoalTargets(
-    userId: number,
-    date: Date,
-  ): Promise<{
-    targetCalories: number;
-    targetProtein: number;
-    targetCarbs: number;
-    targetFat: number;
-    targetFiber: number;
-  }> {
-    const goal = await this.prisma.nutritionGoal.findFirst({
-      where: {
-        userId,
-        startDay: { lte: date },
-        endDate: { gte: date },
-      },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    return {
-      targetCalories: parseFloat(goal?.targetCaloriesPerDay ?? '0') || 0,
-      targetProtein: parseFloat(goal?.targetProtein ?? '0') || 0,
-      targetCarbs: parseFloat(goal?.targetCarbs ?? '0') || 0,
-      targetFat: parseFloat(goal?.targetFat ?? '0') || 0,
-      targetFiber: 0, // Fiber goal chưa có trong NutritionGoal → mặc định 0
-    };
-  }
-
-  // ─── Internal API (dùng bởi MealItemService) ─────────────────────────────────
+  // ─── Internal API ─────────────────────────────────────────────────────────
 
   /**
-   * Lấy DailyLog của user cho ngày hôm nay.
-   * Nếu chưa tồn tại, tạo mới và copy mục tiêu từ NutritionGoal.
+   * Lấy DailyLog của user cho một ngày.
+   * Nếu chưa tồn tại, tạo mới với status mặc định BELOW.
    */
   async getOrCreateForDate(userId: number, date: Date) {
     const logDate = this.toDateOnly(date);
@@ -84,113 +29,19 @@ export class DailyLogService {
     });
     if (existing) return existing;
 
-    const targets = await this.getActiveGoalTargets(userId, logDate);
-
     return this.prisma.dailyLog.create({
       data: {
         userId,
         logDate,
-        targetCalories: targets.targetCalories,
-        targetProtein: targets.targetProtein,
-        targetCarbs: targets.targetCarbs,
-        targetFat: targets.targetFat,
-        targetFiber: targets.targetFiber,
         status: StatusType.BELOW,
       },
     });
   }
 
-  /**
-   * Cộng dồn dinh dưỡng vào DailyLog, cập nhật status.
-   * Tự động tạo DailyLog nếu chưa có.
-   */
-  async addNutrition(userId: number, date: Date, delta: NutritionDelta) {
-    const logDate = this.toDateOnly(date);
-
-    // Dùng upsert để đảm bảo DailyLog tồn tại
-    const targets = await this.getActiveGoalTargets(userId, logDate);
-
-    const updated = await this.prisma.dailyLog.upsert({
-      where: { userId_logDate: { userId, logDate } },
-      create: {
-        userId,
-        logDate,
-        totalCalories: delta.calories,
-        totalProtein: delta.protein,
-        totalCarbs: delta.carbs,
-        totalFat: delta.fat,
-        totalFiber: delta.fiber,
-        targetCalories: targets.targetCalories,
-        targetProtein: targets.targetProtein,
-        targetCarbs: targets.targetCarbs,
-        targetFat: targets.targetFat,
-        targetFiber: targets.targetFiber,
-        status: this.calcStatus(delta.calories, targets.targetCalories),
-      },
-      update: {
-        totalCalories: { increment: delta.calories },
-        totalProtein: { increment: delta.protein },
-        totalCarbs: { increment: delta.carbs },
-        totalFat: { increment: delta.fat },
-        totalFiber: { increment: delta.fiber },
-      },
-    });
-
-    // Tính lại status sau khi increment (cần giá trị mới nhất)
-    const newStatus = this.calcStatus(
-      Number(updated.totalCalories),
-      Number(updated.targetCalories),
-    );
-    if (newStatus !== updated.status) {
-      return this.prisma.dailyLog.update({
-        where: { id: updated.id },
-        data: { status: newStatus },
-      });
-    }
-    return updated;
-  }
-
-  /**
-   * Trừ dinh dưỡng khỏi DailyLog (khi xóa hoặc sửa MealItem).
-   * Nếu DailyLog không tồn tại, không làm gì.
-   */
-  async subtractNutrition(userId: number, date: Date, delta: NutritionDelta) {
-    const logDate = this.toDateOnly(date);
-
-    const log = await this.prisma.dailyLog.findUnique({
-      where: { userId_logDate: { userId, logDate } },
-    });
-    if (!log) return;
-
-    const updated = await this.prisma.dailyLog.update({
-      where: { id: log.id },
-      data: {
-        totalCalories: { decrement: delta.calories },
-        totalProtein: { decrement: delta.protein },
-        totalCarbs: { decrement: delta.carbs },
-        totalFat: { decrement: delta.fat },
-        totalFiber: { decrement: delta.fiber },
-      },
-    });
-
-    const newStatus = this.calcStatus(
-      Number(updated.totalCalories),
-      Number(updated.targetCalories),
-    );
-    if (newStatus !== updated.status) {
-      return this.prisma.dailyLog.update({
-        where: { id: updated.id },
-        data: { status: newStatus },
-      });
-    }
-    return updated;
-  }
-
-  // ─── Public API (Controller endpoints) ───────────────────────────────────────
+  // ─── Public API (Controller endpoints) ───────────────────────────────────
 
   /** Lấy hoặc tạo DailyLog cho ngày hôm nay của user */
   async getOrCreateToday(userId: number) {
-    // Lấy giờ hiện tại theo timezone +07:00 (Việt Nam)
     const nowVN = new Date(Date.now() + 7 * 60 * 60 * 1000);
     return this.getOrCreateForDate(userId, nowVN);
   }

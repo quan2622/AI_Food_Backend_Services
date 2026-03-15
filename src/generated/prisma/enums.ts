@@ -63,3 +63,12 @@ export const FoodType = {
 } as const
 
 export type FoodType = (typeof FoodType)[keyof typeof FoodType]
+
+
+export const SourceType = {
+  USDA: 'USDA',
+  MANUAL: 'MANUAL',
+  CALCULATED: 'CALCULATED'
+} as const
+
+export type SourceType = (typeof SourceType)[keyof typeof SourceType]

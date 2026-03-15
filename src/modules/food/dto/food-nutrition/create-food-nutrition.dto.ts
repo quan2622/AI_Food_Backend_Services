@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import { IsIn, IsNotEmpty, IsNumber, IsBoolean, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import { SourceType } from '../../../../generated/prisma/enums.js';
 
 export class CreateFoodNutritionDto {
   @IsNumber({}, { message: 'servingSize không hợp lệ' })
@@ -10,13 +11,10 @@ export class CreateFoodNutritionDto {
   @MaxLength(50)
   servingUnit: string;
 
-  @IsString()
-  @IsNotEmpty({ message: 'source không được để trống' })
-  @MaxLength(50)
-  source: string;
+  @IsIn(['USDA', 'MANUAL', 'CALCULATED'], { message: 'source không hợp lệ, phải là USDA | MANUAL | CALCULATED' })
+  source: SourceType;
 
   @IsOptional()
   @IsBoolean({ message: 'isCalculated không hợp lệ' })
   isCalculated?: boolean;
 }
-

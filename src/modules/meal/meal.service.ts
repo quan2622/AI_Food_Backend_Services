@@ -75,7 +75,6 @@ export class MealService {
             select: {
               id: true,
               foodName: true,
-              calories: true,
               imageUrl: true,
               foodCategory: { select: { name: true } },
             },

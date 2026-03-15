@@ -42,6 +42,8 @@ export type AITrainingJobMinAggregateOutputType = {
   finishedAt: Date | null
   status: string | null
   modelId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AITrainingJobMaxAggregateOutputType = {
@@ -50,6 +52,8 @@ export type AITrainingJobMaxAggregateOutputType = {
   finishedAt: Date | null
   status: string | null
   modelId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type AITrainingJobCountAggregateOutputType = {
@@ -58,6 +62,8 @@ export type AITrainingJobCountAggregateOutputType = {
   finishedAt: number
   status: number
   modelId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -78,6 +84,8 @@ export type AITrainingJobMinAggregateInputType = {
   finishedAt?: true
   status?: true
   modelId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type AITrainingJobMaxAggregateInputType = {
@@ -86,6 +94,8 @@ export type AITrainingJobMaxAggregateInputType = {
   finishedAt?: true
   status?: true
   modelId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type AITrainingJobCountAggregateInputType = {
@@ -94,6 +104,8 @@ export type AITrainingJobCountAggregateInputType = {
   finishedAt?: true
   status?: true
   modelId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -189,6 +201,8 @@ export type AITrainingJobGroupByOutputType = {
   finishedAt: Date | null
   status: string
   modelId: number
+  createdAt: Date
+  updatedAt: Date
   _count: AITrainingJobCountAggregateOutputType | null
   _avg: AITrainingJobAvgAggregateOutputType | null
   _sum: AITrainingJobSumAggregateOutputType | null
@@ -220,6 +234,8 @@ export type AITrainingJobWhereInput = {
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   status?: Prisma.StringFilter<"AITrainingJob"> | string
   modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
   model?: Prisma.XOR<Prisma.AIModelScalarRelationFilter, Prisma.AIModelWhereInput>
 }
 
@@ -229,6 +245,8 @@ export type AITrainingJobOrderByWithRelationInput = {
   finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   model?: Prisma.AIModelOrderByWithRelationInput
 }
 
@@ -241,6 +259,8 @@ export type AITrainingJobWhereUniqueInput = Prisma.AtLeast<{
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   status?: Prisma.StringFilter<"AITrainingJob"> | string
   modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
   model?: Prisma.XOR<Prisma.AIModelScalarRelationFilter, Prisma.AIModelWhereInput>
 }, "id">
 
@@ -250,6 +270,8 @@ export type AITrainingJobOrderByWithAggregationInput = {
   finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.AITrainingJobCountOrderByAggregateInput
   _avg?: Prisma.AITrainingJobAvgOrderByAggregateInput
   _max?: Prisma.AITrainingJobMaxOrderByAggregateInput
@@ -266,12 +288,16 @@ export type AITrainingJobScalarWhereWithAggregatesInput = {
   finishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AITrainingJob"> | Date | string | null
   status?: Prisma.StringWithAggregatesFilter<"AITrainingJob"> | string
   modelId?: Prisma.IntWithAggregatesFilter<"AITrainingJob"> | number
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"AITrainingJob"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AITrainingJob"> | Date | string
 }
 
 export type AITrainingJobCreateInput = {
   startedAt: Date | string
   finishedAt?: Date | string | null
   status: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   model: Prisma.AIModelCreateNestedOneWithoutJobsInput
 }
 
@@ -281,12 +307,16 @@ export type AITrainingJobUncheckedCreateInput = {
   finishedAt?: Date | string | null
   status: string
   modelId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AITrainingJobUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   model?: Prisma.AIModelUpdateOneRequiredWithoutJobsNestedInput
 }
 
@@ -296,6 +326,8 @@ export type AITrainingJobUncheckedUpdateInput = {
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobCreateManyInput = {
@@ -304,12 +336,16 @@ export type AITrainingJobCreateManyInput = {
   finishedAt?: Date | string | null
   status: string
   modelId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AITrainingJobUpdateManyMutationInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobUncheckedUpdateManyInput = {
@@ -318,6 +354,8 @@ export type AITrainingJobUncheckedUpdateManyInput = {
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobListRelationFilter = {
@@ -336,6 +374,8 @@ export type AITrainingJobCountOrderByAggregateInput = {
   finishedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobAvgOrderByAggregateInput = {
@@ -349,6 +389,8 @@ export type AITrainingJobMaxOrderByAggregateInput = {
   finishedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobMinOrderByAggregateInput = {
@@ -357,6 +399,8 @@ export type AITrainingJobMinOrderByAggregateInput = {
   finishedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   modelId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobSumOrderByAggregateInput = {
@@ -410,6 +454,8 @@ export type AITrainingJobCreateWithoutModelInput = {
   startedAt: Date | string
   finishedAt?: Date | string | null
   status: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AITrainingJobUncheckedCreateWithoutModelInput = {
@@ -417,6 +463,8 @@ export type AITrainingJobUncheckedCreateWithoutModelInput = {
   startedAt: Date | string
   finishedAt?: Date | string | null
   status: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AITrainingJobCreateOrConnectWithoutModelInput = {
@@ -454,6 +502,8 @@ export type AITrainingJobScalarWhereInput = {
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   status?: Prisma.StringFilter<"AITrainingJob"> | string
   modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
 }
 
 export type AITrainingJobCreateManyModelInput = {
@@ -461,12 +511,16 @@ export type AITrainingJobCreateManyModelInput = {
   startedAt: Date | string
   finishedAt?: Date | string | null
   status: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AITrainingJobUpdateWithoutModelInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobUncheckedUpdateWithoutModelInput = {
@@ -474,6 +528,8 @@ export type AITrainingJobUncheckedUpdateWithoutModelInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobUncheckedUpdateManyWithoutModelInput = {
@@ -481,6 +537,8 @@ export type AITrainingJobUncheckedUpdateManyWithoutModelInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -491,6 +549,8 @@ export type AITrainingJobSelect<ExtArgs extends runtime.Types.Extensions.Interna
   finishedAt?: boolean
   status?: boolean
   modelId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
@@ -500,6 +560,8 @@ export type AITrainingJobSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   finishedAt?: boolean
   status?: boolean
   modelId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
@@ -509,6 +571,8 @@ export type AITrainingJobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   finishedAt?: boolean
   status?: boolean
   modelId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
@@ -518,9 +582,11 @@ export type AITrainingJobSelectScalar = {
   finishedAt?: boolean
   status?: boolean
   modelId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type AITrainingJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startedAt" | "finishedAt" | "status" | "modelId", ExtArgs["result"]["aITrainingJob"]>
+export type AITrainingJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startedAt" | "finishedAt" | "status" | "modelId" | "createdAt" | "updatedAt", ExtArgs["result"]["aITrainingJob"]>
 export type AITrainingJobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
 }
@@ -542,6 +608,8 @@ export type $AITrainingJobPayload<ExtArgs extends runtime.Types.Extensions.Inter
     finishedAt: Date | null
     status: string
     modelId: number
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["aITrainingJob"]>
   composites: {}
 }
@@ -971,6 +1039,8 @@ export interface AITrainingJobFieldRefs {
   readonly finishedAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
   readonly status: Prisma.FieldRef<"AITrainingJob", 'String'>
   readonly modelId: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly createdAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
 }
     
 

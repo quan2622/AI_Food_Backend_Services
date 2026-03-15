@@ -9,15 +9,16 @@ import { UpsertNutritionValueDto } from '../dto/food-nutrition/upsert-nutrition-
 export class FoodNutritionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  // NutritionComponent
+  // ─── Nutrient (formerly NutritionComponent) ───────────────────────────────
+
   findAllComponents() {
-    return this.prisma.nutritionComponent.findMany({
+    return this.prisma.nutrient.findMany({
       orderBy: { name: 'asc' },
     });
   }
 
   createComponent(dto: CreateNutritionComponentDto) {
-    return this.prisma.nutritionComponent.create({
+    return this.prisma.nutrient.create({
       data: {
         name: dto.name,
         unit: dto.unit,
@@ -26,14 +27,12 @@ export class FoodNutritionService {
   }
 
   async updateComponent(id: number, dto: CreateNutritionComponentDto) {
-    const existing = await this.prisma.nutritionComponent.findUnique({
-      where: { id },
-    });
+    const existing = await this.prisma.nutrient.findUnique({ where: { id } });
     if (!existing) {
-      throw new NotFoundException(`NutritionComponent #${id} không tồn tại`);
+      throw new NotFoundException(`Nutrient #${id} không tồn tại`);
     }
 
-    return this.prisma.nutritionComponent.update({
+    return this.prisma.nutrient.update({
       where: { id },
       data: {
         ...(dto.name != null && { name: dto.name }),
@@ -43,23 +42,22 @@ export class FoodNutritionService {
   }
 
   async removeComponent(id: number) {
-    const existing = await this.prisma.nutritionComponent.findUnique({
-      where: { id },
-    });
+    const existing = await this.prisma.nutrient.findUnique({ where: { id } });
     if (!existing) {
-      throw new NotFoundException(`NutritionComponent #${id} không tồn tại`);
+      throw new NotFoundException(`Nutrient #${id} không tồn tại`);
     }
 
-    await this.prisma.nutritionComponent.delete({ where: { id } });
+    await this.prisma.nutrient.delete({ where: { id } });
   }
 
-  // FoodNutrition
+  // ─── IngredientNutrition (formerly FoodNutrition) ─────────────────────────
+
   findByFoodId(foodId: number) {
-    return this.prisma.foodNutrition.findMany({
+    return this.prisma.ingredientNutrition.findMany({
       where: { foodId },
       include: {
         values: {
-          include: { component: true },
+          include: { nutrient: true },
         },
       },
       orderBy: { createdAt: 'desc' },
@@ -67,17 +65,17 @@ export class FoodNutritionService {
   }
 
   async findOneNutrition(id: number) {
-    const nutrition = await this.prisma.foodNutrition.findUnique({
+    const nutrition = await this.prisma.ingredientNutrition.findUnique({
       where: { id },
       include: {
         values: {
-          include: { component: true },
+          include: { nutrient: true },
         },
       },
     });
 
     if (!nutrition) {
-      throw new NotFoundException(`FoodNutrition #${id} không tồn tại`);
+      throw new NotFoundException(`IngredientNutrition #${id} không tồn tại`);
     }
 
     return nutrition;
@@ -89,7 +87,7 @@ export class FoodNutritionService {
       throw new NotFoundException(`Food #${foodId} không tồn tại`);
     }
 
-    return this.prisma.foodNutrition.create({
+    return this.prisma.ingredientNutrition.create({
       data: {
         foodId,
         servingSize: dto.servingSize,
@@ -101,14 +99,14 @@ export class FoodNutritionService {
   }
 
   async updateNutrition(id: number, dto: UpdateFoodNutritionDto) {
-    const existing = await this.prisma.foodNutrition.findUnique({
+    const existing = await this.prisma.ingredientNutrition.findUnique({
       where: { id },
     });
     if (!existing) {
-      throw new NotFoundException(`FoodNutrition #${id} không tồn tại`);
+      throw new NotFoundException(`IngredientNutrition #${id} không tồn tại`);
     }
 
-    return this.prisma.foodNutrition.update({
+    return this.prisma.ingredientNutrition.update({
       where: { id },
       data: {
         ...(dto.servingSize != null && { servingSize: dto.servingSize }),
@@ -120,34 +118,34 @@ export class FoodNutritionService {
   }
 
   async removeNutrition(id: number) {
-    const existing = await this.prisma.foodNutrition.findUnique({
+    const existing = await this.prisma.ingredientNutrition.findUnique({
       where: { id },
     });
     if (!existing) {
-      throw new NotFoundException(`FoodNutrition #${id} không tồn tại`);
+      throw new NotFoundException(`IngredientNutrition #${id} không tồn tại`);
     }
 
-    await this.prisma.foodNutrition.delete({ where: { id } });
+    await this.prisma.ingredientNutrition.delete({ where: { id } });
   }
 
   async upsertValues(nutritionId: number, dto: UpsertNutritionValueDto) {
-    const nutrition = await this.prisma.foodNutrition.findUnique({
+    const nutrition = await this.prisma.ingredientNutrition.findUnique({
       where: { id: nutritionId },
     });
     if (!nutrition) {
       throw new NotFoundException(
-        `FoodNutrition #${nutritionId} không tồn tại`,
+        `IngredientNutrition #${nutritionId} không tồn tại`,
       );
     }
 
     await this.prisma.$transaction([
-      this.prisma.foodNutritionValue.deleteMany({
-        where: { nutritionId },
+      this.prisma.nutritionValue.deleteMany({
+        where: { ingredientNutritionId: nutritionId },
       }),
-      this.prisma.foodNutritionValue.createMany({
+      this.prisma.nutritionValue.createMany({
         data: dto.values.map((v) => ({
-          nutritionId,
-          componentId: v.componentId,
+          ingredientNutritionId: nutritionId,
+          nutrientId: v.nutrientId,
           value: v.value,
         })),
       }),
@@ -156,7 +154,6 @@ export class FoodNutritionService {
     return this.findOneNutrition(nutritionId);
   }
 
-  // Stub: tính dinh dưỡng từ DishIngredient, sẽ được hoàn thiện sau
   async calculateFromIngredients(foodId: number) {
     const food = await this.prisma.food.findUnique({ where: { id: foodId } });
     if (!food) {

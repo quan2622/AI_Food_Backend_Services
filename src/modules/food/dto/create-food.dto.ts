@@ -3,12 +3,10 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsNumber,
-  IsPositive,
-  Min,
-  MaxLength,
   IsIn,
   IsInt,
+  Min,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateFoodDto {
@@ -26,31 +24,6 @@ export class CreateFoodDto {
   @IsString()
   @MaxLength(500)
   imageUrl?: string;
-
-  @IsOptional()
-  @IsNumber({}, { message: 'Fiber không hợp lệ' })
-  @Min(0)
-  fiber?: number;
-
-  @IsOptional()
-  @IsNumber({}, { message: 'Protein không hợp lệ' })
-  @Min(0)
-  protein?: number;
-
-  @IsOptional()
-  @IsNumber({}, { message: 'Carbs không hợp lệ' })
-  @Min(0)
-  carbs?: number;
-
-  @IsOptional()
-  @IsNumber({}, { message: 'Fat không hợp lệ' })
-  @Min(0)
-  fat?: number;
-
-  @IsOptional()
-  @IsNumber({}, { message: 'Calories không hợp lệ' })
-  @IsPositive({ message: 'Calories phải là số dương' })
-  calories?: number;
 
   @IsOptional()
   @IsInt({ message: 'categoryId phải là số nguyên' })

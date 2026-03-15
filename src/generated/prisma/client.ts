@@ -48,6 +48,11 @@ export type User = Prisma.UserModel
  */
 export type UserProfile = Prisma.UserProfileModel
 /**
+ * Model UserAllergy
+ * 
+ */
+export type UserAllergy = Prisma.UserAllergyModel
+/**
  * Model NutritionGoal
  * 
  */
@@ -58,35 +63,50 @@ export type NutritionGoal = Prisma.NutritionGoalModel
  */
 export type AllCode = Prisma.AllCodeModel
 /**
- * Model Food
+ * Model Allergen
  * 
  */
-export type Food = Prisma.FoodModel
+export type Allergen = Prisma.AllergenModel
 /**
  * Model FoodCategory
  * 
  */
 export type FoodCategory = Prisma.FoodCategoryModel
 /**
- * Model NutritionComponent
+ * Model Food
  * 
  */
-export type NutritionComponent = Prisma.NutritionComponentModel
+export type Food = Prisma.FoodModel
 /**
- * Model FoodNutrition
- * 
+ * Model IngredientNutrition
+ * Represents a specific nutritional profile for a food (e.g., per 100g serving).
  */
-export type FoodNutrition = Prisma.FoodNutritionModel
+export type IngredientNutrition = Prisma.IngredientNutritionModel
 /**
- * Model FoodNutritionValue
- * 
+ * Model Nutrient
+ * A single nutrient (e.g., Protein, Fat, Carbohydrates).
  */
-export type FoodNutritionValue = Prisma.FoodNutritionValueModel
+export type Nutrient = Prisma.NutrientModel
 /**
- * Model DishIngredient
+ * Model NutritionValue
+ * The actual value of a nutrient for a given IngredientNutrition record.
+ */
+export type NutritionValue = Prisma.NutritionValueModel
+/**
+ * Model FoodIngredient
+ * Represents the composition of a DISH food (which ingredients it contains).
+ */
+export type FoodIngredient = Prisma.FoodIngredientModel
+/**
+ * Model IngredientAllergen
+ * Represents the relationship between an Ingredient (Food) and an Allergen.
+ */
+export type IngredientAllergen = Prisma.IngredientAllergenModel
+/**
+ * Model DailyLog
  * 
  */
-export type DishIngredient = Prisma.DishIngredientModel
+export type DailyLog = Prisma.DailyLogModel
 /**
  * Model Meal
  * 
@@ -102,16 +122,6 @@ export type MealItem = Prisma.MealItemModel
  * 
  */
 export type FoodImage = Prisma.FoodImageModel
-/**
- * Model DailyLog
- * 
- */
-export type DailyLog = Prisma.DailyLogModel
-/**
- * Model UserAllergy
- * 
- */
-export type UserAllergy = Prisma.UserAllergyModel
 /**
  * Model Report
  * 

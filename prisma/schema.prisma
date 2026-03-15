@@ -66,12 +66,11 @@ model User {
   id             Int             @id @default(autoincrement())
   email          String          @unique
   password       String
-  genderCode     String?
   avatarUrl      String?
   fullName       String
   accessToken    String?         @db.Text
   refreshToken   String?         @db.Text
-  birthOfDate    DateTime?
+  dateOfBirth    DateTime?
   isAdmin        Boolean         @default(false)
   status         Boolean         @default(true)
   createdAt      DateTime        @default(now())
@@ -111,19 +110,22 @@ model UserAllergy {
   note          String?      @db.Text
   userProfileId Int
   userProfile   UserProfile  @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  allergenId    Int
+  allergen      Allergen     @relation(fields: [allergenId], references: [id], onDelete: Restrict)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
+  @@unique([userProfileId, allergenId])
   @@map("user_allergies")
 }
 
 model NutritionGoal {
   id                   Int      @id @default(autoincrement())
   goalType             GoalType
-  targetCaloriesPerDay String
-  targetProtein        String
-  targetCarbs          String
-  targetFat            String
+  targetCaloriesPerDay Float
+  targetProtein        Float
+  targetCarbs          Float
+  targetFat            Float
   startDay             DateTime
   endDate              DateTime
   userId               Int
@@ -146,11 +148,28 @@ model AllCode {
   @@map("all_codes")
 }
 
+model Allergen {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userAllergies        UserAllergy[]
+  ingredientAllergens  IngredientAllergen[]
+
+  @@map("allergens")
+}
+
 // ─── Food Domain ────────────────────────────────────────────────────────────
 
 model FoodCategory {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
+  id          Int            @id @default(autoincrement())
+  name        String         @unique
+  description String?
+  parentId    Int?
+  parent      FoodCategory?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children    FoodCategory[] @relation("CategoryTree")
 
   foods Food[]
 
@@ -165,6 +184,7 @@ model Food {
   foodType     FoodType         @default(INGREDIENT)
   categoryId   Int?
   foodCategory FoodCategory?    @relation(fields: [categoryId], references: [id])
+  isActive     Boolean          @default(true)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 
@@ -172,7 +192,9 @@ model Food {
   ingredientNutritions   IngredientNutrition[]
   dishIngredients        FoodIngredient[]      @relation("DishHasIngredients")
   usedAsIngredient       FoodIngredient[]      @relation("IngredientUsedInDish")
+  ingredientAllergens    IngredientAllergen[]
 
+  @@index([foodName])
   @@map("foods")
 }
 
@@ -232,6 +254,20 @@ model FoodIngredient {
   @@map("food_ingredients")
 }
 
+/// Represents the relationship between an Ingredient (Food) and an Allergen.
+model IngredientAllergen {
+  id           Int      @id @default(autoincrement())
+  ingredientId Int
+  ingredient   Food     @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  allergenId   Int
+  allergen     Allergen @relation(fields: [allergenId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([ingredientId, allergenId])
+  @@map("ingredient_allergens")
+}
+
 // ─── Daily Tracking ──────────────────────────────────────────────────────────
 
 model DailyLog {
@@ -286,6 +322,9 @@ model MealItem {
 model FoodImage {
   id         Int      @id @default(autoincrement())
   imageUrl   String
+  fileName   String?
+  mimeType   String?
+  fileSize   Int?
   uploadedAt DateTime @default(now())
   mealItemId Int
   mealItem   MealItem @relation(fields: [mealItemId], references: [id], onDelete: Cascade)
@@ -298,10 +337,10 @@ model FoodImage {
 model Report {
   id             Int        @id @default(autoincrement())
   reportType     ReportType
-  generalAt      DateTime
+  generatedAt    DateTime
   timeRangeStart DateTime
   timeRangeEnd   DateTime
-  data           String     @db.Text
+  data           Json
   userId         Int
   user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt      DateTime   @default(now())

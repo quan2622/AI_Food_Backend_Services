@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { FoodType, Prisma } from '../../../generated/prisma/client.js';
+import { FoodType } from '../../../generated/prisma/client.js';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
@@ -16,11 +16,6 @@ export class FoodService {
         categoryId: dto.categoryId ?? null,
         foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
-        protein: dto.protein ?? 0,
-        carbs: dto.carbs ?? 0,
-        fat: dto.fat ?? 0,
-        fiber: dto.fiber ?? 0,
-        calories: dto.calories ?? 0,
       },
     });
   }
@@ -33,11 +28,6 @@ export class FoodService {
         categoryId: dto.categoryId ?? null,
         foodType: dto.foodType ?? FoodType.INGREDIENT,
         imageUrl: dto.imageUrl,
-        protein: dto.protein ?? 0,
-        carbs: dto.carbs ?? 0,
-        fat: dto.fat ?? 0,
-        fiber: dto.fiber ?? 0,
-        calories: dto.calories ?? 0,
       })),
       skipDuplicates: true,
     });
@@ -83,12 +73,7 @@ export class FoodService {
         ...(dto.categoryId !== undefined && { categoryId: dto.categoryId ?? null }),
         ...(dto.foodType != null && { foodType: dto.foodType }),
         ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
-        ...(dto.protein != null && { protein: dto.protein }),
-        ...(dto.carbs != null && { carbs: dto.carbs }),
-        ...(dto.fat != null && { fat: dto.fat }),
-        ...(dto.fiber != null && { fiber: dto.fiber }),
-        ...(dto.calories != null && { calories: dto.calories }),
-      } as Prisma.FoodUncheckedUpdateInput,
+      },
     });
   }
 
@@ -110,4 +95,3 @@ export class FoodService {
     return { deletedCount: result.count };
   }
 }
-

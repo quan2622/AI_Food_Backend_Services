@@ -19,7 +19,7 @@ export class DishIngredientService {
 
   async findByDish(dishId: number) {
     await this.validateDishType(dishId);
-    return this.prisma.dishIngredient.findMany({
+    return this.prisma.foodIngredient.findMany({
       where: { dishId },
       include: {
         ingredient: true,
@@ -38,7 +38,7 @@ export class DishIngredientService {
       throw new NotFoundException(`Nguyên liệu #${dto.ingredientId} không tồn tại`);
     }
 
-    return this.prisma.dishIngredient.create({
+    return this.prisma.foodIngredient.create({
       data: {
         dishId,
         ingredientId: dto.ingredientId,
@@ -48,12 +48,12 @@ export class DishIngredientService {
   }
 
   async updateIngredient(id: number, dto: UpdateDishIngredientDto) {
-    const existing = await this.prisma.dishIngredient.findUnique({ where: { id } });
+    const existing = await this.prisma.foodIngredient.findUnique({ where: { id } });
     if (!existing) {
-      throw new NotFoundException(`DishIngredient #${id} không tồn tại`);
+      throw new NotFoundException(`FoodIngredient #${id} không tồn tại`);
     }
 
-    return this.prisma.dishIngredient.update({
+    return this.prisma.foodIngredient.update({
       where: { id },
       data: {
         ...(dto.quantityGrams != null && { quantityGrams: dto.quantityGrams }),
@@ -62,12 +62,11 @@ export class DishIngredientService {
   }
 
   async removeIngredient(id: number) {
-    const existing = await this.prisma.dishIngredient.findUnique({ where: { id } });
+    const existing = await this.prisma.foodIngredient.findUnique({ where: { id } });
     if (!existing) {
-      throw new NotFoundException(`DishIngredient #${id} không tồn tại`);
+      throw new NotFoundException(`FoodIngredient #${id} không tồn tại`);
     }
 
-    await this.prisma.dishIngredient.delete({ where: { id } });
+    await this.prisma.foodIngredient.delete({ where: { id } });
   }
 }
-

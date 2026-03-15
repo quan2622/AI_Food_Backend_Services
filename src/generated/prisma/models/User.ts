@@ -38,12 +38,11 @@ export type UserMinAggregateOutputType = {
   id: number | null
   email: string | null
   password: string | null
-  genderCode: string | null
   avatarUrl: string | null
   fullName: string | null
   accessToken: string | null
   refreshToken: string | null
-  birthOfDate: Date | null
+  dateOfBirth: Date | null
   isAdmin: boolean | null
   status: boolean | null
   createdAt: Date | null
@@ -54,12 +53,11 @@ export type UserMaxAggregateOutputType = {
   id: number | null
   email: string | null
   password: string | null
-  genderCode: string | null
   avatarUrl: string | null
   fullName: string | null
   accessToken: string | null
   refreshToken: string | null
-  birthOfDate: Date | null
+  dateOfBirth: Date | null
   isAdmin: boolean | null
   status: boolean | null
   createdAt: Date | null
@@ -70,12 +68,11 @@ export type UserCountAggregateOutputType = {
   id: number
   email: number
   password: number
-  genderCode: number
   avatarUrl: number
   fullName: number
   accessToken: number
   refreshToken: number
-  birthOfDate: number
+  dateOfBirth: number
   isAdmin: number
   status: number
   createdAt: number
@@ -96,12 +93,11 @@ export type UserMinAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  genderCode?: true
   avatarUrl?: true
   fullName?: true
   accessToken?: true
   refreshToken?: true
-  birthOfDate?: true
+  dateOfBirth?: true
   isAdmin?: true
   status?: true
   createdAt?: true
@@ -112,12 +108,11 @@ export type UserMaxAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  genderCode?: true
   avatarUrl?: true
   fullName?: true
   accessToken?: true
   refreshToken?: true
-  birthOfDate?: true
+  dateOfBirth?: true
   isAdmin?: true
   status?: true
   createdAt?: true
@@ -128,12 +123,11 @@ export type UserCountAggregateInputType = {
   id?: true
   email?: true
   password?: true
-  genderCode?: true
   avatarUrl?: true
   fullName?: true
   accessToken?: true
   refreshToken?: true
-  birthOfDate?: true
+  dateOfBirth?: true
   isAdmin?: true
   status?: true
   createdAt?: true
@@ -231,12 +225,11 @@ export type UserGroupByOutputType = {
   id: number
   email: string
   password: string
-  genderCode: string | null
   avatarUrl: string | null
   fullName: string
   accessToken: string | null
   refreshToken: string | null
-  birthOfDate: Date | null
+  dateOfBirth: Date | null
   isAdmin: boolean
   status: boolean
   createdAt: Date
@@ -270,12 +263,11 @@ export type UserWhereInput = {
   id?: Prisma.IntFilter<"User"> | number
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  genderCode?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   fullName?: Prisma.StringFilter<"User"> | string
   accessToken?: Prisma.StringNullableFilter<"User"> | string | null
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
-  birthOfDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   status?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -290,12 +282,11 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  genderCode?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   fullName?: Prisma.SortOrder
   accessToken?: Prisma.SortOrderInput | Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  birthOfDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -313,12 +304,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   password?: Prisma.StringFilter<"User"> | string
-  genderCode?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   fullName?: Prisma.StringFilter<"User"> | string
   accessToken?: Prisma.StringNullableFilter<"User"> | string | null
   refreshToken?: Prisma.StringNullableFilter<"User"> | string | null
-  birthOfDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   status?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -333,12 +323,11 @@ export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  genderCode?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   fullName?: Prisma.SortOrder
   accessToken?: Prisma.SortOrderInput | Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  birthOfDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -357,12 +346,11 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
-  genderCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   fullName?: Prisma.StringWithAggregatesFilter<"User"> | string
   accessToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   refreshToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  birthOfDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   isAdmin?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   status?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -372,12 +360,11 @@ export type UserScalarWhereWithAggregatesInput = {
 export type UserCreateInput = {
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -392,12 +379,11 @@ export type UserUncheckedCreateInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -411,12 +397,11 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -431,12 +416,11 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -451,12 +435,11 @@ export type UserCreateManyInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -466,12 +449,11 @@ export type UserCreateManyInput = {
 export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,12 +464,11 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -498,12 +479,11 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  genderCode?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   accessToken?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
-  birthOfDate?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -518,12 +498,11 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  genderCode?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   accessToken?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
-  birthOfDate?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -534,12 +513,11 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  genderCode?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   accessToken?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
-  birthOfDate?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
   isAdmin?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -642,12 +620,11 @@ export type UserUpdateOneRequiredWithoutReportsNestedInput = {
 export type UserCreateWithoutUserProfileInput = {
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -661,12 +638,11 @@ export type UserUncheckedCreateWithoutUserProfileInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -695,12 +671,11 @@ export type UserUpdateToOneWithWhereWithoutUserProfileInput = {
 export type UserUpdateWithoutUserProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,12 +689,11 @@ export type UserUncheckedUpdateWithoutUserProfileInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -732,12 +706,11 @@ export type UserUncheckedUpdateWithoutUserProfileInput = {
 export type UserCreateWithoutNutritionGoalsInput = {
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -751,12 +724,11 @@ export type UserUncheckedCreateWithoutNutritionGoalsInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -785,12 +757,11 @@ export type UserUpdateToOneWithWhereWithoutNutritionGoalsInput = {
 export type UserUpdateWithoutNutritionGoalsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -804,12 +775,11 @@ export type UserUncheckedUpdateWithoutNutritionGoalsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -822,12 +792,11 @@ export type UserUncheckedUpdateWithoutNutritionGoalsInput = {
 export type UserCreateWithoutDailyLogsInput = {
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -841,12 +810,11 @@ export type UserUncheckedCreateWithoutDailyLogsInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -875,12 +843,11 @@ export type UserUpdateToOneWithWhereWithoutDailyLogsInput = {
 export type UserUpdateWithoutDailyLogsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -894,12 +861,11 @@ export type UserUncheckedUpdateWithoutDailyLogsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -912,12 +878,11 @@ export type UserUncheckedUpdateWithoutDailyLogsInput = {
 export type UserCreateWithoutReportsInput = {
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -931,12 +896,11 @@ export type UserUncheckedCreateWithoutReportsInput = {
   id?: number
   email: string
   password: string
-  genderCode?: string | null
   avatarUrl?: string | null
   fullName: string
   accessToken?: string | null
   refreshToken?: string | null
-  birthOfDate?: Date | string | null
+  dateOfBirth?: Date | string | null
   isAdmin?: boolean
   status?: boolean
   createdAt?: Date | string
@@ -965,12 +929,11 @@ export type UserUpdateToOneWithWhereWithoutReportsInput = {
 export type UserUpdateWithoutReportsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -984,12 +947,11 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  genderCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  birthOfDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1052,12 +1014,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   email?: boolean
   password?: boolean
-  genderCode?: boolean
   avatarUrl?: boolean
   fullName?: boolean
   accessToken?: boolean
   refreshToken?: boolean
-  birthOfDate?: boolean
+  dateOfBirth?: boolean
   isAdmin?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1073,12 +1034,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   password?: boolean
-  genderCode?: boolean
   avatarUrl?: boolean
   fullName?: boolean
   accessToken?: boolean
   refreshToken?: boolean
-  birthOfDate?: boolean
+  dateOfBirth?: boolean
   isAdmin?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1089,12 +1049,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   password?: boolean
-  genderCode?: boolean
   avatarUrl?: boolean
   fullName?: boolean
   accessToken?: boolean
   refreshToken?: boolean
-  birthOfDate?: boolean
+  dateOfBirth?: boolean
   isAdmin?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1105,19 +1064,18 @@ export type UserSelectScalar = {
   id?: boolean
   email?: boolean
   password?: boolean
-  genderCode?: boolean
   avatarUrl?: boolean
   fullName?: boolean
   accessToken?: boolean
   refreshToken?: boolean
-  birthOfDate?: boolean
+  dateOfBirth?: boolean
   isAdmin?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "genderCode" | "avatarUrl" | "fullName" | "accessToken" | "refreshToken" | "birthOfDate" | "isAdmin" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "avatarUrl" | "fullName" | "accessToken" | "refreshToken" | "dateOfBirth" | "isAdmin" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userProfile?: boolean | Prisma.User$userProfileArgs<ExtArgs>
   nutritionGoals?: boolean | Prisma.User$nutritionGoalsArgs<ExtArgs>
@@ -1140,12 +1098,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: number
     email: string
     password: string
-    genderCode: string | null
     avatarUrl: string | null
     fullName: string
     accessToken: string | null
     refreshToken: string | null
-    birthOfDate: Date | null
+    dateOfBirth: Date | null
     isAdmin: boolean
     status: boolean
     createdAt: Date
@@ -1580,12 +1537,11 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'Int'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
-  readonly genderCode: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly fullName: Prisma.FieldRef<"User", 'String'>
   readonly accessToken: Prisma.FieldRef<"User", 'String'>
   readonly refreshToken: Prisma.FieldRef<"User", 'String'>
-  readonly birthOfDate: Prisma.FieldRef<"User", 'DateTime'>
+  readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
   readonly isAdmin: Prisma.FieldRef<"User", 'Boolean'>
   readonly status: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

@@ -14,6 +14,9 @@ import { Type } from 'class-transformer';
 import type { SeverityType } from '../../../generated/prisma/client.js';
 
 export class AllergyInputDto {
+  @IsInt({ message: 'allergenId phải là số nguyên' })
+  @Min(1, { message: 'allergenId không hợp lệ' })
+  allergenId: number;
   @IsIn(['MILD', 'MODERATE', 'SEVERE'], {
     message: 'Mức độ phải là MILD, MODERATE hoặc SEVERE',
   })

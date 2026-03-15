@@ -77,6 +77,7 @@ export class UserProfileService {
         allergies: {
           create:
             dto.allergies?.map((a) => ({
+              allergenId: a.allergenId,
               severity: a.severity,
               note: a.note,
             })) ?? [],
@@ -161,6 +162,7 @@ export class UserProfileService {
           allergies: {
             deleteMany: {},
             create: dto.allergies.map((a) => ({
+              allergenId: a.allergenId,
               severity: a.severity,
               note: a.note,
             })),
@@ -226,6 +228,7 @@ export class UserProfileService {
           allergies: {
             deleteMany: {},
             create: dto.allergies.map((a) => ({
+              allergenId: a.allergenId,
               severity: a.severity,
               note: a.note,
             })),

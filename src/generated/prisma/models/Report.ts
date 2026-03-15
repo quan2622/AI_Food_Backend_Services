@@ -39,10 +39,9 @@ export type ReportSumAggregateOutputType = {
 export type ReportMinAggregateOutputType = {
   id: number | null
   reportType: $Enums.ReportType | null
-  generalAt: Date | null
+  generatedAt: Date | null
   timeRangeStart: Date | null
   timeRangeEnd: Date | null
-  data: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -51,10 +50,9 @@ export type ReportMinAggregateOutputType = {
 export type ReportMaxAggregateOutputType = {
   id: number | null
   reportType: $Enums.ReportType | null
-  generalAt: Date | null
+  generatedAt: Date | null
   timeRangeStart: Date | null
   timeRangeEnd: Date | null
-  data: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,7 +61,7 @@ export type ReportMaxAggregateOutputType = {
 export type ReportCountAggregateOutputType = {
   id: number
   reportType: number
-  generalAt: number
+  generatedAt: number
   timeRangeStart: number
   timeRangeEnd: number
   data: number
@@ -87,10 +85,9 @@ export type ReportSumAggregateInputType = {
 export type ReportMinAggregateInputType = {
   id?: true
   reportType?: true
-  generalAt?: true
+  generatedAt?: true
   timeRangeStart?: true
   timeRangeEnd?: true
-  data?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -99,10 +96,9 @@ export type ReportMinAggregateInputType = {
 export type ReportMaxAggregateInputType = {
   id?: true
   reportType?: true
-  generalAt?: true
+  generatedAt?: true
   timeRangeStart?: true
   timeRangeEnd?: true
-  data?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -111,7 +107,7 @@ export type ReportMaxAggregateInputType = {
 export type ReportCountAggregateInputType = {
   id?: true
   reportType?: true
-  generalAt?: true
+  generatedAt?: true
   timeRangeStart?: true
   timeRangeEnd?: true
   data?: true
@@ -210,10 +206,10 @@ export type ReportGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ReportGroupByOutputType = {
   id: number
   reportType: $Enums.ReportType
-  generalAt: Date
+  generatedAt: Date
   timeRangeStart: Date
   timeRangeEnd: Date
-  data: string
+  data: runtime.JsonValue
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -245,10 +241,10 @@ export type ReportWhereInput = {
   NOT?: Prisma.ReportWhereInput | Prisma.ReportWhereInput[]
   id?: Prisma.IntFilter<"Report"> | number
   reportType?: Prisma.EnumReportTypeFilter<"Report"> | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFilter<"Report"> | Date | string
+  generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.StringFilter<"Report"> | string
+  data?: Prisma.JsonFilter<"Report">
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -258,7 +254,7 @@ export type ReportWhereInput = {
 export type ReportOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   reportType?: Prisma.SortOrder
-  generalAt?: Prisma.SortOrder
+  generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
   data?: Prisma.SortOrder
@@ -274,10 +270,10 @@ export type ReportWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ReportWhereInput[]
   NOT?: Prisma.ReportWhereInput | Prisma.ReportWhereInput[]
   reportType?: Prisma.EnumReportTypeFilter<"Report"> | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFilter<"Report"> | Date | string
+  generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.StringFilter<"Report"> | string
+  data?: Prisma.JsonFilter<"Report">
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -287,7 +283,7 @@ export type ReportWhereUniqueInput = Prisma.AtLeast<{
 export type ReportOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   reportType?: Prisma.SortOrder
-  generalAt?: Prisma.SortOrder
+  generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
   data?: Prisma.SortOrder
@@ -307,10 +303,10 @@ export type ReportScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ReportScalarWhereWithAggregatesInput | Prisma.ReportScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Report"> | number
   reportType?: Prisma.EnumReportTypeWithAggregatesFilter<"Report"> | $Enums.ReportType
-  generalAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
+  generatedAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
-  data?: Prisma.StringWithAggregatesFilter<"Report"> | string
+  data?: Prisma.JsonWithAggregatesFilter<"Report">
   userId?: Prisma.IntWithAggregatesFilter<"Report"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Report"> | Date | string
@@ -318,10 +314,10 @@ export type ReportScalarWhereWithAggregatesInput = {
 
 export type ReportCreateInput = {
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutReportsInput
@@ -330,10 +326,10 @@ export type ReportCreateInput = {
 export type ReportUncheckedCreateInput = {
   id?: number
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -341,10 +337,10 @@ export type ReportUncheckedCreateInput = {
 
 export type ReportUpdateInput = {
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutReportsNestedInput
@@ -353,10 +349,10 @@ export type ReportUpdateInput = {
 export type ReportUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -365,10 +361,10 @@ export type ReportUncheckedUpdateInput = {
 export type ReportCreateManyInput = {
   id?: number
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -376,10 +372,10 @@ export type ReportCreateManyInput = {
 
 export type ReportUpdateManyMutationInput = {
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,10 +383,10 @@ export type ReportUpdateManyMutationInput = {
 export type ReportUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -409,7 +405,7 @@ export type ReportOrderByRelationAggregateInput = {
 export type ReportCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reportType?: Prisma.SortOrder
-  generalAt?: Prisma.SortOrder
+  generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
   data?: Prisma.SortOrder
@@ -426,10 +422,9 @@ export type ReportAvgOrderByAggregateInput = {
 export type ReportMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reportType?: Prisma.SortOrder
-  generalAt?: Prisma.SortOrder
+  generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
-  data?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -438,10 +433,9 @@ export type ReportMaxOrderByAggregateInput = {
 export type ReportMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reportType?: Prisma.SortOrder
-  generalAt?: Prisma.SortOrder
+  generatedAt?: Prisma.SortOrder
   timeRangeStart?: Prisma.SortOrder
   timeRangeEnd?: Prisma.SortOrder
-  data?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -500,10 +494,10 @@ export type EnumReportTypeFieldUpdateOperationsInput = {
 
 export type ReportCreateWithoutUserInput = {
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -511,10 +505,10 @@ export type ReportCreateWithoutUserInput = {
 export type ReportUncheckedCreateWithoutUserInput = {
   id?: number
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -551,10 +545,10 @@ export type ReportScalarWhereInput = {
   NOT?: Prisma.ReportScalarWhereInput | Prisma.ReportScalarWhereInput[]
   id?: Prisma.IntFilter<"Report"> | number
   reportType?: Prisma.EnumReportTypeFilter<"Report"> | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFilter<"Report"> | Date | string
+  generatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeStart?: Prisma.DateTimeFilter<"Report"> | Date | string
   timeRangeEnd?: Prisma.DateTimeFilter<"Report"> | Date | string
-  data?: Prisma.StringFilter<"Report"> | string
+  data?: Prisma.JsonFilter<"Report">
   userId?: Prisma.IntFilter<"Report"> | number
   createdAt?: Prisma.DateTimeFilter<"Report"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Report"> | Date | string
@@ -563,20 +557,20 @@ export type ReportScalarWhereInput = {
 export type ReportCreateManyUserInput = {
   id?: number
   reportType: $Enums.ReportType
-  generalAt: Date | string
+  generatedAt: Date | string
   timeRangeStart: Date | string
   timeRangeEnd: Date | string
-  data: string
+  data: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ReportUpdateWithoutUserInput = {
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -584,10 +578,10 @@ export type ReportUpdateWithoutUserInput = {
 export type ReportUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -595,10 +589,10 @@ export type ReportUncheckedUpdateWithoutUserInput = {
 export type ReportUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   reportType?: Prisma.EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
-  generalAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   timeRangeEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data?: Prisma.StringFieldUpdateOperationsInput | string
+  data?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -608,7 +602,7 @@ export type ReportUncheckedUpdateManyWithoutUserInput = {
 export type ReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reportType?: boolean
-  generalAt?: boolean
+  generatedAt?: boolean
   timeRangeStart?: boolean
   timeRangeEnd?: boolean
   data?: boolean
@@ -621,7 +615,7 @@ export type ReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type ReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reportType?: boolean
-  generalAt?: boolean
+  generatedAt?: boolean
   timeRangeStart?: boolean
   timeRangeEnd?: boolean
   data?: boolean
@@ -634,7 +628,7 @@ export type ReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   reportType?: boolean
-  generalAt?: boolean
+  generatedAt?: boolean
   timeRangeStart?: boolean
   timeRangeEnd?: boolean
   data?: boolean
@@ -647,7 +641,7 @@ export type ReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type ReportSelectScalar = {
   id?: boolean
   reportType?: boolean
-  generalAt?: boolean
+  generatedAt?: boolean
   timeRangeStart?: boolean
   timeRangeEnd?: boolean
   data?: boolean
@@ -656,7 +650,7 @@ export type ReportSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reportType" | "generalAt" | "timeRangeStart" | "timeRangeEnd" | "data" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["report"]>
+export type ReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reportType" | "generatedAt" | "timeRangeStart" | "timeRangeEnd" | "data" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["report"]>
 export type ReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -675,10 +669,10 @@ export type $ReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     reportType: $Enums.ReportType
-    generalAt: Date
+    generatedAt: Date
     timeRangeStart: Date
     timeRangeEnd: Date
-    data: string
+    data: runtime.JsonValue
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -1108,10 +1102,10 @@ export interface Prisma__ReportClient<T, Null = never, ExtArgs extends runtime.T
 export interface ReportFieldRefs {
   readonly id: Prisma.FieldRef<"Report", 'Int'>
   readonly reportType: Prisma.FieldRef<"Report", 'ReportType'>
-  readonly generalAt: Prisma.FieldRef<"Report", 'DateTime'>
+  readonly generatedAt: Prisma.FieldRef<"Report", 'DateTime'>
   readonly timeRangeStart: Prisma.FieldRef<"Report", 'DateTime'>
   readonly timeRangeEnd: Prisma.FieldRef<"Report", 'DateTime'>
-  readonly data: Prisma.FieldRef<"Report", 'String'>
+  readonly data: Prisma.FieldRef<"Report", 'Json'>
   readonly userId: Prisma.FieldRef<"Report", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Report", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Report", 'DateTime'>

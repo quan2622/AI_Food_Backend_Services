@@ -53,19 +53,21 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   UserProfile: 'UserProfile',
+  UserAllergy: 'UserAllergy',
   NutritionGoal: 'NutritionGoal',
   AllCode: 'AllCode',
-  Food: 'Food',
+  Allergen: 'Allergen',
   FoodCategory: 'FoodCategory',
-  NutritionComponent: 'NutritionComponent',
-  FoodNutrition: 'FoodNutrition',
-  FoodNutritionValue: 'FoodNutritionValue',
-  DishIngredient: 'DishIngredient',
+  Food: 'Food',
+  IngredientNutrition: 'IngredientNutrition',
+  Nutrient: 'Nutrient',
+  NutritionValue: 'NutritionValue',
+  FoodIngredient: 'FoodIngredient',
+  IngredientAllergen: 'IngredientAllergen',
+  DailyLog: 'DailyLog',
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
-  DailyLog: 'DailyLog',
-  UserAllergy: 'UserAllergy',
   Report: 'Report',
   AIModel: 'AIModel',
   AITrainingJob: 'AITrainingJob'
@@ -91,12 +93,11 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  genderCode: 'genderCode',
   avatarUrl: 'avatarUrl',
   fullName: 'fullName',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  birthOfDate: 'birthOfDate',
+  dateOfBirth: 'dateOfBirth',
   isAdmin: 'isAdmin',
   status: 'status',
   createdAt: 'createdAt',
@@ -122,6 +123,19 @@ export const UserProfileScalarFieldEnum = {
 } as const
 
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const UserAllergyScalarFieldEnum = {
+  id: 'id',
+  severity: 'severity',
+  note: 'note',
+  userProfileId: 'userProfileId',
+  allergenId: 'allergenId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
 
 
 export const NutritionGoalScalarFieldEnum = {
@@ -154,18 +168,35 @@ export const AllCodeScalarFieldEnum = {
 export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
 
 
+export const AllergenScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AllergenScalarFieldEnum = (typeof AllergenScalarFieldEnum)[keyof typeof AllergenScalarFieldEnum]
+
+
+export const FoodCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  parentId: 'parentId'
+} as const
+
+export type FoodCategoryScalarFieldEnum = (typeof FoodCategoryScalarFieldEnum)[keyof typeof FoodCategoryScalarFieldEnum]
+
+
 export const FoodScalarFieldEnum = {
   id: 'id',
   foodName: 'foodName',
   description: 'description',
-  categoryId: 'categoryId',
-  foodType: 'foodType',
   imageUrl: 'imageUrl',
-  protein: 'protein',
-  carbs: 'carbs',
-  fat: 'fat',
-  fiber: 'fiber',
-  calories: 'calories',
+  foodType: 'foodType',
+  categoryId: 'categoryId',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -173,30 +204,7 @@ export const FoodScalarFieldEnum = {
 export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
 
 
-export const FoodCategoryScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  parentId: 'parentId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type FoodCategoryScalarFieldEnum = (typeof FoodCategoryScalarFieldEnum)[keyof typeof FoodCategoryScalarFieldEnum]
-
-
-export const NutritionComponentScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  unit: 'unit',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NutritionComponentScalarFieldEnum = (typeof NutritionComponentScalarFieldEnum)[keyof typeof NutritionComponentScalarFieldEnum]
-
-
-export const FoodNutritionScalarFieldEnum = {
+export const IngredientNutritionScalarFieldEnum = {
   id: 'id',
   servingSize: 'servingSize',
   servingUnit: 'servingUnit',
@@ -207,22 +215,29 @@ export const FoodNutritionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type FoodNutritionScalarFieldEnum = (typeof FoodNutritionScalarFieldEnum)[keyof typeof FoodNutritionScalarFieldEnum]
+export type IngredientNutritionScalarFieldEnum = (typeof IngredientNutritionScalarFieldEnum)[keyof typeof IngredientNutritionScalarFieldEnum]
 
 
-export const FoodNutritionValueScalarFieldEnum = {
+export const NutrientScalarFieldEnum = {
   id: 'id',
-  value: 'value',
-  nutritionId: 'nutritionId',
-  componentId: 'componentId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  name: 'name',
+  unit: 'unit'
 } as const
 
-export type FoodNutritionValueScalarFieldEnum = (typeof FoodNutritionValueScalarFieldEnum)[keyof typeof FoodNutritionValueScalarFieldEnum]
+export type NutrientScalarFieldEnum = (typeof NutrientScalarFieldEnum)[keyof typeof NutrientScalarFieldEnum]
 
 
-export const DishIngredientScalarFieldEnum = {
+export const NutritionValueScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  ingredientNutritionId: 'ingredientNutritionId',
+  nutrientId: 'nutrientId'
+} as const
+
+export type NutritionValueScalarFieldEnum = (typeof NutritionValueScalarFieldEnum)[keyof typeof NutritionValueScalarFieldEnum]
+
+
+export const FoodIngredientScalarFieldEnum = {
   id: 'id',
   quantityGrams: 'quantityGrams',
   dishId: 'dishId',
@@ -231,7 +246,30 @@ export const DishIngredientScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type DishIngredientScalarFieldEnum = (typeof DishIngredientScalarFieldEnum)[keyof typeof DishIngredientScalarFieldEnum]
+export type FoodIngredientScalarFieldEnum = (typeof FoodIngredientScalarFieldEnum)[keyof typeof FoodIngredientScalarFieldEnum]
+
+
+export const IngredientAllergenScalarFieldEnum = {
+  id: 'id',
+  ingredientId: 'ingredientId',
+  allergenId: 'allergenId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IngredientAllergenScalarFieldEnum = (typeof IngredientAllergenScalarFieldEnum)[keyof typeof IngredientAllergenScalarFieldEnum]
+
+
+export const DailyLogScalarFieldEnum = {
+  id: 'id',
+  logDate: 'logDate',
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
 
 
 export const MealScalarFieldEnum = {
@@ -276,44 +314,10 @@ export const FoodImageScalarFieldEnum = {
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
 
 
-export const DailyLogScalarFieldEnum = {
-  id: 'id',
-  logDate: 'logDate',
-  totalCalories: 'totalCalories',
-  totalProtein: 'totalProtein',
-  totalCarbs: 'totalCarbs',
-  totalFat: 'totalFat',
-  totalFiber: 'totalFiber',
-  targetCalories: 'targetCalories',
-  targetProtein: 'targetProtein',
-  targetCarbs: 'targetCarbs',
-  targetFat: 'targetFat',
-  targetFiber: 'targetFiber',
-  status: 'status',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
-
-
-export const UserAllergyScalarFieldEnum = {
-  id: 'id',
-  severity: 'severity',
-  note: 'note',
-  userProfileId: 'userProfileId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
-
-
 export const ReportScalarFieldEnum = {
   id: 'id',
   reportType: 'reportType',
-  generalAt: 'generalAt',
+  generatedAt: 'generatedAt',
   timeRangeStart: 'timeRangeStart',
   timeRangeEnd: 'timeRangeEnd',
   data: 'data',
@@ -342,7 +346,9 @@ export const AITrainingJobScalarFieldEnum = {
   startedAt: 'startedAt',
   finishedAt: 'finishedAt',
   status: 'status',
-  modelId: 'modelId'
+  modelId: 'modelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AITrainingJobScalarFieldEnum = (typeof AITrainingJobScalarFieldEnum)[keyof typeof AITrainingJobScalarFieldEnum]
@@ -354,6 +360,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -370,4 +383,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

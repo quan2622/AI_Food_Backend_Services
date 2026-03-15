@@ -19,6 +19,7 @@ import { UserAllergyModule } from './modules/user-allergy/user-allergy.module';
 import { ReportModule } from './modules/report/report.module';
 import { AiModelModule } from './modules/ai-model/ai-model.module';
 import { AiTrainingJobModule } from './modules/ai-training-job/ai-training-job.module';
+import { AllergenModule } from './modules/allergen/allergen.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { AiTrainingJobModule } from './modules/ai-training-job/ai-training-job.m
     ReportModule,
     AiModelModule,
     AiTrainingJobModule,
+    AllergenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
