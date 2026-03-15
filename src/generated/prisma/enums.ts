@@ -67,15 +67,6 @@ export const ReportType = {
 export type ReportType = (typeof ReportType)[keyof typeof ReportType]
 
 
-export const FoodType = {
-  INGREDIENT: 'INGREDIENT',
-  DISH: 'DISH',
-  BRANDED: 'BRANDED'
-} as const
-
-export type FoodType = (typeof FoodType)[keyof typeof FoodType]
-
-
 export const SourceType = {
   USDA: 'USDA',
   MANUAL: 'MANUAL',
