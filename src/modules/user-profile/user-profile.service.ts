@@ -4,17 +4,17 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import type { UserProfile } from '../../generated/prisma/client.js';
+import { ActivityLevel, type UserProfile } from '../../generated/prisma/client.js';
 import type { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import type { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
 
 /** Hệ số hoạt động TDEE */
-const ACTIVITY_FACTORS: Record<string, number> = {
+const ACTIVITY_FACTORS: Record<ActivityLevel, number> = {
   SEDENTARY: 1.2,
-  LIGHT: 1.375,
-  MODERATE: 1.55,
-  ACTIVE: 1.725,
-  VERY_ACTIVE: 1.9,
+  LIGHTLY_ACTIVE: 1.375,
+  MODERATELY_ACTIVE: 1.55,
+  VERY_ACTIVE: 1.725,
+  SUPER_ACTIVE: 1.9,
 };
 
 @Injectable()
@@ -43,8 +43,8 @@ export class UserProfileService {
   }
 
   /** TDEE = BMR × hệ số hoạt động */
-  private calculateTdee(bmr: number, activityLevel?: string): number {
-    const factor = ACTIVITY_FACTORS[activityLevel ?? ''] ?? 1.55;
+  private calculateTdee(bmr: number, activityLevel?: ActivityLevel | null): number {
+    const factor = activityLevel ? ACTIVITY_FACTORS[activityLevel] : 1.55;
     return parseFloat((bmr * factor).toFixed(2));
   }
 
@@ -66,7 +66,10 @@ export class UserProfileService {
 
     const bmi = this.calculateBmi(dto.weight, dto.height);
     const bmr = this.calculateBmr(dto.weight, dto.height, dto.age, dto.gender);
-    const tdee = this.calculateTdee(bmr, dto.activityLevel);
+    const tdee = this.calculateTdee(
+      bmr,
+      dto.activityLevel ? (dto.activityLevel as ActivityLevel) : null,
+    );
 
     return this.prisma.userProfile.create({
       data: {
@@ -75,7 +78,9 @@ export class UserProfileService {
         height: dto.height,
         weight: dto.weight,
         gender: dto.gender ?? null,
-        activityLevel: dto.activityLevel ?? null,
+        activityLevel: dto.activityLevel
+          ? (dto.activityLevel as ActivityLevel)
+          : null,
         bmi,
         bmr,
         tdee,
@@ -134,8 +139,10 @@ export class UserProfileService {
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
     const newGender = dto.gender ?? profile.gender ?? undefined;
-    const newActivityLevel =
-      dto.activityLevel ?? profile.activityLevel ?? undefined;
+    const newActivityLevel: ActivityLevel | null =
+      (dto.activityLevel as ActivityLevel | undefined) ??
+      profile.activityLevel ??
+      null;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
     const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
@@ -149,7 +156,9 @@ export class UserProfileService {
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.gender !== undefined && { gender: dto.gender }),
         ...(dto.activityLevel !== undefined && {
-          activityLevel: dto.activityLevel,
+          activityLevel: dto.activityLevel
+            ? (dto.activityLevel as ActivityLevel)
+            : null,
         }),
         bmi,
         bmr,
@@ -190,8 +199,10 @@ export class UserProfileService {
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
     const newGender = dto.gender ?? profile.gender ?? undefined;
-    const newActivityLevel =
-      dto.activityLevel ?? profile.activityLevel ?? undefined;
+    const newActivityLevel: ActivityLevel | null =
+      (dto.activityLevel as ActivityLevel | undefined) ??
+      profile.activityLevel ??
+      null;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
     const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
@@ -205,7 +216,9 @@ export class UserProfileService {
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.gender !== undefined && { gender: dto.gender }),
         ...(dto.activityLevel !== undefined && {
-          activityLevel: dto.activityLevel,
+          activityLevel: dto.activityLevel
+            ? (dto.activityLevel as ActivityLevel)
+            : null,
         }),
         bmi,
         bmr,

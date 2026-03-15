@@ -29,9 +29,17 @@ export class CreateUserProfileDto {
   gender?: string;
 
   @IsOptional()
-  @IsIn(['SEDENTARY', 'LIGHT', 'MODERATE', 'ACTIVE', 'VERY_ACTIVE'], {
-    message:
-      'activityLevel phải là SEDENTARY, LIGHT, MODERATE, ACTIVE hoặc VERY_ACTIVE',
+  @IsIn(
+    [
+      'SEDENTARY',
+      'LIGHTLY_ACTIVE',
+      'MODERATELY_ACTIVE',
+      'VERY_ACTIVE',
+      'SUPER_ACTIVE',
+    ],
+    {
+      message:
+        'activityLevel phải là SEDENTARY, LIGHTLY_ACTIVE, MODERATELY_ACTIVE, VERY_ACTIVE hoặc SUPER_ACTIVE',
   })
   activityLevel?: string;
 }

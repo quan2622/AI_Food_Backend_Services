@@ -56,12 +56,6 @@ enum ReportType {
   TRAFFIC
 }
 
-enum FoodType {
-  INGREDIENT
-  DISH
-  BRANDED
-}
-
 enum SourceType {
   USDA
   MANUAL
