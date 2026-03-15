@@ -10,7 +10,7 @@ type NutritionGoalWithGoalTypeInfo = {
   id: number;
   goalType: GoalType;
   goalTypeInfo: { value: string; description: string | null } | null;
-  targetCaloriesPerDay: number;
+  targetCalories: number;
   targetProtein: number;
   targetCarbs: number;
   targetFat: number;
@@ -59,7 +59,7 @@ export class NutritionGoalService {
       data: {
         userId,
         goalType: dto.goalType,
-        targetCaloriesPerDay: dto.targetCaloriesPerDay,
+        targetCalories: dto.targetCalories,
         targetProtein: dto.targetProtein,
         targetCarbs: dto.targetCarbs,
         targetFat: dto.targetFat,
@@ -122,8 +122,8 @@ export class NutritionGoalService {
       where: { id },
       data: {
         ...(dto.goalType != null && { goalType: dto.goalType }),
-        ...(dto.targetCaloriesPerDay != null && {
-          targetCaloriesPerDay: dto.targetCaloriesPerDay,
+        ...(dto.targetCalories != null && {
+          targetCalories: dto.targetCalories,
         }),
         ...(dto.targetProtein != null && {
           targetProtein: dto.targetProtein,

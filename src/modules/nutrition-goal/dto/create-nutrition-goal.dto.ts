@@ -13,7 +13,7 @@ export class CreateNutritionGoalDto {
 
   @IsNumber({}, { message: 'Lượng calo mục tiêu không hợp lệ' })
   @IsNotEmpty({ message: 'Lượng calo mục tiêu không được để trống' })
-  targetCaloriesPerDay: number;
+  targetCalories: number;
 
   @IsNumber({}, { message: 'Mục tiêu protein không hợp lệ' })
   @IsNotEmpty({ message: 'Mục tiêu protein không được để trống' })
