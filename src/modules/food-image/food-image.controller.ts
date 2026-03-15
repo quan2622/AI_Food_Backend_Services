@@ -51,9 +51,9 @@ export class FoodImageController {
     return this.foodImageService.create(user.id, dto, image);
   }
 
-  @Get('meal-items/:mealItemId')
-  findAllByMealItemId(@Param('mealItemId', ParseIntPipe) mealItemId: number) {
-    return this.foodImageService.findAllByMealItemId(mealItemId);
+  @Get('meals/:mealId')
+  findAllByMealId(@Param('mealId', ParseIntPipe) mealId: number) {
+    return this.foodImageService.findAllByMealId(mealId);
   }
 
   @Get(':id')
@@ -61,13 +61,13 @@ export class FoodImageController {
     return this.foodImageService.findOne(id);
   }
 
-  @Delete('meal-items/:mealItemId')
+  @Delete('meals/:mealId')
   @HttpCode(HttpStatus.OK)
-  removeAllByMealItemId(
-    @Param('mealItemId', ParseIntPipe) mealItemId: number,
+  removeAllByMealId(
+    @Param('mealId', ParseIntPipe) mealId: number,
     @User() user: { id: number },
   ) {
-    return this.foodImageService.removeAllByMealItemId(mealItemId, user.id);
+    return this.foodImageService.removeAllByMealId(mealId, user.id);
   }
 
   @Delete(':id')
