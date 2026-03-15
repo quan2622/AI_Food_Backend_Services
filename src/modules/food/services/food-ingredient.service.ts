@@ -4,7 +4,7 @@ import { CreateDishIngredientDto } from '../dto/dish-ingredient/create-dish-ingr
 import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingredient.dto.js';
 
 @Injectable()
-export class DishIngredientService {
+export class FoodIngredientService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByDish(dishId: number) {
@@ -22,7 +22,9 @@ export class DishIngredientService {
       where: { id: dto.ingredientId },
     });
     if (!ingredient) {
-      throw new NotFoundException(`Nguyên liệu #${dto.ingredientId} không tồn tại`);
+      throw new NotFoundException(
+        `Nguyên liệu #${dto.ingredientId} không tồn tại`,
+      );
     }
 
     return this.prisma.foodIngredient.create({
@@ -35,7 +37,9 @@ export class DishIngredientService {
   }
 
   async updateIngredient(id: number, dto: UpdateDishIngredientDto) {
-    const existing = await this.prisma.foodIngredient.findUnique({ where: { id } });
+    const existing = await this.prisma.foodIngredient.findUnique({
+      where: { id },
+    });
     if (!existing) {
       throw new NotFoundException(`FoodIngredient #${id} không tồn tại`);
     }
@@ -49,7 +53,9 @@ export class DishIngredientService {
   }
 
   async removeIngredient(id: number) {
-    const existing = await this.prisma.foodIngredient.findUnique({ where: { id } });
+    const existing = await this.prisma.foodIngredient.findUnique({
+      where: { id },
+    });
     if (!existing) {
       throw new NotFoundException(`FoodIngredient #${id} không tồn tại`);
     }
@@ -57,3 +63,4 @@ export class DishIngredientService {
     await this.prisma.foodIngredient.delete({ where: { id } });
   }
 }
+

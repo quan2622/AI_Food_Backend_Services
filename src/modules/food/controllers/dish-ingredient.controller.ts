@@ -9,14 +9,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { DishIngredientService } from '../services/dish-ingredient.service.js';
+import { FoodIngredientService } from '../services/food-ingredient.service.js';
 import { CreateDishIngredientDto } from '../dto/dish-ingredient/create-dish-ingredient.dto.js';
 import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingredient.dto.js';
 import { AdminGuard } from '../../../guards/admin.guard';
 
 @Controller('foods/:dishId/ingredients')
 export class DishIngredientController {
-  constructor(private readonly dishIngredientService: DishIngredientService) {}
+  constructor(private readonly dishIngredientService: FoodIngredientService) {}
 
   @Get()
   findByDish(@Param('dishId', ParseIntPipe) dishId: number) {
