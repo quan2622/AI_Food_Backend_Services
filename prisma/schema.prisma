@@ -17,9 +17,9 @@ datasource db {
 // ─── Enums ──────────────────────────────────────────────────────────────────
 
 enum GoalType {
-  LOSE
-  GAIN
-  MAINTAIN
+  WEIGHT_LOSS
+  WEIGHT_GAIN
+  MAINTENANCE
 }
 
 enum MealType {
@@ -42,6 +42,14 @@ enum SeverityType {
   LIFE_THREATENING
 }
 
+enum ActivityLevel {
+  SEDENTARY
+  LIGHTLY_ACTIVE
+  MODERATELY_ACTIVE
+  VERY_ACTIVE
+  SUPER_ACTIVE
+}
+
 enum ReportType {
   UPLOAD_COUNT
   POPULAR_FOOD
@@ -60,7 +68,27 @@ enum SourceType {
   CALCULATED
 }
 
+enum UnitType {
+ UNIT_G
+ UNIT_KG
+ UNIT_MG
+ UNIT_OZ
+ UNIT_LB
+}
+
 // ─── Models ─────────────────────────────────────────────────────────────────
+
+model AllCode {
+  id          Int      @id @default(autoincrement())
+  keyMap      String   @unique
+  type        String
+  value       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("all_codes")
+}
 
 model User {
   id             Int             @id @default(autoincrement())
@@ -95,13 +123,31 @@ model UserProfile {
   bmr           Float
   tdee          Float
   gender        String?
-  activityLevel String?
+  activityLevel ActivityLevel?
   userId        Int     @unique
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   @@map("user_profiles")
+}
+
+
+model NutritionGoal {
+  id                   Int      @id @default(autoincrement())
+  goalType             GoalType
+  targetCalories       Float
+  targetProtein        Float
+  targetCarbs          Float
+  targetFat            Float
+  startDay             DateTime
+  endDate              DateTime
+  userId               Int
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("nutrition_goals")
 }
 
 model UserAllergy {
@@ -117,35 +163,6 @@ model UserAllergy {
 
   @@unique([userId, allergenId])
   @@map("user_allergies")
-}
-
-model NutritionGoal {
-  id                   Int      @id @default(autoincrement())
-  goalType             GoalType
-  targetCaloriesPerDay Float
-  targetProtein        Float
-  targetCarbs          Float
-  targetFat            Float
-  startDay             DateTime
-  endDate              DateTime
-  userId               Int
-  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-
-  @@map("nutrition_goals")
-}
-
-model AllCode {
-  id          Int      @id @default(autoincrement())
-  keyMap      String   @unique
-  type        String
-  value       String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("all_codes")
 }
 
 model Allergen {
@@ -196,10 +213,8 @@ model Food {
   foodName     String
   description  String?
   imageUrl     String?
-  foodType     FoodType         @default(DISH)
   categoryId   Int?
   foodCategory FoodCategory?    @relation(fields: [categoryId], references: [id])
-  isActive     Boolean          @default(true)
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 
@@ -214,7 +229,7 @@ model Food {
 model IngredientNutrition {
   id           Int               @id @default(autoincrement())
   servingSize  Float
-  servingUnit  String            @default("g")
+  servingUnit  UnitType   @default(UNIT_G)
   source       SourceType        @default(MANUAL)
   isCalculated Boolean           @default(false)
   ingredientId Int
@@ -231,7 +246,7 @@ model IngredientNutrition {
 model Nutrient {
   id   Int    @id @default(autoincrement())
   name String @unique
-  unit String
+  unit UnitType
 
   values NutritionValue[]
 

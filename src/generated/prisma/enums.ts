@@ -10,9 +10,9 @@
 */
 
 export const GoalType = {
-  LOSE: 'LOSE',
-  GAIN: 'GAIN',
-  MAINTAIN: 'MAINTAIN'
+  WEIGHT_LOSS: 'WEIGHT_LOSS',
+  WEIGHT_GAIN: 'WEIGHT_GAIN',
+  MAINTENANCE: 'MAINTENANCE'
 } as const
 
 export type GoalType = (typeof GoalType)[keyof typeof GoalType]
@@ -47,6 +47,17 @@ export const SeverityType = {
 export type SeverityType = (typeof SeverityType)[keyof typeof SeverityType]
 
 
+export const ActivityLevel = {
+  SEDENTARY: 'SEDENTARY',
+  LIGHTLY_ACTIVE: 'LIGHTLY_ACTIVE',
+  MODERATELY_ACTIVE: 'MODERATELY_ACTIVE',
+  VERY_ACTIVE: 'VERY_ACTIVE',
+  SUPER_ACTIVE: 'SUPER_ACTIVE'
+} as const
+
+export type ActivityLevel = (typeof ActivityLevel)[keyof typeof ActivityLevel]
+
+
 export const ReportType = {
   UPLOAD_COUNT: 'UPLOAD_COUNT',
   POPULAR_FOOD: 'POPULAR_FOOD',
@@ -72,3 +83,14 @@ export const SourceType = {
 } as const
 
 export type SourceType = (typeof SourceType)[keyof typeof SourceType]
+
+
+export const UnitType = {
+  UNIT_G: 'UNIT_G',
+  UNIT_KG: 'UNIT_KG',
+  UNIT_MG: 'UNIT_MG',
+  UNIT_OZ: 'UNIT_OZ',
+  UNIT_LB: 'UNIT_LB'
+} as const
+
+export type UnitType = (typeof UnitType)[keyof typeof UnitType]

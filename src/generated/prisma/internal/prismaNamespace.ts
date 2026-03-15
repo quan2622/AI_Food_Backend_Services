@@ -384,11 +384,11 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  AllCode: 'AllCode',
   User: 'User',
   UserProfile: 'UserProfile',
-  UserAllergy: 'UserAllergy',
   NutritionGoal: 'NutritionGoal',
-  AllCode: 'AllCode',
+  UserAllergy: 'UserAllergy',
   Allergen: 'Allergen',
   Ingredient: 'Ingredient',
   FoodCategory: 'FoodCategory',
@@ -420,10 +420,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userProfile" | "userAllergy" | "nutritionGoal" | "allCode" | "allergen" | "ingredient" | "foodCategory" | "food" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "report" | "aIModel" | "aITrainingJob"
+    modelProps: "allCode" | "user" | "userProfile" | "nutritionGoal" | "userAllergy" | "allergen" | "ingredient" | "foodCategory" | "food" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "report" | "aIModel" | "aITrainingJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    AllCode: {
+      payload: Prisma.$AllCodePayload<ExtArgs>
+      fields: Prisma.AllCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AllCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AllCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        findFirst: {
+          args: Prisma.AllCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AllCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        findMany: {
+          args: Prisma.AllCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        create: {
+          args: Prisma.AllCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        createMany: {
+          args: Prisma.AllCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AllCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        delete: {
+          args: Prisma.AllCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        update: {
+          args: Prisma.AllCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.AllCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AllCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AllCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.AllCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+        }
+        aggregate: {
+          args: Prisma.AllCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAllCode>
+        }
+        groupBy: {
+          args: Prisma.AllCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AllCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AllCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AllCodeCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -572,80 +646,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    UserAllergy: {
-      payload: Prisma.$UserAllergyPayload<ExtArgs>
-      fields: Prisma.UserAllergyFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.UserAllergyFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.UserAllergyFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        findFirst: {
-          args: Prisma.UserAllergyFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.UserAllergyFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        findMany: {
-          args: Prisma.UserAllergyFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
-        }
-        create: {
-          args: Prisma.UserAllergyCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        createMany: {
-          args: Prisma.UserAllergyCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.UserAllergyCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
-        }
-        delete: {
-          args: Prisma.UserAllergyDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        update: {
-          args: Prisma.UserAllergyUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        deleteMany: {
-          args: Prisma.UserAllergyDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.UserAllergyUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.UserAllergyUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
-        }
-        upsert: {
-          args: Prisma.UserAllergyUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
-        }
-        aggregate: {
-          args: Prisma.UserAllergyAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUserAllergy>
-        }
-        groupBy: {
-          args: Prisma.UserAllergyGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserAllergyGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.UserAllergyCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserAllergyCountAggregateOutputType> | number
-        }
-      }
-    }
     NutritionGoal: {
       payload: Prisma.$NutritionGoalPayload<ExtArgs>
       fields: Prisma.NutritionGoalFieldRefs
@@ -720,77 +720,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    AllCode: {
-      payload: Prisma.$AllCodePayload<ExtArgs>
-      fields: Prisma.AllCodeFieldRefs
+    UserAllergy: {
+      payload: Prisma.$UserAllergyPayload<ExtArgs>
+      fields: Prisma.UserAllergyFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.AllCodeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+          args: Prisma.UserAllergyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.AllCodeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         findFirst: {
-          args: Prisma.AllCodeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload> | null
+          args: Prisma.UserAllergyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.AllCodeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         findMany: {
-          args: Prisma.AllCodeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+          args: Prisma.UserAllergyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
         }
         create: {
-          args: Prisma.AllCodeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         createMany: {
-          args: Prisma.AllCodeCreateManyArgs<ExtArgs>
+          args: Prisma.UserAllergyCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.AllCodeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+          args: Prisma.UserAllergyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
         }
         delete: {
-          args: Prisma.AllCodeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         update: {
-          args: Prisma.AllCodeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         deleteMany: {
-          args: Prisma.AllCodeDeleteManyArgs<ExtArgs>
+          args: Prisma.UserAllergyDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.AllCodeUpdateManyArgs<ExtArgs>
+          args: Prisma.UserAllergyUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.AllCodeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>[]
+          args: Prisma.UserAllergyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>[]
         }
         upsert: {
-          args: Prisma.AllCodeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$AllCodePayload>
+          args: Prisma.UserAllergyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAllergyPayload>
         }
         aggregate: {
-          args: Prisma.AllCodeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAllCode>
+          args: Prisma.UserAllergyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserAllergy>
         }
         groupBy: {
-          args: Prisma.AllCodeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AllCodeGroupByOutputType>[]
+          args: Prisma.UserAllergyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAllergyGroupByOutputType>[]
         }
         count: {
-          args: Prisma.AllCodeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AllCodeCountAggregateOutputType> | number
+          args: Prisma.UserAllergyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAllergyCountAggregateOutputType> | number
         }
       }
     }
@@ -2017,16 +2017,28 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const AllCodeScalarFieldEnum = {
+  id: 'id',
+  keyMap: 'keyMap',
+  type: 'type',
+  value: 'value',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  genderCode: 'genderCode',
   avatarUrl: 'avatarUrl',
   fullName: 'fullName',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  birthOfDate: 'birthOfDate',
+  dateOfBirth: 'dateOfBirth',
   isAdmin: 'isAdmin',
   status: 'status',
   createdAt: 'createdAt',
@@ -2054,23 +2066,10 @@ export const UserProfileScalarFieldEnum = {
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
 
 
-export const UserAllergyScalarFieldEnum = {
-  id: 'id',
-  severity: 'severity',
-  note: 'note',
-  userId: 'userId',
-  allergenId: 'allergenId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
-
-
 export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
-  targetCaloriesPerDay: 'targetCaloriesPerDay',
+  targetCalories: 'targetCalories',
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',
   targetFat: 'targetFat',
@@ -2084,17 +2083,17 @@ export const NutritionGoalScalarFieldEnum = {
 export type NutritionGoalScalarFieldEnum = (typeof NutritionGoalScalarFieldEnum)[keyof typeof NutritionGoalScalarFieldEnum]
 
 
-export const AllCodeScalarFieldEnum = {
+export const UserAllergyScalarFieldEnum = {
   id: 'id',
-  keyMap: 'keyMap',
-  type: 'type',
-  value: 'value',
-  description: 'description',
+  severity: 'severity',
+  note: 'note',
+  userId: 'userId',
+  allergenId: 'allergenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
+export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
 
 
 export const AllergenScalarFieldEnum = {
@@ -2135,9 +2134,7 @@ export const FoodScalarFieldEnum = {
   foodName: 'foodName',
   description: 'description',
   imageUrl: 'imageUrl',
-  foodType: 'foodType',
   categoryId: 'categoryId',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2249,7 +2246,8 @@ export const FoodImageScalarFieldEnum = {
   mimeType: 'mimeType',
   fileSize: 'fileSize',
   uploadedAt: 'uploadedAt',
-  mealItemId: 'mealItemId'
+  userId: 'userId',
+  mealId: 'mealId'
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
@@ -2389,16 +2387,16 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
- * Reference to a field of type 'SeverityType'
+ * Reference to a field of type 'ActivityLevel'
  */
-export type EnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType'>
+export type EnumActivityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityLevel'>
     
 
 
 /**
- * Reference to a field of type 'SeverityType[]'
+ * Reference to a field of type 'ActivityLevel[]'
  */
-export type ListEnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType[]'>
+export type ListEnumActivityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityLevel[]'>
     
 
 
@@ -2417,16 +2415,30 @@ export type ListEnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
- * Reference to a field of type 'FoodType'
+ * Reference to a field of type 'SeverityType'
  */
-export type EnumFoodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodType'>
+export type EnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType'>
     
 
 
 /**
- * Reference to a field of type 'FoodType[]'
+ * Reference to a field of type 'SeverityType[]'
  */
-export type ListEnumFoodTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FoodType[]'>
+export type ListEnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitType'
+ */
+export type EnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType'>
+    
+
+
+/**
+ * Reference to a field of type 'UnitType[]'
+ */
+export type ListEnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType[]'>
     
 
 
@@ -2594,11 +2606,11 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
+  allCode?: Prisma.AllCodeOmit
   user?: Prisma.UserOmit
   userProfile?: Prisma.UserProfileOmit
-  userAllergy?: Prisma.UserAllergyOmit
   nutritionGoal?: Prisma.NutritionGoalOmit
-  allCode?: Prisma.AllCodeOmit
+  userAllergy?: Prisma.UserAllergyOmit
   allergen?: Prisma.AllergenOmit
   ingredient?: Prisma.IngredientOmit
   foodCategory?: Prisma.FoodCategoryOmit

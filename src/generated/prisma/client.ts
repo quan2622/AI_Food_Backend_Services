@@ -27,8 +27,8 @@ export * from "./enums.js"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more AllCodes
+ * const allCodes = await prisma.allCode.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -37,6 +37,11 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
+/**
+ * Model AllCode
+ * 
+ */
+export type AllCode = Prisma.AllCodeModel
 /**
  * Model User
  * 
@@ -48,20 +53,15 @@ export type User = Prisma.UserModel
  */
 export type UserProfile = Prisma.UserProfileModel
 /**
- * Model UserAllergy
- * 
- */
-export type UserAllergy = Prisma.UserAllergyModel
-/**
  * Model NutritionGoal
  * 
  */
 export type NutritionGoal = Prisma.NutritionGoalModel
 /**
- * Model AllCode
+ * Model UserAllergy
  * 
  */
-export type AllCode = Prisma.AllCodeModel
+export type UserAllergy = Prisma.UserAllergyModel
 /**
  * Model Allergen
  * 

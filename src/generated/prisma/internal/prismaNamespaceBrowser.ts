@@ -51,11 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  AllCode: 'AllCode',
   User: 'User',
   UserProfile: 'UserProfile',
-  UserAllergy: 'UserAllergy',
   NutritionGoal: 'NutritionGoal',
-  AllCode: 'AllCode',
+  UserAllergy: 'UserAllergy',
   Allergen: 'Allergen',
   Ingredient: 'Ingredient',
   FoodCategory: 'FoodCategory',
@@ -90,16 +90,28 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const AllCodeScalarFieldEnum = {
+  id: 'id',
+  keyMap: 'keyMap',
+  type: 'type',
+  value: 'value',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  genderCode: 'genderCode',
   avatarUrl: 'avatarUrl',
   fullName: 'fullName',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  birthOfDate: 'birthOfDate',
+  dateOfBirth: 'dateOfBirth',
   isAdmin: 'isAdmin',
   status: 'status',
   createdAt: 'createdAt',
@@ -127,23 +139,10 @@ export const UserProfileScalarFieldEnum = {
 export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
 
 
-export const UserAllergyScalarFieldEnum = {
-  id: 'id',
-  severity: 'severity',
-  note: 'note',
-  userId: 'userId',
-  allergenId: 'allergenId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
-
-
 export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
-  targetCaloriesPerDay: 'targetCaloriesPerDay',
+  targetCalories: 'targetCalories',
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',
   targetFat: 'targetFat',
@@ -157,17 +156,17 @@ export const NutritionGoalScalarFieldEnum = {
 export type NutritionGoalScalarFieldEnum = (typeof NutritionGoalScalarFieldEnum)[keyof typeof NutritionGoalScalarFieldEnum]
 
 
-export const AllCodeScalarFieldEnum = {
+export const UserAllergyScalarFieldEnum = {
   id: 'id',
-  keyMap: 'keyMap',
-  type: 'type',
-  value: 'value',
-  description: 'description',
+  severity: 'severity',
+  note: 'note',
+  userId: 'userId',
+  allergenId: 'allergenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AllCodeScalarFieldEnum = (typeof AllCodeScalarFieldEnum)[keyof typeof AllCodeScalarFieldEnum]
+export type UserAllergyScalarFieldEnum = (typeof UserAllergyScalarFieldEnum)[keyof typeof UserAllergyScalarFieldEnum]
 
 
 export const AllergenScalarFieldEnum = {
@@ -208,9 +207,7 @@ export const FoodScalarFieldEnum = {
   foodName: 'foodName',
   description: 'description',
   imageUrl: 'imageUrl',
-  foodType: 'foodType',
   categoryId: 'categoryId',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -322,7 +319,8 @@ export const FoodImageScalarFieldEnum = {
   mimeType: 'mimeType',
   fileSize: 'fileSize',
   uploadedAt: 'uploadedAt',
-  mealItemId: 'mealItemId'
+  userId: 'userId',
+  mealId: 'mealId'
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]

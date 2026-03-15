@@ -8,11 +8,11 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/AllCode.js'
 export type * from './models/User.js'
 export type * from './models/UserProfile.js'
-export type * from './models/UserAllergy.js'
 export type * from './models/NutritionGoal.js'
-export type * from './models/AllCode.js'
+export type * from './models/UserAllergy.js'
 export type * from './models/Allergen.js'
 export type * from './models/Ingredient.js'
 export type * from './models/FoodCategory.js'
