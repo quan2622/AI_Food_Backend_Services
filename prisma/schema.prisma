@@ -214,9 +214,39 @@ model Food {
 
   mealItems       MealItem[]
   foodIngredients FoodIngredient[]
+  nutritionProfile FoodNutritionProfile?
 
   @@index([foodName])
   @@map("foods")
+}
+
+/// Represents the nutritional profile for a Food, normalized to per 100g.
+model FoodNutritionProfile {
+  id           Int        @id @default(autoincrement())
+  source       SourceType @default(MANUAL)
+  isCalculated Boolean    @default(false)
+  foodId       Int
+  food         Food       @relation(fields: [foodId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  values FoodNutritionValue[]
+
+  @@unique([foodId])
+  @@map("food_nutrition_profiles")
+}
+
+/// The actual value of a nutrient for a given FoodNutritionProfile record.
+model FoodNutritionValue {
+  id                     Int                  @id @default(autoincrement())
+  value                  Float
+  foodNutritionProfileId Int
+  foodNutritionProfile   FoodNutritionProfile @relation(fields: [foodNutritionProfileId], references: [id], onDelete: Cascade)
+  nutrientId             Int
+  nutrient               Nutrient             @relation(fields: [nutrientId], references: [id], onDelete: Restrict)
+
+  @@unique([foodNutritionProfileId, nutrientId])
+  @@map("food_nutrition_values")
 }
 
 /// Represents a specific nutritional profile for an ingredient (e.g., per 100g serving).
@@ -243,6 +273,7 @@ model Nutrient {
   unit UnitType
 
   values NutritionValue[]
+  foodValues FoodNutritionValue[]
 
   @@map("nutrients")
 }
