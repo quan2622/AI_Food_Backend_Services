@@ -404,6 +404,7 @@ export const ModelName = {
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
+  WorkoutLog: 'WorkoutLog',
   Report: 'Report',
   AIModel: 'AIModel',
   AITrainingJob: 'AITrainingJob'
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "allCode" | "user" | "userProfile" | "nutritionGoal" | "userAllergy" | "allergen" | "ingredient" | "foodCategory" | "food" | "foodNutritionProfile" | "foodNutritionValue" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "report" | "aIModel" | "aITrainingJob"
+    modelProps: "allCode" | "user" | "userProfile" | "nutritionGoal" | "userAllergy" | "allergen" | "ingredient" | "foodCategory" | "food" | "foodNutritionProfile" | "foodNutritionValue" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "workoutLog" | "report" | "aIModel" | "aITrainingJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1906,6 +1907,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WorkoutLog: {
+      payload: Prisma.$WorkoutLogPayload<ExtArgs>
+      fields: Prisma.WorkoutLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorkoutLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorkoutLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        findFirst: {
+          args: Prisma.WorkoutLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorkoutLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        findMany: {
+          args: Prisma.WorkoutLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>[]
+        }
+        create: {
+          args: Prisma.WorkoutLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        createMany: {
+          args: Prisma.WorkoutLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorkoutLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>[]
+        }
+        delete: {
+          args: Prisma.WorkoutLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        update: {
+          args: Prisma.WorkoutLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorkoutLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorkoutLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorkoutLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorkoutLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkoutLogPayload>
+        }
+        aggregate: {
+          args: Prisma.WorkoutLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkoutLog>
+        }
+        groupBy: {
+          args: Prisma.WorkoutLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkoutLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorkoutLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkoutLogCountAggregateOutputType> | number
+        }
+      }
+    }
     Report: {
       payload: Prisma.$ReportPayload<ExtArgs>
       fields: Prisma.ReportFieldRefs
@@ -2426,6 +2501,22 @@ export const FoodImageScalarFieldEnum = {
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
 
 
+export const WorkoutLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workoutType: 'workoutType',
+  durationMinute: 'durationMinute',
+  burnedCalories: 'burnedCalories',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkoutLogScalarFieldEnum = (typeof WorkoutLogScalarFieldEnum)[keyof typeof WorkoutLogScalarFieldEnum]
+
+
 export const ReportScalarFieldEnum = {
   id: 'id',
   reportType: 'reportType',
@@ -2799,6 +2890,7 @@ export type GlobalOmitConfig = {
   meal?: Prisma.MealOmit
   mealItem?: Prisma.MealItemOmit
   foodImage?: Prisma.FoodImageOmit
+  workoutLog?: Prisma.WorkoutLogOmit
   report?: Prisma.ReportOmit
   aIModel?: Prisma.AIModelOmit
   aITrainingJob?: Prisma.AITrainingJobOmit

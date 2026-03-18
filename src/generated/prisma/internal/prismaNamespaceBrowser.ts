@@ -71,6 +71,7 @@ export const ModelName = {
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
+  WorkoutLog: 'WorkoutLog',
   Report: 'Report',
   AIModel: 'AIModel',
   AITrainingJob: 'AITrainingJob'
@@ -349,6 +350,22 @@ export const FoodImageScalarFieldEnum = {
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
+
+
+export const WorkoutLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workoutType: 'workoutType',
+  durationMinute: 'durationMinute',
+  burnedCalories: 'burnedCalories',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkoutLogScalarFieldEnum = (typeof WorkoutLogScalarFieldEnum)[keyof typeof WorkoutLogScalarFieldEnum]
 
 
 export const ReportScalarFieldEnum = {
