@@ -201,6 +201,7 @@ export type NutrientWhereInput = {
   name?: Prisma.StringFilter<"Nutrient"> | string
   unit?: Prisma.EnumUnitTypeFilter<"Nutrient"> | $Enums.UnitType
   values?: Prisma.NutritionValueListRelationFilter
+  foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }
 
 export type NutrientOrderByWithRelationInput = {
@@ -208,6 +209,7 @@ export type NutrientOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
   values?: Prisma.NutritionValueOrderByRelationAggregateInput
+  foodValues?: Prisma.FoodNutritionValueOrderByRelationAggregateInput
 }
 
 export type NutrientWhereUniqueInput = Prisma.AtLeast<{
@@ -218,6 +220,7 @@ export type NutrientWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.NutrientWhereInput | Prisma.NutrientWhereInput[]
   unit?: Prisma.EnumUnitTypeFilter<"Nutrient"> | $Enums.UnitType
   values?: Prisma.NutritionValueListRelationFilter
+  foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }, "id" | "name">
 
 export type NutrientOrderByWithAggregationInput = {
@@ -244,6 +247,7 @@ export type NutrientCreateInput = {
   name: string
   unit: $Enums.UnitType
   values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
+  foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUncheckedCreateInput = {
@@ -251,12 +255,14 @@ export type NutrientUncheckedCreateInput = {
   name: string
   unit: $Enums.UnitType
   values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
+  foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
+  foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientUncheckedUpdateInput = {
@@ -264,6 +270,7 @@ export type NutrientUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
+  foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientCreateManyInput = {
@@ -281,6 +288,11 @@ export type NutrientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+}
+
+export type NutrientScalarRelationFilter = {
+  is?: Prisma.NutrientWhereInput
+  isNot?: Prisma.NutrientWhereInput
 }
 
 export type NutrientCountOrderByAggregateInput = {
@@ -309,9 +321,18 @@ export type NutrientSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
-export type NutrientScalarRelationFilter = {
-  is?: Prisma.NutrientWhereInput
-  isNot?: Prisma.NutrientWhereInput
+export type NutrientCreateNestedOneWithoutFoodValuesInput = {
+  create?: Prisma.XOR<Prisma.NutrientCreateWithoutFoodValuesInput, Prisma.NutrientUncheckedCreateWithoutFoodValuesInput>
+  connectOrCreate?: Prisma.NutrientCreateOrConnectWithoutFoodValuesInput
+  connect?: Prisma.NutrientWhereUniqueInput
+}
+
+export type NutrientUpdateOneRequiredWithoutFoodValuesNestedInput = {
+  create?: Prisma.XOR<Prisma.NutrientCreateWithoutFoodValuesInput, Prisma.NutrientUncheckedCreateWithoutFoodValuesInput>
+  connectOrCreate?: Prisma.NutrientCreateOrConnectWithoutFoodValuesInput
+  upsert?: Prisma.NutrientUpsertWithoutFoodValuesInput
+  connect?: Prisma.NutrientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.NutrientUpdateToOneWithWhereWithoutFoodValuesInput, Prisma.NutrientUpdateWithoutFoodValuesInput>, Prisma.NutrientUncheckedUpdateWithoutFoodValuesInput>
 }
 
 export type NutrientCreateNestedOneWithoutValuesInput = {
@@ -328,15 +349,59 @@ export type NutrientUpdateOneRequiredWithoutValuesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.NutrientUpdateToOneWithWhereWithoutValuesInput, Prisma.NutrientUpdateWithoutValuesInput>, Prisma.NutrientUncheckedUpdateWithoutValuesInput>
 }
 
+export type NutrientCreateWithoutFoodValuesInput = {
+  name: string
+  unit: $Enums.UnitType
+  values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
+}
+
+export type NutrientUncheckedCreateWithoutFoodValuesInput = {
+  id?: number
+  name: string
+  unit: $Enums.UnitType
+  values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
+}
+
+export type NutrientCreateOrConnectWithoutFoodValuesInput = {
+  where: Prisma.NutrientWhereUniqueInput
+  create: Prisma.XOR<Prisma.NutrientCreateWithoutFoodValuesInput, Prisma.NutrientUncheckedCreateWithoutFoodValuesInput>
+}
+
+export type NutrientUpsertWithoutFoodValuesInput = {
+  update: Prisma.XOR<Prisma.NutrientUpdateWithoutFoodValuesInput, Prisma.NutrientUncheckedUpdateWithoutFoodValuesInput>
+  create: Prisma.XOR<Prisma.NutrientCreateWithoutFoodValuesInput, Prisma.NutrientUncheckedCreateWithoutFoodValuesInput>
+  where?: Prisma.NutrientWhereInput
+}
+
+export type NutrientUpdateToOneWithWhereWithoutFoodValuesInput = {
+  where?: Prisma.NutrientWhereInput
+  data: Prisma.XOR<Prisma.NutrientUpdateWithoutFoodValuesInput, Prisma.NutrientUncheckedUpdateWithoutFoodValuesInput>
+}
+
+export type NutrientUpdateWithoutFoodValuesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
+}
+
+export type NutrientUncheckedUpdateWithoutFoodValuesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
+}
+
 export type NutrientCreateWithoutValuesInput = {
   name: string
   unit: $Enums.UnitType
+  foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUncheckedCreateWithoutValuesInput = {
   id?: number
   name: string
   unit: $Enums.UnitType
+  foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientCreateOrConnectWithoutValuesInput = {
@@ -358,12 +423,14 @@ export type NutrientUpdateToOneWithWhereWithoutValuesInput = {
 export type NutrientUpdateWithoutValuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientUncheckedUpdateWithoutValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
 
@@ -373,10 +440,12 @@ export type NutrientUncheckedUpdateWithoutValuesInput = {
 
 export type NutrientCountOutputType = {
   values: number
+  foodValues: number
 }
 
 export type NutrientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   values?: boolean | NutrientCountOutputTypeCountValuesArgs
+  foodValues?: boolean | NutrientCountOutputTypeCountFoodValuesArgs
 }
 
 /**
@@ -396,12 +465,20 @@ export type NutrientCountOutputTypeCountValuesArgs<ExtArgs extends runtime.Types
   where?: Prisma.NutritionValueWhereInput
 }
 
+/**
+ * NutrientCountOutputType without action
+ */
+export type NutrientCountOutputTypeCountFoodValuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FoodNutritionValueWhereInput
+}
+
 
 export type NutrientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   unit?: boolean
   values?: boolean | Prisma.Nutrient$valuesArgs<ExtArgs>
+  foodValues?: boolean | Prisma.Nutrient$foodValuesArgs<ExtArgs>
   _count?: boolean | Prisma.NutrientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["nutrient"]>
 
@@ -426,6 +503,7 @@ export type NutrientSelectScalar = {
 export type NutrientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "unit", ExtArgs["result"]["nutrient"]>
 export type NutrientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   values?: boolean | Prisma.Nutrient$valuesArgs<ExtArgs>
+  foodValues?: boolean | Prisma.Nutrient$foodValuesArgs<ExtArgs>
   _count?: boolean | Prisma.NutrientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type NutrientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -435,6 +513,7 @@ export type $NutrientPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Nutrient"
   objects: {
     values: Prisma.$NutritionValuePayload<ExtArgs>[]
+    foodValues: Prisma.$FoodNutritionValuePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -835,6 +914,7 @@ readonly fields: NutrientFieldRefs;
 export interface Prisma__NutrientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   values<T extends Prisma.Nutrient$valuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Nutrient$valuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NutritionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  foodValues<T extends Prisma.Nutrient$foodValuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Nutrient$foodValuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FoodNutritionValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1276,6 +1356,30 @@ export type Nutrient$valuesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.NutritionValueScalarFieldEnum | Prisma.NutritionValueScalarFieldEnum[]
+}
+
+/**
+ * Nutrient.foodValues
+ */
+export type Nutrient$foodValuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FoodNutritionValue
+   */
+  select?: Prisma.FoodNutritionValueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FoodNutritionValue
+   */
+  omit?: Prisma.FoodNutritionValueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FoodNutritionValueInclude<ExtArgs> | null
+  where?: Prisma.FoodNutritionValueWhereInput
+  orderBy?: Prisma.FoodNutritionValueOrderByWithRelationInput | Prisma.FoodNutritionValueOrderByWithRelationInput[]
+  cursor?: Prisma.FoodNutritionValueWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FoodNutritionValueScalarFieldEnum | Prisma.FoodNutritionValueScalarFieldEnum[]
 }
 
 /**

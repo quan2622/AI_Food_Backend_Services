@@ -27,6 +27,10 @@ export class CreateNutritionGoalDto {
   @IsNotEmpty({ message: 'Mục tiêu fat không được để trống' })
   targetFat: number;
 
+  @IsNumber({}, { message: 'Mục tiêu chất xơ không hợp lệ' })
+  @IsNotEmpty({ message: 'Mục tiêu chất xơ không được để trống' })
+  targetFiber: number;
+
   @IsDateString({}, { message: 'Ngày bắt đầu không hợp lệ' })
   startDay: string;
 

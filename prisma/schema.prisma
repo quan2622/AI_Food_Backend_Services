@@ -134,6 +134,7 @@ model NutritionGoal {
   targetProtein        Float
   targetCarbs          Float
   targetFat            Float
+  targetFiber          Float    @default(0)
   startDay             DateTime
   endDate              DateTime
   userId               Int

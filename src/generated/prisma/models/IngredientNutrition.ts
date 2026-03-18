@@ -494,10 +494,6 @@ export type EnumUnitTypeFieldUpdateOperationsInput = {
   set?: $Enums.UnitType
 }
 
-export type EnumSourceTypeFieldUpdateOperationsInput = {
-  set?: $Enums.SourceType
-}
-
 export type IngredientNutritionCreateNestedOneWithoutValuesInput = {
   create?: Prisma.XOR<Prisma.IngredientNutritionCreateWithoutValuesInput, Prisma.IngredientNutritionUncheckedCreateWithoutValuesInput>
   connectOrCreate?: Prisma.IngredientNutritionCreateOrConnectWithoutValuesInput

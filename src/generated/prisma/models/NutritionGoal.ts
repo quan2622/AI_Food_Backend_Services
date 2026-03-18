@@ -32,6 +32,7 @@ export type NutritionGoalAvgAggregateOutputType = {
   targetProtein: number | null
   targetCarbs: number | null
   targetFat: number | null
+  targetFiber: number | null
   userId: number | null
 }
 
@@ -41,6 +42,7 @@ export type NutritionGoalSumAggregateOutputType = {
   targetProtein: number | null
   targetCarbs: number | null
   targetFat: number | null
+  targetFiber: number | null
   userId: number | null
 }
 
@@ -51,6 +53,7 @@ export type NutritionGoalMinAggregateOutputType = {
   targetProtein: number | null
   targetCarbs: number | null
   targetFat: number | null
+  targetFiber: number | null
   startDay: Date | null
   endDate: Date | null
   userId: number | null
@@ -65,6 +68,7 @@ export type NutritionGoalMaxAggregateOutputType = {
   targetProtein: number | null
   targetCarbs: number | null
   targetFat: number | null
+  targetFiber: number | null
   startDay: Date | null
   endDate: Date | null
   userId: number | null
@@ -79,6 +83,7 @@ export type NutritionGoalCountAggregateOutputType = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber: number
   startDay: number
   endDate: number
   userId: number
@@ -94,6 +99,7 @@ export type NutritionGoalAvgAggregateInputType = {
   targetProtein?: true
   targetCarbs?: true
   targetFat?: true
+  targetFiber?: true
   userId?: true
 }
 
@@ -103,6 +109,7 @@ export type NutritionGoalSumAggregateInputType = {
   targetProtein?: true
   targetCarbs?: true
   targetFat?: true
+  targetFiber?: true
   userId?: true
 }
 
@@ -113,6 +120,7 @@ export type NutritionGoalMinAggregateInputType = {
   targetProtein?: true
   targetCarbs?: true
   targetFat?: true
+  targetFiber?: true
   startDay?: true
   endDate?: true
   userId?: true
@@ -127,6 +135,7 @@ export type NutritionGoalMaxAggregateInputType = {
   targetProtein?: true
   targetCarbs?: true
   targetFat?: true
+  targetFiber?: true
   startDay?: true
   endDate?: true
   userId?: true
@@ -141,6 +150,7 @@ export type NutritionGoalCountAggregateInputType = {
   targetProtein?: true
   targetCarbs?: true
   targetFat?: true
+  targetFiber?: true
   startDay?: true
   endDate?: true
   userId?: true
@@ -242,6 +252,7 @@ export type NutritionGoalGroupByOutputType = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber: number
   startDay: Date
   endDate: Date
   userId: number
@@ -279,6 +290,7 @@ export type NutritionGoalWhereInput = {
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFiber?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -294,6 +306,7 @@ export type NutritionGoalOrderByWithRelationInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   startDay?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -312,6 +325,7 @@ export type NutritionGoalWhereUniqueInput = Prisma.AtLeast<{
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFiber?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -327,6 +341,7 @@ export type NutritionGoalOrderByWithAggregationInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   startDay?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -349,6 +364,7 @@ export type NutritionGoalScalarWhereWithAggregatesInput = {
   targetProtein?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   targetFat?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
+  targetFiber?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeWithAggregatesFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeWithAggregatesFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"NutritionGoal"> | number
@@ -362,6 +378,7 @@ export type NutritionGoalCreateInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -376,6 +393,7 @@ export type NutritionGoalUncheckedCreateInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   userId: number
@@ -389,6 +407,7 @@ export type NutritionGoalUpdateInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -403,6 +422,7 @@ export type NutritionGoalUncheckedUpdateInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -417,6 +437,7 @@ export type NutritionGoalCreateManyInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   userId: number
@@ -430,6 +451,7 @@ export type NutritionGoalUpdateManyMutationInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -443,6 +465,7 @@ export type NutritionGoalUncheckedUpdateManyInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
@@ -467,6 +490,7 @@ export type NutritionGoalCountOrderByAggregateInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   startDay?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -480,6 +504,7 @@ export type NutritionGoalAvgOrderByAggregateInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -490,6 +515,7 @@ export type NutritionGoalMaxOrderByAggregateInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   startDay?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -504,6 +530,7 @@ export type NutritionGoalMinOrderByAggregateInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   startDay?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -517,6 +544,7 @@ export type NutritionGoalSumOrderByAggregateInput = {
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
   targetFat?: Prisma.SortOrder
+  targetFiber?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -572,6 +600,7 @@ export type NutritionGoalCreateWithoutUserInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -585,6 +614,7 @@ export type NutritionGoalUncheckedCreateWithoutUserInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -627,6 +657,7 @@ export type NutritionGoalScalarWhereInput = {
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetFat?: Prisma.FloatFilter<"NutritionGoal"> | number
+  targetFiber?: Prisma.FloatFilter<"NutritionGoal"> | number
   startDay?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   endDate?: Prisma.DateTimeFilter<"NutritionGoal"> | Date | string
   userId?: Prisma.IntFilter<"NutritionGoal"> | number
@@ -641,6 +672,7 @@ export type NutritionGoalCreateManyUserInput = {
   targetProtein: number
   targetCarbs: number
   targetFat: number
+  targetFiber?: number
   startDay: Date | string
   endDate: Date | string
   createdAt?: Date | string
@@ -653,6 +685,7 @@ export type NutritionGoalUpdateWithoutUserInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -666,6 +699,7 @@ export type NutritionGoalUncheckedUpdateWithoutUserInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -679,6 +713,7 @@ export type NutritionGoalUncheckedUpdateManyWithoutUserInput = {
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
   targetFat?: Prisma.FloatFieldUpdateOperationsInput | number
+  targetFiber?: Prisma.FloatFieldUpdateOperationsInput | number
   startDay?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -694,6 +729,7 @@ export type NutritionGoalSelect<ExtArgs extends runtime.Types.Extensions.Interna
   targetProtein?: boolean
   targetCarbs?: boolean
   targetFat?: boolean
+  targetFiber?: boolean
   startDay?: boolean
   endDate?: boolean
   userId?: boolean
@@ -709,6 +745,7 @@ export type NutritionGoalSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   targetProtein?: boolean
   targetCarbs?: boolean
   targetFat?: boolean
+  targetFiber?: boolean
   startDay?: boolean
   endDate?: boolean
   userId?: boolean
@@ -724,6 +761,7 @@ export type NutritionGoalSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   targetProtein?: boolean
   targetCarbs?: boolean
   targetFat?: boolean
+  targetFiber?: boolean
   startDay?: boolean
   endDate?: boolean
   userId?: boolean
@@ -739,6 +777,7 @@ export type NutritionGoalSelectScalar = {
   targetProtein?: boolean
   targetCarbs?: boolean
   targetFat?: boolean
+  targetFiber?: boolean
   startDay?: boolean
   endDate?: boolean
   userId?: boolean
@@ -746,7 +785,7 @@ export type NutritionGoalSelectScalar = {
   updatedAt?: boolean
 }
 
-export type NutritionGoalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "goalType" | "targetCalories" | "targetProtein" | "targetCarbs" | "targetFat" | "startDay" | "endDate" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["nutritionGoal"]>
+export type NutritionGoalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "goalType" | "targetCalories" | "targetProtein" | "targetCarbs" | "targetFat" | "targetFiber" | "startDay" | "endDate" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["nutritionGoal"]>
 export type NutritionGoalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -769,6 +808,7 @@ export type $NutritionGoalPayload<ExtArgs extends runtime.Types.Extensions.Inter
     targetProtein: number
     targetCarbs: number
     targetFat: number
+    targetFiber: number
     startDay: Date
     endDate: Date
     userId: number
@@ -1204,6 +1244,7 @@ export interface NutritionGoalFieldRefs {
   readonly targetProtein: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly targetCarbs: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly targetFat: Prisma.FieldRef<"NutritionGoal", 'Float'>
+  readonly targetFiber: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly startDay: Prisma.FieldRef<"NutritionGoal", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"NutritionGoal", 'DateTime'>
   readonly userId: Prisma.FieldRef<"NutritionGoal", 'Int'>

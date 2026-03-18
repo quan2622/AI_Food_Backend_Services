@@ -60,6 +60,8 @@ export const ModelName = {
   Ingredient: 'Ingredient',
   FoodCategory: 'FoodCategory',
   Food: 'Food',
+  FoodNutritionProfile: 'FoodNutritionProfile',
+  FoodNutritionValue: 'FoodNutritionValue',
   IngredientNutrition: 'IngredientNutrition',
   Nutrient: 'Nutrient',
   NutritionValue: 'NutritionValue',
@@ -146,6 +148,7 @@ export const NutritionGoalScalarFieldEnum = {
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',
   targetFat: 'targetFat',
+  targetFiber: 'targetFiber',
   startDay: 'startDay',
   endDate: 'endDate',
   userId: 'userId',
@@ -213,6 +216,28 @@ export const FoodScalarFieldEnum = {
 } as const
 
 export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
+
+
+export const FoodNutritionProfileScalarFieldEnum = {
+  id: 'id',
+  source: 'source',
+  isCalculated: 'isCalculated',
+  foodId: 'foodId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FoodNutritionProfileScalarFieldEnum = (typeof FoodNutritionProfileScalarFieldEnum)[keyof typeof FoodNutritionProfileScalarFieldEnum]
+
+
+export const FoodNutritionValueScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  foodNutritionProfileId: 'foodNutritionProfileId',
+  nutrientId: 'nutrientId'
+} as const
+
+export type FoodNutritionValueScalarFieldEnum = (typeof FoodNutritionValueScalarFieldEnum)[keyof typeof FoodNutritionValueScalarFieldEnum]
 
 
 export const IngredientNutritionScalarFieldEnum = {

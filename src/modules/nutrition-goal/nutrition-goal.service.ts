@@ -14,6 +14,8 @@ type NutritionGoalWithGoalTypeInfo = {
   targetProtein: number;
   targetCarbs: number;
   targetFat: number;
+  targetFiber: number;
+
   startDay: Date;
   endDate: Date;
   userId: number;
@@ -63,6 +65,8 @@ export class NutritionGoalService {
         targetProtein: dto.targetProtein,
         targetCarbs: dto.targetCarbs,
         targetFat: dto.targetFat,
+        targetFiber: dto.targetFiber,
+
         startDay: new Date(dto.startDay),
         endDate: new Date(dto.endDate),
       },
@@ -134,6 +138,10 @@ export class NutritionGoalService {
         ...(dto.targetFat != null && {
           targetFat: dto.targetFat,
         }),
+        ...(dto.targetFiber != null && {
+          targetFiber: dto.targetFiber,
+        }),
+
         ...(dto.startDay != null && { startDay: new Date(dto.startDay) }),
         ...(dto.endDate != null && { endDate: new Date(dto.endDate) }),
       },

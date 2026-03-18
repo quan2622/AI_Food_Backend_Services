@@ -63,6 +63,16 @@ export type FoodCategory = Prisma.FoodCategoryModel
  */
 export type Food = Prisma.FoodModel
 /**
+ * Model FoodNutritionProfile
+ * Represents the nutritional profile for a Food, normalized to per 100g.
+ */
+export type FoodNutritionProfile = Prisma.FoodNutritionProfileModel
+/**
+ * Model FoodNutritionValue
+ * The actual value of a nutrient for a given FoodNutritionProfile record.
+ */
+export type FoodNutritionValue = Prisma.FoodNutritionValueModel
+/**
  * Model IngredientNutrition
  * Represents a specific nutritional profile for an ingredient (e.g., per 100g serving).
  */
