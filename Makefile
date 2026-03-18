@@ -15,7 +15,7 @@ help:
 	@echo "  make start-prod  - Start production (node dist/main)"
 	@echo ""
 	@echo "Docker:"
-	@echo "  make docker-up   - Start PostgreSQL container"
+	@echo "  make docker-up   - Start PostgreSQL and Redis containers"
 	@echo "  make docker-down - Stop and remove containers"
 	@echo "  make docker-logs - View container logs"
 	@echo "  make docker-clean - Stop, remove containers and volumes"
@@ -65,24 +65,25 @@ start-prod:
 # =============================================================================
 
 docker-up:
-	docker-compose up -d
+	docker compose up -d
 	@echo ""
 	@echo "Services started:"
 	@echo "  PostgreSQL: localhost:5432 (ai_food_db)"
+	@echo "  Redis:      localhost:6379 (password: 123456)"
 	@echo ""
 	@echo "Waiting for PostgreSQL to be ready..."
 	@sleep 3
-	@docker-compose exec -T postgres pg_isready -U postgres || (echo "Waiting a bit more..." && sleep 5)
+	@docker compose exec -T postgres pg_isready -U postgres || (echo "Waiting a bit more..." && sleep 5)
 	@echo "PostgreSQL is ready!"
 
 docker-down:
-	docker-compose down
+	docker compose down
 
 docker-logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 docker-clean:
-	docker-compose down -v --remove-orphans
+	docker compose down -v --remove-orphans
 
 # =============================================================================
 # Database

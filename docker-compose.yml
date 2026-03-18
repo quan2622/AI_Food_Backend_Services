@@ -11,7 +11,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis_server
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass 123456
+
 volumes:
   postgres_data:
+  redis_data:
 
 # docker start postgres_db
