@@ -31,6 +31,14 @@ export class UpdateDailyLogDto {
   targetCarbs?: number;
 
   @IsOptional()
+  @IsNumber()
+  targetFat?: number;
+
+  @IsOptional()
+  @IsNumber()
+  targetFiber?: number;
+
+  @IsOptional()
   @IsString()
   @IsIn(['BELOW', 'MET', 'ABOVE'], {
     message: 'status phải là BELOW, MET hoặc ABOVE',
