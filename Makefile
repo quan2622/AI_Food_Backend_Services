@@ -121,9 +121,7 @@ seed-allcode:
 seed-%:
 	npm run seed:$*
 
-seed-recommender:
-	@echo "Cleaning old test data..."
-	@npm run seed:controlled:reset
+seed-recommender: db-reset
 	@echo "Seeding fresh recommendation scenarios..."
 	@npm run seed:controlled
 
