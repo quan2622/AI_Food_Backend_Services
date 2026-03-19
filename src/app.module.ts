@@ -21,8 +21,10 @@ import { AiModelModule } from './modules/ai-model/ai-model.module';
 import { AiTrainingJobModule } from './modules/ai-training-job/ai-training-job.module';
 import { AllergenModule } from './modules/allergen/allergen.module';
 import { WorkoutLogModule } from './modules/workout-log/workout-log.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
+
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -45,7 +47,9 @@ import { WorkoutLogModule } from './modules/workout-log/workout-log.module';
     AiTrainingJobModule,
     AllergenModule,
     WorkoutLogModule,
+    RedisModule, // Added RedisModule to handle Redis connection and status
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })

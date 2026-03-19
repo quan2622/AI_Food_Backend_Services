@@ -9,6 +9,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
+import { RedisService } from './redis/redis.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { HttpExceptionFilter, TransformInterceptor } from './common';
 
@@ -64,6 +65,7 @@ async function bootstrap() {
 
   const serverStatus = app.get(AppService).getServerStatus();
   const dbStatus = await app.get(PrismaService).getConnectionStatus();
+  const redisStatus = await app.get(RedisService).getConnectionStatus();
 
   const line =
     '====================================================================';
@@ -88,12 +90,24 @@ async function bootstrap() {
   logger.log(
     '||   DATABASE STATUS                                              ||',
   );
+
+  // PostgreSQL Status
   if (dbStatus.connected) {
-    logger.log(`||   • Database    : connected${' '.repeat(36)}||`);
+    logger.log(`||   • PostgreSQL  : connected${' '.repeat(36)}||`);
   } else {
     const errorMsg = (dbStatus.error ?? 'Unknown error').toString();
     logger.error(
-      `||   • Database    : disconnected - ${errorMsg.padEnd(22)}||`,
+      `||   • PostgreSQL  : disconnected - ${errorMsg.padEnd(20)}||`,
+    );
+  }
+
+  // Redis Status
+  if (redisStatus.connected) {
+    logger.log(`||   • Redis       : connected${' '.repeat(36)}||`);
+  } else {
+    const errorMsg = (redisStatus.error ?? 'Unknown error').toString();
+    logger.error(
+      `||   • Redis       : disconnected - ${errorMsg.padEnd(20)}||`,
     );
   }
 
