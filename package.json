@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed:allcode": "npm run build && node dist/src/seed/allcode.seed.js"
+    "seed:allcode": "npm run build && node dist/src/seed/allcode.seed.js",
+    "seed:recommender": "npm run build && node dist/src/seed/recommender.seed.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
