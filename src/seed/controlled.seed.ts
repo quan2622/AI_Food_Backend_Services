@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as bcrypt from 'bcrypt';
 import { AppModule } from '../app.module';
 import { PrismaService } from '../prisma/prisma.service';
 import {
@@ -230,13 +231,16 @@ async function runControlledSeed() {
   const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
   const prisma = app.get(PrismaService);
 
-  console.log('🚀 Starting Controlled Seed (v2)...');
+  console.log('Starting Controlled Seed (v2)...');
+
+  // Pre-hash password for all users
+  const hashedPassword = await bcrypt.hash('123456', 10);
 
   try {
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 1: Master Data
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n📦 Phase 1: Master Data...');
+    console.log('\nPhase 1: Master Data...');
 
     for (const n of NUTRIENTS) {
       await prisma.nutrient.upsert({ where: { name: n.name }, update: {}, create: n as any });
@@ -256,12 +260,12 @@ async function runControlledSeed() {
     const dbCategories = await prisma.foodCategory.findMany();
     const CATEGORY_ID: Record<string, number> = Object.fromEntries(dbCategories.map(c => [c.name, c.id]));
 
-    console.log('✅ Phase 1 done');
+    console.log('Phase 1 done');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 2: Foods (65 fixed)
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n🍜 Phase 2: Foods (65 fixed)...');
+    console.log('\nPhase 2: Foods (65 fixed)...');
 
     const FOOD_ID: Record<string, number> = {};
     const newItemDate = daysAgo(2);
@@ -297,12 +301,12 @@ async function runControlledSeed() {
       FOOD_ID[f.foodName] = food.id;
     }
 
-    console.log(`✅ Phase 2 done — ${Object.keys(FOOD_ID).length} foods`);
+    console.log(`Phase 2 done — ${Object.keys(FOOD_ID).length} foods`);
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 3: Ingredients + Allergen Links
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n🥕 Phase 3: Ingredient allergen links...');
+    console.log('\nPhase 3: Ingredient allergen links...');
 
     // Create one ingredient per allergen type, then link to relevant foods
     const INGREDIENT_ID: Record<string, number> = {};
@@ -334,12 +338,12 @@ async function runControlledSeed() {
       }
     }
 
-    console.log('✅ Phase 3 done');
+    console.log('Phase 3 done');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 4: Special Users SC01–SC10
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n👤 Phase 4: Special users SC01–SC10...');
+    console.log('\nPhase 4: Special users SC01–SC10...');
 
     // Helper: upsert user with profile + goal
     async function upsertSpecialUser(opts: {
@@ -354,7 +358,7 @@ async function runControlledSeed() {
         update: {},
         create: {
           email: opts.email,
-          password: 'seeded_password_hash',
+          password: hashedPassword,
           fullName: opts.fullName,
           userProfile: {
             create: {
@@ -551,12 +555,12 @@ async function runControlledSeed() {
     await seedConsumedMeals(sc10.id, MealType.DINNER, 300, ['Rau muống xào tỏi', 'Súp bí đỏ']);
     await seedPastLogs(sc10.id, 75, ['Canh khổ qua dồn thịt', 'Gỏi gà bắp cải', 'Rau muống xào tỏi', 'Gỏi cuốn chay']);
 
-    console.log('✅ Phase 4 done — special users SC01–SC10');
+    console.log('Phase 4 done — special users SC01–SC10');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 5: Cluster Users (50)
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n👥 Phase 5: Cluster users...');
+    console.log('\nPhase 5: Cluster users...');
 
     let clusterUserIdx = 0;
     const clusterUsers: { userId: number; cluster: string; preferredFoods: string[]; mealDist: Record<string, number>; logCount: number }[] = [];
@@ -573,7 +577,7 @@ async function runControlledSeed() {
           where: { email },
           update: {},
           create: {
-            email, password: 'seeded_password_hash',
+            email, password: hashedPassword,
             fullName: `Cluster ${clusterKey} User ${clusterUserIdx}`,
             userProfile: {
               create: {
@@ -603,12 +607,12 @@ async function runControlledSeed() {
       }
     }
 
-    console.log(`✅ Phase 5 done — ${clusterUsers.length} cluster users`);
+    console.log(`Phase 5 done — ${clusterUsers.length} cluster users`);
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 6: Affinity History (NON-cluster-preferred foods only)
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n📅 Phase 6: Affinity signal (non-cluster foods)...');
+    console.log('\nPhase 6: Affinity signal (non-cluster foods)...');
 
     // Create a small pool of "affinity seeder" users (cold-start, no cluster)
     const affinityUsersCount = 10;
@@ -618,7 +622,7 @@ async function runControlledSeed() {
       const u = await prisma.user.upsert({
         where: { email }, update: {},
         create: {
-          email, password: 'seeded_password_hash', fullName: `Affinity Pool ${i}`,
+          email, password: hashedPassword, fullName: `Affinity Pool ${i}`,
           userProfile: { create: { age: 25, height: 165, weight: 60, bmi: 22, bmr: 1500, tdee: 2000, activityLevel: ActivityLevel.SEDENTARY } },
         },
       });
@@ -647,12 +651,12 @@ async function runControlledSeed() {
       }
     }
 
-    console.log('✅ Phase 6 done');
+    console.log('Phase 6 done');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 7: Cluster History (preferred foods — CF signal)
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n🤝 Phase 7: Cluster history (CF signal)...');
+    console.log('\nPhase 7: Cluster history (CF signal)...');
 
     for (const cu of clusterUsers) {
       const allFoodNames = Object.keys(FOOD_ID);
@@ -681,12 +685,12 @@ async function runControlledSeed() {
       }
     }
 
-    console.log('✅ Phase 7 done');
+    console.log('Phase 7 done');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 8: Popularity Boost (anonymous user pool)
     // ═══════════════════════════════════════════════════════════════════════
-    console.log('\n🔥 Phase 8: Popularity boost...');
+    console.log('\nPhase 8: Popularity boost...');
 
     const POP_BOOST_COUNT = 10;
     const popUserIds: number[] = [];
@@ -695,7 +699,7 @@ async function runControlledSeed() {
       const u = await prisma.user.upsert({
         where: { email }, update: {},
         create: {
-          email, password: 'seeded_password_hash', fullName: `Pop Boost User ${i + 1}`,
+          email, password: hashedPassword, fullName: `Pop Boost User ${i + 1}`,
           userProfile: { create: { age: 30, height: 170, weight: 70, bmi: 24, bmr: 1600, tdee: 2200, activityLevel: ActivityLevel.LIGHTLY_ACTIVE } },
         },
       });
@@ -717,12 +721,12 @@ async function runControlledSeed() {
       }
     }
 
-    console.log('✅ Phase 8 done');
+    console.log('Phase 8 done');
 
-    console.log('\n🎉 All phases complete! Controlled seed data ready for testing.');
+    console.log('\nAll phases complete! Controlled seed data ready for testing.');
 
   } catch (err) {
-    console.error('❌ Controlled seed failed:', err);
+    console.error('Controlled seed failed:', err);
     throw err;
   } finally {
     await app.close();

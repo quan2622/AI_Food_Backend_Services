@@ -1,7 +1,7 @@
 .PHONY: help install dev build start start-prod test lint lint-fix clean \
 	docker-up docker-down docker-logs docker-clean \
 	db-migrate db-push db-seed db-studio db-reset db-generate \
-	test-db-reset setup seed-allcode seed-%
+	test-db-reset setup seed-allcode seed-% seed-recommender
 
 # Default target
 help:
@@ -28,6 +28,7 @@ help:
 	@echo "Application Seeds:"
 	@echo "  make seed-allcode        - Run npm run seed:allcode"
 	@echo "  make seed-<name>         - Run npm run seed:<name> (ví dụ: seed-user)"
+	@echo "  make seed-recommender    - Fresh seed for testing (Reset + Seed Controlled)"
 	@echo "  make db-studio   - Open Prisma Studio"
 	@echo "  make db-reset    - Reset database (WARNING: deletes all data)"
 	@echo "  make db-generate - Generate Prisma client"
@@ -119,6 +120,12 @@ seed-allcode:
 # Generic seed target: `make seed-<name>` -> `npm run seed:<name>`
 seed-%:
 	npm run seed:$*
+
+seed-recommender:
+	@echo "Cleaning old test data..."
+	@npm run seed:controlled:reset
+	@echo "Seeding fresh recommendation scenarios..."
+	@npm run seed:controlled
 
 # =============================================================================
 # Testing & Quality

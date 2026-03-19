@@ -6,7 +6,7 @@ async function runReset() {
   const app = await NestFactory.create(AppModule, { logger: ['error', 'warn'] });
   const prisma = app.get(PrismaService);
 
-  console.log('🗑️  Resetting controlled seed data (@seed.test users)...');
+  console.log('Resetting controlled seed data (@seed.test users)...');
 
   try {
     // Find all seed users
@@ -17,7 +17,7 @@ async function runReset() {
     const seedUserIds = seedUsers.map(u => u.id);
 
     if (seedUserIds.length === 0) {
-      console.log('ℹ️  No seed users found. Nothing to reset.');
+      console.log('No seed users found. Nothing to reset.');
       return;
     }
 
@@ -37,25 +37,25 @@ async function runReset() {
     const mealIds = meals.map(m => m.id);
 
     await prisma.mealItem.deleteMany({ where: { mealId: { in: mealIds } } });
-    console.log('  ✓ MealItems deleted');
+    console.log('  MealItems deleted');
 
     await prisma.meal.deleteMany({ where: { id: { in: mealIds } } });
-    console.log('  ✓ Meals deleted');
+    console.log('  Meals deleted');
 
     await prisma.dailyLog.deleteMany({ where: { id: { in: dailyLogIds } } });
-    console.log('  ✓ DailyLogs deleted');
+    console.log('  DailyLogs deleted');
 
     await prisma.userAllergy.deleteMany({ where: { userId: { in: seedUserIds } } });
-    console.log('  ✓ UserAllergies deleted');
+    console.log('  UserAllergies deleted');
 
     await prisma.nutritionGoal.deleteMany({ where: { userId: { in: seedUserIds } } });
-    console.log('  ✓ NutritionGoals deleted');
+    console.log('  NutritionGoals deleted');
 
     await prisma.userProfile.deleteMany({ where: { userId: { in: seedUserIds } } });
-    console.log('  ✓ UserProfiles deleted');
+    console.log('  UserProfiles deleted');
 
     await prisma.user.deleteMany({ where: { id: { in: seedUserIds } } });
-    console.log('  ✓ Users deleted');
+    console.log('  Users deleted');
 
     // 2. Delete food-related data (FoodIngredient → IngredientAllergen → Ingredient)
     const seedIngredientNames = [
@@ -71,7 +71,7 @@ async function runReset() {
     await prisma.foodIngredient.deleteMany({ where: { ingredientId: { in: seedIngredientIds } } });
     await prisma.ingredientAllergen.deleteMany({ where: { ingredientId: { in: seedIngredientIds } } });
     await prisma.ingredient.deleteMany({ where: { id: { in: seedIngredientIds } } });
-    console.log('  ✓ Seed ingredients deleted');
+    console.log('  Seed ingredients deleted');
 
     // 3. Delete foods from FOODS_FIXED (by name list)
     const seedFoodNames = [
@@ -104,11 +104,11 @@ async function runReset() {
     await prisma.foodNutritionValue.deleteMany({ where: { foodNutritionProfileId: { in: profileIds } } });
     await prisma.foodNutritionProfile.deleteMany({ where: { id: { in: profileIds } } });
     await prisma.food.deleteMany({ where: { id: { in: seedFoodIds } } });
-    console.log('  ✓ Seed foods deleted');
+    console.log('  Seed foods deleted');
 
-    console.log('\n✅ Reset complete. Ready to run: npm run seed:controlled');
+    console.log('\nReset complete. Ready to run: npm run seed:controlled');
   } catch (err) {
-    console.error('❌ Reset failed:', err);
+    console.error('Reset failed:', err);
     throw err;
   } finally {
     await app.close();
