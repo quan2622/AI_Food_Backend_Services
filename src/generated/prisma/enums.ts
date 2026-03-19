@@ -12,7 +12,8 @@
 export const GoalType = {
   WEIGHT_LOSS: 'WEIGHT_LOSS',
   WEIGHT_GAIN: 'WEIGHT_GAIN',
-  MAINTENANCE: 'MAINTENANCE'
+  MAINTENANCE: 'MAINTENANCE',
+  STRICT_DIET: 'STRICT_DIET'
 } as const
 
 export type GoalType = (typeof GoalType)[keyof typeof GoalType]

@@ -20,6 +20,7 @@ enum GoalType {
   WEIGHT_LOSS
   WEIGHT_GAIN
   MAINTENANCE
+  STRICT_DIET
 }
 
 enum MealType {

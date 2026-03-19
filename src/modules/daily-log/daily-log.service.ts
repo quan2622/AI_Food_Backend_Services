@@ -8,11 +8,11 @@ export class DailyLogService {
 
   // ─── Private helpers ──────────────────────────────────────────────────────
 
-  /** Chuẩn hoá Date về đầu ngày UTC (chỉ giữ phần date) */
+  /** Chuẩn hoá Date về đầu ngày local (trùng khớp với lúc gieo hạt Seed) */
   private toDateOnly(date: Date): Date {
-    return new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
-    );
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
   }
 
   // ─── Internal API ─────────────────────────────────────────────────────────
@@ -26,24 +26,62 @@ export class DailyLogService {
 
     const existing = await this.prisma.dailyLog.findUnique({
       where: { userId_logDate: { userId, logDate } },
+      include: {
+        meals: {
+          include: {
+            mealItems: {
+              include: { food: { select: { foodName: true, imageUrl: true } } }
+            }
+          }
+        }
+      }
     });
-    if (existing) return existing;
 
-    return this.prisma.dailyLog.create({
+    if (existing) return this.formatDailyLogWithTotals(existing);
+
+    const newLog = await this.prisma.dailyLog.create({
       data: {
         userId,
         logDate,
         status: StatusType.BELOW,
       },
+      include: {
+        meals: {
+          include: {
+            mealItems: { include: { food: true } }
+          }
+        }
+      }
     });
+
+    return this.formatDailyLogWithTotals(newLog);
+  }
+
+  /** Helper tính tổng dinh dưỡng để trả về kèm JSON */
+  private formatDailyLogWithTotals(log: any) {
+    const totals = { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
+    if (log.meals) {
+      log.meals.forEach(meal => {
+        meal.mealItems.forEach(item => {
+          totals.calories += item.calories || 0;
+          totals.protein += item.protein || 0;
+          totals.carbs += item.carbs || 0;
+          totals.fat += item.fat || 0;
+          totals.fiber += item.fiber || 0;
+        });
+      });
+    }
+    return {
+      ...log,
+      totals
+    };
   }
 
   // ─── Public API (Controller endpoints) ───────────────────────────────────
 
   /** Lấy hoặc tạo DailyLog cho ngày hôm nay của user */
   async getOrCreateToday(userId: number) {
-    const nowVN = new Date(Date.now() + 7 * 60 * 60 * 1000);
-    return this.getOrCreateForDate(userId, nowVN);
+    return this.getOrCreateForDate(userId, new Date());
   }
 
   /** Lấy tất cả DailyLog của user (sắp xếp mới nhất trước) */
@@ -93,10 +131,9 @@ export class DailyLogService {
 
   /** Lấy DailyLog của user theo tuần (7 ngày gần nhất) */
   findWeeklySummary(userId: number) {
-    const nowVN = new Date(Date.now() + 7 * 60 * 60 * 1000);
-    const today = this.toDateOnly(nowVN);
+    const today = this.toDateOnly(new Date());
     const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setUTCDate(sevenDaysAgo.getUTCDate() - 6);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
 
     return this.prisma.dailyLog.findMany({
       where: {

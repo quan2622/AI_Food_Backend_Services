@@ -20,7 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seed:allcode": "npm run build && node dist/src/seed/allcode.seed.js",
     "seed:recommender": "npm run build && node dist/src/seed/recommender.seed.js",
-    "seed:test-scenarios": "npm run build && node dist/src/seed/test-scenarios.seed.js"
+    "seed:test-scenarios": "npm run build && node dist/src/seed/test-scenarios.seed.js",
+    "seed:controlled": "npm run build && node dist/src/seed/controlled.seed.js",
+    "seed:controlled:reset": "npm run build && node dist/src/seed/controlled.seed.reset.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
