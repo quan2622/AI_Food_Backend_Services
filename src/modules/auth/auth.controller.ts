@@ -18,7 +18,8 @@ import { CreateUserDto } from '../users/dto/create-user.dto.js';
 import { UsersService } from '../users/users.service';
 import type { User } from '@/generated/prisma/client.js';
 import { LocalAuthGuard } from '@/guards/local-auth.guard';
-import { Public } from '@/common/decorators';
+import { JwtAuthGuard } from '@/guards/jwt-auth.guard';
+import { Public, User as UserDecorator } from '@/common/decorators';
 
 export interface RequestWithUser extends ExpressRequest {
   user: Omit<User, 'password'>;
@@ -93,5 +94,22 @@ export class AuthController {
     this.setRefreshTokenCookie(res, result.data.refresh_token);
 
     return result;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(
+    @UserDecorator() user: Omit<User, 'password'>,
+    @Res({ passthrough: true }) res: ExpressResponse,
+  ) {
+    // Xoá refresh token cookie
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      path: '/',
+    });
+
+    // Xoá tokens từ database
+    return this.authService.logout(user.id);
   }
 }

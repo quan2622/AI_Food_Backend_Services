@@ -137,4 +137,14 @@ export class AuthService {
       );
     }
   }
+
+  async logout(userId: number): Promise<object> {
+    // Xoá cả access token và refresh token khỏi database
+    await this.usersService.clearTokens(userId);
+
+    return {
+      message: 'Đăng xuất thành công',
+      EC: 0,
+    };
+  }
 }
