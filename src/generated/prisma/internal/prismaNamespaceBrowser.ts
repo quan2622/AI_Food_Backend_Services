@@ -152,7 +152,7 @@ export const NutritionGoalScalarFieldEnum = {
   targetCarbs: 'targetCarbs',
   targetFat: 'targetFat',
   targetFiber: 'targetFiber',
-  startDay: 'startDay',
+  startDate: 'startDate',
   endDate: 'endDate',
   userId: 'userId',
   createdAt: 'createdAt',

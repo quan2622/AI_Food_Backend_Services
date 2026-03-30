@@ -37,7 +37,7 @@ export class CreateNutritionGoalDto {
   targetFiber: number;
 
   @IsDateString({}, { message: 'Ngày bắt đầu không hợp lệ' })
-  startDay: string;
+  startDate: string;
 
   @IsDateString({}, { message: 'Ngày kết thúc không hợp lệ' })
   endDate: string;

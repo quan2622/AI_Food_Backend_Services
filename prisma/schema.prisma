@@ -146,7 +146,7 @@ model NutritionGoal {
   targetCarbs          Float
   targetFat            Float
   targetFiber          Float               @default(0)
-  startDay             DateTime
+  startDate            DateTime
   endDate              DateTime
   userId               Int
   user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)

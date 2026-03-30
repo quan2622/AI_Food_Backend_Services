@@ -20,7 +20,7 @@ type NutritionGoalHistoryItem = {
     description: string | null;
   } | null;
   targetWeight: number | null;
-  startDay: Date;
+  startDate: Date;
   endDate: Date;
   createdAt: Date;
 };
@@ -51,7 +51,7 @@ type NutritionGoalWithGoalTypeInfo = {
   targetFat: number;
   targetFiber: number;
 
-  startDay: Date;
+  startDate: Date;
   endDate: Date;
   userId: number;
   createdAt: Date;
@@ -91,13 +91,13 @@ export class NutritionGoalService {
         select: { keyMap: true, value: true, description: true },
       }),
       this.prisma.allCode.findMany({
-        where: { type: 'NUTR_GOAL', value: { in: statusValues } },
+        where: { keyMap: { in: statusValues } },
         select: { keyMap: true, value: true, description: true },
       }),
     ]);
 
     const goalTypeMap = new Map(goalTypeAllCodes.map((a) => [a.keyMap, a]));
-    const statusMap = new Map(statusAllCodes.map((a) => [a.value, a]));
+    const statusMap = new Map(statusAllCodes.map((a) => [a.keyMap, a]));
 
     return goals.map((goal) => {
       const goalTypeAllCode = goalTypeMap.get(goal.goalType);
@@ -146,13 +146,13 @@ export class NutritionGoalService {
         select: { keyMap: true, value: true, description: true },
       }),
       this.prisma.allCode.findMany({
-        where: { type: 'NUTR_GOAL', value: { in: statusValues } },
+        where: { keyMap: { in: statusValues } },
         select: { keyMap: true, value: true, description: true },
       }),
     ]);
 
     const goalTypeMap = new Map(goalTypeAllCodes.map((a) => [a.keyMap, a]));
-    const statusMap = new Map(statusAllCodes.map((a) => [a.value, a]));
+    const statusMap = new Map(statusAllCodes.map((a) => [a.keyMap, a]));
 
     return goals.map((goal) => {
       const goalTypeAllCode = goalTypeMap.get(goal.goalType);
@@ -194,7 +194,7 @@ export class NutritionGoalService {
         targetFat: dto.targetFat,
         targetFiber: dto.targetFiber,
         status: dto.status || NutritionGoalStatus.NUTR_GOAL_ONGOING,
-        startDay: new Date(dto.startDay),
+        startDate: new Date(dto.startDate),
         endDate: new Date(dto.endDate),
       },
     });
@@ -249,7 +249,7 @@ export class NutritionGoalService {
       status: g.status,
       statusInfo: g.statusInfo,
       targetWeight: g.targetWeight,
-      startDay: g.startDay,
+      startDate: g.startDate,
       endDate: g.endDate,
       createdAt: g.createdAt,
     }));
@@ -324,7 +324,7 @@ export class NutritionGoalService {
           targetFiber: dto.targetFiber,
         }),
 
-        ...(dto.startDay != null && { startDay: new Date(dto.startDay) }),
+        ...(dto.startDate != null && { startDate: new Date(dto.startDate) }),
         ...(dto.endDate != null && { endDate: new Date(dto.endDate) }),
         ...(dto.status != null && { status: dto.status as any }),
       },

@@ -66,10 +66,10 @@ export class DailyLogService {
     const goal = await this.prisma.nutritionGoal.findFirst({
       where: {
         userId,
-        startDay: { lte: date },
+        startDate: { lte: date },
         endDate: { gte: date },
       },
-      orderBy: { startDay: 'desc' },
+      orderBy: { startDate: 'desc' },
     });
     return goal;
   }
