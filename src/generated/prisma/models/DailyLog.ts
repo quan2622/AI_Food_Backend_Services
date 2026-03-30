@@ -39,7 +39,7 @@ export type DailyLogSumAggregateOutputType = {
 export type DailyLogMinAggregateOutputType = {
   id: number | null
   logDate: Date | null
-  status: $Enums.StatusType | null
+  status: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -48,7 +48,7 @@ export type DailyLogMinAggregateOutputType = {
 export type DailyLogMaxAggregateOutputType = {
   id: number | null
   logDate: Date | null
-  status: $Enums.StatusType | null
+  status: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -192,7 +192,7 @@ export type DailyLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type DailyLogGroupByOutputType = {
   id: number
   logDate: Date
-  status: $Enums.StatusType
+  status: string
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -224,7 +224,7 @@ export type DailyLogWhereInput = {
   NOT?: Prisma.DailyLogWhereInput | Prisma.DailyLogWhereInput[]
   id?: Prisma.IntFilter<"DailyLog"> | number
   logDate?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
-  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
+  status?: Prisma.StringFilter<"DailyLog"> | string
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -250,7 +250,7 @@ export type DailyLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DailyLogWhereInput[]
   NOT?: Prisma.DailyLogWhereInput | Prisma.DailyLogWhereInput[]
   logDate?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
-  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
+  status?: Prisma.StringFilter<"DailyLog"> | string
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -278,7 +278,7 @@ export type DailyLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DailyLogScalarWhereWithAggregatesInput | Prisma.DailyLogScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"DailyLog"> | number
   logDate?: Prisma.DateTimeWithAggregatesFilter<"DailyLog"> | Date | string
-  status?: Prisma.EnumStatusTypeWithAggregatesFilter<"DailyLog"> | $Enums.StatusType
+  status?: Prisma.StringWithAggregatesFilter<"DailyLog"> | string
   userId?: Prisma.IntWithAggregatesFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLog"> | Date | string
@@ -286,7 +286,7 @@ export type DailyLogScalarWhereWithAggregatesInput = {
 
 export type DailyLogCreateInput = {
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
@@ -296,7 +296,7 @@ export type DailyLogCreateInput = {
 export type DailyLogUncheckedCreateInput = {
   id?: number
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -305,7 +305,7 @@ export type DailyLogUncheckedCreateInput = {
 
 export type DailyLogUpdateInput = {
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
@@ -315,7 +315,7 @@ export type DailyLogUpdateInput = {
 export type DailyLogUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,7 +325,7 @@ export type DailyLogUncheckedUpdateInput = {
 export type DailyLogCreateManyInput = {
   id?: number
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -333,7 +333,7 @@ export type DailyLogCreateManyInput = {
 
 export type DailyLogUpdateManyMutationInput = {
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -341,7 +341,7 @@ export type DailyLogUpdateManyMutationInput = {
 export type DailyLogUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,10 +446,6 @@ export type DailyLogUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.DailyLogScalarWhereInput | Prisma.DailyLogScalarWhereInput[]
 }
 
-export type EnumStatusTypeFieldUpdateOperationsInput = {
-  set?: $Enums.StatusType
-}
-
 export type DailyLogCreateNestedOneWithoutMealsInput = {
   create?: Prisma.XOR<Prisma.DailyLogCreateWithoutMealsInput, Prisma.DailyLogUncheckedCreateWithoutMealsInput>
   connectOrCreate?: Prisma.DailyLogCreateOrConnectWithoutMealsInput
@@ -466,7 +462,7 @@ export type DailyLogUpdateOneRequiredWithoutMealsNestedInput = {
 
 export type DailyLogCreateWithoutUserInput = {
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   meals?: Prisma.MealCreateNestedManyWithoutDailyLogInput
@@ -475,7 +471,7 @@ export type DailyLogCreateWithoutUserInput = {
 export type DailyLogUncheckedCreateWithoutUserInput = {
   id?: number
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   meals?: Prisma.MealUncheckedCreateNestedManyWithoutDailyLogInput
@@ -513,7 +509,7 @@ export type DailyLogScalarWhereInput = {
   NOT?: Prisma.DailyLogScalarWhereInput | Prisma.DailyLogScalarWhereInput[]
   id?: Prisma.IntFilter<"DailyLog"> | number
   logDate?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
-  status?: Prisma.EnumStatusTypeFilter<"DailyLog"> | $Enums.StatusType
+  status?: Prisma.StringFilter<"DailyLog"> | string
   userId?: Prisma.IntFilter<"DailyLog"> | number
   createdAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLog"> | Date | string
@@ -521,7 +517,7 @@ export type DailyLogScalarWhereInput = {
 
 export type DailyLogCreateWithoutMealsInput = {
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
@@ -530,7 +526,7 @@ export type DailyLogCreateWithoutMealsInput = {
 export type DailyLogUncheckedCreateWithoutMealsInput = {
   id?: number
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -554,7 +550,7 @@ export type DailyLogUpdateToOneWithWhereWithoutMealsInput = {
 
 export type DailyLogUpdateWithoutMealsInput = {
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
@@ -563,7 +559,7 @@ export type DailyLogUpdateWithoutMealsInput = {
 export type DailyLogUncheckedUpdateWithoutMealsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -572,14 +568,14 @@ export type DailyLogUncheckedUpdateWithoutMealsInput = {
 export type DailyLogCreateManyUserInput = {
   id?: number
   logDate: Date | string
-  status?: $Enums.StatusType
+  status?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type DailyLogUpdateWithoutUserInput = {
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meals?: Prisma.MealUpdateManyWithoutDailyLogNestedInput
@@ -588,7 +584,7 @@ export type DailyLogUpdateWithoutUserInput = {
 export type DailyLogUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meals?: Prisma.MealUncheckedUpdateManyWithoutDailyLogNestedInput
@@ -597,7 +593,7 @@ export type DailyLogUncheckedUpdateWithoutUserInput = {
 export type DailyLogUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   logDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumStatusTypeFieldUpdateOperationsInput | $Enums.StatusType
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -696,7 +692,7 @@ export type $DailyLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     logDate: Date
-    status: $Enums.StatusType
+    status: string
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -1127,7 +1123,7 @@ export interface Prisma__DailyLogClient<T, Null = never, ExtArgs extends runtime
 export interface DailyLogFieldRefs {
   readonly id: Prisma.FieldRef<"DailyLog", 'Int'>
   readonly logDate: Prisma.FieldRef<"DailyLog", 'DateTime'>
-  readonly status: Prisma.FieldRef<"DailyLog", 'StatusType'>
+  readonly status: Prisma.FieldRef<"DailyLog", 'String'>
   readonly userId: Prisma.FieldRef<"DailyLog", 'Int'>
   readonly createdAt: Prisma.FieldRef<"DailyLog", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DailyLog", 'DateTime'>

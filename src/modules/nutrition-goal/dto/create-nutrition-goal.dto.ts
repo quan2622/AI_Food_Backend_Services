@@ -1,15 +1,20 @@
+import { GoalType, NutritionGoalStatus } from '@/generated/prisma/enums';
 import {
   IsDateString,
   IsNotEmpty,
-  IsEnum,
+  IsString,
   IsNumber,
+  IsOptional,
 } from 'class-validator';
-import { GoalType } from '../../../generated/prisma/enums.js';
 
 export class CreateNutritionGoalDto {
-  @IsEnum(GoalType, { message: 'Loại mục tiêu không hợp lệ' })
+  @IsString({ message: 'Loại mục tiêu không hợp lệ' })
   @IsNotEmpty({ message: 'Loại mục tiêu không được để trống' })
   goalType: GoalType;
+
+  @IsNumber({}, { message: 'Lượng cân nặng mục tiêu không hợp lệ' })
+  @IsNotEmpty({ message: 'Lượng cân nặng mục tiêu không được để trống' })
+  targetWeight: number;
 
   @IsNumber({}, { message: 'Lượng calo mục tiêu không hợp lệ' })
   @IsNotEmpty({ message: 'Lượng calo mục tiêu không được để trống' })
@@ -36,4 +41,8 @@ export class CreateNutritionGoalDto {
 
   @IsDateString({}, { message: 'Ngày kết thúc không hợp lệ' })
   endDate: string;
+
+  @IsString({ message: 'Trạng thái không hợp lệ' })
+  @IsOptional()
+  status?: NutritionGoalStatus;
 }

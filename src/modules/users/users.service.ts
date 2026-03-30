@@ -66,6 +66,23 @@ export class UsersService {
     return result;
   }
 
+  async getMe(
+    id: number,
+  ): Promise<Omit<User, 'password'> & { userProfile: any }> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: { userProfile: true },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User #${id} không tồn tại`);
+    }
+
+    const { password: _pw, ...result } = user;
+
+    return result;
+  }
+
   async update(
     id: number,
     dto: UpdateUserDto,

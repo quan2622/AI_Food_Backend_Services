@@ -57,7 +57,7 @@ export type UserProfileMinAggregateOutputType = {
   bmr: number | null
   tdee: number | null
   gender: string | null
-  activityLevel: $Enums.ActivityLevel | null
+  activityLevel: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -72,7 +72,7 @@ export type UserProfileMaxAggregateOutputType = {
   bmr: number | null
   tdee: number | null
   gender: string | null
-  activityLevel: $Enums.ActivityLevel | null
+  activityLevel: string | null
   userId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -258,7 +258,7 @@ export type UserProfileGroupByOutputType = {
   bmr: number
   tdee: number
   gender: string | null
-  activityLevel: $Enums.ActivityLevel | null
+  activityLevel: string | null
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -296,7 +296,7 @@ export type UserProfileWhereInput = {
   bmr?: Prisma.FloatFilter<"UserProfile"> | number
   tdee?: Prisma.FloatFilter<"UserProfile"> | number
   gender?: Prisma.StringNullableFilter<"UserProfile"> | string | null
-  activityLevel?: Prisma.EnumActivityLevelNullableFilter<"UserProfile"> | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   userId?: Prisma.IntFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
@@ -332,7 +332,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   bmr?: Prisma.FloatFilter<"UserProfile"> | number
   tdee?: Prisma.FloatFilter<"UserProfile"> | number
   gender?: Prisma.StringNullableFilter<"UserProfile"> | string | null
-  activityLevel?: Prisma.EnumActivityLevelNullableFilter<"UserProfile"> | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -370,7 +370,7 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   bmr?: Prisma.FloatWithAggregatesFilter<"UserProfile"> | number
   tdee?: Prisma.FloatWithAggregatesFilter<"UserProfile"> | number
   gender?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
-  activityLevel?: Prisma.EnumActivityLevelNullableWithAggregatesFilter<"UserProfile"> | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   userId?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
@@ -384,7 +384,7 @@ export type UserProfileCreateInput = {
   bmr: number
   tdee: number
   gender?: string | null
-  activityLevel?: $Enums.ActivityLevel | null
+  activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutUserProfileInput
@@ -399,7 +399,7 @@ export type UserProfileUncheckedCreateInput = {
   bmr: number
   tdee: number
   gender?: string | null
-  activityLevel?: $Enums.ActivityLevel | null
+  activityLevel?: string | null
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -413,7 +413,7 @@ export type UserProfileUpdateInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutUserProfileNestedInput
@@ -428,7 +428,7 @@ export type UserProfileUncheckedUpdateInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -443,7 +443,7 @@ export type UserProfileCreateManyInput = {
   bmr: number
   tdee: number
   gender?: string | null
-  activityLevel?: $Enums.ActivityLevel | null
+  activityLevel?: string | null
   userId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -457,7 +457,7 @@ export type UserProfileUpdateManyMutationInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -471,7 +471,7 @@ export type UserProfileUncheckedUpdateManyInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,10 +589,6 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableEnumActivityLevelFieldUpdateOperationsInput = {
-  set?: $Enums.ActivityLevel | null
-}
-
 export type UserProfileCreateWithoutUserInput = {
   age: number
   height: number
@@ -601,7 +597,7 @@ export type UserProfileCreateWithoutUserInput = {
   bmr: number
   tdee: number
   gender?: string | null
-  activityLevel?: $Enums.ActivityLevel | null
+  activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -615,7 +611,7 @@ export type UserProfileUncheckedCreateWithoutUserInput = {
   bmr: number
   tdee: number
   gender?: string | null
-  activityLevel?: $Enums.ActivityLevel | null
+  activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -644,7 +640,7 @@ export type UserProfileUpdateWithoutUserInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -658,7 +654,7 @@ export type UserProfileUncheckedUpdateWithoutUserInput = {
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  activityLevel?: Prisma.NullableEnumActivityLevelFieldUpdateOperationsInput | $Enums.ActivityLevel | null
+  activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -753,7 +749,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     bmr: number
     tdee: number
     gender: string | null
-    activityLevel: $Enums.ActivityLevel | null
+    activityLevel: string | null
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -1189,7 +1185,7 @@ export interface UserProfileFieldRefs {
   readonly bmr: Prisma.FieldRef<"UserProfile", 'Float'>
   readonly tdee: Prisma.FieldRef<"UserProfile", 'Float'>
   readonly gender: Prisma.FieldRef<"UserProfile", 'String'>
-  readonly activityLevel: Prisma.FieldRef<"UserProfile", 'ActivityLevel'>
+  readonly activityLevel: Prisma.FieldRef<"UserProfile", 'String'>
   readonly userId: Prisma.FieldRef<"UserProfile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserProfile", 'DateTime'>

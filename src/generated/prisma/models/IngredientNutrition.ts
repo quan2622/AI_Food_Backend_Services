@@ -41,8 +41,8 @@ export type IngredientNutritionSumAggregateOutputType = {
 export type IngredientNutritionMinAggregateOutputType = {
   id: number | null
   servingSize: number | null
-  servingUnit: $Enums.UnitType | null
-  source: $Enums.SourceType | null
+  servingUnit: string | null
+  source: string | null
   isCalculated: boolean | null
   ingredientId: number | null
   createdAt: Date | null
@@ -52,8 +52,8 @@ export type IngredientNutritionMinAggregateOutputType = {
 export type IngredientNutritionMaxAggregateOutputType = {
   id: number | null
   servingSize: number | null
-  servingUnit: $Enums.UnitType | null
-  source: $Enums.SourceType | null
+  servingUnit: string | null
+  source: string | null
   isCalculated: boolean | null
   ingredientId: number | null
   createdAt: Date | null
@@ -208,8 +208,8 @@ export type IngredientNutritionGroupByArgs<ExtArgs extends runtime.Types.Extensi
 export type IngredientNutritionGroupByOutputType = {
   id: number
   servingSize: number
-  servingUnit: $Enums.UnitType
-  source: $Enums.SourceType
+  servingUnit: string
+  source: string
   isCalculated: boolean
   ingredientId: number
   createdAt: Date
@@ -242,8 +242,8 @@ export type IngredientNutritionWhereInput = {
   NOT?: Prisma.IngredientNutritionWhereInput | Prisma.IngredientNutritionWhereInput[]
   id?: Prisma.IntFilter<"IngredientNutrition"> | number
   servingSize?: Prisma.FloatFilter<"IngredientNutrition"> | number
-  servingUnit?: Prisma.EnumUnitTypeFilter<"IngredientNutrition"> | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFilter<"IngredientNutrition"> | $Enums.SourceType
+  servingUnit?: Prisma.StringFilter<"IngredientNutrition"> | string
+  source?: Prisma.StringFilter<"IngredientNutrition"> | string
   isCalculated?: Prisma.BoolFilter<"IngredientNutrition"> | boolean
   ingredientId?: Prisma.IntFilter<"IngredientNutrition"> | number
   createdAt?: Prisma.DateTimeFilter<"IngredientNutrition"> | Date | string
@@ -271,8 +271,8 @@ export type IngredientNutritionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.IngredientNutritionWhereInput[]
   NOT?: Prisma.IngredientNutritionWhereInput | Prisma.IngredientNutritionWhereInput[]
   servingSize?: Prisma.FloatFilter<"IngredientNutrition"> | number
-  servingUnit?: Prisma.EnumUnitTypeFilter<"IngredientNutrition"> | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFilter<"IngredientNutrition"> | $Enums.SourceType
+  servingUnit?: Prisma.StringFilter<"IngredientNutrition"> | string
+  source?: Prisma.StringFilter<"IngredientNutrition"> | string
   isCalculated?: Prisma.BoolFilter<"IngredientNutrition"> | boolean
   ingredientId?: Prisma.IntFilter<"IngredientNutrition"> | number
   createdAt?: Prisma.DateTimeFilter<"IngredientNutrition"> | Date | string
@@ -303,8 +303,8 @@ export type IngredientNutritionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.IngredientNutritionScalarWhereWithAggregatesInput | Prisma.IngredientNutritionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"IngredientNutrition"> | number
   servingSize?: Prisma.FloatWithAggregatesFilter<"IngredientNutrition"> | number
-  servingUnit?: Prisma.EnumUnitTypeWithAggregatesFilter<"IngredientNutrition"> | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeWithAggregatesFilter<"IngredientNutrition"> | $Enums.SourceType
+  servingUnit?: Prisma.StringWithAggregatesFilter<"IngredientNutrition"> | string
+  source?: Prisma.StringWithAggregatesFilter<"IngredientNutrition"> | string
   isCalculated?: Prisma.BoolWithAggregatesFilter<"IngredientNutrition"> | boolean
   ingredientId?: Prisma.IntWithAggregatesFilter<"IngredientNutrition"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IngredientNutrition"> | Date | string
@@ -313,8 +313,8 @@ export type IngredientNutritionScalarWhereWithAggregatesInput = {
 
 export type IngredientNutritionCreateInput = {
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -325,8 +325,8 @@ export type IngredientNutritionCreateInput = {
 export type IngredientNutritionUncheckedCreateInput = {
   id?: number
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   ingredientId: number
   createdAt?: Date | string
@@ -336,8 +336,8 @@ export type IngredientNutritionUncheckedCreateInput = {
 
 export type IngredientNutritionUpdateInput = {
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,8 +348,8 @@ export type IngredientNutritionUpdateInput = {
 export type IngredientNutritionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,8 +360,8 @@ export type IngredientNutritionUncheckedUpdateInput = {
 export type IngredientNutritionCreateManyInput = {
   id?: number
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   ingredientId: number
   createdAt?: Date | string
@@ -370,8 +370,8 @@ export type IngredientNutritionCreateManyInput = {
 
 export type IngredientNutritionUpdateManyMutationInput = {
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,8 +380,8 @@ export type IngredientNutritionUpdateManyMutationInput = {
 export type IngredientNutritionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -490,10 +490,6 @@ export type IngredientNutritionUncheckedUpdateManyWithoutIngredientNestedInput =
   deleteMany?: Prisma.IngredientNutritionScalarWhereInput | Prisma.IngredientNutritionScalarWhereInput[]
 }
 
-export type EnumUnitTypeFieldUpdateOperationsInput = {
-  set?: $Enums.UnitType
-}
-
 export type IngredientNutritionCreateNestedOneWithoutValuesInput = {
   create?: Prisma.XOR<Prisma.IngredientNutritionCreateWithoutValuesInput, Prisma.IngredientNutritionUncheckedCreateWithoutValuesInput>
   connectOrCreate?: Prisma.IngredientNutritionCreateOrConnectWithoutValuesInput
@@ -510,8 +506,8 @@ export type IngredientNutritionUpdateOneRequiredWithoutValuesNestedInput = {
 
 export type IngredientNutritionCreateWithoutIngredientInput = {
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -521,8 +517,8 @@ export type IngredientNutritionCreateWithoutIngredientInput = {
 export type IngredientNutritionUncheckedCreateWithoutIngredientInput = {
   id?: number
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -561,8 +557,8 @@ export type IngredientNutritionScalarWhereInput = {
   NOT?: Prisma.IngredientNutritionScalarWhereInput | Prisma.IngredientNutritionScalarWhereInput[]
   id?: Prisma.IntFilter<"IngredientNutrition"> | number
   servingSize?: Prisma.FloatFilter<"IngredientNutrition"> | number
-  servingUnit?: Prisma.EnumUnitTypeFilter<"IngredientNutrition"> | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFilter<"IngredientNutrition"> | $Enums.SourceType
+  servingUnit?: Prisma.StringFilter<"IngredientNutrition"> | string
+  source?: Prisma.StringFilter<"IngredientNutrition"> | string
   isCalculated?: Prisma.BoolFilter<"IngredientNutrition"> | boolean
   ingredientId?: Prisma.IntFilter<"IngredientNutrition"> | number
   createdAt?: Prisma.DateTimeFilter<"IngredientNutrition"> | Date | string
@@ -571,8 +567,8 @@ export type IngredientNutritionScalarWhereInput = {
 
 export type IngredientNutritionCreateWithoutValuesInput = {
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -582,8 +578,8 @@ export type IngredientNutritionCreateWithoutValuesInput = {
 export type IngredientNutritionUncheckedCreateWithoutValuesInput = {
   id?: number
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   ingredientId: number
   createdAt?: Date | string
@@ -608,8 +604,8 @@ export type IngredientNutritionUpdateToOneWithWhereWithoutValuesInput = {
 
 export type IngredientNutritionUpdateWithoutValuesInput = {
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -619,8 +615,8 @@ export type IngredientNutritionUpdateWithoutValuesInput = {
 export type IngredientNutritionUncheckedUpdateWithoutValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ingredientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -630,8 +626,8 @@ export type IngredientNutritionUncheckedUpdateWithoutValuesInput = {
 export type IngredientNutritionCreateManyIngredientInput = {
   id?: number
   servingSize: number
-  servingUnit?: $Enums.UnitType
-  source?: $Enums.SourceType
+  servingUnit?: string
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -639,8 +635,8 @@ export type IngredientNutritionCreateManyIngredientInput = {
 
 export type IngredientNutritionUpdateWithoutIngredientInput = {
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -650,8 +646,8 @@ export type IngredientNutritionUpdateWithoutIngredientInput = {
 export type IngredientNutritionUncheckedUpdateWithoutIngredientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -661,8 +657,8 @@ export type IngredientNutritionUncheckedUpdateWithoutIngredientInput = {
 export type IngredientNutritionUncheckedUpdateManyWithoutIngredientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servingSize?: Prisma.FloatFieldUpdateOperationsInput | number
-  servingUnit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  servingUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -770,8 +766,8 @@ export type $IngredientNutritionPayload<ExtArgs extends runtime.Types.Extensions
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     servingSize: number
-    servingUnit: $Enums.UnitType
-    source: $Enums.SourceType
+    servingUnit: string
+    source: string
     isCalculated: boolean
     ingredientId: number
     createdAt: Date
@@ -1203,8 +1199,8 @@ export interface Prisma__IngredientNutritionClient<T, Null = never, ExtArgs exte
 export interface IngredientNutritionFieldRefs {
   readonly id: Prisma.FieldRef<"IngredientNutrition", 'Int'>
   readonly servingSize: Prisma.FieldRef<"IngredientNutrition", 'Float'>
-  readonly servingUnit: Prisma.FieldRef<"IngredientNutrition", 'UnitType'>
-  readonly source: Prisma.FieldRef<"IngredientNutrition", 'SourceType'>
+  readonly servingUnit: Prisma.FieldRef<"IngredientNutrition", 'String'>
+  readonly source: Prisma.FieldRef<"IngredientNutrition", 'String'>
   readonly isCalculated: Prisma.FieldRef<"IngredientNutrition", 'Boolean'>
   readonly ingredientId: Prisma.FieldRef<"IngredientNutrition", 'Int'>
   readonly createdAt: Prisma.FieldRef<"IngredientNutrition", 'DateTime'>

@@ -38,7 +38,7 @@ export type FoodNutritionProfileSumAggregateOutputType = {
 
 export type FoodNutritionProfileMinAggregateOutputType = {
   id: number | null
-  source: $Enums.SourceType | null
+  source: string | null
   isCalculated: boolean | null
   foodId: number | null
   createdAt: Date | null
@@ -47,7 +47,7 @@ export type FoodNutritionProfileMinAggregateOutputType = {
 
 export type FoodNutritionProfileMaxAggregateOutputType = {
   id: number | null
-  source: $Enums.SourceType | null
+  source: string | null
   isCalculated: boolean | null
   foodId: number | null
   createdAt: Date | null
@@ -191,7 +191,7 @@ export type FoodNutritionProfileGroupByArgs<ExtArgs extends runtime.Types.Extens
 
 export type FoodNutritionProfileGroupByOutputType = {
   id: number
-  source: $Enums.SourceType
+  source: string
   isCalculated: boolean
   foodId: number
   createdAt: Date
@@ -223,7 +223,7 @@ export type FoodNutritionProfileWhereInput = {
   OR?: Prisma.FoodNutritionProfileWhereInput[]
   NOT?: Prisma.FoodNutritionProfileWhereInput | Prisma.FoodNutritionProfileWhereInput[]
   id?: Prisma.IntFilter<"FoodNutritionProfile"> | number
-  source?: Prisma.EnumSourceTypeFilter<"FoodNutritionProfile"> | $Enums.SourceType
+  source?: Prisma.StringFilter<"FoodNutritionProfile"> | string
   isCalculated?: Prisma.BoolFilter<"FoodNutritionProfile"> | boolean
   foodId?: Prisma.IntFilter<"FoodNutritionProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"FoodNutritionProfile"> | Date | string
@@ -249,7 +249,7 @@ export type FoodNutritionProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.FoodNutritionProfileWhereInput | Prisma.FoodNutritionProfileWhereInput[]
   OR?: Prisma.FoodNutritionProfileWhereInput[]
   NOT?: Prisma.FoodNutritionProfileWhereInput | Prisma.FoodNutritionProfileWhereInput[]
-  source?: Prisma.EnumSourceTypeFilter<"FoodNutritionProfile"> | $Enums.SourceType
+  source?: Prisma.StringFilter<"FoodNutritionProfile"> | string
   isCalculated?: Prisma.BoolFilter<"FoodNutritionProfile"> | boolean
   createdAt?: Prisma.DateTimeFilter<"FoodNutritionProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FoodNutritionProfile"> | Date | string
@@ -276,7 +276,7 @@ export type FoodNutritionProfileScalarWhereWithAggregatesInput = {
   OR?: Prisma.FoodNutritionProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FoodNutritionProfileScalarWhereWithAggregatesInput | Prisma.FoodNutritionProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"FoodNutritionProfile"> | number
-  source?: Prisma.EnumSourceTypeWithAggregatesFilter<"FoodNutritionProfile"> | $Enums.SourceType
+  source?: Prisma.StringWithAggregatesFilter<"FoodNutritionProfile"> | string
   isCalculated?: Prisma.BoolWithAggregatesFilter<"FoodNutritionProfile"> | boolean
   foodId?: Prisma.IntWithAggregatesFilter<"FoodNutritionProfile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FoodNutritionProfile"> | Date | string
@@ -284,7 +284,7 @@ export type FoodNutritionProfileScalarWhereWithAggregatesInput = {
 }
 
 export type FoodNutritionProfileCreateInput = {
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -294,7 +294,7 @@ export type FoodNutritionProfileCreateInput = {
 
 export type FoodNutritionProfileUncheckedCreateInput = {
   id?: number
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   foodId: number
   createdAt?: Date | string
@@ -303,7 +303,7 @@ export type FoodNutritionProfileUncheckedCreateInput = {
 }
 
 export type FoodNutritionProfileUpdateInput = {
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,7 +313,7 @@ export type FoodNutritionProfileUpdateInput = {
 
 export type FoodNutritionProfileUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   foodId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,7 +323,7 @@ export type FoodNutritionProfileUncheckedUpdateInput = {
 
 export type FoodNutritionProfileCreateManyInput = {
   id?: number
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   foodId: number
   createdAt?: Date | string
@@ -331,7 +331,7 @@ export type FoodNutritionProfileCreateManyInput = {
 }
 
 export type FoodNutritionProfileUpdateManyMutationInput = {
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,7 +339,7 @@ export type FoodNutritionProfileUpdateManyMutationInput = {
 
 export type FoodNutritionProfileUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   foodId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -425,10 +425,6 @@ export type FoodNutritionProfileUncheckedUpdateOneWithoutFoodNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FoodNutritionProfileUpdateToOneWithWhereWithoutFoodInput, Prisma.FoodNutritionProfileUpdateWithoutFoodInput>, Prisma.FoodNutritionProfileUncheckedUpdateWithoutFoodInput>
 }
 
-export type EnumSourceTypeFieldUpdateOperationsInput = {
-  set?: $Enums.SourceType
-}
-
 export type FoodNutritionProfileCreateNestedOneWithoutValuesInput = {
   create?: Prisma.XOR<Prisma.FoodNutritionProfileCreateWithoutValuesInput, Prisma.FoodNutritionProfileUncheckedCreateWithoutValuesInput>
   connectOrCreate?: Prisma.FoodNutritionProfileCreateOrConnectWithoutValuesInput
@@ -444,7 +440,7 @@ export type FoodNutritionProfileUpdateOneRequiredWithoutValuesNestedInput = {
 }
 
 export type FoodNutritionProfileCreateWithoutFoodInput = {
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -453,7 +449,7 @@ export type FoodNutritionProfileCreateWithoutFoodInput = {
 
 export type FoodNutritionProfileUncheckedCreateWithoutFoodInput = {
   id?: number
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -477,7 +473,7 @@ export type FoodNutritionProfileUpdateToOneWithWhereWithoutFoodInput = {
 }
 
 export type FoodNutritionProfileUpdateWithoutFoodInput = {
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -486,7 +482,7 @@ export type FoodNutritionProfileUpdateWithoutFoodInput = {
 
 export type FoodNutritionProfileUncheckedUpdateWithoutFoodInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,7 +490,7 @@ export type FoodNutritionProfileUncheckedUpdateWithoutFoodInput = {
 }
 
 export type FoodNutritionProfileCreateWithoutValuesInput = {
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -503,7 +499,7 @@ export type FoodNutritionProfileCreateWithoutValuesInput = {
 
 export type FoodNutritionProfileUncheckedCreateWithoutValuesInput = {
   id?: number
-  source?: $Enums.SourceType
+  source?: string
   isCalculated?: boolean
   foodId: number
   createdAt?: Date | string
@@ -527,7 +523,7 @@ export type FoodNutritionProfileUpdateToOneWithWhereWithoutValuesInput = {
 }
 
 export type FoodNutritionProfileUpdateWithoutValuesInput = {
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -536,7 +532,7 @@ export type FoodNutritionProfileUpdateWithoutValuesInput = {
 
 export type FoodNutritionProfileUncheckedUpdateWithoutValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  source?: Prisma.EnumSourceTypeFieldUpdateOperationsInput | $Enums.SourceType
+  source?: Prisma.StringFieldUpdateOperationsInput | string
   isCalculated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   foodId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -636,7 +632,7 @@ export type $FoodNutritionProfilePayload<ExtArgs extends runtime.Types.Extension
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    source: $Enums.SourceType
+    source: string
     isCalculated: boolean
     foodId: number
     createdAt: Date
@@ -1067,7 +1063,7 @@ export interface Prisma__FoodNutritionProfileClient<T, Null = never, ExtArgs ext
  */
 export interface FoodNutritionProfileFieldRefs {
   readonly id: Prisma.FieldRef<"FoodNutritionProfile", 'Int'>
-  readonly source: Prisma.FieldRef<"FoodNutritionProfile", 'SourceType'>
+  readonly source: Prisma.FieldRef<"FoodNutritionProfile", 'String'>
   readonly isCalculated: Prisma.FieldRef<"FoodNutritionProfile", 'Boolean'>
   readonly foodId: Prisma.FieldRef<"FoodNutritionProfile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"FoodNutritionProfile", 'DateTime'>

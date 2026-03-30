@@ -8,45 +8,51 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'GOAL_LOSS',
     type: 'GOAL',
-    value: 'Weight Loss',
-    description: 'Giảm cân (TDEE - 500)',
+    value: 'WEIGHT_LOSS',
+    description: 'Giảm cân',
   },
   {
     keyMap: 'GOAL_GAIN',
     type: 'GOAL',
-    value: 'Weight Gain',
-    description: 'Tăng cân (TDEE + 500)',
+    value: 'WEIGHT_GAIN',
+    description: 'Tăng cân',
   },
   {
     keyMap: 'GOAL_MAINTAIN',
     type: 'GOAL',
-    value: 'Maintenance',
-    description: 'Duy trì cân nặng (TDEE)',
+    value: 'MAINTENANCE',
+    description: 'Duy trì cân nặng',
+  },
+  {
+    keyMap: 'GOAL_STRICT',
+    type: 'GOAL',
+    value: 'STRICT_DIET',
+    description: 'Chế độ ăn nghiêm ngặt',
   },
 
   // --- MEAL ---
   {
     keyMap: 'MEAL_BREAKFAST',
     type: 'MEAL',
-    value: 'Breakfast',
+    value: 'BREAKFAST',
     description: 'Bữa sáng',
   },
   {
     keyMap: 'MEAL_LUNCH',
     type: 'MEAL',
-    value: 'Lunch',
+    value: 'LUNCH',
     description: 'Bữa trưa',
   },
   {
     keyMap: 'MEAL_DINNER',
     type: 'MEAL',
-    value: 'Dinner',
+    value: 'DINNER',
     description: 'Bữa tối',
   },
   {
     keyMap: 'MEAL_SNACK',
     type: 'MEAL',
-    value: 'Snack',
+    value: 'SNACK',
     description: 'Bữa phụ',
   },
 
@@ -54,19 +60,19 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'STATUS_BELOW',
     type: 'STATUS',
-    value: 'Below',
+    value: 'BELOW',
     description: 'Dưới mức mục tiêu',
   },
   {
     keyMap: 'STATUS_MET',
     type: 'STATUS',
-    value: 'Met',
+    value: 'MET',
     description: 'Đã đạt mục tiêu',
   },
   {
     keyMap: 'STATUS_ABOVE',
     type: 'STATUS',
-    value: 'Above',
+    value: 'ABOVE',
     description: 'Vượt mức mục tiêu',
   },
 
@@ -74,25 +80,25 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'SEV_LOW',
     type: 'SEVERITY',
-    value: 'Low',
+    value: 'LOW',
     description: 'Mức độ thấp',
   },
   {
     keyMap: 'SEV_MEDIUM',
     type: 'SEVERITY',
-    value: 'Medium',
+    value: 'MEDIUM',
     description: 'Mức độ trung bình',
   },
   {
     keyMap: 'SEV_HIGH',
     type: 'SEVERITY',
-    value: 'High',
+    value: 'HIGH',
     description: 'Mức độ cao',
   },
   {
-    keyMap: 'SEV_CRITICAL',
+    keyMap: 'SEV_LIFE_THREATENING',
     type: 'SEVERITY',
-    value: 'Life Threatening',
+    value: 'LIFE_THREATENING',
     description: 'Nguy hiểm tính mạng',
   },
 
@@ -100,51 +106,51 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'ACT_SEDENTARY',
     type: 'ACTIVITY',
-    value: 'Sedentary',
-    description: 'Ít vận động (BMR x 1.2)',
+    value: 'SEDENTARY',
+    description: 'Ít vận động',
   },
   {
     keyMap: 'ACT_LIGHT',
     type: 'ACTIVITY',
-    value: 'Lightly Active',
-    description: 'Vận động nhẹ (BMR x 1.375)',
+    value: 'LIGHTLY_ACTIVE',
+    description: 'Vận động nhẹ',
   },
   {
     keyMap: 'ACT_MODERATE',
     type: 'ACTIVITY',
-    value: 'Moderately Active',
-    description: 'Vận động vừa (BMR x 1.55)',
+    value: 'MODERATELY_ACTIVE',
+    description: 'Vận động vừa',
   },
   {
     keyMap: 'ACT_VERY',
     type: 'ACTIVITY',
-    value: 'Very Active',
-    description: 'Vận động mạnh (BMR x 1.725)',
+    value: 'VERY_ACTIVE',
+    description: 'Vận động mạnh',
   },
   {
     keyMap: 'ACT_SUPER',
     type: 'ACTIVITY',
-    value: 'Super Active',
-    description: 'Vận động rất mạnh (BMR x 1.9)',
+    value: 'SUPER_ACTIVE',
+    description: 'Vận động rất mạnh',
   },
 
   // --- REPORT ---
   {
     keyMap: 'REP_UPLOAD',
     type: 'REPORT',
-    value: 'Upload Count',
+    value: 'UPLOAD_COUNT',
     description: 'Thống kê lượt tải lên',
   },
   {
     keyMap: 'REP_POPULAR',
     type: 'REPORT',
-    value: 'Popular Food',
+    value: 'POPULAR_FOOD',
     description: 'Thống kê thực phẩm phổ biến',
   },
   {
     keyMap: 'REP_TRAFFIC',
     type: 'REPORT',
-    value: 'Traffic',
+    value: 'TRAFFIC',
     description: 'Thống kê lưu lượng truy cập',
   },
 
@@ -158,13 +164,13 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'SRC_MANUAL',
     type: 'SOURCE',
-    value: 'Manual',
+    value: 'MANUAL',
     description: 'Nhập thủ công bởi người dùng',
   },
   {
     keyMap: 'SRC_CALC',
     type: 'SOURCE',
-    value: 'Calculated',
+    value: 'CALCULATED',
     description: 'Dữ liệu được hệ thống tự tính toán',
   },
 
@@ -172,38 +178,58 @@ const allCodes: CreateAllcodeDto[] = [
   {
     keyMap: 'UNIT_G',
     type: 'UNIT',
-    value: 'g',
+    value: 'UNIT_G',
     description: 'Gram',
   },
   {
     keyMap: 'UNIT_KG',
     type: 'UNIT',
-    value: 'kg',
+    value: 'UNIT_KG',
     description: 'Kilogram',
   },
   {
     keyMap: 'UNIT_MG',
     type: 'UNIT',
-    value: 'mg',
+    value: 'UNIT_MG',
     description: 'Milligram',
   },
   {
     keyMap: 'UNIT_OZ',
     type: 'UNIT',
-    value: 'oz',
+    value: 'UNIT_OZ',
     description: 'Ounce',
   },
   {
     keyMap: 'UNIT_LB',
     type: 'UNIT',
-    value: 'lb',
+    value: 'UNIT_LB',
     description: 'Pound',
   },
+
+  // --- NUTR_GOAL ---
   {
-    keyMap: 'UNIT_ML',
-    type: 'UNIT',
-    value: 'ml',
-    description: 'Milliliter',
+    keyMap: 'NUTR_GOAL_ONGOING',
+    type: 'NUTR_GOAL',
+    value: 'ONGOING',
+    description: 'Đang tiến hành',
+  },
+  {
+    keyMap: 'NUTR_GOAL_COMPLETED',
+    type: 'NUTR_GOAL',
+    value: 'COMPLETED',
+    description: 'Hoàn thành',
+  },
+  {
+    keyMap: 'NUTR_GOAL_PAUSED',
+    type: 'NUTR_GOAL',
+    value: 'PAUSED',
+    description: 'Tạm dừng',
+  },
+  {
+    keyMap: 'NUTR_GOAL_FAILED',
+    type: 'NUTR_GOAL',
+    value: 'FAILED',
+    description: 'Thất bại',
   },
 ];
 
@@ -214,6 +240,11 @@ async function bootstrap(): Promise<void> {
 
   try {
     const allcodeService = app.get(AllcodeService);
+
+    // Xóa data cũ trước khi seed
+    await allcodeService.removeAll();
+    console.log('Cleared existing all_codes data');
+
     const result = await allcodeService.createMany(allCodes);
 
     console.log(`AllCode seed completed. Created: ${result.createdCount}`);

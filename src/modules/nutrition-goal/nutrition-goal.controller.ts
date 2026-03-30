@@ -42,6 +42,16 @@ export class NutritionGoalController {
     return this.nutritionGoalService.findAllByUserId(user.id);
   }
 
+  @Get('my-goals')
+  findMyGoalsWithHistory(@User() user: { id: number }) {
+    return this.nutritionGoalService.findMyGoalsWithHistory(user.id);
+  }
+
+  @Get('current')
+  getCurrentGoal(@User() user: { id: number }) {
+    return this.nutritionGoalService.findCurrentGoal(user.id);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.nutritionGoalService.findOne(id);

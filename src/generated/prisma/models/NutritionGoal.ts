@@ -28,6 +28,7 @@ export type AggregateNutritionGoal = {
 
 export type NutritionGoalAvgAggregateOutputType = {
   id: number | null
+  targetWeight: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
@@ -38,6 +39,7 @@ export type NutritionGoalAvgAggregateOutputType = {
 
 export type NutritionGoalSumAggregateOutputType = {
   id: number | null
+  targetWeight: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
@@ -48,7 +50,9 @@ export type NutritionGoalSumAggregateOutputType = {
 
 export type NutritionGoalMinAggregateOutputType = {
   id: number | null
-  goalType: $Enums.GoalType | null
+  goalType: string | null
+  status: $Enums.NutritionGoalStatus | null
+  targetWeight: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
@@ -63,7 +67,9 @@ export type NutritionGoalMinAggregateOutputType = {
 
 export type NutritionGoalMaxAggregateOutputType = {
   id: number | null
-  goalType: $Enums.GoalType | null
+  goalType: string | null
+  status: $Enums.NutritionGoalStatus | null
+  targetWeight: number | null
   targetCalories: number | null
   targetProtein: number | null
   targetCarbs: number | null
@@ -79,6 +85,8 @@ export type NutritionGoalMaxAggregateOutputType = {
 export type NutritionGoalCountAggregateOutputType = {
   id: number
   goalType: number
+  status: number
+  targetWeight: number
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -95,6 +103,7 @@ export type NutritionGoalCountAggregateOutputType = {
 
 export type NutritionGoalAvgAggregateInputType = {
   id?: true
+  targetWeight?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
@@ -105,6 +114,7 @@ export type NutritionGoalAvgAggregateInputType = {
 
 export type NutritionGoalSumAggregateInputType = {
   id?: true
+  targetWeight?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
@@ -116,6 +126,8 @@ export type NutritionGoalSumAggregateInputType = {
 export type NutritionGoalMinAggregateInputType = {
   id?: true
   goalType?: true
+  status?: true
+  targetWeight?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
@@ -131,6 +143,8 @@ export type NutritionGoalMinAggregateInputType = {
 export type NutritionGoalMaxAggregateInputType = {
   id?: true
   goalType?: true
+  status?: true
+  targetWeight?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
@@ -146,6 +160,8 @@ export type NutritionGoalMaxAggregateInputType = {
 export type NutritionGoalCountAggregateInputType = {
   id?: true
   goalType?: true
+  status?: true
+  targetWeight?: true
   targetCalories?: true
   targetProtein?: true
   targetCarbs?: true
@@ -247,7 +263,9 @@ export type NutritionGoalGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type NutritionGoalGroupByOutputType = {
   id: number
-  goalType: $Enums.GoalType
+  goalType: string
+  status: $Enums.NutritionGoalStatus
+  targetWeight: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -285,7 +303,9 @@ export type NutritionGoalWhereInput = {
   OR?: Prisma.NutritionGoalWhereInput[]
   NOT?: Prisma.NutritionGoalWhereInput | Prisma.NutritionGoalWhereInput[]
   id?: Prisma.IntFilter<"NutritionGoal"> | number
-  goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
+  goalType?: Prisma.StringFilter<"NutritionGoal"> | string
+  status?: Prisma.EnumNutritionGoalStatusFilter<"NutritionGoal"> | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.FloatNullableFilter<"NutritionGoal"> | number | null
   targetCalories?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
@@ -302,6 +322,8 @@ export type NutritionGoalWhereInput = {
 export type NutritionGoalOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   goalType?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrderInput | Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -320,7 +342,9 @@ export type NutritionGoalWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.NutritionGoalWhereInput | Prisma.NutritionGoalWhereInput[]
   OR?: Prisma.NutritionGoalWhereInput[]
   NOT?: Prisma.NutritionGoalWhereInput | Prisma.NutritionGoalWhereInput[]
-  goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
+  goalType?: Prisma.StringFilter<"NutritionGoal"> | string
+  status?: Prisma.EnumNutritionGoalStatusFilter<"NutritionGoal"> | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.FloatNullableFilter<"NutritionGoal"> | number | null
   targetCalories?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
@@ -337,6 +361,8 @@ export type NutritionGoalWhereUniqueInput = Prisma.AtLeast<{
 export type NutritionGoalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   goalType?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrderInput | Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -359,7 +385,9 @@ export type NutritionGoalScalarWhereWithAggregatesInput = {
   OR?: Prisma.NutritionGoalScalarWhereWithAggregatesInput[]
   NOT?: Prisma.NutritionGoalScalarWhereWithAggregatesInput | Prisma.NutritionGoalScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"NutritionGoal"> | number
-  goalType?: Prisma.EnumGoalTypeWithAggregatesFilter<"NutritionGoal"> | $Enums.GoalType
+  goalType?: Prisma.StringWithAggregatesFilter<"NutritionGoal"> | string
+  status?: Prisma.EnumNutritionGoalStatusWithAggregatesFilter<"NutritionGoal"> | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.FloatNullableWithAggregatesFilter<"NutritionGoal"> | number | null
   targetCalories?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   targetProtein?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatWithAggregatesFilter<"NutritionGoal"> | number
@@ -373,7 +401,9 @@ export type NutritionGoalScalarWhereWithAggregatesInput = {
 }
 
 export type NutritionGoalCreateInput = {
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -388,7 +418,9 @@ export type NutritionGoalCreateInput = {
 
 export type NutritionGoalUncheckedCreateInput = {
   id?: number
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -402,7 +434,9 @@ export type NutritionGoalUncheckedCreateInput = {
 }
 
 export type NutritionGoalUpdateInput = {
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -417,7 +451,9 @@ export type NutritionGoalUpdateInput = {
 
 export type NutritionGoalUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -432,7 +468,9 @@ export type NutritionGoalUncheckedUpdateInput = {
 
 export type NutritionGoalCreateManyInput = {
   id?: number
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -446,7 +484,9 @@ export type NutritionGoalCreateManyInput = {
 }
 
 export type NutritionGoalUpdateManyMutationInput = {
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -460,7 +500,9 @@ export type NutritionGoalUpdateManyMutationInput = {
 
 export type NutritionGoalUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -486,6 +528,8 @@ export type NutritionGoalOrderByRelationAggregateInput = {
 export type NutritionGoalCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   goalType?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -500,6 +544,7 @@ export type NutritionGoalCountOrderByAggregateInput = {
 
 export type NutritionGoalAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -511,6 +556,8 @@ export type NutritionGoalAvgOrderByAggregateInput = {
 export type NutritionGoalMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   goalType?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -526,6 +573,8 @@ export type NutritionGoalMaxOrderByAggregateInput = {
 export type NutritionGoalMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   goalType?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -540,6 +589,7 @@ export type NutritionGoalMinOrderByAggregateInput = {
 
 export type NutritionGoalSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  targetWeight?: Prisma.SortOrder
   targetCalories?: Prisma.SortOrder
   targetProtein?: Prisma.SortOrder
   targetCarbs?: Prisma.SortOrder
@@ -590,12 +640,22 @@ export type NutritionGoalUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.NutritionGoalScalarWhereInput | Prisma.NutritionGoalScalarWhereInput[]
 }
 
-export type EnumGoalTypeFieldUpdateOperationsInput = {
-  set?: $Enums.GoalType
+export type EnumNutritionGoalStatusFieldUpdateOperationsInput = {
+  set?: $Enums.NutritionGoalStatus
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NutritionGoalCreateWithoutUserInput = {
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -609,7 +669,9 @@ export type NutritionGoalCreateWithoutUserInput = {
 
 export type NutritionGoalUncheckedCreateWithoutUserInput = {
   id?: number
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -652,7 +714,9 @@ export type NutritionGoalScalarWhereInput = {
   OR?: Prisma.NutritionGoalScalarWhereInput[]
   NOT?: Prisma.NutritionGoalScalarWhereInput | Prisma.NutritionGoalScalarWhereInput[]
   id?: Prisma.IntFilter<"NutritionGoal"> | number
-  goalType?: Prisma.EnumGoalTypeFilter<"NutritionGoal"> | $Enums.GoalType
+  goalType?: Prisma.StringFilter<"NutritionGoal"> | string
+  status?: Prisma.EnumNutritionGoalStatusFilter<"NutritionGoal"> | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.FloatNullableFilter<"NutritionGoal"> | number | null
   targetCalories?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetProtein?: Prisma.FloatFilter<"NutritionGoal"> | number
   targetCarbs?: Prisma.FloatFilter<"NutritionGoal"> | number
@@ -667,7 +731,9 @@ export type NutritionGoalScalarWhereInput = {
 
 export type NutritionGoalCreateManyUserInput = {
   id?: number
-  goalType: $Enums.GoalType
+  goalType: string
+  status?: $Enums.NutritionGoalStatus
+  targetWeight?: number | null
   targetCalories: number
   targetProtein: number
   targetCarbs: number
@@ -680,7 +746,9 @@ export type NutritionGoalCreateManyUserInput = {
 }
 
 export type NutritionGoalUpdateWithoutUserInput = {
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -694,7 +762,9 @@ export type NutritionGoalUpdateWithoutUserInput = {
 
 export type NutritionGoalUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -708,7 +778,9 @@ export type NutritionGoalUncheckedUpdateWithoutUserInput = {
 
 export type NutritionGoalUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  goalType?: Prisma.EnumGoalTypeFieldUpdateOperationsInput | $Enums.GoalType
+  goalType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNutritionGoalStatusFieldUpdateOperationsInput | $Enums.NutritionGoalStatus
+  targetWeight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   targetCalories?: Prisma.FloatFieldUpdateOperationsInput | number
   targetProtein?: Prisma.FloatFieldUpdateOperationsInput | number
   targetCarbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -725,6 +797,8 @@ export type NutritionGoalUncheckedUpdateManyWithoutUserInput = {
 export type NutritionGoalSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   goalType?: boolean
+  status?: boolean
+  targetWeight?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
@@ -741,6 +815,8 @@ export type NutritionGoalSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type NutritionGoalSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   goalType?: boolean
+  status?: boolean
+  targetWeight?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
@@ -757,6 +833,8 @@ export type NutritionGoalSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type NutritionGoalSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   goalType?: boolean
+  status?: boolean
+  targetWeight?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
@@ -773,6 +851,8 @@ export type NutritionGoalSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type NutritionGoalSelectScalar = {
   id?: boolean
   goalType?: boolean
+  status?: boolean
+  targetWeight?: boolean
   targetCalories?: boolean
   targetProtein?: boolean
   targetCarbs?: boolean
@@ -785,7 +865,7 @@ export type NutritionGoalSelectScalar = {
   updatedAt?: boolean
 }
 
-export type NutritionGoalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "goalType" | "targetCalories" | "targetProtein" | "targetCarbs" | "targetFat" | "targetFiber" | "startDay" | "endDate" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["nutritionGoal"]>
+export type NutritionGoalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "goalType" | "status" | "targetWeight" | "targetCalories" | "targetProtein" | "targetCarbs" | "targetFat" | "targetFiber" | "startDay" | "endDate" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["nutritionGoal"]>
 export type NutritionGoalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -803,7 +883,9 @@ export type $NutritionGoalPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    goalType: $Enums.GoalType
+    goalType: string
+    status: $Enums.NutritionGoalStatus
+    targetWeight: number | null
     targetCalories: number
     targetProtein: number
     targetCarbs: number
@@ -1239,7 +1321,9 @@ export interface Prisma__NutritionGoalClient<T, Null = never, ExtArgs extends ru
  */
 export interface NutritionGoalFieldRefs {
   readonly id: Prisma.FieldRef<"NutritionGoal", 'Int'>
-  readonly goalType: Prisma.FieldRef<"NutritionGoal", 'GoalType'>
+  readonly goalType: Prisma.FieldRef<"NutritionGoal", 'String'>
+  readonly status: Prisma.FieldRef<"NutritionGoal", 'NutritionGoalStatus'>
+  readonly targetWeight: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly targetCalories: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly targetProtein: Prisma.FieldRef<"NutritionGoal", 'Float'>
   readonly targetCarbs: Prisma.FieldRef<"NutritionGoal", 'Float'>

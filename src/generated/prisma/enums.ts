@@ -10,68 +10,78 @@
 */
 
 export const GoalType = {
-  WEIGHT_LOSS: 'WEIGHT_LOSS',
-  WEIGHT_GAIN: 'WEIGHT_GAIN',
-  MAINTENANCE: 'MAINTENANCE',
-  STRICT_DIET: 'STRICT_DIET'
+  GOAL_LOSS: 'GOAL_LOSS',
+  GOAL_GAIN: 'GOAL_GAIN',
+  GOAL_MAINTAIN: 'GOAL_MAINTAIN',
+  GOAL_STRICT: 'GOAL_STRICT'
 } as const
 
 export type GoalType = (typeof GoalType)[keyof typeof GoalType]
 
 
+export const NutritionGoalStatus = {
+  NUTR_GOAL_ONGOING: 'NUTR_GOAL_ONGOING',
+  NUTR_GOAL_COMPLETED: 'NUTR_GOAL_COMPLETED',
+  NUTR_GOAL_PAUSED: 'NUTR_GOAL_PAUSED',
+  NUTR_GOAL_FAILED: 'NUTR_GOAL_FAILED'
+} as const
+
+export type NutritionGoalStatus = (typeof NutritionGoalStatus)[keyof typeof NutritionGoalStatus]
+
+
 export const MealType = {
-  BREAKFAST: 'BREAKFAST',
-  LUNCH: 'LUNCH',
-  DINNER: 'DINNER',
-  SNACK: 'SNACK'
+  MEAL_BREAKFAST: 'MEAL_BREAKFAST',
+  MEAL_LUNCH: 'MEAL_LUNCH',
+  MEAL_DINNER: 'MEAL_DINNER',
+  MEAL_SNACK: 'MEAL_SNACK'
 } as const
 
 export type MealType = (typeof MealType)[keyof typeof MealType]
 
 
 export const StatusType = {
-  BELOW: 'BELOW',
-  MET: 'MET',
-  ABOVE: 'ABOVE'
+  STATUS_BELOW: 'STATUS_BELOW',
+  STATUS_MET: 'STATUS_MET',
+  STATUS_ABOVE: 'STATUS_ABOVE'
 } as const
 
 export type StatusType = (typeof StatusType)[keyof typeof StatusType]
 
 
 export const SeverityType = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
-  LIFE_THREATENING: 'LIFE_THREATENING'
+  SEV_LOW: 'SEV_LOW',
+  SEV_MEDIUM: 'SEV_MEDIUM',
+  SEV_HIGH: 'SEV_HIGH',
+  SEV_LIFE_THREATENING: 'SEV_LIFE_THREATENING'
 } as const
 
 export type SeverityType = (typeof SeverityType)[keyof typeof SeverityType]
 
 
 export const ActivityLevel = {
-  SEDENTARY: 'SEDENTARY',
-  LIGHTLY_ACTIVE: 'LIGHTLY_ACTIVE',
-  MODERATELY_ACTIVE: 'MODERATELY_ACTIVE',
-  VERY_ACTIVE: 'VERY_ACTIVE',
-  SUPER_ACTIVE: 'SUPER_ACTIVE'
+  ACT_SEDENTARY: 'ACT_SEDENTARY',
+  ACT_LIGHT: 'ACT_LIGHT',
+  ACT_MODERATE: 'ACT_MODERATE',
+  ACT_VERY: 'ACT_VERY',
+  ACT_SUPER: 'ACT_SUPER'
 } as const
 
 export type ActivityLevel = (typeof ActivityLevel)[keyof typeof ActivityLevel]
 
 
 export const ReportType = {
-  UPLOAD_COUNT: 'UPLOAD_COUNT',
-  POPULAR_FOOD: 'POPULAR_FOOD',
-  TRAFFIC: 'TRAFFIC'
+  REP_UPLOAD: 'REP_UPLOAD',
+  REP_POPULAR: 'REP_POPULAR',
+  REP_TRAFFIC: 'REP_TRAFFIC'
 } as const
 
 export type ReportType = (typeof ReportType)[keyof typeof ReportType]
 
 
 export const SourceType = {
-  USDA: 'USDA',
-  MANUAL: 'MANUAL',
-  CALCULATED: 'CALCULATED'
+  SRC_USDA: 'SRC_USDA',
+  SRC_MANUAL: 'SRC_MANUAL',
+  SRC_CALC: 'SRC_CALC'
 } as const
 
 export type SourceType = (typeof SourceType)[keyof typeof SourceType]

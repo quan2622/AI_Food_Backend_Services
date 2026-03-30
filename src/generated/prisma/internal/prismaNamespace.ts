@@ -2294,6 +2294,8 @@ export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[key
 export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
+  status: 'status',
+  targetWeight: 'targetWeight',
   targetCalories: 'targetCalories',
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',
@@ -2651,114 +2653,16 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
- * Reference to a field of type 'ActivityLevel'
+ * Reference to a field of type 'NutritionGoalStatus'
  */
-export type EnumActivityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityLevel'>
+export type EnumNutritionGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NutritionGoalStatus'>
     
 
 
 /**
- * Reference to a field of type 'ActivityLevel[]'
+ * Reference to a field of type 'NutritionGoalStatus[]'
  */
-export type ListEnumActivityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityLevel[]'>
-    
-
-
-/**
- * Reference to a field of type 'GoalType'
- */
-export type EnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalType'>
-    
-
-
-/**
- * Reference to a field of type 'GoalType[]'
- */
-export type ListEnumGoalTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalType[]'>
-    
-
-
-/**
- * Reference to a field of type 'SeverityType'
- */
-export type EnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType'>
-    
-
-
-/**
- * Reference to a field of type 'SeverityType[]'
- */
-export type ListEnumSeverityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SeverityType[]'>
-    
-
-
-/**
- * Reference to a field of type 'SourceType'
- */
-export type EnumSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourceType'>
-    
-
-
-/**
- * Reference to a field of type 'SourceType[]'
- */
-export type ListEnumSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SourceType[]'>
-    
-
-
-/**
- * Reference to a field of type 'UnitType'
- */
-export type EnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType'>
-    
-
-
-/**
- * Reference to a field of type 'UnitType[]'
- */
-export type ListEnumUnitTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnitType[]'>
-    
-
-
-/**
- * Reference to a field of type 'StatusType'
- */
-export type EnumStatusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusType'>
-    
-
-
-/**
- * Reference to a field of type 'StatusType[]'
- */
-export type ListEnumStatusTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusType[]'>
-    
-
-
-/**
- * Reference to a field of type 'MealType'
- */
-export type EnumMealTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MealType'>
-    
-
-
-/**
- * Reference to a field of type 'MealType[]'
- */
-export type ListEnumMealTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MealType[]'>
-    
-
-
-/**
- * Reference to a field of type 'ReportType'
- */
-export type EnumReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportType'>
-    
-
-
-/**
- * Reference to a field of type 'ReportType[]'
- */
-export type ListEnumReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReportType[]'>
+export type ListEnumNutritionGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NutritionGoalStatus[]'>
     
 
 

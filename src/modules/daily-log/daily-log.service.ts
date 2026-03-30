@@ -30,50 +30,99 @@ export class DailyLogService {
         meals: {
           include: {
             mealItems: {
-              include: { food: { select: { foodName: true, imageUrl: true } } }
-            }
-          }
-        }
-      }
+              include: { food: { select: { foodName: true, imageUrl: true } } },
+            },
+          },
+        },
+      },
     });
 
-    if (existing) return this.formatDailyLogWithTotals(existing);
+    const nutritionGoal = await this.getActiveNutritionGoal(userId, logDate);
+
+    if (existing) {
+      return this.formatDailyLogWithTotals(existing, nutritionGoal);
+    }
 
     const newLog = await this.prisma.dailyLog.create({
       data: {
         userId,
         logDate,
-        status: StatusType.BELOW,
+        status: StatusType.STATUS_BELOW,
       },
       include: {
         meals: {
           include: {
-            mealItems: { include: { food: true } }
-          }
-        }
-      }
+            mealItems: { include: { food: true } },
+          },
+        },
+      },
     });
 
-    return this.formatDailyLogWithTotals(newLog);
+    return this.formatDailyLogWithTotals(newLog, nutritionGoal);
+  }
+
+  /** Lấy nutrition goal đang active cho ngày cụ thể */
+  private async getActiveNutritionGoal(userId: number, date: Date) {
+    const goal = await this.prisma.nutritionGoal.findFirst({
+      where: {
+        userId,
+        startDay: { lte: date },
+        endDate: { gte: date },
+      },
+      orderBy: { startDay: 'desc' },
+    });
+    return goal;
   }
 
   /** Helper tính tổng dinh dưỡng để trả về kèm JSON */
-  private formatDailyLogWithTotals(log: any) {
+  private formatDailyLogWithTotals(log: any, nutritionGoal: any = null) {
     const totals = { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
-    if (log.meals) {
-      log.meals.forEach(meal => {
-        meal.mealItems.forEach(item => {
-          totals.calories += item.calories || 0;
-          totals.protein += item.protein || 0;
-          totals.carbs += item.carbs || 0;
-          totals.fat += item.fat || 0;
-          totals.fiber += item.fiber || 0;
-        });
-      });
-    }
+
+    // Tính totalCalories cho mỗi meal và totals cho cả ngày
+    const mealsWithTotals = log.meals
+      ? log.meals.map((meal) => {
+          let mealTotalCalories = 0;
+
+          if (meal.mealItems) {
+            meal.mealItems.forEach((item) => {
+              const quantity = item.quantity || 1;
+              // Tính calories: protein*4 + carbs*4 + fat*9 + fiber*2
+              const itemCalories =
+                ((item.protein || 0) * 4 +
+                  (item.carbs || 0) * 4 +
+                  (item.fat || 0) * 9 +
+                  (item.fiber || 0) * 2) *
+                quantity;
+
+              mealTotalCalories += itemCalories;
+
+              // Cộng vào totals cả ngày
+              totals.calories += itemCalories;
+              totals.protein += (item.protein || 0) * quantity;
+              totals.carbs += (item.carbs || 0) * quantity;
+              totals.fat += (item.fat || 0) * quantity;
+              totals.fiber += (item.fiber || 0) * quantity;
+            });
+          }
+
+          return {
+            ...meal,
+            totalCalories: Math.round(mealTotalCalories * 100) / 100,
+          };
+        })
+      : [];
+
     return {
       ...log,
-      totals
+      meals: mealsWithTotals,
+      totals: {
+        calories: Math.round(totals.calories * 100) / 100,
+        protein: Math.round(totals.protein * 100) / 100,
+        carbs: Math.round(totals.carbs * 100) / 100,
+        fat: Math.round(totals.fat * 100) / 100,
+        fiber: Math.round(totals.fiber * 100) / 100,
+      },
+      nutritionGoal,
     };
   }
 

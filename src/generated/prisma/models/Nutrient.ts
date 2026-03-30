@@ -37,13 +37,13 @@ export type NutrientSumAggregateOutputType = {
 export type NutrientMinAggregateOutputType = {
   id: number | null
   name: string | null
-  unit: $Enums.UnitType | null
+  unit: string | null
 }
 
 export type NutrientMaxAggregateOutputType = {
   id: number | null
   name: string | null
-  unit: $Enums.UnitType | null
+  unit: string | null
 }
 
 export type NutrientCountAggregateOutputType = {
@@ -170,7 +170,7 @@ export type NutrientGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type NutrientGroupByOutputType = {
   id: number
   name: string
-  unit: $Enums.UnitType
+  unit: string
   _count: NutrientCountAggregateOutputType | null
   _avg: NutrientAvgAggregateOutputType | null
   _sum: NutrientSumAggregateOutputType | null
@@ -199,7 +199,7 @@ export type NutrientWhereInput = {
   NOT?: Prisma.NutrientWhereInput | Prisma.NutrientWhereInput[]
   id?: Prisma.IntFilter<"Nutrient"> | number
   name?: Prisma.StringFilter<"Nutrient"> | string
-  unit?: Prisma.EnumUnitTypeFilter<"Nutrient"> | $Enums.UnitType
+  unit?: Prisma.StringFilter<"Nutrient"> | string
   values?: Prisma.NutritionValueListRelationFilter
   foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }
@@ -218,7 +218,7 @@ export type NutrientWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.NutrientWhereInput | Prisma.NutrientWhereInput[]
   OR?: Prisma.NutrientWhereInput[]
   NOT?: Prisma.NutrientWhereInput | Prisma.NutrientWhereInput[]
-  unit?: Prisma.EnumUnitTypeFilter<"Nutrient"> | $Enums.UnitType
+  unit?: Prisma.StringFilter<"Nutrient"> | string
   values?: Prisma.NutritionValueListRelationFilter
   foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }, "id" | "name">
@@ -240,12 +240,12 @@ export type NutrientScalarWhereWithAggregatesInput = {
   NOT?: Prisma.NutrientScalarWhereWithAggregatesInput | Prisma.NutrientScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Nutrient"> | number
   name?: Prisma.StringWithAggregatesFilter<"Nutrient"> | string
-  unit?: Prisma.EnumUnitTypeWithAggregatesFilter<"Nutrient"> | $Enums.UnitType
+  unit?: Prisma.StringWithAggregatesFilter<"Nutrient"> | string
 }
 
 export type NutrientCreateInput = {
   name: string
-  unit: $Enums.UnitType
+  unit: string
   values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
   foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
@@ -253,14 +253,14 @@ export type NutrientCreateInput = {
 export type NutrientUncheckedCreateInput = {
   id?: number
   name: string
-  unit: $Enums.UnitType
+  unit: string
   values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
   foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
   foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
@@ -268,7 +268,7 @@ export type NutrientUpdateInput = {
 export type NutrientUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
   foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
@@ -276,18 +276,18 @@ export type NutrientUncheckedUpdateInput = {
 export type NutrientCreateManyInput = {
   id?: number
   name: string
-  unit: $Enums.UnitType
+  unit: string
 }
 
 export type NutrientUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type NutrientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type NutrientScalarRelationFilter = {
@@ -351,14 +351,14 @@ export type NutrientUpdateOneRequiredWithoutValuesNestedInput = {
 
 export type NutrientCreateWithoutFoodValuesInput = {
   name: string
-  unit: $Enums.UnitType
+  unit: string
   values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUncheckedCreateWithoutFoodValuesInput = {
   id?: number
   name: string
-  unit: $Enums.UnitType
+  unit: string
   values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
@@ -380,27 +380,27 @@ export type NutrientUpdateToOneWithWhereWithoutFoodValuesInput = {
 
 export type NutrientUpdateWithoutFoodValuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientUncheckedUpdateWithoutFoodValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientCreateWithoutValuesInput = {
   name: string
-  unit: $Enums.UnitType
+  unit: string
   foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
 
 export type NutrientUncheckedCreateWithoutValuesInput = {
   id?: number
   name: string
-  unit: $Enums.UnitType
+  unit: string
   foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
@@ -422,14 +422,14 @@ export type NutrientUpdateToOneWithWhereWithoutValuesInput = {
 
 export type NutrientUpdateWithoutValuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientUncheckedUpdateWithoutValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
@@ -518,7 +518,7 @@ export type $NutrientPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
-    unit: $Enums.UnitType
+    unit: string
   }, ExtArgs["result"]["nutrient"]>
   composites: {}
 }
@@ -946,7 +946,7 @@ export interface Prisma__NutrientClient<T, Null = never, ExtArgs extends runtime
 export interface NutrientFieldRefs {
   readonly id: Prisma.FieldRef<"Nutrient", 'Int'>
   readonly name: Prisma.FieldRef<"Nutrient", 'String'>
-  readonly unit: Prisma.FieldRef<"Nutrient", 'UnitType'>
+  readonly unit: Prisma.FieldRef<"Nutrient", 'String'>
 }
     
 

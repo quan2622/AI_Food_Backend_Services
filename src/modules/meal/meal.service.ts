@@ -4,7 +4,6 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { MealType } from '../../generated/prisma/enums';
 import type { CreateMealDto } from './dto/create-meal.dto.js';
 import type { UpdateMealDto } from './dto/update-meal.dto.js';
 
@@ -15,7 +14,7 @@ export class MealService {
   // Lấy mealTypeInfo từ AllCode theo keyMap
   private async enrichMealType<
     T extends {
-      mealType: MealType;
+      mealType: string;
       mealItems?: {
         calories: number;
         protein: number;

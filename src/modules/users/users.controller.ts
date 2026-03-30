@@ -38,7 +38,7 @@ export class UsersController {
     @User()
     user: UserAuthPayload,
   ) {
-    return user;
+    return this.usersService.getMe(user.id);
   }
 
   @Get(':id')

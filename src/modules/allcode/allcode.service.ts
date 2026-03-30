@@ -125,4 +125,9 @@ export class AllcodeService {
 
     return { deletedCount: result.count };
   }
+
+  async removeAll(): Promise<{ deletedCount: number }> {
+    const result = await this.prisma.allCode.deleteMany({});
+    return { deletedCount: result.count };
+  }
 }

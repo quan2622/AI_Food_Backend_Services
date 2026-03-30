@@ -145,6 +145,8 @@ export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[key
 export const NutritionGoalScalarFieldEnum = {
   id: 'id',
   goalType: 'goalType',
+  status: 'status',
+  targetWeight: 'targetWeight',
   targetCalories: 'targetCalories',
   targetProtein: 'targetProtein',
   targetCarbs: 'targetCarbs',

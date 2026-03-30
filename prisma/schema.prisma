@@ -17,50 +17,57 @@ datasource db {
 // ─── Enums ──────────────────────────────────────────────────────────────────
 
 enum GoalType {
-  WEIGHT_LOSS
-  WEIGHT_GAIN
-  MAINTENANCE
-  STRICT_DIET
+  GOAL_LOSS
+  GOAL_GAIN
+  GOAL_MAINTAIN
+  GOAL_STRICT
+}
+
+enum NutritionGoalStatus {
+  NUTR_GOAL_ONGOING
+  NUTR_GOAL_COMPLETED
+  NUTR_GOAL_PAUSED
+  NUTR_GOAL_FAILED
 }
 
 enum MealType {
-  BREAKFAST
-  LUNCH
-  DINNER
-  SNACK
+  MEAL_BREAKFAST
+  MEAL_LUNCH
+  MEAL_DINNER
+  MEAL_SNACK
 }
 
 enum StatusType {
-  BELOW
-  MET
-  ABOVE
+  STATUS_BELOW
+  STATUS_MET
+  STATUS_ABOVE
 }
 
 enum SeverityType {
-  LOW
-  MEDIUM
-  HIGH
-  LIFE_THREATENING
+  SEV_LOW
+  SEV_MEDIUM
+  SEV_HIGH
+  SEV_LIFE_THREATENING
 }
 
 enum ActivityLevel {
-  SEDENTARY
-  LIGHTLY_ACTIVE
-  MODERATELY_ACTIVE
-  VERY_ACTIVE
-  SUPER_ACTIVE
+  ACT_SEDENTARY
+  ACT_LIGHT
+  ACT_MODERATE
+  ACT_VERY
+  ACT_SUPER
 }
 
 enum ReportType {
-  UPLOAD_COUNT
-  POPULAR_FOOD
-  TRAFFIC
+  REP_UPLOAD
+  REP_POPULAR
+  REP_TRAFFIC
 }
 
 enum SourceType {
-  USDA
-  MANUAL
-  CALCULATED
+  SRC_USDA
+  SRC_MANUAL
+  SRC_CALC
 }
 
 enum UnitType {
@@ -119,7 +126,7 @@ model UserProfile {
   bmr           Float
   tdee          Float
   gender        String?
-  activityLevel ActivityLevel?
+  activityLevel String?
   userId        Int     @unique
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
@@ -130,26 +137,28 @@ model UserProfile {
 
 
 model NutritionGoal {
-  id                   Int      @id @default(autoincrement())
-  goalType             GoalType
+  id                   Int                 @id @default(autoincrement())
+  goalType             String
+  status               NutritionGoalStatus @default(NUTR_GOAL_ONGOING)
+  targetWeight         Float?
   targetCalories       Float
   targetProtein        Float
   targetCarbs          Float
   targetFat            Float
-  targetFiber          Float    @default(0)
+  targetFiber          Float               @default(0)
   startDay             DateTime
   endDate              DateTime
   userId               Int
-  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  user                 User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
 
   @@map("nutrition_goals")
 }
 
 model UserAllergy {
   id         Int          @id @default(autoincrement())
-  severity   SeverityType
+  severity   String
   note       String?      @db.Text
   userId     Int
   user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -226,7 +235,7 @@ model Food {
 /// Represents the nutritional profile for a Food, normalized to per 100g.
 model FoodNutritionProfile {
   id           Int        @id @default(autoincrement())
-  source       SourceType @default(MANUAL)
+  source       String     @default("SRC_MANUAL")
   isCalculated Boolean    @default(false)
   foodId       Int
   food         Food       @relation(fields: [foodId], references: [id], onDelete: Cascade)
@@ -256,8 +265,8 @@ model FoodNutritionValue {
 model IngredientNutrition {
   id           Int               @id @default(autoincrement())
   servingSize  Float
-  servingUnit  UnitType   @default(UNIT_G)
-  source       SourceType        @default(MANUAL)
+  servingUnit  String             @default("UNIT_G")
+  source       String             @default("SRC_MANUAL")
   isCalculated Boolean           @default(false)
   ingredientId Int
   ingredient   Ingredient        @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
@@ -273,7 +282,7 @@ model IngredientNutrition {
 model Nutrient {
   id   Int    @id @default(autoincrement())
   name String @unique
-  unit UnitType
+  unit String
 
   values NutritionValue[]
   foodValues FoodNutritionValue[]
@@ -328,7 +337,7 @@ model IngredientAllergen {
 model DailyLog {
   id        Int        @id @default(autoincrement())
   logDate   DateTime   @db.Date
-  status    StatusType @default(BELOW)
+  status    String     @default("STATUS_BELOW")
   userId    Int
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime   @default(now())
@@ -342,7 +351,7 @@ model DailyLog {
 
 model Meal {
   id           Int        @id @default(autoincrement())
-  mealType     MealType
+  mealType     String
   mealDateTime DateTime
   dailyLogId   Int
   dailyLog     DailyLog   @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
@@ -408,7 +417,7 @@ model WorkoutLog {
 
 model Report {
   id             Int        @id @default(autoincrement())
-  reportType     ReportType
+  reportType     String
   generatedAt    DateTime
   timeRangeStart DateTime
   timeRangeEnd   DateTime
