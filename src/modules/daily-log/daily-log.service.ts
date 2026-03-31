@@ -8,10 +8,11 @@ export class DailyLogService {
 
   // ─── Private helpers ──────────────────────────────────────────────────────
 
-  /** Chuẩn hoá Date về đầu ngày local (trùng khớp với lúc gieo hạt Seed) */
+  /** Chuẩn hoá Date về đầu ngày UTC (consistent với database) */
   private toDateOnly(date: Date): Date {
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
+    const d = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    );
     return d;
   }
 
@@ -142,17 +143,32 @@ export class DailyLogService {
   }
 
   /** Lấy DailyLog của user theo ngày cụ thể (YYYY-MM-DD) */
-  async findByDate(userId: number, dateStr: string) {
-    const [year, month, day] = dateStr.split('-').map(Number);
-    const logDate = new Date(Date.UTC(year, month - 1, day));
+  async findByDate(userId: number, date: string) {
+    const targetDate = new Date(date);
+    const startDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+      ),
+    );
+    const endDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+        23,
+        59,
+        59,
+        999,
+      ),
+    );
 
     const log = await this.prisma.dailyLog.findUnique({
-      where: { userId_logDate: { userId, logDate } },
+      where: { userId_logDate: { userId, logDate: startDate } },
     });
     if (!log)
-      throw new NotFoundException(
-        `Không tìm thấy DailyLog cho ngày ${dateStr}`,
-      );
+      throw new NotFoundException(`Không tìm thấy DailyLog cho ngày ${date}`);
     return log;
   }
 
@@ -182,7 +198,7 @@ export class DailyLogService {
   findWeeklySummary(userId: number) {
     const today = this.toDateOnly(new Date());
     const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    sevenDaysAgo.setUTCDate(sevenDaysAgo.getUTCDate() - 6);
 
     return this.prisma.dailyLog.findMany({
       where: {

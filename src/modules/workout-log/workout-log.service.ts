@@ -15,7 +15,9 @@ export class WorkoutLogService {
         durationMinute: createWorkoutLogDto.durationMinute,
         burnedCalories: createWorkoutLogDto.burnedCalories ?? 0,
         startedAt: new Date(createWorkoutLogDto.startedAt),
-        endedAt: createWorkoutLogDto.endedAt ? new Date(createWorkoutLogDto.endedAt) : null,
+        endedAt: createWorkoutLogDto.endedAt
+          ? new Date(createWorkoutLogDto.endedAt)
+          : null,
         source: createWorkoutLogDto.source,
       },
     });
@@ -23,7 +25,7 @@ export class WorkoutLogService {
 
   async findAll(userId: number, page: number = 1, limit: number = 10) {
     const skip = (page - 1) * limit;
-    
+
     const [data, total] = await Promise.all([
       this.prisma.workoutLog.findMany({
         where: { userId },
@@ -49,8 +51,24 @@ export class WorkoutLogService {
 
   async findByDate(userId: number, date: string) {
     const targetDate = new Date(date);
-    const startDate = new Date(targetDate.setHours(0, 0, 0, 0));
-    const endDate = new Date(targetDate.setHours(23, 59, 59, 999));
+    const startDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+      ),
+    );
+    const endDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+        23,
+        59,
+        59,
+        999,
+      ),
+    );
 
     return await this.prisma.workoutLog.findMany({
       where: {
@@ -76,12 +94,18 @@ export class WorkoutLogService {
     return log;
   }
 
-  async update(id: number, userId: number, updateWorkoutLogDto: UpdateWorkoutLogDto) {
+  async update(
+    id: number,
+    userId: number,
+    updateWorkoutLogDto: UpdateWorkoutLogDto,
+  ) {
     await this.findOne(id, userId); // Ensure it exists and belongs to user
 
     const updateData: any = { ...updateWorkoutLogDto };
-    if (updateWorkoutLogDto.startedAt) updateData.startedAt = new Date(updateWorkoutLogDto.startedAt);
-    if (updateWorkoutLogDto.endedAt) updateData.endedAt = new Date(updateWorkoutLogDto.endedAt);
+    if (updateWorkoutLogDto.startedAt)
+      updateData.startedAt = new Date(updateWorkoutLogDto.startedAt);
+    if (updateWorkoutLogDto.endedAt)
+      updateData.endedAt = new Date(updateWorkoutLogDto.endedAt);
 
     return await this.prisma.workoutLog.update({
       where: { id },
@@ -97,10 +121,29 @@ export class WorkoutLogService {
     });
   }
 
-  async calculateDailyBurnedCalories(userId: number, date: Date | string): Promise<number> {
+  async calculateDailyBurnedCalories(
+    userId: number,
+    date: Date | string,
+  ): Promise<number> {
     const targetDate = new Date(date);
-    const startDate = new Date(targetDate.setHours(0, 0, 0, 0));
-    const endDate = new Date(targetDate.setHours(23, 59, 59, 999));
+    const startDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+      ),
+    );
+    const endDate = new Date(
+      Date.UTC(
+        targetDate.getUTCFullYear(),
+        targetDate.getUTCMonth(),
+        targetDate.getUTCDate(),
+        23,
+        59,
+        59,
+        999,
+      ),
+    );
 
     const result = await this.prisma.workoutLog.aggregate({
       where: {
