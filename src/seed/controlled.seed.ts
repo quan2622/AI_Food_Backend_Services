@@ -46,8 +46,7 @@ const CATEGORY_NAMES = [
   'Cơm bowl',
 ];
 
-// ─── FOOD CATALOG (Groups A–G) cal/protein/carbs/fat/fiber per 100g ───────────
-
+// ─── FOOD CATALOG + defaultServingGrams (THÊM MỚI) ─────────────────────────
 const FOODS_FIXED = [
   // Group A — HIGH PROTEIN
   {
@@ -59,6 +58,7 @@ const FOODS_FIXED = [
     fat: 4.5,
     fib: 0.8,
     allergens: [],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Bún bò Huế',
@@ -69,6 +69,7 @@ const FOODS_FIXED = [
     fat: 5.0,
     fib: 1.0,
     allergens: [],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Cơm tấm sườn bì chả',
@@ -79,6 +80,7 @@ const FOODS_FIXED = [
     fat: 12,
     fib: 2.0,
     allergens: ['Egg'],
+    defaultServingGrams: 350,
   },
   {
     foodName: 'Gà nướng lá chanh',
@@ -89,6 +91,7 @@ const FOODS_FIXED = [
     fat: 8.5,
     fib: 0.5,
     allergens: [],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Bò lúc lắc',
@@ -99,6 +102,7 @@ const FOODS_FIXED = [
     fat: 14,
     fib: 1.0,
     allergens: [],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Cháo gà',
@@ -109,6 +113,7 @@ const FOODS_FIXED = [
     fat: 2.5,
     fib: 0.5,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Trứng hấp thịt bằm',
@@ -119,6 +124,7 @@ const FOODS_FIXED = [
     fat: 10,
     fib: 0.3,
     allergens: ['Egg'],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Tôm nướng muối ớt',
@@ -129,7 +135,9 @@ const FOODS_FIXED = [
     fat: 2.0,
     fib: 0.0,
     allergens: ['Shellfish'],
+    defaultServingGrams: 180,
   },
+
   // Group B — HIGH FIBER
   {
     foodName: 'Gỏi cuốn tôm thịt',
@@ -140,6 +148,7 @@ const FOODS_FIXED = [
     fat: 2.0,
     fib: 2.5,
     allergens: ['Shellfish'],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Nộm đu đủ bò khô',
@@ -150,6 +159,7 @@ const FOODS_FIXED = [
     fat: 2.5,
     fib: 3.0,
     allergens: [],
+    defaultServingGrams: 250,
   },
   {
     foodName: 'Canh chua cá',
@@ -160,6 +170,7 @@ const FOODS_FIXED = [
     fat: 2.0,
     fib: 2.8,
     allergens: ['Fish'],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Rau muống xào tỏi',
@@ -170,6 +181,7 @@ const FOODS_FIXED = [
     fat: 2.0,
     fib: 3.5,
     allergens: [],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Dưa hấu & trái cây',
@@ -180,6 +192,7 @@ const FOODS_FIXED = [
     fat: 0.2,
     fib: 1.2,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Súp bí đỏ',
@@ -190,6 +203,7 @@ const FOODS_FIXED = [
     fat: 1.5,
     fib: 2.0,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Gỏi gà bắp cải',
@@ -200,6 +214,7 @@ const FOODS_FIXED = [
     fat: 3.5,
     fib: 2.5,
     allergens: [],
+    defaultServingGrams: 250,
   },
   {
     foodName: 'Canh khổ qua dồn thịt',
@@ -210,7 +225,9 @@ const FOODS_FIXED = [
     fat: 3.0,
     fib: 3.2,
     allergens: [],
+    defaultServingGrams: 300,
   },
+
   // Group C — MODERATE
   {
     foodName: 'Phở gà',
@@ -221,6 +238,7 @@ const FOODS_FIXED = [
     fat: 3.5,
     fib: 0.8,
     allergens: [],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Mì Quảng',
@@ -231,6 +249,7 @@ const FOODS_FIXED = [
     fat: 8.0,
     fib: 2.0,
     allergens: ['Gluten', 'Shellfish'],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Hủ tiếu Nam Vang',
@@ -241,6 +260,7 @@ const FOODS_FIXED = [
     fat: 7.5,
     fib: 1.5,
     allergens: [],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Cơm chiên dương châu',
@@ -251,6 +271,7 @@ const FOODS_FIXED = [
     fat: 12,
     fib: 1.5,
     allergens: ['Egg'],
+    defaultServingGrams: 350,
   },
   {
     foodName: 'Bánh cuốn nhân thịt',
@@ -261,6 +282,7 @@ const FOODS_FIXED = [
     fat: 4.0,
     fib: 1.0,
     allergens: ['Gluten'],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Xôi gà',
@@ -271,6 +293,7 @@ const FOODS_FIXED = [
     fat: 6.5,
     fib: 1.8,
     allergens: [],
+    defaultServingGrams: 250,
   },
   {
     foodName: 'Bánh mì thịt nguội',
@@ -281,6 +304,7 @@ const FOODS_FIXED = [
     fat: 8.5,
     fib: 2.0,
     allergens: ['Gluten', 'Egg'],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Cháo đậu xanh',
@@ -291,6 +315,7 @@ const FOODS_FIXED = [
     fat: 1.0,
     fib: 3.5,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Nem rán (chả giò)',
@@ -301,6 +326,7 @@ const FOODS_FIXED = [
     fat: 11,
     fib: 1.5,
     allergens: ['Gluten', 'Egg'],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Bún riêu cua',
@@ -311,7 +337,9 @@ const FOODS_FIXED = [
     fat: 5.0,
     fib: 1.5,
     allergens: ['Shellfish'],
+    defaultServingGrams: 450,
   },
+
   // Group D — HIGH CARB
   {
     foodName: 'Cơm gà Hội An',
@@ -322,6 +350,7 @@ const FOODS_FIXED = [
     fat: 12,
     fib: 2.0,
     allergens: [],
+    defaultServingGrams: 350,
   },
   {
     foodName: 'Bún mắm',
@@ -332,6 +361,7 @@ const FOODS_FIXED = [
     fat: 10,
     fib: 2.5,
     allergens: ['Fish', 'Shellfish'],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Mì xào hải sản',
@@ -342,6 +372,7 @@ const FOODS_FIXED = [
     fat: 14,
     fib: 2.0,
     allergens: ['Gluten', 'Shellfish'],
+    defaultServingGrams: 450,
   },
   {
     foodName: 'Xôi xéo',
@@ -352,6 +383,7 @@ const FOODS_FIXED = [
     fat: 7.0,
     fib: 2.5,
     allergens: [],
+    defaultServingGrams: 250,
   },
   {
     foodName: 'Bánh bao nhân thịt',
@@ -362,6 +394,7 @@ const FOODS_FIXED = [
     fat: 8.0,
     fib: 1.5,
     allergens: ['Gluten'],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Bánh mì chả cá',
@@ -372,6 +405,7 @@ const FOODS_FIXED = [
     fat: 7.5,
     fib: 1.8,
     allergens: ['Gluten', 'Fish'],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Cháo lòng',
@@ -382,6 +416,7 @@ const FOODS_FIXED = [
     fat: 5.5,
     fib: 0.8,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Bún thịt nướng',
@@ -392,7 +427,9 @@ const FOODS_FIXED = [
     fat: 9.5,
     fib: 2.5,
     allergens: [],
+    defaultServingGrams: 450,
   },
+
   // Group E — SNACK
   {
     foodName: 'Chè đậu đỏ',
@@ -403,6 +440,7 @@ const FOODS_FIXED = [
     fat: 1.5,
     fib: 4.0,
     allergens: [],
+    defaultServingGrams: 300,
   },
   {
     foodName: 'Chè trôi nước',
@@ -413,6 +451,7 @@ const FOODS_FIXED = [
     fat: 4.5,
     fib: 2.0,
     allergens: [],
+    defaultServingGrams: 250,
   },
   {
     foodName: 'Sinh tố bơ',
@@ -423,6 +462,7 @@ const FOODS_FIXED = [
     fat: 13,
     fib: 5.0,
     allergens: [],
+    defaultServingGrams: 400,
   },
   {
     foodName: 'Nước mía',
@@ -433,6 +473,7 @@ const FOODS_FIXED = [
     fat: 0.2,
     fib: 0.3,
     allergens: [],
+    defaultServingGrams: 500,
   },
   {
     foodName: 'Bánh bèo',
@@ -443,6 +484,7 @@ const FOODS_FIXED = [
     fat: 3.0,
     fib: 0.8,
     allergens: [],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Trà sữa trân châu',
@@ -453,6 +495,7 @@ const FOODS_FIXED = [
     fat: 6.5,
     fib: 0.5,
     allergens: ['Dairy'],
+    defaultServingGrams: 500,
   },
   {
     foodName: 'Bánh tráng trộn',
@@ -463,6 +506,7 @@ const FOODS_FIXED = [
     fat: 6.5,
     fib: 2.0,
     allergens: [],
+    defaultServingGrams: 200,
   },
   {
     foodName: 'Gỏi cuốn chay',
@@ -473,7 +517,9 @@ const FOODS_FIXED = [
     fat: 1.5,
     fib: 2.8,
     allergens: [],
+    defaultServingGrams: 200,
   },
+
   // Group F — NEW ITEMS (createdAt = now - 2 days)
   {
     foodName: 'Bún đậu mắm tôm',
@@ -484,6 +530,7 @@ const FOODS_FIXED = [
     fat: 10,
     fib: 2.5,
     allergens: [],
+    defaultServingGrams: 450,
     isNew: true,
   },
   {
@@ -495,6 +542,7 @@ const FOODS_FIXED = [
     fat: 10,
     fib: 1.8,
     allergens: ['Egg'],
+    defaultServingGrams: 350,
     isNew: true,
   },
   {
@@ -506,6 +554,7 @@ const FOODS_FIXED = [
     fat: 4.0,
     fib: 1.5,
     allergens: [],
+    defaultServingGrams: 300,
     isNew: true,
   },
   {
@@ -517,6 +566,7 @@ const FOODS_FIXED = [
     fat: 20,
     fib: 1.5,
     allergens: ['Gluten', 'Egg'],
+    defaultServingGrams: 200,
     isNew: true,
   },
   {
@@ -528,8 +578,10 @@ const FOODS_FIXED = [
     fat: 12,
     fib: 1.0,
     allergens: ['Fish'],
+    defaultServingGrams: 250,
     isNew: true,
   },
+
   // Group G — EDGE CASES
   {
     foodName: '[Dummy - No Nutrition]',
@@ -540,6 +592,7 @@ const FOODS_FIXED = [
     fat: 0,
     fib: 0,
     allergens: [],
+    defaultServingGrams: 100,
   },
   {
     foodName: '[Dummy - All Allergens]',
@@ -550,6 +603,7 @@ const FOODS_FIXED = [
     fat: 8,
     fib: 1,
     allergens: ['Peanut', 'Gluten', 'Dairy', 'Egg', 'Shellfish', 'Fish'],
+    defaultServingGrams: 100,
   },
   {
     foodName: 'Bánh tráng nướng',
@@ -560,6 +614,7 @@ const FOODS_FIXED = [
     fat: 4,
     fib: 1.5,
     allergens: [],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Bánh ướt',
@@ -570,6 +625,7 @@ const FOODS_FIXED = [
     fat: 3,
     fib: 0.8,
     allergens: [],
+    defaultServingGrams: 150,
   },
   {
     foodName: 'Bánh khọt',
@@ -580,6 +636,7 @@ const FOODS_FIXED = [
     fat: 8,
     fib: 1.0,
     allergens: [],
+    defaultServingGrams: 150,
   },
 ];
 
@@ -806,11 +863,6 @@ async function createMealWithItems(
   mealType: string,
   items: {
     foodId: number;
-    cal: number;
-    pro: number;
-    carb: number;
-    fat: number;
-    fib: number;
     qty?: number;
   }[],
 ) {
@@ -818,18 +870,48 @@ async function createMealWithItems(
   const meal = await prisma.meal.create({
     data: { dailyLogId: log.id, mealType, mealDateTime: logDate },
   });
+
   for (const item of items) {
+    // Lấy thông tin food + nutrition profile
+    const food = await prisma.food.findUnique({
+      where: { id: item.foodId },
+      include: {
+        nutritionProfile: {
+          include: { values: { include: { nutrient: true } } },
+        },
+      },
+    });
+
+    if (!food?.nutritionProfile) {
+      console.warn(`Food ${item.foodId} không có nutrition profile`);
+      continue;
+    }
+
+    const quantity = item.qty ?? 1.0;
+    const defaultGrams = food.defaultServingGrams ?? 100;
+    const grams = quantity * defaultGrams;
+
+    // Tạo map nutrient → value per 100g
+    const nutrientMap: Record<string, number> = {};
+    food.nutritionProfile.values.forEach((v) => {
+      nutrientMap[v.nutrient.name] = v.value;
+    });
+
+    const scale = grams / 100;
+
     await prisma.mealItem.create({
       data: {
         mealId: meal.id,
         foodId: item.foodId,
-        quantity: item.qty ?? 1.0,
-        grams: (item.qty ?? 1.0) * 100, // Giả định 100g mỗi phần nếu không có defaultServingGrams
-        calories: item.cal,
-        protein: item.pro,
-        carbs: item.carb,
-        fat: item.fat,
-        fiber: item.fib,
+        quantity,
+        grams, // ← đúng schema mới
+        calories:
+          Math.round((nutrientMap['Calories'] || 0) * scale * 100) / 100,
+        protein: Math.round((nutrientMap['Protein'] || 0) * scale * 100) / 100,
+        carbs:
+          Math.round((nutrientMap['Carbohydrates'] || 0) * scale * 100) / 100,
+        fat: Math.round((nutrientMap['Fat'] || 0) * scale * 100) / 100,
+        fiber: Math.round((nutrientMap['Fiber'] || 0) * scale * 100) / 100,
       },
     });
   }
@@ -913,6 +995,7 @@ async function runControlledSeed() {
           data: {
             foodName: f.foodName,
             categoryId: CATEGORY_ID[f.cat] ?? null,
+            defaultServingGrams: f.defaultServingGrams,
             createdAt: (f as any).isNew ? newItemDate : undefined,
             nutritionProfile: {
               create: {
@@ -1065,11 +1148,6 @@ async function runControlledSeed() {
         items.push({
           foodId: fid,
           qty,
-          cal: parseFloat((fd.cal * qty).toFixed(2)),
-          pro: parseFloat((fd.pro * qty).toFixed(2)),
-          carb: parseFloat((fd.carb * qty).toFixed(2)),
-          fat: parseFloat((fd.fat * qty).toFixed(2)),
-          fib: parseFloat((fd.fib * qty).toFixed(2)),
         });
         totalCal += fd.cal * qty;
       }
@@ -1092,15 +1170,7 @@ async function runControlledSeed() {
           if (!fid) continue;
           const fd = FOODS_FIXED.find((f) => f.foodName === fname)!;
           await createMealWithItems(prisma, userId, date, mt, [
-            {
-              foodId: fid,
-              qty: 1,
-              cal: fd.cal,
-              pro: fd.pro,
-              carb: fd.carb,
-              fat: fd.fat,
-              fib: fd.fib,
-            },
+            { foodId: fid, qty: 1 },
           ]);
         }
       }
@@ -1205,17 +1275,7 @@ async function runControlledSeed() {
         sc03.id,
         daysAgo(i + 1),
         'MEAL_BREAKFAST',
-        [
-          {
-            foodId: fid,
-            qty: 1,
-            cal: fd.cal,
-            pro: fd.pro,
-            carb: fd.carb,
-            fat: fd.fat,
-            fib: fd.fib,
-          },
-        ],
+        [{ foodId: fid, qty: 1 }],
       );
     }
     for (let i = 0; i < 2; i++) {
@@ -1226,17 +1286,7 @@ async function runControlledSeed() {
         sc03.id,
         daysAgo(i + 4),
         'MEAL_BREAKFAST',
-        [
-          {
-            foodId: fid,
-            qty: 1,
-            cal: fd.cal,
-            pro: fd.pro,
-            carb: fd.carb,
-            fat: fd.fat,
-            fib: fd.fib,
-          },
-        ],
+        [{ foodId: fid, qty: 1 }],
       );
     }
     await seedPastLogs(sc03.id, 90, [
@@ -1329,15 +1379,7 @@ async function runControlledSeed() {
       if (!fid) continue;
       const fd = FOODS_FIXED.find((f) => f.foodName === fname)!;
       await createMealWithItems(prisma, sc07.id, daysAgo(d), 'MEAL_BREAKFAST', [
-        {
-          foodId: fid,
-          qty: 1,
-          cal: fd.cal,
-          pro: fd.pro,
-          carb: fd.carb,
-          fat: fd.fat,
-          fib: fd.fib,
-        },
+        { foodId: fid, qty: 1 },
       ]);
     }
 
@@ -1525,15 +1567,7 @@ async function runControlledSeed() {
         for (let n = 0; n < count; n++) {
           const uid = affinityUserIds[n % affinityUserIds.length];
           await createMealWithItems(prisma, uid, daysAgo(dayOffset), mt, [
-            {
-              foodId: fid,
-              qty: 1,
-              cal: fd.cal,
-              pro: fd.pro,
-              carb: fd.carb,
-              fat: fd.fat,
-              fib: fd.fib,
-            },
+            { foodId: fid, qty: 1 },
           ]);
           dayOffset++;
         }
@@ -1575,15 +1609,7 @@ async function runControlledSeed() {
           const fd = FOODS_FIXED.find((f) => f.foodName === foodName)!;
           if (!fd) continue;
           await createMealWithItems(prisma, cu.userId, logDate, mt, [
-            {
-              foodId: fid,
-              qty: 1,
-              cal: fd.cal,
-              pro: fd.pro,
-              carb: fd.carb,
-              fat: fd.fat,
-              fib: fd.fib,
-            },
+            { foodId: fid, qty: 1 },
           ]);
         }
       }
@@ -1637,15 +1663,7 @@ async function runControlledSeed() {
           Math.floor(Math.random() * 3)
         ];
         await createMealWithItems(prisma, uid, daysAgo(dayOff), mt, [
-          {
-            foodId: fid,
-            qty: 1,
-            cal: fd.cal,
-            pro: fd.pro,
-            carb: fd.carb,
-            fat: fd.fat,
-            fib: fd.fib,
-          },
+          { foodId: fid, qty: 1 },
         ]);
       }
     }

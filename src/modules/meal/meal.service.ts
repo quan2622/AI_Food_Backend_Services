@@ -99,7 +99,7 @@ export class MealService {
       data: {
         dailyLogId: dto.dailyLogId,
         mealType: dto.mealType,
-        mealDateTime: new Date(dto.mealDateTime),
+        mealDateTime: new Date(),
       },
       include: this.mealInclude,
     });
