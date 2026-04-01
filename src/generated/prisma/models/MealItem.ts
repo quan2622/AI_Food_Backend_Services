@@ -29,6 +29,7 @@ export type AggregateMealItem = {
 export type MealItemAvgAggregateOutputType = {
   id: number | null
   quantity: number | null
+  grams: number | null
   calories: number | null
   protein: number | null
   carbs: number | null
@@ -41,6 +42,7 @@ export type MealItemAvgAggregateOutputType = {
 export type MealItemSumAggregateOutputType = {
   id: number | null
   quantity: number | null
+  grams: number | null
   calories: number | null
   protein: number | null
   carbs: number | null
@@ -53,6 +55,7 @@ export type MealItemSumAggregateOutputType = {
 export type MealItemMinAggregateOutputType = {
   id: number | null
   quantity: number | null
+  grams: number | null
   calories: number | null
   protein: number | null
   carbs: number | null
@@ -67,6 +70,7 @@ export type MealItemMinAggregateOutputType = {
 export type MealItemMaxAggregateOutputType = {
   id: number | null
   quantity: number | null
+  grams: number | null
   calories: number | null
   protein: number | null
   carbs: number | null
@@ -81,6 +85,7 @@ export type MealItemMaxAggregateOutputType = {
 export type MealItemCountAggregateOutputType = {
   id: number
   quantity: number
+  grams: number
   calories: number
   protein: number
   carbs: number
@@ -97,6 +102,7 @@ export type MealItemCountAggregateOutputType = {
 export type MealItemAvgAggregateInputType = {
   id?: true
   quantity?: true
+  grams?: true
   calories?: true
   protein?: true
   carbs?: true
@@ -109,6 +115,7 @@ export type MealItemAvgAggregateInputType = {
 export type MealItemSumAggregateInputType = {
   id?: true
   quantity?: true
+  grams?: true
   calories?: true
   protein?: true
   carbs?: true
@@ -121,6 +128,7 @@ export type MealItemSumAggregateInputType = {
 export type MealItemMinAggregateInputType = {
   id?: true
   quantity?: true
+  grams?: true
   calories?: true
   protein?: true
   carbs?: true
@@ -135,6 +143,7 @@ export type MealItemMinAggregateInputType = {
 export type MealItemMaxAggregateInputType = {
   id?: true
   quantity?: true
+  grams?: true
   calories?: true
   protein?: true
   carbs?: true
@@ -149,6 +158,7 @@ export type MealItemMaxAggregateInputType = {
 export type MealItemCountAggregateInputType = {
   id?: true
   quantity?: true
+  grams?: true
   calories?: true
   protein?: true
   carbs?: true
@@ -250,6 +260,7 @@ export type MealItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type MealItemGroupByOutputType = {
   id: number
   quantity: number
+  grams: number
   calories: number
   protein: number
   carbs: number
@@ -287,6 +298,7 @@ export type MealItemWhereInput = {
   NOT?: Prisma.MealItemWhereInput | Prisma.MealItemWhereInput[]
   id?: Prisma.IntFilter<"MealItem"> | number
   quantity?: Prisma.FloatFilter<"MealItem"> | number
+  grams?: Prisma.FloatFilter<"MealItem"> | number
   calories?: Prisma.FloatFilter<"MealItem"> | number
   protein?: Prisma.FloatFilter<"MealItem"> | number
   carbs?: Prisma.FloatFilter<"MealItem"> | number
@@ -303,6 +315,7 @@ export type MealItemWhereInput = {
 export type MealItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -322,6 +335,7 @@ export type MealItemWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MealItemWhereInput[]
   NOT?: Prisma.MealItemWhereInput | Prisma.MealItemWhereInput[]
   quantity?: Prisma.FloatFilter<"MealItem"> | number
+  grams?: Prisma.FloatFilter<"MealItem"> | number
   calories?: Prisma.FloatFilter<"MealItem"> | number
   protein?: Prisma.FloatFilter<"MealItem"> | number
   carbs?: Prisma.FloatFilter<"MealItem"> | number
@@ -338,6 +352,7 @@ export type MealItemWhereUniqueInput = Prisma.AtLeast<{
 export type MealItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -360,6 +375,7 @@ export type MealItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MealItemScalarWhereWithAggregatesInput | Prisma.MealItemScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"MealItem"> | number
   quantity?: Prisma.FloatWithAggregatesFilter<"MealItem"> | number
+  grams?: Prisma.FloatWithAggregatesFilter<"MealItem"> | number
   calories?: Prisma.FloatWithAggregatesFilter<"MealItem"> | number
   protein?: Prisma.FloatWithAggregatesFilter<"MealItem"> | number
   carbs?: Prisma.FloatWithAggregatesFilter<"MealItem"> | number
@@ -373,6 +389,7 @@ export type MealItemScalarWhereWithAggregatesInput = {
 
 export type MealItemCreateInput = {
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -387,6 +404,7 @@ export type MealItemCreateInput = {
 export type MealItemUncheckedCreateInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -400,6 +418,7 @@ export type MealItemUncheckedCreateInput = {
 
 export type MealItemUpdateInput = {
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -414,6 +433,7 @@ export type MealItemUpdateInput = {
 export type MealItemUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -428,6 +448,7 @@ export type MealItemUncheckedUpdateInput = {
 export type MealItemCreateManyInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -441,6 +462,7 @@ export type MealItemCreateManyInput = {
 
 export type MealItemUpdateManyMutationInput = {
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -453,6 +475,7 @@ export type MealItemUpdateManyMutationInput = {
 export type MealItemUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -477,6 +500,7 @@ export type MealItemOrderByRelationAggregateInput = {
 export type MealItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -491,6 +515,7 @@ export type MealItemCountOrderByAggregateInput = {
 export type MealItemAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -503,6 +528,7 @@ export type MealItemAvgOrderByAggregateInput = {
 export type MealItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -517,6 +543,7 @@ export type MealItemMaxOrderByAggregateInput = {
 export type MealItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -531,6 +558,7 @@ export type MealItemMinOrderByAggregateInput = {
 export type MealItemSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  grams?: Prisma.SortOrder
   calories?: Prisma.SortOrder
   protein?: Prisma.SortOrder
   carbs?: Prisma.SortOrder
@@ -626,6 +654,7 @@ export type MealItemUncheckedUpdateManyWithoutMealNestedInput = {
 
 export type MealItemCreateWithoutFoodInput = {
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -639,6 +668,7 @@ export type MealItemCreateWithoutFoodInput = {
 export type MealItemUncheckedCreateWithoutFoodInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -681,6 +711,7 @@ export type MealItemScalarWhereInput = {
   NOT?: Prisma.MealItemScalarWhereInput | Prisma.MealItemScalarWhereInput[]
   id?: Prisma.IntFilter<"MealItem"> | number
   quantity?: Prisma.FloatFilter<"MealItem"> | number
+  grams?: Prisma.FloatFilter<"MealItem"> | number
   calories?: Prisma.FloatFilter<"MealItem"> | number
   protein?: Prisma.FloatFilter<"MealItem"> | number
   carbs?: Prisma.FloatFilter<"MealItem"> | number
@@ -694,6 +725,7 @@ export type MealItemScalarWhereInput = {
 
 export type MealItemCreateWithoutMealInput = {
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -707,6 +739,7 @@ export type MealItemCreateWithoutMealInput = {
 export type MealItemUncheckedCreateWithoutMealInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -746,6 +779,7 @@ export type MealItemUpdateManyWithWhereWithoutMealInput = {
 export type MealItemCreateManyFoodInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -758,6 +792,7 @@ export type MealItemCreateManyFoodInput = {
 
 export type MealItemUpdateWithoutFoodInput = {
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -771,6 +806,7 @@ export type MealItemUpdateWithoutFoodInput = {
 export type MealItemUncheckedUpdateWithoutFoodInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -784,6 +820,7 @@ export type MealItemUncheckedUpdateWithoutFoodInput = {
 export type MealItemUncheckedUpdateManyWithoutFoodInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -797,6 +834,7 @@ export type MealItemUncheckedUpdateManyWithoutFoodInput = {
 export type MealItemCreateManyMealInput = {
   id?: number
   quantity: number
+  grams: number
   calories?: number
   protein?: number
   carbs?: number
@@ -809,6 +847,7 @@ export type MealItemCreateManyMealInput = {
 
 export type MealItemUpdateWithoutMealInput = {
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -822,6 +861,7 @@ export type MealItemUpdateWithoutMealInput = {
 export type MealItemUncheckedUpdateWithoutMealInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -835,6 +875,7 @@ export type MealItemUncheckedUpdateWithoutMealInput = {
 export type MealItemUncheckedUpdateManyWithoutMealInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   quantity?: Prisma.FloatFieldUpdateOperationsInput | number
+  grams?: Prisma.FloatFieldUpdateOperationsInput | number
   calories?: Prisma.FloatFieldUpdateOperationsInput | number
   protein?: Prisma.FloatFieldUpdateOperationsInput | number
   carbs?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -850,6 +891,7 @@ export type MealItemUncheckedUpdateManyWithoutMealInput = {
 export type MealItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantity?: boolean
+  grams?: boolean
   calories?: boolean
   protein?: boolean
   carbs?: boolean
@@ -866,6 +908,7 @@ export type MealItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type MealItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantity?: boolean
+  grams?: boolean
   calories?: boolean
   protein?: boolean
   carbs?: boolean
@@ -882,6 +925,7 @@ export type MealItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type MealItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quantity?: boolean
+  grams?: boolean
   calories?: boolean
   protein?: boolean
   carbs?: boolean
@@ -898,6 +942,7 @@ export type MealItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type MealItemSelectScalar = {
   id?: boolean
   quantity?: boolean
+  grams?: boolean
   calories?: boolean
   protein?: boolean
   carbs?: boolean
@@ -909,7 +954,7 @@ export type MealItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type MealItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantity" | "calories" | "protein" | "carbs" | "fat" | "fiber" | "foodId" | "mealId" | "createdAt" | "updatedAt", ExtArgs["result"]["mealItem"]>
+export type MealItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantity" | "grams" | "calories" | "protein" | "carbs" | "fat" | "fiber" | "foodId" | "mealId" | "createdAt" | "updatedAt", ExtArgs["result"]["mealItem"]>
 export type MealItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
   meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
@@ -932,6 +977,7 @@ export type $MealItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     quantity: number
+    grams: number
     calories: number
     protein: number
     carbs: number
@@ -1368,6 +1414,7 @@ export interface Prisma__MealItemClient<T, Null = never, ExtArgs extends runtime
 export interface MealItemFieldRefs {
   readonly id: Prisma.FieldRef<"MealItem", 'Int'>
   readonly quantity: Prisma.FieldRef<"MealItem", 'Float'>
+  readonly grams: Prisma.FieldRef<"MealItem", 'Float'>
   readonly calories: Prisma.FieldRef<"MealItem", 'Float'>
   readonly protein: Prisma.FieldRef<"MealItem", 'Float'>
   readonly carbs: Prisma.FieldRef<"MealItem", 'Float'>

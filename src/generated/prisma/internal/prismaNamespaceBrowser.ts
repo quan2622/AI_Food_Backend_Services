@@ -214,6 +214,7 @@ export const FoodScalarFieldEnum = {
   description: 'description',
   imageUrl: 'imageUrl',
   categoryId: 'categoryId',
+  defaultServingGrams: 'defaultServingGrams',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -326,6 +327,7 @@ export type MealScalarFieldEnum = (typeof MealScalarFieldEnum)[keyof typeof Meal
 export const MealItemScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
+  grams: 'grams',
   calories: 'calories',
   protein: 'protein',
   carbs: 'carbs',

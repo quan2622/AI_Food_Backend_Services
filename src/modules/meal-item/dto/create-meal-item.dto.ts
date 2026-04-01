@@ -11,7 +11,12 @@ export class CreateMealItemDto {
 
   @IsNumber({}, { message: 'quantity không hợp lệ' })
   @Min(0.1, { message: 'quantity phải lớn hơn 0' })
-  quantity: number; // gram
+  quantity: number; // Số lượng món ăn (ví dụ: 1 phần, 2 phần)
+
+  @IsOptional()
+  @IsNumber({}, { message: 'grams không hợp lệ' })
+  @Min(0, { message: 'grams phải >= 0' })
+  grams?: number; // Trọng lượng thực tế (gram). Nếu không có, sẽ tính từ quantity * food.defaultServingGrams
 
   @IsOptional()
   @IsNumber({}, { message: 'calories không hợp lệ' })

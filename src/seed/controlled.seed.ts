@@ -824,6 +824,7 @@ async function createMealWithItems(
         mealId: meal.id,
         foodId: item.foodId,
         quantity: item.qty ?? 1.0,
+        grams: (item.qty ?? 1.0) * 100, // Giả định 100g mỗi phần nếu không có defaultServingGrams
         calories: item.cal,
         protein: item.pro,
         carbs: item.carb,

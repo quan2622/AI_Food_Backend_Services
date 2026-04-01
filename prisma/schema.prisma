@@ -215,14 +215,15 @@ model FoodCategory {
 }
 
 model Food {
-  id           Int              @id @default(autoincrement())
-  foodName     String
-  description  String?
-  imageUrl     String?
-  categoryId   Int?
-  foodCategory FoodCategory?    @relation(fields: [categoryId], references: [id])
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  id                  Int              @id @default(autoincrement())
+  foodName            String
+  description         String?
+  imageUrl            String?
+  categoryId          Int?
+  foodCategory        FoodCategory?    @relation(fields: [categoryId], references: [id])
+  defaultServingGrams Float?           // Trọng lượng mặc định 1 phần ăn (ví dụ: 450g cho 1 tô Bún bò Huế)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 
   mealItems       MealItem[]
   foodIngredients FoodIngredient[]
@@ -366,7 +367,8 @@ model Meal {
 
 model MealItem {
   id         Int         @id @default(autoincrement())
-  quantity   Float
+  quantity   Float       // Số lượng món ăn (ví dụ: 1 tô, 2 phần)
+  grams      Float       // Trọng lượng thực tế tính bằng gram (để tính dinh dưỡng)
   calories   Float       @default(0)
   protein    Float       @default(0)
   carbs      Float       @default(0)

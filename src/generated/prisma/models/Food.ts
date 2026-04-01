@@ -29,11 +29,13 @@ export type AggregateFood = {
 export type FoodAvgAggregateOutputType = {
   id: number | null
   categoryId: number | null
+  defaultServingGrams: number | null
 }
 
 export type FoodSumAggregateOutputType = {
   id: number | null
   categoryId: number | null
+  defaultServingGrams: number | null
 }
 
 export type FoodMinAggregateOutputType = {
@@ -42,6 +44,7 @@ export type FoodMinAggregateOutputType = {
   description: string | null
   imageUrl: string | null
   categoryId: number | null
+  defaultServingGrams: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +55,7 @@ export type FoodMaxAggregateOutputType = {
   description: string | null
   imageUrl: string | null
   categoryId: number | null
+  defaultServingGrams: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +66,7 @@ export type FoodCountAggregateOutputType = {
   description: number
   imageUrl: number
   categoryId: number
+  defaultServingGrams: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,11 +76,13 @@ export type FoodCountAggregateOutputType = {
 export type FoodAvgAggregateInputType = {
   id?: true
   categoryId?: true
+  defaultServingGrams?: true
 }
 
 export type FoodSumAggregateInputType = {
   id?: true
   categoryId?: true
+  defaultServingGrams?: true
 }
 
 export type FoodMinAggregateInputType = {
@@ -84,6 +91,7 @@ export type FoodMinAggregateInputType = {
   description?: true
   imageUrl?: true
   categoryId?: true
+  defaultServingGrams?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +102,7 @@ export type FoodMaxAggregateInputType = {
   description?: true
   imageUrl?: true
   categoryId?: true
+  defaultServingGrams?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,6 +113,7 @@ export type FoodCountAggregateInputType = {
   description?: true
   imageUrl?: true
   categoryId?: true
+  defaultServingGrams?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -201,6 +211,7 @@ export type FoodGroupByOutputType = {
   description: string | null
   imageUrl: string | null
   categoryId: number | null
+  defaultServingGrams: number | null
   createdAt: Date
   updatedAt: Date
   _count: FoodCountAggregateOutputType | null
@@ -234,6 +245,7 @@ export type FoodWhereInput = {
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
+  defaultServingGrams?: Prisma.FloatNullableFilter<"Food"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   foodCategory?: Prisma.XOR<Prisma.FoodCategoryNullableScalarRelationFilter, Prisma.FoodCategoryWhereInput> | null
@@ -248,6 +260,7 @@ export type FoodOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   foodCategory?: Prisma.FoodCategoryOrderByWithRelationInput
@@ -265,6 +278,7 @@ export type FoodWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
+  defaultServingGrams?: Prisma.FloatNullableFilter<"Food"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   foodCategory?: Prisma.XOR<Prisma.FoodCategoryNullableScalarRelationFilter, Prisma.FoodCategoryWhereInput> | null
@@ -279,6 +293,7 @@ export type FoodOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.FoodCountOrderByAggregateInput
@@ -297,6 +312,7 @@ export type FoodScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableWithAggregatesFilter<"Food"> | number | null
+  defaultServingGrams?: Prisma.FloatNullableWithAggregatesFilter<"Food"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Food"> | Date | string
 }
@@ -305,6 +321,7 @@ export type FoodCreateInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   foodCategory?: Prisma.FoodCategoryCreateNestedOneWithoutFoodsInput
@@ -319,6 +336,7 @@ export type FoodUncheckedCreateInput = {
   description?: string | null
   imageUrl?: string | null
   categoryId?: number | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutFoodInput
@@ -330,6 +348,7 @@ export type FoodUpdateInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodCategory?: Prisma.FoodCategoryUpdateOneWithoutFoodsNestedInput
@@ -344,6 +363,7 @@ export type FoodUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutFoodNestedInput
@@ -357,6 +377,7 @@ export type FoodCreateManyInput = {
   description?: string | null
   imageUrl?: string | null
   categoryId?: number | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -365,6 +386,7 @@ export type FoodUpdateManyMutationInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -375,6 +397,7 @@ export type FoodUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -395,6 +418,7 @@ export type FoodCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,6 +426,7 @@ export type FoodCountOrderByAggregateInput = {
 export type FoodAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrder
 }
 
 export type FoodMaxOrderByAggregateInput = {
@@ -410,6 +435,7 @@ export type FoodMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -420,6 +446,7 @@ export type FoodMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -427,6 +454,7 @@ export type FoodMinOrderByAggregateInput = {
 export type FoodSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  defaultServingGrams?: Prisma.SortOrder
 }
 
 export type FoodScalarRelationFilter = {
@@ -522,6 +550,7 @@ export type FoodCreateWithoutFoodCategoryInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemCreateNestedManyWithoutFoodInput
@@ -534,6 +563,7 @@ export type FoodUncheckedCreateWithoutFoodCategoryInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutFoodInput
@@ -576,6 +606,7 @@ export type FoodScalarWhereInput = {
   description?: Prisma.StringNullableFilter<"Food"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Food"> | string | null
   categoryId?: Prisma.IntNullableFilter<"Food"> | number | null
+  defaultServingGrams?: Prisma.FloatNullableFilter<"Food"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Food"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Food"> | Date | string
 }
@@ -584,6 +615,7 @@ export type FoodCreateWithoutNutritionProfileInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   foodCategory?: Prisma.FoodCategoryCreateNestedOneWithoutFoodsInput
@@ -597,6 +629,7 @@ export type FoodUncheckedCreateWithoutNutritionProfileInput = {
   description?: string | null
   imageUrl?: string | null
   categoryId?: number | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutFoodInput
@@ -623,6 +656,7 @@ export type FoodUpdateWithoutNutritionProfileInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodCategory?: Prisma.FoodCategoryUpdateOneWithoutFoodsNestedInput
@@ -636,6 +670,7 @@ export type FoodUncheckedUpdateWithoutNutritionProfileInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutFoodNestedInput
@@ -646,6 +681,7 @@ export type FoodCreateWithoutFoodIngredientsInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   foodCategory?: Prisma.FoodCategoryCreateNestedOneWithoutFoodsInput
@@ -659,6 +695,7 @@ export type FoodUncheckedCreateWithoutFoodIngredientsInput = {
   description?: string | null
   imageUrl?: string | null
   categoryId?: number | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutFoodInput
@@ -685,6 +722,7 @@ export type FoodUpdateWithoutFoodIngredientsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodCategory?: Prisma.FoodCategoryUpdateOneWithoutFoodsNestedInput
@@ -698,6 +736,7 @@ export type FoodUncheckedUpdateWithoutFoodIngredientsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutFoodNestedInput
@@ -708,6 +747,7 @@ export type FoodCreateWithoutMealItemsInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   foodCategory?: Prisma.FoodCategoryCreateNestedOneWithoutFoodsInput
@@ -721,6 +761,7 @@ export type FoodUncheckedCreateWithoutMealItemsInput = {
   description?: string | null
   imageUrl?: string | null
   categoryId?: number | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   foodIngredients?: Prisma.FoodIngredientUncheckedCreateNestedManyWithoutFoodInput
@@ -747,6 +788,7 @@ export type FoodUpdateWithoutMealItemsInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodCategory?: Prisma.FoodCategoryUpdateOneWithoutFoodsNestedInput
@@ -760,6 +802,7 @@ export type FoodUncheckedUpdateWithoutMealItemsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodIngredients?: Prisma.FoodIngredientUncheckedUpdateManyWithoutFoodNestedInput
@@ -771,6 +814,7 @@ export type FoodCreateManyFoodCategoryInput = {
   foodName: string
   description?: string | null
   imageUrl?: string | null
+  defaultServingGrams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -779,6 +823,7 @@ export type FoodUpdateWithoutFoodCategoryInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUpdateManyWithoutFoodNestedInput
@@ -791,6 +836,7 @@ export type FoodUncheckedUpdateWithoutFoodCategoryInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutFoodNestedInput
@@ -803,6 +849,7 @@ export type FoodUncheckedUpdateManyWithoutFoodCategoryInput = {
   foodName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultServingGrams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -853,6 +900,7 @@ export type FoodSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   description?: boolean
   imageUrl?: boolean
   categoryId?: boolean
+  defaultServingGrams?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   foodCategory?: boolean | Prisma.Food$foodCategoryArgs<ExtArgs>
@@ -868,6 +916,7 @@ export type FoodSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   description?: boolean
   imageUrl?: boolean
   categoryId?: boolean
+  defaultServingGrams?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   foodCategory?: boolean | Prisma.Food$foodCategoryArgs<ExtArgs>
@@ -879,6 +928,7 @@ export type FoodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   description?: boolean
   imageUrl?: boolean
   categoryId?: boolean
+  defaultServingGrams?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   foodCategory?: boolean | Prisma.Food$foodCategoryArgs<ExtArgs>
@@ -890,11 +940,12 @@ export type FoodSelectScalar = {
   description?: boolean
   imageUrl?: boolean
   categoryId?: boolean
+  defaultServingGrams?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FoodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "foodName" | "description" | "imageUrl" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["food"]>
+export type FoodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "foodName" | "description" | "imageUrl" | "categoryId" | "defaultServingGrams" | "createdAt" | "updatedAt", ExtArgs["result"]["food"]>
 export type FoodInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   foodCategory?: boolean | Prisma.Food$foodCategoryArgs<ExtArgs>
   mealItems?: boolean | Prisma.Food$mealItemsArgs<ExtArgs>
@@ -923,6 +974,7 @@ export type $FoodPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     description: string | null
     imageUrl: string | null
     categoryId: number | null
+    defaultServingGrams: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["food"]>
@@ -1357,6 +1409,7 @@ export interface FoodFieldRefs {
   readonly description: Prisma.FieldRef<"Food", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Food", 'String'>
   readonly categoryId: Prisma.FieldRef<"Food", 'Int'>
+  readonly defaultServingGrams: Prisma.FieldRef<"Food", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Food", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Food", 'DateTime'>
 }
