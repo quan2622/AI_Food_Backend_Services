@@ -23,6 +23,7 @@ import { AllergenModule } from './modules/allergen/allergen.module';
 import { WorkoutLogModule } from './modules/workout-log/workout-log.module';
 import { RecommendModule } from './modules/recommend/recommend.module';
 import { RedisModule } from './redis/redis.module';
+import { UserReportModule } from './modules/user-report/user-report.module';
 
 @Module({
   imports: [
@@ -48,7 +49,8 @@ import { RedisModule } from './redis/redis.module';
     AllergenModule,
     WorkoutLogModule,
     RecommendModule,
-    RedisModule, // Added RedisModule to handle Redis connection and status
+    RedisModule,
+    UserReportModule,
   ],
 
   controllers: [AppController],

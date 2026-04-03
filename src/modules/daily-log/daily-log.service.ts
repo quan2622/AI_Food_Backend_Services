@@ -87,12 +87,10 @@ export class DailyLogService {
           if (meal.mealItems) {
             meal.mealItems.forEach((item) => {
               const quantity = item.quantity || 1;
-              // Tính calories: protein*4 + carbs*4 + fat*9 + fiber*2
+              const netCarbs = (item.carbs || 0) - (item.fiber || 0);
+              // Công thức: Protein×4 + NetCarbs×4 + Fat×9
               const itemCalories =
-                ((item.protein || 0) * 4 +
-                  (item.carbs || 0) * 4 +
-                  (item.fat || 0) * 9 +
-                  (item.fiber || 0) * 2) *
+                ((item.protein || 0) * 4 + netCarbs * 4 + (item.fat || 0) * 9) *
                 quantity;
 
               mealTotalCalories += itemCalories;
@@ -100,7 +98,7 @@ export class DailyLogService {
               // Cộng vào totals cả ngày
               totals.calories += itemCalories;
               totals.protein += (item.protein || 0) * quantity;
-              totals.carbs += (item.carbs || 0) * quantity;
+              totals.carbs += netCarbs * quantity;
               totals.fat += (item.fat || 0) * quantity;
               totals.fiber += (item.fiber || 0) * quantity;
             });
@@ -142,34 +140,73 @@ export class DailyLogService {
     });
   }
 
-  /** Lấy DailyLog của user theo ngày cụ thể (YYYY-MM-DD) */
+  /** Lấy DailyLog của user theo ngày cụ thể (YYYY-MM-DD) với đầy đủ meals, mealItems và food */
   async findByDate(userId: number, date: string) {
     const targetDate = new Date(date);
-    const startDate = new Date(
+    const logDate = new Date(
       Date.UTC(
         targetDate.getUTCFullYear(),
         targetDate.getUTCMonth(),
         targetDate.getUTCDate(),
-      ),
-    );
-    const endDate = new Date(
-      Date.UTC(
-        targetDate.getUTCFullYear(),
-        targetDate.getUTCMonth(),
-        targetDate.getUTCDate(),
-        23,
-        59,
-        59,
-        999,
       ),
     );
 
     const log = await this.prisma.dailyLog.findUnique({
-      where: { userId_logDate: { userId, logDate: startDate } },
+      where: { userId_logDate: { userId, logDate } },
+      include: {
+        meals: {
+          include: {
+            mealItems: {
+              include: {
+                food: {
+                  select: {
+                    foodName: true,
+                    imageUrl: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
-    if (!log)
+
+    if (!log) {
       throw new NotFoundException(`Không tìm thấy DailyLog cho ngày ${date}`);
-    return log;
+    }
+
+    return this.formatDailyLogSimple(log);
+  }
+
+  /** Format DailyLog không bao gồm totals và nutritionGoal */
+  private formatDailyLogSimple(log: any) {
+    const mealsWithTotals = log.meals
+      ? log.meals.map((meal) => {
+          let mealTotalCalories = 0;
+
+          if (meal.mealItems) {
+            meal.mealItems.forEach((item) => {
+              const quantity = item.quantity || 1;
+              const netCarbs = (item.carbs || 0) - (item.fiber || 0);
+              const itemCalories =
+                ((item.protein || 0) * 4 + netCarbs * 4 + (item.fat || 0) * 9) *
+                quantity;
+
+              mealTotalCalories += itemCalories;
+            });
+          }
+
+          return {
+            ...meal,
+            totalCalories: Math.round(mealTotalCalories * 100) / 100,
+          };
+        })
+      : [];
+
+    return {
+      ...log,
+      meals: mealsWithTotals,
+    };
   }
 
   /** [Admin] Lấy tất cả DailyLog (mọi user) */

@@ -64,6 +64,7 @@ export class MealItemService {
   /**
    * Lấy giá trị dinh dưỡng từ FoodNutritionProfile và tính toán theo grams
    * Giá trị trong profile là per 100g, nên cần nhân với grams/100
+   * Calories được tính theo công thức: Protein×4 + NetCarbs×4 + Fat×9
    */
   private async calculateNutritionFromFood(
     foodId: number,
@@ -97,9 +98,7 @@ export class MealItemService {
       const nutrientName = value.nutrient.name.toLowerCase();
       const nutrientValue = value.value * ratio;
 
-      if (nutrientName.includes('calorie') || nutrientName === 'calories') {
-        result.calories = nutrientValue;
-      } else if (nutrientName === 'protein') {
+      if (nutrientName === 'protein') {
         result.protein = nutrientValue;
       } else if (nutrientName === 'carbs' || nutrientName === 'carbohydrates') {
         result.carbs = nutrientValue;
@@ -109,6 +108,10 @@ export class MealItemService {
         result.fiber = nutrientValue;
       }
     }
+
+    // Tính calories theo công thức: Protein×4 + NetCarbs×4 + Fat×9
+    const netCarbs = result.carbs - result.fiber;
+    result.calories = result.protein * 4 + netCarbs * 4 + result.fat * 9;
 
     return result;
   }
