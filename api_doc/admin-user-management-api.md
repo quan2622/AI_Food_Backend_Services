@@ -391,20 +391,19 @@ Authorization: Bearer <admin_token>
 POST /user-profiles
 ```
 
-**Mô tả**: Tạo profile mới cho user (chỉ khi user chưa có profile)
+**Mô tả**: User tự tạo profile cho chính mình (mỗi user chỉ có 1 profile)
 
-⚠️ **Lưu ý**: Mỗi user chỉ có 1 profile duy nhất (quan hệ 1-1)
+⚠️ **Lưu ý**: Mỗi user chỉ có 1 profile duy nhất (quan hệ 1-1). User phải đăng nhập để tạo profile.
 
 **Headers**:
 ```
-Authorization: Bearer <admin_token>
+Authorization: Bearer <token>
 Content-Type: application/json
 ```
 
 **Request Body**:
 ```json
 {
-  "userId": 1,                          // Bắt buộc - ID của user
   "age": 25,                            // Bắt buộc - 1-100
   "height": 170.5,                      // Bắt buộc - Chiều cao (cm)
   "weight": 65.0,                       // Bắt buộc - Cân nặng (kg)
@@ -498,7 +497,7 @@ Content-Type: application/json
 DELETE /user-profiles/:id
 ```
 
-**Mô tả**: Xóa profile của user
+**Mô tả**: Xóa profile của user (Admin)
 
 **Params**:
 | Tên | Kiểu | Bắt buộc | Mô tả |
@@ -508,6 +507,71 @@ DELETE /user-profiles/:id
 **Headers**:
 ```
 Authorization: Bearer <admin_token>
+```
+
+**Response** (204 No Content)
+
+---
+
+### 2.7 User tự xem Profile của mình
+
+```
+GET /user-profiles
+```
+
+**Mô tả**: User đăng nhập tự xem profile của chính mình
+
+**Headers**:
+```
+Authorization: Bearer <token>
+```
+
+**Response** (200 OK): *Giống 2.2*
+
+---
+
+### 2.8 User tự cập nhật Profile của mình
+
+```
+PATCH /user-profiles
+```
+
+**Mô tả**: User đăng nhập tự cập nhật profile của chính mình
+
+**Headers**:
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Request Body** (tất cả tùy chọn):
+```json
+{
+  "age": 26,
+  "height": 171.0,
+  "weight": 66.5,
+  "gender": "MALE",
+  "activityLevel": "VERY_ACTIVE"
+}
+```
+
+**Tự động tính toán lại**: BMI, BMR, TDEE sẽ được tính lại khi weight/height/age thay đổi
+
+**Response** (200 OK): *Giống 2.5*
+
+---
+
+### 2.9 User tự xóa Profile của mình
+
+```
+DELETE /user-profiles
+```
+
+**Mô tả**: User đăng nhập tự xóa profile của chính mình
+
+**Headers**:
+```
+Authorization: Bearer <token>
 ```
 
 **Response** (204 No Content)

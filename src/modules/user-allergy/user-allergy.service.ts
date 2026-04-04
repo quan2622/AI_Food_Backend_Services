@@ -1,7 +1,13 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
+import { isEmpty } from 'lodash';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
 import type { CreateUserAllergyDto } from './dto/create-user-allergy.dto.js';
 import type { UpdateUserAllergyDto } from './dto/update-user-allergy.dto.js';
+import { UserAllergyPaginationDto } from './dto/user-allergy-pagination.dto';
+import { UserAllergyGroupedDto } from './dto/user-allergy-grouped.dto';
 
 @Injectable()
 export class UserAllergyService {
@@ -45,6 +51,108 @@ export class UserAllergyService {
       include: { allergen: true },
       orderBy: { createdAt: 'desc' },
     });
+  }
+
+  async findAllAdmin(
+    page: number,
+    limit: number,
+    queryString: string,
+  ) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      delete filter.current;
+      delete filter.pageSize;
+
+      // Convert aqp sort format to Prisma sort format
+      let sort: Record<string, 'asc' | 'desc'>;
+      if (isEmpty(aqpSort)) {
+        sort = { createdAt: 'desc' };
+      } else {
+        sort = Object.entries(aqpSort as Record<string, number>).reduce(
+          (acc, [key, value]) => {
+            acc[key] = value === 1 ? 'asc' : 'desc';
+            return acc;
+          },
+          {} as Record<string, 'asc' | 'desc'>,
+        );
+      }
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.userAllergy.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.userAllergy.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          allergen: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              fullName: true,
+              avatarUrl: true,
+            },
+          },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      // Group by user
+      const groupedMap = new Map<number, UserAllergyGroupedDto>();
+      for (const item of result) {
+        const existing = groupedMap.get(item.userId);
+        if (existing) {
+          existing.allergies.push({
+            id: item.id,
+            severity: item.severity,
+            note: item.note,
+            allergenId: item.allergenId,
+            allergen: item.allergen,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+          });
+        } else {
+          groupedMap.set(item.userId, {
+            userId: item.userId,
+            user: item.user,
+            allergies: [{
+              id: item.id,
+              severity: item.severity,
+              note: item.note,
+              allergenId: item.allergenId,
+              allergen: item.allergen,
+              createdAt: item.createdAt,
+              updatedAt: item.updatedAt,
+            }],
+          });
+        }
+      }
+
+      return {
+        EC: 0,
+        EM: 'Get user allergies with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result: plainToInstance(UserAllergyGroupedDto, Array.from(groupedMap.values())),
+      };
+    } catch (error) {
+      console.error('Error in user allergy service get paginate(admin):', error.message);
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in user allergy service get paginate',
+      });
+    }
   }
 
   async findOne(id: number) {

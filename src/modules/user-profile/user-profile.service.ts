@@ -1,12 +1,13 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
+import { isEmpty } from 'lodash';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
 import type { UserProfile } from '../../generated/prisma/client.js';
 import type { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import type { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
+import { UserProfilePaginationDto } from './dto/user-profile-pagination.dto';
 
 /** Hệ số hoạt động TDEE */
 const ACTIVITY_FACTORS: Record<string, number> = {
@@ -89,6 +90,76 @@ export class UserProfileService {
         user: { select: { id: true, fullName: true, email: true } },
       },
     });
+  }
+
+  async findAllAdmin(
+    page: number,
+    limit: number,
+    queryString: string,
+  ) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      delete filter.current;
+      delete filter.pageSize;
+
+      // Convert aqp sort format to Prisma sort format
+      let sort: Record<string, 'asc' | 'desc'>;
+      if (isEmpty(aqpSort)) {
+        sort = { createdAt: 'desc' };
+      } else {
+        sort = Object.entries(aqpSort as Record<string, number>).reduce(
+          (acc, [key, value]) => {
+            acc[key] = value === 1 ? 'asc' : 'desc';
+            return acc;
+          },
+          {} as Record<string, 'asc' | 'desc'>,
+        );
+      }
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.userProfile.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.userProfile.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              fullName: true,
+              avatarUrl: true,
+            },
+          },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get user profiles with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result: plainToInstance(UserProfilePaginationDto, result),
+      };
+    } catch (error) {
+      console.error('Error in user profile service get paginate(admin):', error.message);
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in user profile service get paginate',
+      });
+    }
   }
 
   async findOne(id: number): Promise<UserProfile> {

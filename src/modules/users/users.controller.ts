@@ -6,9 +6,11 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto.js';
@@ -17,6 +19,7 @@ import { UpdatePasswordDto } from './dto/update-password.dto.js';
 import { UpdateStatusDto } from './dto/update-status.dto.js';
 import { User } from '@/common/decorators';
 import type { UserAuthPayload } from '@/types/index.type';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('users')
 export class UsersController {
@@ -31,6 +34,16 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('/admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.usersService.findAllAdmin(page, limit, qs);
   }
 
   @Get('me')

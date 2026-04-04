@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserAllergyService } from './user-allergy.service';
 import { CreateUserAllergyDto } from './dto/create-user-allergy.dto.js';
 import { UpdateUserAllergyDto } from './dto/update-user-allergy.dto.js';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('user-allergies')
 export class UserAllergyController {
@@ -24,6 +27,16 @@ export class UserAllergyController {
   @Get('user/:userId')
   findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.userAllergyService.findAllByUserId(userId);
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('/admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.userAllergyService.findAllAdmin(page, limit, qs);
   }
 
   @Get(':id')

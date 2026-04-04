@@ -2,14 +2,20 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
+import { isEmpty } from 'lodash';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
 import type { User } from '../../generated/prisma/client.js';
 import type { CreateUserDto } from './dto/create-user.dto.js';
 import type { UpdateUserDto } from './dto/update-user.dto.js';
 import type { UpdatePasswordDto } from './dto/update-password.dto.js';
 import type { UpdateStatusDto } from './dto/update-status.dto.js';
+import { UserPaginationDto } from './dto/user-pagination.dto';
 
 const SALT_ROUNDS = 10;
 
@@ -48,6 +54,71 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     return this.prisma.user.findMany();
+  }
+
+  async findAllAdmin(
+    page: number,
+    limit: number,
+    queryString: string,
+  ) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter, projection } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      delete filter.current;
+      delete filter.pageSize;
+
+      // Convert aqp sort format to Prisma sort format
+      let sort: Record<string, 'asc' | 'desc'>;
+      if (isEmpty(aqpSort)) {
+        sort = { createdAt: 'desc' };
+      } else {
+        sort = Object.entries(aqpSort as Record<string, number>).reduce(
+          (acc, [key, value]) => {
+            acc[key] = value === 1 ? 'asc' : 'desc';
+            return acc;
+          },
+          {} as Record<string, 'asc' | 'desc'>,
+        );
+      }
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.user.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.user.findMany({
+        where: filter,
+        orderBy: sort,
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      const data = result.map((user) => {
+        const { password: _pw, accessToken: _at, refreshToken: _rt, ...userWithoutSensitive } = user;
+        return userWithoutSensitive;
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get users with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result: plainToInstance(UserPaginationDto, data),
+      };
+    } catch (error) {
+      console.error('Error in user service get users paginate(admin):', error.message);
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in user service get users paginate',
+      });
+    }
   }
 
   async findByEmail(email: string): Promise<User | null> {

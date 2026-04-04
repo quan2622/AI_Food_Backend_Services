@@ -6,15 +6,18 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
 import { User } from 'src/common/decorators';
 import type { UserAuthPayload } from '@/types/index.type';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('user-profiles')
 export class UserProfileController {
@@ -32,6 +35,16 @@ export class UserProfileController {
   @Get('all')
   findAll() {
     return this.userProfileService.findAll();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('/admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.userProfileService.findAllAdmin(page, limit, qs);
   }
 
   @Get()
