@@ -50,6 +50,9 @@ install:
 	npm install
 
 dev:
+	@echo "Checking if PostgreSQL and Redis are running..."
+	@docker compose ps --services --filter "status=running" | grep -q "^postgres$$" || (echo "PostgreSQL not running, starting services..." && $(MAKE) docker-up)
+	@docker compose ps --services --filter "status=running" | grep -q "^redis$$" || (echo "Redis not running, starting services..." && $(MAKE) docker-up)
 	npm run start:dev
 
 build:
@@ -123,6 +126,7 @@ seed-%:
 
 seed-recommender: db-reset
 	@echo "Seeding fresh recommendation scenarios..."
+	@npm run seed:allcode
 	@npm run seed:controlled
 
 # =============================================================================
