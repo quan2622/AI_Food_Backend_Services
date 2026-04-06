@@ -4,7 +4,7 @@ Tài liệu API dành cho Admin để quản lý Thực phẩm (Món ăn, Phân 
 
 **Tiền tố:** `/api/v1` — xem [README.md](./README.md).
 
-**Quyền:** `GET /foods`, `GET /foods/:id` — mọi user đã đăng nhập. `POST|PATCH|DELETE` food & bulk — **`AdminGuard`**.
+**Quyền:** `GET /foods`, `GET /foods/:id` — mọi user đã đăng nhập. **`GET /foods/admin`** — chỉ **admin** (`AdminGuard`). `POST|PATCH|DELETE` food & bulk — **`AdminGuard`**.
 
 ---
 
@@ -26,11 +26,100 @@ Base path: `/foods`
 GET /foods/admin?current=1&pageSize=10&...
 ```
 
-**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+**Mô tả:** Danh sách món cho trang admin: phân trang, lọc, sắp xếp; mỗi bản ghi **luôn kèm** `foodCategory` và **`foodIngredients[]`** (có nested `ingredient`).
 
-**Response** (trong `data`): `{ EC, EM, meta, result }`.
+**Yêu cầu:** `AdminGuard` — JWT với `isAdmin: true`.
 
-- **`result`:** mỗi món có **`foodCategory`** (id, name, description, parentId) — không dùng keyMap trên `Food`; hiển thị danh mục từ quan hệ.
+**Headers:**
+```
+Authorization: Bearer <admin_token>
+```
+
+**Query (thường dùng):**
+
+| Tham số | Kiểu | Mô tả |
+|---------|------|--------|
+| `current` | number | Trang (thường bắt đầu `1`) |
+| `pageSize` | number | Số món mỗi trang |
+| (khác) | — | Lọc / sort theo [api-query-params](https://github.com/koajs/aqp) — đưa vào `filter`, `sort` như `GET /users/admin` |
+
+**Sort mặc định (khi không gửi sort):** `createdAt` giảm dần.
+
+**Ví dụ:**
+```
+GET /api/v1/foods/admin?current=1&pageSize=20
+GET /api/v1/foods/admin?current=1&pageSize=10&filter[categoryId]=1
+```
+
+**Response (200):** Sau envelope toàn cục (`metadata` + `data`), phần **`data`** chứa object:
+
+| Trường | Kiểu | Mô tả |
+|--------|------|--------|
+| `EC` | number | `0` khi thành công |
+| `EM` | string | Thông báo ngắn |
+| `meta` | object | `current`, `pageSize`, `pages`, `total` |
+| `result` | `Food[]` | Mảng món ăn đã join |
+
+**Mỗi phần tử trong `result` gồm:**
+
+- Các scalar của `Food`: `id`, `foodName`, `description`, `imageUrl`, `categoryId`, `defaultServingGrams`, `createdAt`, `updatedAt`.
+- **`foodCategory`** (có thể `null` nếu không gán category): `id`, `name`, `description`, `parentId`.
+- **`foodIngredients`**: mảng `FoodIngredient[]`, sắp theo `id` tăng dần. Mỗi phần tử có:
+  - `id`, `quantityGrams`, `foodId`, `ingredientId`, `createdAt`, `updatedAt`
+  - **`ingredient`**: bản ghi `Ingredient` đầy đủ — `id`, `ingredientName`, `description`, `imageUrl`, `createdAt`, `updatedAt`
+
+**Không có trong response của endpoint này:** `nutritionProfile` / `mealItems` — chỉ phục vụ danh sách + category + thành phần nguyên liệu. Cần dinh dưỡng chi tiết thì gọi thêm API khác hoặc mở rộng backend sau.
+
+**Ví dụ `data` (rút gọn):**
+
+```json
+{
+  "EC": 0,
+  "EM": "Get foods with query paginate success (admin)",
+  "meta": {
+    "current": 1,
+    "pageSize": 10,
+    "pages": 3,
+    "total": 25
+  },
+  "result": [
+    {
+      "id": 1,
+      "foodName": "Bún bò Huế",
+      "description": "...",
+      "imageUrl": "https://...",
+      "categoryId": 1,
+      "defaultServingGrams": 450,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "foodCategory": {
+        "id": 1,
+        "name": "Món nước",
+        "description": "...",
+        "parentId": null
+      },
+      "foodIngredients": [
+        {
+          "id": 1,
+          "quantityGrams": 200,
+          "foodId": 1,
+          "ingredientId": 5,
+          "createdAt": "2024-01-01T00:00:00.000Z",
+          "updatedAt": "2024-01-01T00:00:00.000Z",
+          "ingredient": {
+            "id": 5,
+            "ingredientName": "Bún tươi",
+            "description": "Bún gạo tươi",
+            "imageUrl": null,
+            "createdAt": "2024-01-01T00:00:00.000Z",
+            "updatedAt": "2024-01-01T00:00:00.000Z"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
@@ -164,18 +253,28 @@ Content-Type: application/json
 **Request Body**:
 ```json
 {
-  "foodName": "Phở bò tái",           // Bắt buộc - Tên món ăn, tối đa 255 ký tự
-  "description": "Phở bò với thịt tái", // Tùy chọn - Mô tả, tối đa 1000 ký tự
-  "imageUrl": "https://...",            // Tùy chọn - URL ảnh, tối đa 500 ký tự
-  "categoryId": 1                         // Tùy chọn - ID của category
+  "foodName": "Phở bò tái",
+  "description": "Phở bò với thịt tái",
+  "imageUrl": "https://...",
+  "categoryId": 1,
+  "defaultServingGrams": 450
 }
 ```
+
+| Field | Bắt buộc | Mô tả |
+|-------|----------|--------|
+| `foodName` | ✅ | Tên món, tối đa 255 ký tự |
+| `description` | | Mô tả, tối đa 1000 ký tự |
+| `imageUrl` | | URL ảnh, tối đa 500 ký tự |
+| `categoryId` | | ID category, số nguyên > 0 |
+| `defaultServingGrams` | ✅ | Khẩu phần mặc định (gram) cho 1 phần ăn; số ≥ 0 |
 
 **Validation Rules**:
 - `foodName`: Không được để trống, tối đa 255 ký tự
 - `description`: Tối đa 1000 ký tự
 - `imageUrl`: Tối đa 500 ký tự
 - `categoryId`: Số nguyên dương (> 0)
+- `defaultServingGrams`: **Bắt buộc** — số (có thể thập phân), ≥ 0
 
 **Response** (201 Created):
 ```json
@@ -185,6 +284,7 @@ Content-Type: application/json
   "description": "Phở bò với thịt tái",
   "imageUrl": "https://...",
   "categoryId": 1,
+  "defaultServingGrams": 450,
   "createdAt": "2024-01-01T00:00:00Z",
   "updatedAt": "2024-01-01T00:00:00Z"
 }
@@ -211,16 +311,18 @@ Content-Type: application/json
 **Request Body**:
 ```json
 {
-  "items": [                            // Bắt buộc - Mảng các món ăn, không được rỗng
+  "items": [
     {
       "foodName": "Cơm tấm sườn",
       "description": "Cơm tấm với sườn nướng",
-      "categoryId": 2
+      "categoryId": 2,
+      "defaultServingGrams": 380
     },
     {
       "foodName": "Bánh mì thịt",
       "description": "Bánh mì kẹp thịt",
-      "categoryId": 3
+      "categoryId": 3,
+      "defaultServingGrams": 220
     }
   ]
 }
@@ -270,7 +372,8 @@ Content-Type: application/json
   "foodName": "Phở bò đặc biệt",
   "description": "Phở bò với thịt tái, nạm, gầu",
   "imageUrl": "https://new-image.jpg",
-  "categoryId": 1
+  "categoryId": 1,
+  "defaultServingGrams": 350
 }
 ```
 
@@ -282,6 +385,7 @@ Content-Type: application/json
   "description": "Phở bò với thịt tái, nạm, gầu",
   "imageUrl": "https://new-image.jpg",
   "categoryId": 1,
+  "defaultServingGrams": 350,
   "updatedAt": "2024-01-02T00:00:00Z"
 }
 ```

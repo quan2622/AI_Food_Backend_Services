@@ -2,8 +2,8 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsIn,
   IsInt,
+  IsNumber,
   Min,
   MaxLength,
 } from 'class-validator';
@@ -28,4 +28,9 @@ export class CreateFoodDto {
   @IsInt({ message: 'categoryId phải là số nguyên' })
   @Min(1, { message: 'categoryId phải lớn hơn 0' })
   categoryId?: number;
+
+  /** Khẩu phần mặc định (gram) cho 1 phần ăn — khớp `Food.defaultServingGrams` trong schema */
+  @IsNumber({}, { message: 'defaultServingGrams phải là số' })
+  @Min(0, { message: 'defaultServingGrams không được âm' })
+  defaultServingGrams: number;
 }

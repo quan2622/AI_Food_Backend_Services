@@ -24,6 +24,7 @@ export class FoodService {
         description: dto.description,
         categoryId: dto.categoryId ?? null,
         imageUrl: dto.imageUrl,
+        defaultServingGrams: dto.defaultServingGrams,
       },
     });
   }
@@ -35,6 +36,7 @@ export class FoodService {
         description: dto.description,
         categoryId: dto.categoryId ?? null,
         imageUrl: dto.imageUrl,
+        defaultServingGrams: dto.defaultServingGrams,
       })),
       skipDuplicates: true,
     });
@@ -76,6 +78,12 @@ export class FoodService {
         include: {
           foodCategory: {
             select: { id: true, name: true, description: true, parentId: true },
+          },
+          foodIngredients: {
+            include: {
+              ingredient: true,
+            },
+            orderBy: { id: 'asc' },
           },
         },
         skip: offset,
@@ -131,6 +139,9 @@ export class FoodService {
           categoryId: dto.categoryId ?? null,
         }),
         ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
+        ...(dto.defaultServingGrams !== undefined && {
+          defaultServingGrams: dto.defaultServingGrams ?? null,
+        }),
       },
     });
   }
