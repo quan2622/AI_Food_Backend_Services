@@ -1,5 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../common/utils/admin-pagination.util';
 import type { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
 import type { UpdateNutritionGoalDto } from './dto/update-nutrition-goal.dto.js';
 import { NutritionGoalStatus } from '@/generated/prisma/enums';
@@ -209,6 +219,58 @@ export class NutritionGoalService {
     });
 
     return this.enrichGoalType(goals);
+  }
+
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { createdAt: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.nutritionGoal.count({
+        where: filter,
+      });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const goals = await this.prisma.nutritionGoal.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          user: { select: { id: true, fullName: true, email: true } },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      const enriched = await this.enrichGoalType(goals);
+
+      return {
+        EC: 0,
+        EM: 'Get nutrition goals with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result: enriched,
+      };
+    } catch (error) {
+      console.error(
+        'Error in nutrition goal service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in nutrition goal service get paginate',
+      });
+    }
   }
 
   async findAllByUserId(

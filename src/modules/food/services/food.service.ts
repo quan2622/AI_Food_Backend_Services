@@ -1,5 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../../prisma/prisma.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../../common/utils/admin-pagination.util';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
@@ -43,6 +53,56 @@ export class FoodService {
       where: { categoryId },
       orderBy: { foodName: 'asc' },
     });
+  }
+
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { createdAt: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.food.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.food.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          foodCategory: {
+            select: { id: true, name: true, description: true, parentId: true },
+          },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get foods with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in food service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in food service get paginate',
+      });
+    }
   }
 
   async findOne(id: number) {

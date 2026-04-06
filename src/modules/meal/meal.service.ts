@@ -1,9 +1,16 @@
 import {
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../common/utils/admin-pagination.util';
 import type { CreateMealDto } from './dto/create-meal.dto.js';
 import type { UpdateMealDto } from './dto/update-meal.dto.js';
 
@@ -38,7 +45,7 @@ export class MealService {
     const keyMaps = [...new Set(meals.map((m) => m.mealType))];
     const allCodes = await this.prisma.allCode.findMany({
       where: { keyMap: { in: keyMaps } },
-      select: { keyMap: true, value: true, description: true },
+      select: { keyMap: true, value: true, description: true, type: true },
     });
     const map = new Map(allCodes.map((a) => [a.keyMap, a]));
 
@@ -164,6 +171,74 @@ export class MealService {
       },
     });
     return this.enrichMealType(meals);
+  }
+
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { mealDateTime: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.meal.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const meals = await this.prisma.meal.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          dailyLog: {
+            include: {
+              user: {
+                select: { id: true, fullName: true, email: true },
+              },
+            },
+          },
+          mealItems: {
+            include: {
+              food: {
+                select: {
+                  id: true,
+                  foodName: true,
+                  imageUrl: true,
+                  foodCategory: { select: { name: true } },
+                },
+              },
+            },
+          },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      const enriched = await this.enrichMealType(meals);
+
+      return {
+        EC: 0,
+        EM: 'Get meals with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result: enriched,
+      };
+    } catch (error) {
+      console.error(
+        'Error in meal service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in meal service get paginate',
+      });
+    }
   }
 
   async findOne(id: number) {

@@ -61,6 +61,16 @@ export class FoodController {
     return this.foodService.remove(id);
   }
 
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.foodService.findAllAdmin(page, limit, qs);
+  }
+
   // ──── All authenticated users ────────────────────────────────────────────
   @Get()
   findAll(@Query('categoryId', ParseIntPipe) categoryId?: number) {

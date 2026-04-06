@@ -1,20 +1,38 @@
 # Admin API Documentation - Food Management
 
-Tài liệu API dành cho Admin để quản lý Thực phẩm (Món ăn, Phân loại, Ảnh thực phẩm)
+Tài liệu API dành cho Admin để quản lý Thực phẩm (Món ăn, Phân loại, Ảnh thực phẩm).
+
+**Tiền tố:** `/api/v1` — xem [README.md](./README.md).
+
+**Quyền:** `GET /foods`, `GET /foods/:id` — mọi user đã đăng nhập. `POST|PATCH|DELETE` food & bulk — **`AdminGuard`**.
 
 ---
 
 ## 📋 Mục lục
 
-1. [Món ăn (Foods)](#1-món-ăn-foods)
+1. [Món ăn (Foods)](#1-món-ăn-foods) — gồm `GET /foods/admin`
 2. [Phân loại (Categories)](#2-phân-loại-categories)
-3. [Ảnh thực phẩm (Food Images)](#3-ảnh-thực-phẩm-food-images)
+3. [Ảnh thực phẩm (Food Images)](#3-ảnh-thực-phẩm-food-images) — gồm `GET /food-images/admin`
 
 ---
 
 ## 1. Món ăn (Foods)
 
-Base URL: `/foods`
+Base path: `/foods`
+
+### 1.0 [Admin] Phân trang + lọc (aqp) — khuyến nghị cho bảng món
+
+```
+GET /foods/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- **`result`:** mỗi món có **`foodCategory`** (id, name, description, parentId) — không dùng keyMap trên `Food`; hiển thị danh mục từ quan hệ.
+
+---
 
 ### 1.1 Lấy danh sách tất cả Món ăn
 
@@ -627,9 +645,23 @@ Authorization: Bearer <admin_token>
 
 ## 3. Ảnh thực phẩm (Food Images)
 
-Base URL: `/food-images`
+Base path: `/food-images`
 
 Food Images là ảnh do users upload khi ghi lại bữa ăn (meal). Admin có thể xem và quản lý.
+
+### 3.0 [Admin] Phân trang + lọc (aqp) — toàn bộ ảnh hệ thống
+
+```
+GET /food-images/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- **`result`:** mỗi bản ghi gồm `user` (rút gọn), `meal` (id, mealType, mealDateTime, dailyLogId), và **`mealTypeInfo`**: map từ `all_codes` theo `meal.mealType` (`keyMap`, `value`, `description`, `type`).
+
+---
 
 ### 3.1 Upload ảnh thực phẩm
 
@@ -754,7 +786,7 @@ Authorization: Bearer <admin_token>
   "mealId": 5,
   "meal": {
     "id": 5,
-    "mealType": "BREAKFAST",
+    "mealType": "MEAL_BREAKFAST",
     "mealDateTime": "2024-01-01T08:00:00Z"
   },
   "uploadedAt": "2024-01-01T12:00:00Z"

@@ -4,6 +4,14 @@ Tài liệu API dành cho Admin để quản lý Users, User Profiles và User A
 
 ---
 
+## Tiền tố & response
+
+- **URL đầy đủ:** `{origin}/api/v1` + path bên dưới (hỗ trợ thêm `/api/v2`).
+- **JWT:** `Authorization: Bearer <access_token>`.
+- **Response:** thường bọc trong `{ metadata, data }` — xem [README.md](./README.md).
+
+---
+
 ## 📋 Mục lục
 
 1. [Users Management](#1-users-management)
@@ -14,19 +22,49 @@ Tài liệu API dành cho Admin để quản lý Users, User Profiles và User A
 
 ## 1. Users Management
 
-Base URL: `/users`
+Base path: `/users`
 
-### 1.1 Lấy danh sách tất cả Users
+### 1.0 [Admin] Danh sách user có phân trang & lọc (khuyến nghị cho trang admin)
+
+```
+GET /users/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** Phân trang và lọc qua `api-query-params` (filter, sort). `AdminGuard` bắt buộc `isAdmin: true`.
+
+**Query:**
+
+| Tên | Kiểu | Mô tả |
+|-----|------|--------|
+| current | number | Trang (thường bắt đầu 1) |
+| pageSize | number | Kích thước trang |
+| (khác) | — | Tham số lọc/sort theo chuẩn aqp trên query string |
+
+**Response:** Object dạng `{ EC, EM, meta: { current, pageSize, pages, total }, result: [...] }` — user **không** chứa password (đã strip).
+
+---
+
+### 1.0b User hiện tại (đã đăng nhập)
+
+```
+GET /users/me
+```
+
+**Mô tả:** Thông tin user theo JWT + `userProfile`.
+
+---
+
+### 1.1 Lấy danh sách Users (findMany thô)
 
 ```
 GET /users
 ```
 
-**Mô tả**: Lấy danh sách tất cả người dùng trong hệ thống (dành cho Admin)
+**Mô tả:** `findMany` toàn bộ user — **có thể bao gồm trường nhạy cảm** tùy phiên bản service. Cho màn admin, **ưu tiên `GET /users/admin`**.
 
 **Headers**:
 ```
-Authorization: Bearer <admin_token>
+Authorization: Bearer <token>
 ```
 
 **Response** (200 OK):
@@ -287,19 +325,29 @@ Authorization: Bearer <admin_token>
 
 ## 2. User Profiles
 
-Base URL: `/user-profiles`
+Base path: `/user-profiles`
 
-### 2.1 Lấy danh sách tất cả Profiles
+### 2.0 [Admin] Danh sách profile có phân trang (khuyến nghị)
+
+```
+GET /user-profiles/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard` + filter/sort qua query (giống pattern `users/admin`).
+
+---
+
+### 2.1 Lấy danh sách tất cả Profiles (mảng phẳng)
 
 ```
 GET /user-profiles/all
 ```
 
-**Mô tả**: Lấy danh sách tất cả user profiles trong hệ thống
+**Mô tả**: Lấy danh sách tất cả user profiles — **chỉ cần JWT** (controller không gắn `AdminGuard` trong code hiện tại).
 
 **Headers**:
 ```
-Authorization: Bearer <admin_token>
+Authorization: Bearer <token>
 ```
 
 **Response** (200 OK):
@@ -314,7 +362,7 @@ Authorization: Bearer <admin_token>
     "bmr": 1523.5,
     "tdee": 2200.0,
     "gender": "MALE",
-    "activityLevel": "MODERATELY_ACTIVE",
+    "activityLevel": "ACT_MODERATE",
     "userId": 1,
     "user": {
       "id": 1,
@@ -407,19 +455,22 @@ Content-Type: application/json
   "age": 25,                            // Bắt buộc - 1-100
   "height": 170.5,                      // Bắt buộc - Chiều cao (cm)
   "weight": 65.0,                       // Bắt buộc - Cân nặng (kg)
-  "gender": "MALE",                     // Tùy chọn - MALE/FEMALE/OTHER
-  "activityLevel": "MODERATELY_ACTIVE"  // Tùy chọn - Xem bảng dưới
+  "gender": "MALE",                     // Tùy chọn - MALE/FEMALE/UNDEFINED
+  "activityLevel": "ACT_MODERATE"       // Tùy chọn - ACT_* (xem bảng Activity Level)
 }
 ```
 
-**Activity Level Options**:
-| Giá trị | Mô tả |
-|---------|-------|
-| SEDENTARY | Ít vận động (ngồi làm việc) |
-| LIGHTLY_ACTIVE | Vận động nhẹ (1-3 ngày/tuần) |
-| MODERATELY_ACTIVE | Vận động vừa (3-5 ngày/tuần) |
-| VERY_ACTIVE | Vận động nhiều (6-7 ngày/tuần) |
-| SUPER_ACTIVE | Vận động rất nhiều (2 lần/ngày) |
+**Gender (optional):** `MALE` \| `FEMALE` \| `UNDEFINED`
+
+**Activity Level (optional)** — enum trong schema:
+
+| Giá trị | Gợi ý mô tả |
+|---------|-------------|
+| ACT_SEDENTARY | Ít vận động |
+| ACT_LIGHT | Nhẹ |
+| ACT_MODERATE | Vừa |
+| ACT_VERY | Nhiều |
+| ACT_SUPER | Rất cao |
 
 **Tự động tính toán**: Khi tạo profile, hệ thống tự động tính:
 - `bmi`: Body Mass Index
@@ -580,7 +631,27 @@ Authorization: Bearer <token>
 
 ## 3. User Allergies
 
-Base URL: `/user-allergies`
+Base path: `/user-allergies`
+
+### 3.0 [Admin] Danh sách dị ứng có phân trang
+
+```
+GET /user-allergies/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+
+**Query:** `current`, `pageSize`, và các tham số `filter` / sort theo aqp.
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- **`meta`:** `current`, `pageSize`, `pages`, `total`
+- **`result`:** mảng nhóm theo **user** (`userId`, `user`, `allergies[]`). Trong mỗi phần tử `allergies`:
+  - `severity`: mã Prisma (`SEV_*`)
+  - **`severityInfo`**: map từ bảng `all_codes` theo `keyMap` = `severity` — gồm `keyMap`, `value`, `description`, `type` (nhãn hiển thị cho mức độ dị ứng)
+  - `allergen`, `note`, …
+
+---
 
 ### 3.1 Lấy danh sách Allergies của User
 
@@ -605,7 +676,7 @@ Authorization: Bearer <admin_token>
 [
   {
     "id": 1,
-    "severity": "HIGH",
+    "severity": "SEV_HIGH",
     "note": "Phản ứng nghiêm trọng với đậu phộng",
     "userId": 1,
     "allergenId": 1,
@@ -643,7 +714,7 @@ Authorization: Bearer <admin_token>
 ```json
 {
   "id": 1,
-  "severity": "HIGH",
+  "severity": "SEV_HIGH",
   "note": "Phản ứng nghiêm trọng",
   "userId": 1,
   "allergenId": 1,
@@ -677,18 +748,21 @@ Content-Type: application/json
 {
   "userId": 1,                          // Bắt buộc - ID của user
   "allergenId": 1,                      // Bắt buộc - ID của chất gây dị ứng
-  "severity": "HIGH",                   // Bắt buộc - Mức độ nghiêm trọng
+  "severity": "SEV_HIGH",               // Bắt buộc — giá trị Prisma (xem bảng Severity)
   "note": "Phản ứng nghiêm trọng"       // Tùy chọn - Ghi chú, tối đa 1000 ký tự
 }
 ```
 
-**Severity Levels**:
+**Severity** (enum `SeverityType` trong DB):
+
 | Giá trị | Mô tả |
 |---------|-------|
-| LOW | Nhẹ - Triệu chứng nhẹ |
-| MEDIUM | Trung bình - Cần chú ý |
-| HIGH | Nặng - Tránh xa |
-| LIFE_THREATENING | Nguy hiểm tính mạng - Cấm tuyệt đối |
+| SEV_LOW | Nhẹ |
+| SEV_MEDIUM | Trung bình |
+| SEV_HIGH | Nặng |
+| SEV_LIFE_THREATENING | Nguy hiểm tính mạng |
+
+**Lưu ý:** DTO có thể đang validate tập khác — khi gọi API nếu bị 400, thử đúng giá trị Prisma ở bảng trên.
 
 **Validation**:
 - Mỗi user không thể có trùng `allergenId` (unique constraint)
@@ -700,7 +774,7 @@ Content-Type: application/json
   "id": 1,
   "userId": 1,
   "allergenId": 1,
-  "severity": "HIGH",
+  "severity": "SEV_HIGH",
   "note": "Phản ứng nghiêm trọng",
   "createdAt": "2024-01-01T00:00:00Z"
 }
@@ -732,7 +806,7 @@ Content-Type: application/json
 **Request Body** (tất cả tùy chọn):
 ```json
 {
-  "severity": "LIFE_THREATENING",
+  "severity": "SEV_LIFE_THREATENING",
   "note": "Cực kỳ nguy hiểm, cần mang theo epinephrine"
 }
 ```
@@ -743,7 +817,7 @@ Content-Type: application/json
   "id": 1,
   "userId": 1,
   "allergenId": 1,
-  "severity": "LIFE_THREATENING",
+  "severity": "SEV_LIFE_THREATENING",
   "note": "Cực kỳ nguy hiểm...",
   "updatedAt": "2024-01-02T00:00:00Z"
 }

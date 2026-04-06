@@ -13,11 +13,14 @@ import {
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { FoodImageService } from './food-image.service';
 import { CreateFoodImageDto } from './dto/create-food-image.dto.js';
 import { User } from 'src/common/decorators';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('food-images')
 export class FoodImageController {
@@ -54,6 +57,16 @@ export class FoodImageController {
   @Get('meals/:mealId')
   findAllByMealId(@Param('mealId', ParseIntPipe) mealId: number) {
     return this.foodImageService.findAllByMealId(mealId);
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.foodImageService.findAllAdmin(page, limit, qs);
   }
 
   @Get(':id')

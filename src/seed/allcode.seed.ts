@@ -231,6 +231,26 @@ const allCodes: CreateAllcodeDto[] = [
     value: 'FAILED',
     description: 'Thất bại',
   },
+
+  // --- GENDER ---
+  {
+    keyMap: 'MALE',
+    type: 'GENDER',
+    value: 'MALE',
+    description: 'Nam',
+  },
+  {
+    keyMap: 'FEMALE',
+    type: 'GENDER',
+    value: 'FEMALE',
+    description: 'Nữ',
+  },
+  {
+    keyMap: 'UNDEFINED',
+    type: 'GENDER',
+    value: 'UNDEFINED',
+    description: 'Chưa xác định',
+  },
 ];
 
 async function bootstrap(): Promise<void> {

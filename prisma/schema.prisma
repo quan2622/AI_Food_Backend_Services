@@ -78,6 +78,12 @@ enum UnitType {
  UNIT_LB
 }
 
+enum GenderType {
+  MALE
+  FEMALE
+  UNDEFINED
+}
+
 // ─── Models ─────────────────────────────────────────────────────────────────
 
 model AllCode {
@@ -118,19 +124,19 @@ model User {
 }
 
 model UserProfile {
-  id            Int     @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   age           Int
   height        Float
   weight        Float
   bmi           Float
   bmr           Float
   tdee          Float
-  gender        String?
+  gender        GenderType @default(UNDEFINED)
   activityLevel String?
-  userId        Int     @unique
-  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  userId        Int        @unique
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   @@map("user_profiles")
 }

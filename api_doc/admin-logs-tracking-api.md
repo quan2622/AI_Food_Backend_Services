@@ -2,13 +2,15 @@
 
 Tài liệu API dành cho Admin để quản lý Logs & Tracking: Daily Logs, Workout Logs và Meals.
 
+**Tiền tố:** `/api/v1` — xem [README.md](./README.md).
+
 ---
 
 ## 📋 Mục lục
 
-1. [Daily Logs](#1-daily-logs)
+1. [Daily Logs](#1-daily-logs) — gồm `GET /daily-logs/admin`
 2. [Workout Logs](#2-workout-logs)
-3. [Meals](#3-meals)
+3. [Meals](#3-meals) — gồm `GET /meals/admin`
 
 ---
 
@@ -61,7 +63,25 @@ Authorization: Bearer <admin_token>
 
 ---
 
-### 1.2 [Admin] Lấy Daily Log theo ID
+### 1.2 [Admin] Phân trang + lọc (aqp) — khuyến nghị
+
+```
+GET /daily-logs/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+
+**Query:** `current`, `pageSize`, và `filter` / sort theo aqp.
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- Mỗi phần tử trong **`result`** gồm các field của `DailyLog` + `user`, và **`statusInfo`**: object từ bảng `all_codes` theo `keyMap` = trường `status` (ví dụ `STATUS_BELOW`), gồm `keyMap`, `value`, `description`, `type` — dùng để hiển thị nhãn trạng thái ngày.
+
+**Khác `/daily-logs/all`:** endpoint này có **`meta.total` / `pages`**, không trả về full mọi bản ghi một lần.
+
+---
+
+### 1.3 [Admin] Lấy Daily Log theo ID
 
 ```
 GET /daily-logs/id/:id
@@ -114,7 +134,7 @@ Authorization: Bearer <admin_token>
 
 ---
 
-### 1.3 Lấy Daily Logs của User hiện tại
+### 1.4 Lấy Daily Logs của User hiện tại
 
 ```
 GET /daily-logs
@@ -151,7 +171,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 1.4 Lấy Daily Log hôm nay (Get or Create)
+### 1.5 Lấy Daily Log hôm nay (Get or Create)
 
 ```
 GET /daily-logs/today
@@ -179,7 +199,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 1.5 Lấy Daily Log theo ngày cụ thể
+### 1.6 Lấy Daily Log theo ngày cụ thể
 
 ```
 GET /daily-logs/:date
@@ -217,7 +237,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 1.6 Lấy tóm tắt 7 ngày gần nhất
+### 1.7 Lấy tóm tắt 7 ngày gần nhất
 
 ```
 GET /daily-logs/weekly
@@ -258,9 +278,11 @@ Authorization: Bearer <token>
 
 ## 2. Workout Logs
 
-Base URL: `/workout-logs`
+Base path: `/workout-logs`
 
 Workout Logs là bản ghi các hoạt động tập luyện của user.
+
+**Giới hạn cho admin:** không có endpoint `GET /workout-logs/all` — API chỉ trả về workout của **user trong JWT**. Để xem workout của user khác cần mở rộng backend hoặc dùng tài khoản impersonation (hiện chưa có).
 
 ### 2.1 Lấy tất cả Workout Logs của User
 
@@ -568,7 +590,21 @@ Authorization: Bearer <admin_token>
 
 ---
 
-### 3.2 Lấy Meals theo Daily Log
+### 3.2 [Admin] Phân trang + lọc (aqp) — khuyến nghị
+
+```
+GET /meals/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- **`result`:** mỗi meal gồm `dailyLog` (kèm `user`), `mealItems` + food, v.v.; **`mealTypeInfo`**: map từ `all_codes` theo `mealType` (vd. `MEAL_BREAKFAST`) — `keyMap`, `value`, `description`, `type`; đồng thời có các tổng dinh dưỡng như luồng enrich meal (totalCalories, …).
+
+---
+
+### 3.3 Lấy Meals theo Daily Log
 
 ```
 GET /meals/daily-log/:dailyLogId
@@ -628,7 +664,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 3.3 Lấy chi tiết 1 Meal
+### 3.4 Lấy chi tiết 1 Meal
 
 ```
 GET /meals/:id
@@ -688,7 +724,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 3.4 Tạo Meal mới
+### 3.5 Tạo Meal mới
 
 ```
 POST /meals
@@ -737,7 +773,7 @@ Content-Type: application/json
 
 ---
 
-### 3.5 Cập nhật Meal
+### 3.6 Cập nhật Meal
 
 ```
 PATCH /meals/:id
@@ -779,7 +815,7 @@ Content-Type: application/json
 
 ---
 
-### 3.6 Xóa Meal
+### 3.7 Xóa Meal
 
 ```
 DELETE /meals/:id
@@ -871,7 +907,7 @@ Workout Logs sử dụng `@UseGuards(JwtAuthGuard)` cho toàn bộ controller.
 ## 🔗 API Liên quan
 
 ### Meal Items
-- Xem API Meal Items để thêm/xóa món ăn trong meal
+- [admin-meal-items-api.md](./admin-meal-items-api.md) — thêm/xóa món trong meal
 
 ### Food Images
 - Xem `@/api_doc/admin-food-management-api.md` - Phần Ảnh thực phẩm

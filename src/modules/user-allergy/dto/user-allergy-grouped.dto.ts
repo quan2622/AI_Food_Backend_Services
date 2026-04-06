@@ -9,6 +9,12 @@ export class UserAllergyGroupedDto {
   allergies: {
     id: number;
     severity: string;
+    severityInfo?: {
+      keyMap: string;
+      value: string;
+      description: string | null;
+      type: string;
+    } | null;
     note: string | null;
     allergenId: number;
     allergen: {

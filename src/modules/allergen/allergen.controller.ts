@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { AllergenService } from './allergen.service';
 import { CreateAllergenDto } from './dto/create-allergen.dto.js';
 import { UpdateAllergenDto } from './dto/update-allergen.dto.js';
+import { AdminGuard } from '../../guards/admin.guard';
 
 @Controller('allergens')
 export class AllergenController {
@@ -19,6 +22,16 @@ export class AllergenController {
   @Post()
   create(@Body() dto: CreateAllergenDto) {
     return this.allergenService.create(dto);
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.allergenService.findAllAdmin(page, limit, qs);
   }
 
   @Get()

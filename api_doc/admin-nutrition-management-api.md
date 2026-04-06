@@ -1,21 +1,27 @@
 # Admin API Documentation - Nutrition Management
 
-Tài liệu API dành cho Admin để quản lý Dinh dưỡng: Chất dinh dưỡng (Nutrients/Nutrition Components) và Mục tiêu dinh dưỡng (Nutrition Goals).
+Tài liệu API dành cho Admin để quản lý Dinh dưỡng: Chất dinh dưỡng (Nutrients — endpoint `nutrition-components`) và Mục tiêu dinh dưỡng (Nutrition Goals).
+
+**Tiền tố:** `/api/v1` — xem [README.md](./README.md).
 
 ---
 
 ## 📋 Mục lục
 
 1. [Chất dinh dưỡng (Nutrition Components)](#1-chất-dinh-dưỡng-nutrition-components)
-2. [Mục tiêu dinh dưỡng (Nutrition Goals)](#2-mục-tiêu-dinh-dưỡng-nutrition-goals)
+2. [Mục tiêu dinh dưỡng (Nutrition Goals)](#2-mục-tiêu-dinh-dưỡng-nutrition-goals) — gồm `GET /nutrition-goals/admin` (phân trang)
 
 ---
 
 ## 1. Chất dinh dưỡng (Nutrition Components)
 
-Base URL: `/nutrition-components`
+Base path: `/nutrition-components`
+
+Trong database model tên **`Nutrient`**. API vẫn dùng path `nutrition-components`.
 
 Quản lý danh sách các chỉ số dinh dưỡng có thể có (Calories, Protein, Fat, Carbs...).
+
+**Đơn vị (`unit`):** enum Prisma `UnitType` — ví dụ `UNIT_G`, `UNIT_KG`, `UNIT_MG`, `UNIT_OZ`, `UNIT_LB` (không dùng chuỗi tự do kiểu `kcal` trừ khi seed cho phép).
 
 ### 1.1 Lấy danh sách Chỉ số Dinh dưỡng
 
@@ -36,31 +42,31 @@ Authorization: Bearer <admin_token>
   {
     "id": 1,
     "name": "Calories",
-    "unit": "kcal",
+    "unit": "UNIT_G",
     "values": []
   },
   {
     "id": 2,
     "name": "Protein",
-    "unit": "G",
+    "unit": "UNIT_G",
     "values": []
   },
   {
     "id": 3,
     "name": "Carbohydrates",
-    "unit": "G",
+    "unit": "UNIT_G",
     "values": []
   },
   {
     "id": 4,
     "name": "Fat",
-    "unit": "G",
+    "unit": "UNIT_G",
     "values": []
   },
   {
     "id": 5,
     "name": "Fiber",
-    "unit": "G",
+    "unit": "UNIT_G",
     "values": []
   }
 ]
@@ -88,18 +94,19 @@ Content-Type: application/json
 ```json
 {
   "name": "Iron",           // Bắt buộc - Tên chỉ số, tối đa 255 ký tự
-  "unit": "MG"              // Bắt buộc - Đơn vị (G, KG, MG, OZ, LB)
+  "unit": "UNIT_MG"         // Bắt buộc — UnitType
 }
 ```
 
-**Unit Types** (`unit`):
-| Giá trị | Mô tả |
-|---------|-------|
-| `G` | Gram |
-| `KG` | Kilogram |
-| `MG` | Milligram |
-| `OZ` | Ounce |
-| `LB` | Pound |
+**Unit Types** (`unit`) — `UnitType` trong Prisma:
+
+| Giá trị | Gợi ý |
+|---------|--------|
+| `UNIT_G` | Gram |
+| `UNIT_KG` | Kilogram |
+| `UNIT_MG` | Milligram |
+| `UNIT_OZ` | Ounce |
+| `UNIT_LB` | Pound |
 
 **Validation Rules**:
 - `name`: Không được để trống, tối đa 255 ký tự
@@ -110,7 +117,7 @@ Content-Type: application/json
 {
   "id": 6,
   "name": "Iron",
-  "unit": "MG",
+  "unit": "UNIT_MG",
   "values": []
 }
 ```
@@ -188,11 +195,28 @@ Authorization: Bearer <admin_token>
 
 ## 2. Mục tiêu dinh dưỡng (Nutrition Goals)
 
-Base URL: `/nutrition-goals`
+Base path: `/nutrition-goals`
 
 Quản lý mục tiêu dinh dưỡng của người dùng (giảm cân, tăng cân, duy trì...).
 
-### 2.1 [Admin] Lấy tất cả Mục tiêu dinh dưỡng
+### 2.1 [Admin] Phân trang + lọc (aqp) — khuyến nghị cho bảng admin
+
+```
+GET /nutrition-goals/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort qua [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+
+**Query thường dùng:** `current`, `pageSize`, cùng các tham số `filter` / sort theo aqp.
+
+**Response** (trong `data`): object dạng `{ EC, EM, meta, result }`:
+
+- **`meta`:** `current`, `pageSize`, `pages`, `total`
+- **`result`:** mảng goal kèm user; mỗi goal có **`goalTypeInfo`** và **`statusInfo`** (map từ `all_codes` theo `keyMap` = `goalType` / `status`) với `keyMap`, `value`, `description`
+
+---
+
+### 2.2 [Admin] Lấy tất cả Mục tiêu dinh dưỡng (không phân trang)
 
 ```
 GET /nutrition-goals/all
@@ -236,7 +260,7 @@ Authorization: Bearer <admin_token>
 
 ---
 
-### 2.2 Lấy Mục tiêu dinh dưỡng của User hiện tại
+### 2.3 Lấy Mục tiêu dinh dưỡng của User hiện tại
 
 ```
 GET /nutrition-goals
@@ -272,7 +296,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 2.3 Lấy Mục tiêu dinh dưỡng với lịch sử
+### 2.4 Lấy Mục tiêu dinh dưỡng với lịch sử
 
 ```
 GET /nutrition-goals/my-goals
@@ -307,7 +331,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 2.4 Lấy Mục tiêu dinh dưỡng hiện tại
+### 2.5 Lấy Mục tiêu dinh dưỡng hiện tại
 
 ```
 GET /nutrition-goals/current
@@ -339,13 +363,15 @@ Authorization: Bearer <token>
 
 ---
 
-### 2.5 Lấy chi tiết 1 Mục tiêu dinh dưỡng
+### 2.6 Lấy chi tiết 1 Mục tiêu dinh dưỡng
 
 ```
 GET /nutrition-goals/:id
 ```
 
-**Mô tả**: Lấy thông tin chi tiết của một mục tiêu dinh dưỡng
+**Mô tả**: Lấy thông tin chi tiết của một mục tiêu dinh dưỡng (kèm `user`).
+
+**Lưu ý:** Handler hiện **không** kiểm tra `userId` khớp JWT — mọi user đăng nhập có thể đọc goal theo `id` (nên cân nhắc siết quyền ở backend nếu cần bảo mật).
 
 **Params**:
 | Tên | Kiểu | Bắt buộc | Mô tả |
@@ -384,7 +410,7 @@ Authorization: Bearer <token>
 
 ---
 
-### 2.6 Tạo Mục tiêu dinh dưỡng mới
+### 2.7 Tạo Mục tiêu dinh dưỡng mới
 
 ```
 POST /nutrition-goals
@@ -451,7 +477,7 @@ Content-Type: application/json
 
 ---
 
-### 2.7 Cập nhật Mục tiêu dinh dưỡng
+### 2.8 Cập nhật Mục tiêu dinh dưỡng
 
 ```
 PATCH /nutrition-goals/:id
@@ -506,7 +532,7 @@ Content-Type: application/json
 
 ---
 
-### 2.8 Xóa 1 Mục tiêu dinh dưỡng
+### 2.9 Xóa 1 Mục tiêu dinh dưỡng
 
 ```
 DELETE /nutrition-goals/:id
@@ -533,13 +559,15 @@ Authorization: Bearer <token>
 
 ---
 
-### 2.9 Xóa nhiều Mục tiêu dinh dưỡng (Bulk Delete)
+### 2.10 Xóa nhiều Mục tiêu dinh dưỡng (Bulk Delete)
 
 ```
 DELETE /nutrition-goals/bulk
 ```
 
-**Mô tả**: Xóa nhiều mục tiêu dinh dưỡng cùng lúc
+**Mô tả**: Xóa nhiều mục tiêu dinh dưỡng cùng lúc (chỉ các goal thuộc user trong token).
+
+**Lưu ý định tuyến:** Trong NestJS, route `bulk` phải được khai báo **trước** `DELETE :id` — controller đã đặt đúng thứ tự.
 
 **Headers**:
 ```
@@ -550,20 +578,11 @@ Content-Type: application/json
 **Request Body**:
 ```json
 {
-  "ids": [1, 2, 3]    // Bắt buộc - Mảng các ID, không được rỗng, mỗi ID > 0
+  "ids": [1, 2, 3]
 }
 ```
 
-**Validation Rules**:
-- `ids`: Phải là mảng số nguyên dương, không được rỗng
-
-**Response** (200 OK):
-```json
-{
-  "count": 3,
-  "message": "Deleted 3 nutrition goals successfully"
-}
-```
+**Response** (200 OK): theo service — thường có `count` / message.
 
 ---
 
@@ -588,7 +607,7 @@ Token JWT phải chứa:
 ### User-based Access
 Các API Nutrition Goals sử dụng `@User()` decorator để lấy userId từ token:
 - Users chỉ có thể xem/cập nhật/xóa mục tiêu của chính mình
-- Admin có thể xem tất cả qua `/nutrition-goals/all`
+- Admin có thể xem tất cả qua `/nutrition-goals/all` hoặc phân trang qua `/nutrition-goals/admin`
 
 ---
 
@@ -619,8 +638,9 @@ Các API Nutrition Goals sử dụng `@User()` decorator để lấy userId từ
 ### Scenario: Admin quản lý tất cả mục tiêu
 
 ```
-1. GET /nutrition-goals/all        → Xem tất cả mục tiêu
-2. GET /nutrition-goals/5          → Xem chi tiết mục tiêu #5
+1. GET /nutrition-goals/admin?current=1&pageSize=20   → Danh sách phân trang (khuyến nghị)
+2. GET /nutrition-goals/all                          → Toàn bộ không phân trang
+3. GET /nutrition-goals/5                             → Chi tiết mục tiêu #5
 ```
 
 ---

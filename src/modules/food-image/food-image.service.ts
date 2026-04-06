@@ -1,17 +1,26 @@
 import {
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
 import type { CreateFoodImageDto } from './dto/create-food-image.dto.js';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { AllCodeLookupService } from '../../common/services/allcode-lookup.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../common/utils/admin-pagination.util';
 
 @Injectable()
 export class FoodImageService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly allCodeLookup: AllCodeLookupService,
   ) {}
 
   async create(
@@ -104,5 +113,74 @@ export class FoodImageService {
       where: { mealId },
     });
     return { deletedCount: result.count };
+  }
+
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { uploadedAt: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.foodImage.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const rows = await this.prisma.foodImage.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          user: {
+            select: { id: true, email: true, fullName: true },
+          },
+          meal: {
+            select: {
+              id: true,
+              mealType: true,
+              mealDateTime: true,
+              dailyLogId: true,
+            },
+          },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      const mealTypeMap = await this.allCodeLookup.mapByKeyMaps(
+        rows.map((r) => r.meal?.mealType).filter(Boolean) as string[],
+      );
+
+      const result = rows.map((r) => ({
+        ...r,
+        mealTypeInfo: r.meal?.mealType
+          ? mealTypeMap.get(r.meal.mealType) ?? null
+          : null,
+      }));
+
+      return {
+        EC: 0,
+        EM: 'Get food images with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in food image service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in food image service get paginate',
+      });
+    }
   }
 }

@@ -23,23 +23,23 @@ export class CreateUserProfileDto {
   weight: number;
 
   @IsOptional()
-  @IsIn(['MALE', 'FEMALE', 'OTHER'], {
-    message: 'gender phải là MALE, FEMALE hoặc OTHER',
+  @IsIn(['MALE', 'FEMALE', 'UNDEFINED'], {
+    message: 'gender phải là MALE, FEMALE hoặc UNDEFINED',
   })
   gender?: string;
 
   @IsOptional()
   @IsIn(
     [
-      'SEDENTARY',
-      'LIGHTLY_ACTIVE',
-      'MODERATELY_ACTIVE',
-      'VERY_ACTIVE',
-      'SUPER_ACTIVE',
+      'ACT_SEDENTARY',
+      'ACT_LIGHT',
+      'ACT_MODERATE',
+      'ACT_VERY',
+      'ACT_SUPER',
     ],
     {
       message:
-        'activityLevel phải là SEDENTARY, LIGHTLY_ACTIVE, MODERATELY_ACTIVE, VERY_ACTIVE hoặc SUPER_ACTIVE',
+        'activityLevel phải là ACT_SEDENTARY, ACT_LIGHT, ACT_MODERATE, ACT_VERY hoặc ACT_SUPER',
   })
   activityLevel?: string;
 }

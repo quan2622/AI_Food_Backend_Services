@@ -1,10 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StatusType } from '../../generated/prisma/enums';
+import { AllCodeLookupService } from '../../common/services/allcode-lookup.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../common/utils/admin-pagination.util';
 
 @Injectable()
 export class DailyLogService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly allCodeLookup: AllCodeLookupService,
+  ) {}
 
   // ─── Private helpers ──────────────────────────────────────────────────────
 
@@ -217,6 +231,64 @@ export class DailyLogService {
         user: { select: { id: true, fullName: true, email: true } },
       },
     });
+  }
+
+  /** [Admin] Phân trang + lọc (aqp); gắn statusInfo từ AllCode theo keyMap `status`. */
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { logDate: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.dailyLog.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const rows = await this.prisma.dailyLog.findMany({
+        where: filter,
+        orderBy: sort,
+        include: {
+          user: { select: { id: true, fullName: true, email: true } },
+        },
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      const statusMap = await this.allCodeLookup.mapByKeyMaps(
+        rows.map((r) => r.status),
+      );
+
+      const result = rows.map((r) => ({
+        ...r,
+        statusInfo: statusMap.get(r.status) ?? null,
+      }));
+
+      return {
+        EC: 0,
+        EM: 'Get daily logs with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in daily log service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in daily log service get paginate',
+      });
+    }
   }
 
   /** [Admin] Lấy một DailyLog theo id */

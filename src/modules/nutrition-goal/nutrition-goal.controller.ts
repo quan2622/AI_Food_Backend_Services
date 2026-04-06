@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { NutritionGoalService } from './nutrition-goal.service';
 import { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
@@ -35,6 +36,16 @@ export class NutritionGoalController {
   @Get('all')
   findAll() {
     return this.nutritionGoalService.findAll();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.nutritionGoalService.findAllAdmin(page, limit, qs);
   }
 
   @Get()

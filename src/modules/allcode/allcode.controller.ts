@@ -10,7 +10,9 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AdminGuard } from '../../guards/admin.guard';
 import { AllcodeService } from './allcode.service';
 import { CreateAllcodeDto } from './dto/create-allcode.dto.js';
 import { UpdateAllcodeDto } from './dto/update-allcode.dto.js';
@@ -39,6 +41,16 @@ export class AllcodeController {
       return this.allcodeService.findByType(type);
     }
     return this.allcodeService.findAll();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.allcodeService.findAllAdmin(page, limit, qs);
   }
 
   @Get('key/:keyMap')

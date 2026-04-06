@@ -2,12 +2,14 @@
 
 Tài liệu API dành cho Admin để quản lý Nguyên liệu, Chất gây dị ứng (Allergens) và Dinh dưỡng Nguyên liệu.
 
+**Tiền tố:** `/api/v1` — xem [README.md](./README.md).
+
 ---
 
 ## 📋 Mục lục
 
-1. [Chất gây dị ứng (Allergens)](#1-chất-gây-dị-ứng-allergens)
-2. [Liên kết Nguyên liệu - Allergen](#2-liên-kết-nguyên-liệu---allergen)
+1. [Chất gây dị ứng (Allergens)](#1-chất-gây-dị-ứng-allergens) — gồm `GET /allergens/admin`
+2. [Liên kết Nguyên liệu - Allergen](#2-liên-kết-nguyên-liệu---allergen) — gồm `GET /ingredient-allergens/admin`
 3. [Nguyên liệu trong Món ăn (Dish Ingredients)](#3-nguyên-liệu-trong-món-ăn-dish-ingredients)
 4. [Dinh dưỡng Nguyên liệu (Ingredient Nutrition)](#4-dinh-dưỡng-nguyên-liệu-ingredient-nutrition)
 5. [Chỉ số Dinh dưỡng (Nutrition Components)](#5-chỉ-số-dinh-dưỡng-nutrition-components)
@@ -29,9 +31,21 @@ Hệ thống hiện tại **không có API CRUD trực tiếp** cho danh sách n
 
 ## 1. Chất gây dị ứng (Allergens)
 
-Base URL: `/allergens`
+Base path: `/allergens`
 
 Allergens là các chất gây dị ứng độc lập (ví dụ: Đậu phộng, Hải sản, Gluten...).
+
+### 1.0 [Admin] Phân trang + lọc (aqp) — khuyến nghị
+
+```
+GET /allergens/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Response** (trong `data`): `{ EC, EM, meta, result }` — **`result`** là mảng `Allergen` (không có keyMap riêng; hiển thị tên/mô tả từ entity).
+
+---
 
 ### 1.1 Lấy danh sách tất cả Allergens
 
@@ -229,11 +243,25 @@ Authorization: Bearer <admin_token>
 
 ## 2. Liên kết Nguyên liệu - Allergen
 
-Base URL: `/ingredient-allergens`
+Base path: `/ingredient-allergens`
 
 Quản lý mối quan hệ nhiều-nhiều giữa **Nguyên liệu** và **Allergen**.
 - Một nguyên liệu có thể chứa nhiều allergen
 - Một allergen có thể có trong nhiều nguyên liệu
+
+### 2.0 [Admin] Phân trang + lọc (aqp) — toàn bộ liên kết
+
+```
+GET /ingredient-allergens/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Response** (trong `data`): `{ EC, EM, meta, result }`.
+
+- **`result`:** mỗi bản ghi gồm **`ingredient`** và **`allergen`** đầy đủ (không map thêm AllCode trên entity này).
+
+---
 
 ### 2.1 Lấy danh sách Allergens của một Nguyên liệu
 
@@ -375,7 +403,7 @@ Authorization: Bearer <admin_token>
 
 ## 3. Nguyên liệu trong Món ăn (Dish Ingredients)
 
-Base URL: `/foods/:dishId/ingredients`
+Base path: `/foods/:dishId/ingredients`
 
 Quản lý thành phần nguyên liệu của mỗi món ăn.
 
@@ -549,9 +577,21 @@ Authorization: Bearer <admin_token>
 
 ## 4. Dinh dưỡng Nguyên liệu (Ingredient Nutrition)
 
-Base URL: `/ingredients/:ingredientId/nutritions`
+Controller `FoodNutritionController` — các path dưới đây nằm **trực tiếp dưới** `/api/v1` (không có prefix `foods` cho phần ingredient).
 
-Quản lý thông tin dinh dưỡng của từng nguyên liệu.
+Quản lý bản ghi **`IngredientNutrition`** (khẩu phần + bộ giá trị `NutritionValue` theo `nutrientId`).
+
+**Tổng hợp theo món:**
+
+```
+GET /foods/:foodId/nutritions
+```
+
+Trả về mọi `IngredientNutrition` của các nguyên liệu thuộc món `foodId` (aggregate).
+
+---
+
+Base path (theo nguyên liệu): `/ingredients/:ingredientId/nutritions`
 
 ### 4.1 Lấy Dinh dưỡng của Nguyên liệu
 
@@ -577,8 +617,8 @@ Authorization: Bearer <admin_token>
   {
     "id": 1,
     "servingSize": 100,
-    "servingUnit": "G",
-    "source": "MANUAL",
+    "servingUnit": "UNIT_G",
+    "source": "SRC_MANUAL",
     "isCalculated": false,
     "ingredientId": 5,
     "values": [
@@ -621,35 +661,28 @@ Authorization: Bearer <admin_token>
 Content-Type: application/json
 ```
 
-**Request Body**:
+**Request Body** (`CreateFoodNutritionDto`):
 ```json
 {
-  "servingSize": 100,             // Bắt buộc - Khẩu phần, >= 0
-  "servingUnit": "G",             // Bắt buộc - Đơn vị (G, KG, MG, OZ, LB)
-  "source": "USDA",               // Bắt buộc - Nguồn (USDA | MANUAL | CALCULATED)
-  "isCalculated": false           // Tùy chọn - Tính toán tự động
+  "servingSize": 100,
+  "servingUnit": "UNIT_G",
+  "source": "SRC_USDA",
+  "isCalculated": false
 }
 ```
 
-**Unit Types** (`servingUnit`):
-- `G` - Gram
-- `KG` - Kilogram
-- `MG` - Milligram
-- `OZ` - Ounce
-- `LB` - Pound
+- **`servingUnit`:** enum Prisma `UnitType` (`UNIT_G`, `UNIT_KG`, …).
+- **`source`:** enum Prisma `SourceType` — `SRC_USDA` \| `SRC_MANUAL` \| `SRC_CALC`.
 
-**Source Types** (`source`):
-- `USDA` - Dữ liệu từ USDA
-- `MANUAL` - Nhập thủ công
-- `CALCULATED` - Tính toán từ các nguyên liệu khác
+**Lưu ý:** DTO trong code có thể dùng bộ string khác cho `source` — nếu request bị 400, thử đúng giá trị enum Prisma ở trên.
 
 **Response** (201 Created):
 ```json
 {
   "id": 2,
   "servingSize": 100,
-  "servingUnit": "G",
-  "source": "USDA",
+  "servingUnit": "UNIT_G",
+  "source": "SRC_USDA",
   "isCalculated": false,
   "ingredientId": 5,
   "createdAt": "2024-01-01T00:00:00Z"
@@ -658,19 +691,19 @@ Content-Type: application/json
 
 ---
 
-### 4.3 Cập nhật Dinh dưỡng
+### 4.3 Cập nhật Dinh dưỡng (bản ghi IngredientNutrition)
 
 ```
 PATCH /foods/:foodId/nutritions/:id
 ```
 
-**Mô tả**: Cập nhật thông tin dinh dưỡng
+**Mô tả:** Cập nhật một bản ghi `IngredientNutrition` theo **id** (service chỉ dùng `id`; `foodId` trên path để định tuyến nhất quán).
 
 **Params**:
 | Tên | Kiểu | Bắt buộc | Mô tả |
 |-----|------|----------|-------|
-| foodId | number | ✅ | ID của món ăn |
-| id | number | ✅ | ID của bản ghi dinh dưỡng |
+| foodId | number | ✅ | ID món ăn (dish) |
+| id | number | ✅ | ID bản ghi `IngredientNutrition` |
 
 **Headers**:
 ```
@@ -682,8 +715,8 @@ Content-Type: application/json
 ```json
 {
   "servingSize": 150,
-  "servingUnit": "G",
-  "source": "MANUAL",
+  "servingUnit": "UNIT_G",
+  "source": "SRC_MANUAL",
   "isCalculated": true
 }
 ```
@@ -693,8 +726,8 @@ Content-Type: application/json
 {
   "id": 1,
   "servingSize": 150,
-  "servingUnit": "G",
-  "source": "MANUAL",
+  "servingUnit": "UNIT_G",
+  "source": "SRC_MANUAL",
   "isCalculated": true,
   "updatedAt": "2024-01-02T00:00:00Z"
 }
@@ -708,13 +741,13 @@ Content-Type: application/json
 DELETE /foods/:foodId/nutritions/:id
 ```
 
-**Mô tả**: Xóa thông tin dinh dưỡng
+**Mô tả:** Xóa bản ghi `IngredientNutrition` theo `id`.
 
 **Params**:
 | Tên | Kiểu | Bắt buộc | Mô tả |
 |-----|------|----------|-------|
-| foodId | number | ✅ | ID của món ăn |
-| id | number | ✅ | ID của bản ghi dinh dưỡng |
+| foodId | number | ✅ | ID món ăn |
+| id | number | ✅ | ID bản ghi dinh dưỡng |
 
 **Headers**:
 ```
@@ -734,7 +767,7 @@ Authorization: Bearer <admin_token>
 POST /foods/:foodId/nutritions/:id/values
 ```
 
-**Mô tả**: Cập nhật/Thêm các giá trị dinh dưỡng cụ thể (calories, protein...)
+**Mô tả:** Ghi đè toàn bộ `NutritionValue` của bản ghi `IngredientNutrition` (xóa cũ + tạo mới trong transaction). Dùng **`nutrientId`** (bảng Nutrient), không dùng tên tự do.
 
 **Params**:
 | Tên | Kiểu | Bắt buộc | Mô tả |
@@ -790,155 +823,9 @@ Content-Type: application/json
 
 ## 5. Chỉ số Dinh dưỡng (Nutrition Components)
 
-Base URL: `/nutrition-components`
+Path **`/nutrition-components`** — CRUD **Nutrient** (tên + `UnitType`).
 
-Quản lý danh sách các chỉ số dinh dưỡng có thể có (Calories, Protein, Fat...).
-
-### 5.1 Lấy danh sách Chỉ số Dinh dưỡng
-
-```
-GET /nutrition-components
-```
-
-**Mô tả**: Lấy tất cả các chỉ số dinh dưỡng có thể đo
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
-
-**Response** (200 OK):
-```json
-[
-  {
-    "id": 1,
-    "name": "Calories",
-    "unit": "kcal",
-    "values": []
-  },
-  {
-    "id": 2,
-    "name": "Protein",
-    "unit": "g",
-    "values": []
-  },
-  {
-    "id": 3,
-    "name": "Carbohydrates",
-    "unit": "g",
-    "values": []
-  }
-]
-```
-
----
-
-### 5.2 Tạo Chỉ số Dinh dưỡng mới
-
-```
-POST /nutrition-components
-```
-
-**Mô tả**: Thêm một chỉ số dinh dưỡng mới
-
-**⚠️ Yêu cầu**: Admin token
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-Content-Type: application/json
-```
-
-**Request Body**:
-```json
-{
-  "name": "Fiber",          // Bắt buộc - Tên chỉ số, tối đa 255 ký tự
-  "unit": "G"               // Bắt buộc - Đơn vị (G, KG, MG, OZ, LB)
-}
-```
-
-**Validation Rules**:
-- `name`: Không được để trống, tối đa 255 ký tự
-- `unit`: Phải là một trong các giá trị: `G`, `KG`, `MG`, `OZ`, `LB`
-
-**Response** (201 Created):
-```json
-{
-  "id": 4,
-  "name": "Fiber",
-  "unit": "G",
-  "values": []
-}
-```
-
----
-
-### 5.3 Cập nhật Chỉ số Dinh dưỡng
-
-```
-PATCH /nutrition-components/:id
-```
-
-**Mô tả**: Cập nhật thông tin chỉ số dinh dưỡng
-
-**⚠️ Yêu cầu**: Admin token
-
-**Params**:
-| Tên | Kiểu | Bắt buộc | Mô tả |
-|-----|------|----------|-------|
-| id | number | ✅ | ID của chỉ số dinh dưỡng |
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-Content-Type: application/json
-```
-
-**Request Body** (tất cả tùy chọn):
-```json
-{
-  "name": "Chất xơ",
-  "unit": "G"
-}
-```
-
-**Response** (200 OK):
-```json
-{
-  "id": 4,
-  "name": "Chất xơ",
-  "unit": "G"
-}
-```
-
----
-
-### 5.4 Xóa Chỉ số Dinh dưỡng
-
-```
-DELETE /nutrition-components/:id
-```
-
-**Mô tả**: Xóa một chỉ số dinh dưỡng
-
-**⚠️ Yêu cầu**: Admin token
-
-⚠️ **Cảnh báo**: Xóa sẽ ảnh hưởng đến tất cả các giá trị dinh dưỡng đang sử dụng chỉ số này.
-
-**Params**:
-| Tên | Kiểu | Bắt buộc | Mô tả |
-|-----|------|----------|-------|
-| id | number | ✅ | ID của chỉ số dinh dưỡng |
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
-
-**Response** (204 No Content):
-```
-(empty body)
-```
+**Không lặp lại chi tiết ở đây** — xem đầy đủ tại [admin-nutrition-management-api.md](./admin-nutrition-management-api.md) mục *Chất dinh dưỡng*.
 
 ---
 

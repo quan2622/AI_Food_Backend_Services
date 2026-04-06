@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { MealService } from './meal.service';
 import { CreateMealDto } from './dto/create-meal.dto.js';
@@ -39,6 +40,16 @@ export class MealController {
   @Get('all')
   findAll() {
     return this.mealService.findAll();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.mealService.findAllAdmin(page, limit, qs);
   }
 
   @Get(':id')

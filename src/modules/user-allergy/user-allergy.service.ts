@@ -4,6 +4,7 @@ import type { AqpQuery } from 'api-query-params';
 import { isEmpty } from 'lodash';
 import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
+import { AllCodeLookupService } from '../../common/services/allcode-lookup.service';
 import type { CreateUserAllergyDto } from './dto/create-user-allergy.dto.js';
 import type { UpdateUserAllergyDto } from './dto/update-user-allergy.dto.js';
 import { UserAllergyPaginationDto } from './dto/user-allergy-pagination.dto';
@@ -11,7 +12,10 @@ import { UserAllergyGroupedDto } from './dto/user-allergy-grouped.dto';
 
 @Injectable()
 export class UserAllergyService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly allCodeLookup: AllCodeLookupService,
+  ) {}
 
   async create(dto: CreateUserAllergyDto) {
     const user = await this.prisma.user.findUnique({
@@ -104,33 +108,31 @@ export class UserAllergyService {
         take: defaultLimit,
       });
 
+      const severityMap = await this.allCodeLookup.mapByKeyMaps(
+        result.map((r) => r.severity),
+      );
+
       // Group by user
       const groupedMap = new Map<number, UserAllergyGroupedDto>();
       for (const item of result) {
+        const allergyRow = {
+          id: item.id,
+          severity: item.severity,
+          severityInfo: severityMap.get(item.severity) ?? null,
+          note: item.note,
+          allergenId: item.allergenId,
+          allergen: item.allergen,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+        };
         const existing = groupedMap.get(item.userId);
         if (existing) {
-          existing.allergies.push({
-            id: item.id,
-            severity: item.severity,
-            note: item.note,
-            allergenId: item.allergenId,
-            allergen: item.allergen,
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
-          });
+          existing.allergies.push(allergyRow);
         } else {
           groupedMap.set(item.userId, {
             userId: item.userId,
             user: item.user,
-            allergies: [{
-              id: item.id,
-              severity: item.severity,
-              note: item.note,
-              allergenId: item.allergenId,
-              allergen: item.allergen,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-            }],
+            allergies: [allergyRow],
           });
         }
       }

@@ -7,7 +7,19 @@ export class UserProfilePaginationDto {
   bmr: number;
   tdee: number;
   gender: string | null;
+  genderData: {
+    keyMap: string;
+    type: string;
+    value: string;
+    description: string | null;
+  } | null;
   activityLevel: string | null;
+  activityLevelData: {
+    keyMap: string;
+    type: string;
+    value: string;
+    description: string | null;
+  } | null;
   userId: number;
   createdAt: Date;
   updatedAt: Date;

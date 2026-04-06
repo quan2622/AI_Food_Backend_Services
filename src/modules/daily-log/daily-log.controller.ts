@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { DailyLogService } from './daily-log.service';
 import { User } from 'src/common/decorators';
@@ -38,6 +39,17 @@ export class DailyLogController {
   @Get('all')
   findAll() {
     return this.dailyLogService.findAll();
+  }
+
+  /** [Admin] Phân trang + lọc (aqp), kèm statusInfo (AllCode) */
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.dailyLogService.findAllAdmin(page, limit, qs);
   }
 
   /** [Admin] Lấy một DailyLog theo ID */

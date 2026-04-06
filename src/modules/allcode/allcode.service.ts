@@ -1,9 +1,16 @@
 import {
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../common/utils/admin-pagination.util';
 import type { AllCode } from '../../generated/prisma/client.js';
 import type { CreateAllcodeDto } from './dto/create-allcode.dto.js';
 import type { UpdateAllcodeDto } from './dto/update-allcode.dto.js';
@@ -57,6 +64,51 @@ export class AllcodeService {
       where: { type },
       orderBy: { keyMap: 'asc' },
     });
+  }
+
+  async findAllAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { type: 'asc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.allCode.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.allCode.findMany({
+        where: filter,
+        orderBy: sort,
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get all codes with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in allcode service get paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in allcode service get paginate',
+      });
+    }
   }
 
   async findOne(id: number): Promise<AllCode> {

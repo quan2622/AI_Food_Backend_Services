@@ -39,7 +39,8 @@ export class UserProfileService {
     gender?: string,
   ): number {
     const base = 10 * weight + 6.25 * height - 5 * age;
-    const offset = gender === 'FEMALE' ? -161 : 5; // default MALE
+    // FEMALE uses -161, MALE and UNDEFINED default to +5 (male calculation)
+    const offset = gender === 'FEMALE' ? -161 : 5;
     return parseFloat((base + offset).toFixed(2));
   }
 
@@ -142,6 +143,42 @@ export class UserProfileService {
         take: defaultLimit,
       });
 
+      // Fetch activity level data from AllCode for each profile
+      const activityLevelCodes = await this.prisma.allCode.findMany({
+        where: {
+          type: 'ACTIVITY',
+          keyMap: {
+            in: result
+              .map((p) => p.activityLevel)
+              .filter((a): a is string => a !== null && a !== undefined),
+          },
+        },
+      });
+
+      const activityLevelMap = new Map(activityLevelCodes.map((c) => [c.keyMap, c]));
+
+      // Fetch gender data from AllCode for each profile
+      const genderCodes = await this.prisma.allCode.findMany({
+        where: {
+          type: 'GENDER',
+          keyMap: {
+            in: result
+              .map((p) => p.gender)
+              .filter((g): g is string => g !== null && g !== undefined),
+          },
+        },
+      });
+
+      const genderMap = new Map(genderCodes.map((c) => [c.keyMap, c]));
+
+      const data = result.map((profile) => ({
+        ...profile,
+        genderData: profile.gender ? genderMap.get(profile.gender) || null : null,
+        activityLevelData: profile.activityLevel
+          ? activityLevelMap.get(profile.activityLevel) || null
+          : null,
+      }));
+
       return {
         EC: 0,
         EM: 'Get user profiles with query paginate success (admin)',
@@ -151,7 +188,7 @@ export class UserProfileService {
           pages: totalPages,
           total: totalItems,
         },
-        result: plainToInstance(UserProfilePaginationDto, result),
+        result: plainToInstance(UserProfilePaginationDto, data),
       };
     } catch (error) {
       console.error('Error in user profile service get paginate(admin):', error.message);
