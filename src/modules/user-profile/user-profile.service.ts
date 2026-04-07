@@ -76,7 +76,7 @@ export class UserProfileService {
         age: dto.age,
         height: dto.height,
         weight: dto.weight,
-        gender: dto.gender ?? null,
+        gender: dto.gender ?? 'UNDEFINED',
         activityLevel: dto.activityLevel ?? null,
         bmi,
         bmr,
@@ -162,9 +162,7 @@ export class UserProfileService {
         where: {
           type: 'GENDER',
           keyMap: {
-            in: result
-              .map((p) => p.gender)
-              .filter((g): g is string => g !== null && g !== undefined),
+            in: result.map((p) => p.gender),
           },
         },
       });
@@ -241,7 +239,7 @@ export class UserProfileService {
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
-    const newGender = dto.gender ?? profile.gender ?? undefined;
+    const newGender = dto.gender ?? profile.gender;
     const newActivityLevel: string | null =
       dto.activityLevel ?? profile.activityLevel ?? null;
 
@@ -297,7 +295,7 @@ export class UserProfileService {
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
     const newAge = dto.age ?? profile.age;
-    const newGender = dto.gender ?? profile.gender ?? undefined;
+    const newGender = dto.gender ?? profile.gender;
     const newActivityLevel: string | null =
       dto.activityLevel ?? profile.activityLevel ?? null;
 

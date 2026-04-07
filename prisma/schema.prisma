@@ -212,6 +212,8 @@ model FoodCategory {
   name        String         @unique
   description String?
   parentId    Int?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   parent      FoodCategory?  @relation("CategoryTree", fields: [parentId], references: [id])
   children    FoodCategory[] @relation("CategoryTree")
 

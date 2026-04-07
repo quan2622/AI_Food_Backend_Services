@@ -56,7 +56,7 @@ export type UserProfileMinAggregateOutputType = {
   bmi: number | null
   bmr: number | null
   tdee: number | null
-  gender: string | null
+  gender: $Enums.GenderType | null
   activityLevel: string | null
   userId: number | null
   createdAt: Date | null
@@ -71,7 +71,7 @@ export type UserProfileMaxAggregateOutputType = {
   bmi: number | null
   bmr: number | null
   tdee: number | null
-  gender: string | null
+  gender: $Enums.GenderType | null
   activityLevel: string | null
   userId: number | null
   createdAt: Date | null
@@ -257,7 +257,7 @@ export type UserProfileGroupByOutputType = {
   bmi: number
   bmr: number
   tdee: number
-  gender: string | null
+  gender: $Enums.GenderType
   activityLevel: string | null
   userId: number
   createdAt: Date
@@ -295,7 +295,7 @@ export type UserProfileWhereInput = {
   bmi?: Prisma.FloatFilter<"UserProfile"> | number
   bmr?: Prisma.FloatFilter<"UserProfile"> | number
   tdee?: Prisma.FloatFilter<"UserProfile"> | number
-  gender?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  gender?: Prisma.EnumGenderTypeFilter<"UserProfile"> | $Enums.GenderType
   activityLevel?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   userId?: Prisma.IntFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
@@ -311,7 +311,7 @@ export type UserProfileOrderByWithRelationInput = {
   bmi?: Prisma.SortOrder
   bmr?: Prisma.SortOrder
   tdee?: Prisma.SortOrder
-  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrder
   activityLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,7 +331,7 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   bmi?: Prisma.FloatFilter<"UserProfile"> | number
   bmr?: Prisma.FloatFilter<"UserProfile"> | number
   tdee?: Prisma.FloatFilter<"UserProfile"> | number
-  gender?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  gender?: Prisma.EnumGenderTypeFilter<"UserProfile"> | $Enums.GenderType
   activityLevel?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
@@ -346,7 +346,7 @@ export type UserProfileOrderByWithAggregationInput = {
   bmi?: Prisma.SortOrder
   bmr?: Prisma.SortOrder
   tdee?: Prisma.SortOrder
-  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrder
   activityLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -369,7 +369,7 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   bmi?: Prisma.FloatWithAggregatesFilter<"UserProfile"> | number
   bmr?: Prisma.FloatWithAggregatesFilter<"UserProfile"> | number
   tdee?: Prisma.FloatWithAggregatesFilter<"UserProfile"> | number
-  gender?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+  gender?: Prisma.EnumGenderTypeWithAggregatesFilter<"UserProfile"> | $Enums.GenderType
   activityLevel?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   userId?: Prisma.IntWithAggregatesFilter<"UserProfile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
@@ -383,7 +383,7 @@ export type UserProfileCreateInput = {
   bmi: number
   bmr: number
   tdee: number
-  gender?: string | null
+  gender?: $Enums.GenderType
   activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -398,7 +398,7 @@ export type UserProfileUncheckedCreateInput = {
   bmi: number
   bmr: number
   tdee: number
-  gender?: string | null
+  gender?: $Enums.GenderType
   activityLevel?: string | null
   userId: number
   createdAt?: Date | string
@@ -412,7 +412,7 @@ export type UserProfileUpdateInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -427,7 +427,7 @@ export type UserProfileUncheckedUpdateInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,7 +442,7 @@ export type UserProfileCreateManyInput = {
   bmi: number
   bmr: number
   tdee: number
-  gender?: string | null
+  gender?: $Enums.GenderType
   activityLevel?: string | null
   userId: number
   createdAt?: Date | string
@@ -456,7 +456,7 @@ export type UserProfileUpdateManyMutationInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -470,7 +470,7 @@ export type UserProfileUncheckedUpdateManyInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,6 +589,10 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumGenderTypeFieldUpdateOperationsInput = {
+  set?: $Enums.GenderType
+}
+
 export type UserProfileCreateWithoutUserInput = {
   age: number
   height: number
@@ -596,7 +600,7 @@ export type UserProfileCreateWithoutUserInput = {
   bmi: number
   bmr: number
   tdee: number
-  gender?: string | null
+  gender?: $Enums.GenderType
   activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -610,7 +614,7 @@ export type UserProfileUncheckedCreateWithoutUserInput = {
   bmi: number
   bmr: number
   tdee: number
-  gender?: string | null
+  gender?: $Enums.GenderType
   activityLevel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -639,7 +643,7 @@ export type UserProfileUpdateWithoutUserInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -653,7 +657,7 @@ export type UserProfileUncheckedUpdateWithoutUserInput = {
   bmi?: Prisma.FloatFieldUpdateOperationsInput | number
   bmr?: Prisma.FloatFieldUpdateOperationsInput | number
   tdee?: Prisma.FloatFieldUpdateOperationsInput | number
-  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.EnumGenderTypeFieldUpdateOperationsInput | $Enums.GenderType
   activityLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -748,7 +752,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     bmi: number
     bmr: number
     tdee: number
-    gender: string | null
+    gender: $Enums.GenderType
     activityLevel: string | null
     userId: number
     createdAt: Date
@@ -1184,7 +1188,7 @@ export interface UserProfileFieldRefs {
   readonly bmi: Prisma.FieldRef<"UserProfile", 'Float'>
   readonly bmr: Prisma.FieldRef<"UserProfile", 'Float'>
   readonly tdee: Prisma.FieldRef<"UserProfile", 'Float'>
-  readonly gender: Prisma.FieldRef<"UserProfile", 'String'>
+  readonly gender: Prisma.FieldRef<"UserProfile", 'GenderType'>
   readonly activityLevel: Prisma.FieldRef<"UserProfile", 'String'>
   readonly userId: Prisma.FieldRef<"UserProfile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"UserProfile", 'DateTime'>

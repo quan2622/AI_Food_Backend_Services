@@ -186,6 +186,13 @@ export type FloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type EnumGenderTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GenderType | Prisma.EnumGenderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel> | $Enums.GenderType
+}
+
 export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
@@ -200,6 +207,16 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type EnumGenderTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GenderType | Prisma.EnumGenderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGenderTypeWithAggregatesFilter<$PrismaModel> | $Enums.GenderType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel>
 }
 
 export type EnumNutritionGoalStatusFilter<$PrismaModel = never> = {
@@ -474,6 +491,13 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
+export type NestedEnumGenderTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GenderType | Prisma.EnumGenderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel> | $Enums.GenderType
+}
+
 export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel>
@@ -488,6 +512,16 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumGenderTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GenderType | Prisma.EnumGenderTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GenderType[] | Prisma.ListEnumGenderTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGenderTypeWithAggregatesFilter<$PrismaModel> | $Enums.GenderType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGenderTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumNutritionGoalStatusFilter<$PrismaModel = never> = {

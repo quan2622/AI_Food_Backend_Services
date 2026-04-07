@@ -7,6 +7,7 @@ import {
   Min,
   Max,
 } from 'class-validator';
+import type { UserProfile } from '../../../generated/prisma/client.js';
 
 export class CreateUserProfileDto {
   @IsInt({ message: 'Tuổi phải là số nguyên' })
@@ -26,7 +27,7 @@ export class CreateUserProfileDto {
   @IsIn(['MALE', 'FEMALE', 'UNDEFINED'], {
     message: 'gender phải là MALE, FEMALE hoặc UNDEFINED',
   })
-  gender?: string;
+  gender?: UserProfile['gender'];
 
   @IsOptional()
   @IsIn(

@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { FoodCategoryService } from '../services/food-category.service.js';
@@ -26,6 +27,16 @@ export class FoodCategoryController {
   @Get('roots')
   findRoots() {
     return this.foodCategoryService.findRoots();
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  findAllAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.foodCategoryService.findAllAdmin(page, limit, qs);
   }
 
   @Get(':id')

@@ -4,7 +4,7 @@ Tài liệu API dành cho Admin để quản lý Thực phẩm (Món ăn, Phân 
 
 **Tiền tố:** `/api/v1` — xem [README.md](./README.md).
 
-**Quyền:** `GET /foods`, `GET /foods/:id` — mọi user đã đăng nhập. **`GET /foods/admin`** — chỉ **admin** (`AdminGuard`). `POST|PATCH|DELETE` food & bulk — **`AdminGuard`**.
+**Quyền:** `GET /foods`, `GET /foods/:id` — mọi user đã đăng nhập. **`GET /foods/admin`**, **`GET /food-categories/admin`**, **`GET /food-images/admin`** — chỉ **admin** (`AdminGuard`). `POST|PATCH|DELETE` food & bulk, cùng toàn bộ thao tác ghi trên category — **`AdminGuard`**.
 
 ---
 
@@ -466,18 +466,69 @@ Base URL: `/food-categories`
 
 Hệ thống category hỗ trợ **phân cấp cha-con** (tree structure), một category có thể có nhiều sub-categories.
 
-### 2.1 Lấy danh sách tất cả Categories
+### 2.0 [Admin] Phân trang + lọc (aqp) — danh sách category cho admin
+
+```
+GET /food-categories/admin?current=1&pageSize=10&...
+```
+
+**Mô tả:** `AdminGuard`. Dùng cho bảng quản trị category: phân trang, lọc, sắp xếp.
+
+**Query (thường dùng):**
+
+| Tham số | Kiểu | Mô tả |
+|---------|------|--------|
+| `current` | number | Trang hiện tại (thường bắt đầu từ `1`) |
+| `pageSize` | number | Số bản ghi mỗi trang |
+| (khác) | — | Filter / sort theo [api-query-params](https://github.com/koajs/aqp), ví dụ `name=/món/i`, `sort=-name` |
+
+**Sort mặc định:** `name` tăng dần.
+
+**Ví dụ:**
+```
+GET /api/v1/food-categories/admin?current=1&pageSize=10
+GET /api/v1/food-categories/admin?current=1&pageSize=10&name=/món/i&sort=-name
+```
+
+**Response** (200 OK):
+```json
+{
+  "EC": 0,
+  "EM": "Get food categories with query paginate success (admin)",
+  "meta": {
+    "current": 1,
+    "pageSize": 10,
+    "pages": 2,
+    "total": 16
+  },
+  "result": [
+    {
+      "id": 1,
+      "name": "Món nước",
+      "description": "Các món có nước dùng",
+      "parentId": null,
+      "createdAt": "2026-04-07T14:59:50.101Z",
+      "updatedAt": "2026-04-07T14:59:50.101Z",
+      "parent": null,
+      "children": [
+        { "id": 2, "name": "Phở" },
+        { "id": 3, "name": "Bún" }
+      ],
+      "foodCount": 12
+    }
+  ]
+}
+```
+
+---
+
+### 2.1 Lấy danh sách tất cả Categories (root + children)
 
 ```
 GET /food-categories
 ```
 
-**Mô tả**: Lấy tất cả categories kèm theo cấu trúc cha-con
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
+**Mô tả**: Lấy danh sách category gốc (`parentId = null`) và kèm danh sách `children`.
 
 **Response** (200 OK):
 ```json
@@ -487,29 +538,17 @@ Authorization: Bearer <admin_token>
     "name": "Món nước",
     "description": "Các món có nước dùng",
     "parentId": null,
+    "createdAt": "2026-04-07T14:59:50.101Z",
+    "updatedAt": "2026-04-07T14:59:50.101Z",
     "children": [
       {
         "id": 2,
         "name": "Phở",
         "description": "Các loại phở",
-        "parentId": 1,
-        "children": []
-      },
-      {
-        "id": 3,
-        "name": "Bún",
-        "description": "Các loại bún",
-        "parentId": 1,
-        "children": []
+        "parentId": 1
       }
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Món cơm",
-    "description": "Các món ăn với cơm",
-    "parentId": null,
-    "children": [...]
+    ],
+    "foodCount": 12
   }
 ]
 ```
@@ -522,12 +561,7 @@ Authorization: Bearer <admin_token>
 GET /food-categories/roots
 ```
 
-**Mô tả**: Lấy các categories cấp cao nhất (không có parent)
-
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
+**Mô tả**: Lấy các category cấp cao nhất (`parentId = null`), có `foodCount`.
 
 **Response** (200 OK):
 ```json
@@ -537,14 +571,18 @@ Authorization: Bearer <admin_token>
     "name": "Món nước",
     "description": "Các món có nước dùng",
     "parentId": null,
-    "children": [ ... ]
+    "createdAt": "2026-04-07T14:59:50.101Z",
+    "updatedAt": "2026-04-07T14:59:50.101Z",
+    "foodCount": 12
   },
   {
     "id": 4,
     "name": "Món cơm",
     "description": "Các món ăn với cơm",
     "parentId": null,
-    "children": [ ... ]
+    "createdAt": "2026-04-07T14:59:50.101Z",
+    "updatedAt": "2026-04-07T14:59:50.101Z",
+    "foodCount": 8
   }
 ]
 ```
@@ -564,11 +602,6 @@ GET /food-categories/:id
 |-----|------|----------|-------|
 | id | number | ✅ | ID của category |
 
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
-
 **Response** (200 OK):
 ```json
 {
@@ -576,14 +609,13 @@ Authorization: Bearer <admin_token>
   "name": "Món nước",
   "description": "Các món có nước dùng",
   "parentId": null,
-  "parent": null,
+  "createdAt": "2026-04-07T14:59:50.101Z",
+  "updatedAt": "2026-04-07T14:59:50.101Z",
   "children": [
-    { "id": 2, "name": "Phở", ... },
-    { "id": 3, "name": "Bún", ... }
+    { "id": 2, "name": "Phở", "description": "...", "parentId": 1 },
+    { "id": 3, "name": "Bún", "description": "...", "parentId": 1 }
   ],
-  "foods": [
-    { "id": 1, "foodName": "Bún bò Huế", ... }
-  ]
+  "foodCount": 12
 }
 ```
 
@@ -602,11 +634,6 @@ GET /food-categories/:id/children
 |-----|------|----------|-------|
 | id | number | ✅ | ID của category cha |
 
-**Headers**:
-```
-Authorization: Bearer <admin_token>
-```
-
 **Response** (200 OK):
 ```json
 [
@@ -615,14 +642,18 @@ Authorization: Bearer <admin_token>
     "name": "Phở",
     "description": "Các loại phở",
     "parentId": 1,
-    "foods": [ ... ]
+    "createdAt": "2026-04-07T14:59:50.101Z",
+    "updatedAt": "2026-04-07T14:59:50.101Z",
+    "foodCount": 7
   },
   {
     "id": 3,
     "name": "Bún",
     "description": "Các loại bún",
     "parentId": 1,
-    "foods": [ ... ]
+    "createdAt": "2026-04-07T14:59:50.101Z",
+    "updatedAt": "2026-04-07T14:59:50.101Z",
+    "foodCount": 5
   }
 ]
 ```

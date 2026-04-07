@@ -96,3 +96,12 @@ export const UnitType = {
 } as const
 
 export type UnitType = (typeof UnitType)[keyof typeof UnitType]
+
+
+export const GenderType = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  UNDEFINED: 'UNDEFINED'
+} as const
+
+export type GenderType = (typeof GenderType)[keyof typeof GenderType]

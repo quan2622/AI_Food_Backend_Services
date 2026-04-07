@@ -202,7 +202,9 @@ export const FoodCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  parentId: 'parentId'
+  parentId: 'parentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type FoodCategoryScalarFieldEnum = (typeof FoodCategoryScalarFieldEnum)[keyof typeof FoodCategoryScalarFieldEnum]
