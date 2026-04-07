@@ -30,7 +30,7 @@ export class AllergenService {
       const { sort: aqpSort } = parsed;
 
       stripAdminPaginationFilter(filter as Record<string, unknown>);
-      const sort = prismaSortFromAqp(aqpSort, { name: 'asc' });
+      const sort = prismaSortFromAqp(aqpSort, { updatedAt: 'desc' });
 
       const offset = (page - 1) * limit;
       const defaultLimit = limit ? limit : 10;

@@ -32,6 +32,8 @@ GET /users/admin?current=1&pageSize=10&...
 
 **Mô tả:** Phân trang và lọc qua `api-query-params` (filter, sort). `AdminGuard` bắt buộc `isAdmin: true`.
 
+**Sort mặc định:** `updatedAt` giảm dần.
+
 **Query:**
 
 | Tên | Kiểu | Mô tả |
@@ -334,6 +336,8 @@ GET /user-profiles/admin?current=1&pageSize=10&...
 ```
 
 **Mô tả:** `AdminGuard` + filter/sort qua query (giống pattern `users/admin`).
+
+**Sort mặc định:** `updatedAt` giảm dần.
 
 ---
 
@@ -640,6 +644,8 @@ GET /user-allergies/admin?current=1&pageSize=10&...
 ```
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
+
+**Sort mặc định:** `updatedAt` giảm dần.
 
 **Query:** `current`, `pageSize`, và các tham số `filter` / sort theo aqp.
 

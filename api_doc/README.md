@@ -102,6 +102,8 @@ Khi backend bổ sung endpoint, nên cập nhật lại file trong `api_doc/`.
 
 **Lọc & sort:** theo [api-query-params](https://github.com/koajs/aqp) — tham số lọc đưa vào `filter`, sort theo quy ước aqp (giống `GET /users/admin`).
 
+**Mặc định khi không truyền `sort`:** đa số endpoint `GET .../admin` sắp xếp theo `updatedAt` giảm dần; riêng `GET /food-images/admin` dùng `uploadedAt` giảm dần.
+
 **Ví dụ:** `GET /api/v1/foods/admin?current=1&pageSize=20&filter[foodName][$regex]=phở`
 
 **Payload trong `data` (sau envelope)** thường có dạng:

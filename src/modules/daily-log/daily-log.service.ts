@@ -241,7 +241,7 @@ export class DailyLogService {
       const { sort: aqpSort } = parsed;
 
       stripAdminPaginationFilter(filter as Record<string, unknown>);
-      const sort = prismaSortFromAqp(aqpSort, { logDate: 'desc' });
+      const sort = prismaSortFromAqp(aqpSort, { updatedAt: 'desc' });
 
       const offset = (page - 1) * limit;
       const defaultLimit = limit ? limit : 10;

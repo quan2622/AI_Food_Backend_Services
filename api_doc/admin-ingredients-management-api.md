@@ -43,6 +43,8 @@ GET /allergens/admin?current=1&pageSize=10&...
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
 
+**Sort mặc định:** `updatedAt` giảm dần.
+
 **Response** (trong `data`): `{ EC, EM, meta, result }` — **`result`** là mảng `Allergen` (không có keyMap riêng; hiển thị tên/mô tả từ entity).
 
 ---
@@ -256,6 +258,8 @@ GET /ingredient-allergens/admin?current=1&pageSize=10&...
 ```
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Sort mặc định:** `updatedAt` giảm dần.
 
 **Response** (trong `data`): `{ EC, EM, meta, result }`.
 

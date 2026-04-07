@@ -207,6 +207,8 @@ GET /nutrition-goals/admin?current=1&pageSize=10&...
 
 **Mô tả:** `AdminGuard`. Lọc/sort qua [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
 
+**Sort mặc định:** `updatedAt` giảm dần.
+
 **Query thường dùng:** `current`, `pageSize`, cùng các tham số `filter` / sort theo aqp.
 
 **Response** (trong `data`): object dạng `{ EC, EM, meta, result }`:

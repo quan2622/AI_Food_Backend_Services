@@ -71,6 +71,8 @@ GET /daily-logs/admin?current=1&pageSize=10&...
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp) (giống `GET /users/admin`).
 
+**Sort mặc định:** `updatedAt` giảm dần.
+
 **Query:** `current`, `pageSize`, và `filter` / sort theo aqp.
 
 **Response** (trong `data`): `{ EC, EM, meta, result }`.
@@ -597,6 +599,8 @@ GET /meals/admin?current=1&pageSize=10&...
 ```
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Sort mặc định:** `updatedAt` giảm dần.
 
 **Response** (trong `data`): `{ EC, EM, meta, result }`.
 

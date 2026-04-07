@@ -72,7 +72,7 @@ export class UsersService {
       // Convert aqp sort format to Prisma sort format
       let sort: Record<string, 'asc' | 'desc'>;
       if (isEmpty(aqpSort)) {
-        sort = { createdAt: 'desc' };
+        sort = { updatedAt: 'desc' };
       } else {
         sort = Object.entries(aqpSort as Record<string, number>).reduce(
           (acc, [key, value]) => {

@@ -49,6 +49,8 @@ GET /allcodes/admin?current=1&pageSize=10&...
 
 **Mô tả:** `AdminGuard` (JWT + `isAdmin: true`). Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
 
+**Sort mặc định:** `updatedAt` giảm dần.
+
 **Query:** `current`, `pageSize`, và các tham số `filter` / sort (ví dụ lọc theo `type`, `keyMap`).
 
 **Response** (trong `data`): `{ EC, EM, meta, result }`.

@@ -43,7 +43,7 @@ Authorization: Bearer <admin_token>
 | `pageSize` | number | Số món mỗi trang |
 | (khác) | — | Lọc / sort theo [api-query-params](https://github.com/koajs/aqp) — đưa vào `filter`, `sort` như `GET /users/admin` |
 
-**Sort mặc định (khi không gửi sort):** `createdAt` giảm dần.
+**Sort mặc định (khi không gửi sort):** `updatedAt` giảm dần.
 
 **Ví dụ:**
 ```
@@ -482,7 +482,7 @@ GET /food-categories/admin?current=1&pageSize=10&...
 | `pageSize` | number | Số bản ghi mỗi trang |
 | (khác) | — | Filter / sort theo [api-query-params](https://github.com/koajs/aqp), ví dụ `name=/món/i`, `sort=-name` |
 
-**Sort mặc định:** `name` tăng dần.
+**Sort mặc định:** `updatedAt` giảm dần (mới cập nhật lên trước).
 
 **Ví dụ:**
 ```
@@ -791,6 +791,8 @@ GET /food-images/admin?current=1&pageSize=10&...
 ```
 
 **Mô tả:** `AdminGuard`. Lọc/sort theo [api-query-params](https://github.com/koajs/aqp).
+
+**Sort mặc định:** `uploadedAt` giảm dần (model `FoodImage` không có `updatedAt`).
 
 **Response** (trong `data`): `{ EC, EM, meta, result }`.
 
