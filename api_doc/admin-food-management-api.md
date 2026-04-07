@@ -11,7 +11,7 @@ Tài liệu API dành cho Admin để quản lý Thực phẩm (Món ăn, Phân 
 ## 📋 Mục lục
 
 1. [Món ăn (Foods)](#1-món-ăn-foods) — gồm `GET /foods/admin`
-2. [Phân loại (Categories)](#2-phân-loại-categories)
+2. [Phân loại (Categories)](#2-phân-loại-categories) — gồm `GET /food-categories/admin`
 3. [Ảnh thực phẩm (Food Images)](#3-ảnh-thực-phẩm-food-images) — gồm `GET /food-images/admin`
 
 ---
