@@ -38,18 +38,24 @@ export type NutrientMinAggregateOutputType = {
   id: number | null
   name: string | null
   unit: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type NutrientMaxAggregateOutputType = {
   id: number | null
   name: string | null
   unit: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type NutrientCountAggregateOutputType = {
   id: number
   name: number
   unit: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -66,18 +72,24 @@ export type NutrientMinAggregateInputType = {
   id?: true
   name?: true
   unit?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type NutrientMaxAggregateInputType = {
   id?: true
   name?: true
   unit?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type NutrientCountAggregateInputType = {
   id?: true
   name?: true
   unit?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -171,6 +183,8 @@ export type NutrientGroupByOutputType = {
   id: number
   name: string
   unit: string
+  createdAt: Date
+  updatedAt: Date
   _count: NutrientCountAggregateOutputType | null
   _avg: NutrientAvgAggregateOutputType | null
   _sum: NutrientSumAggregateOutputType | null
@@ -200,6 +214,8 @@ export type NutrientWhereInput = {
   id?: Prisma.IntFilter<"Nutrient"> | number
   name?: Prisma.StringFilter<"Nutrient"> | string
   unit?: Prisma.StringFilter<"Nutrient"> | string
+  createdAt?: Prisma.DateTimeFilter<"Nutrient"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Nutrient"> | Date | string
   values?: Prisma.NutritionValueListRelationFilter
   foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }
@@ -208,6 +224,8 @@ export type NutrientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   values?: Prisma.NutritionValueOrderByRelationAggregateInput
   foodValues?: Prisma.FoodNutritionValueOrderByRelationAggregateInput
 }
@@ -219,6 +237,8 @@ export type NutrientWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.NutrientWhereInput[]
   NOT?: Prisma.NutrientWhereInput | Prisma.NutrientWhereInput[]
   unit?: Prisma.StringFilter<"Nutrient"> | string
+  createdAt?: Prisma.DateTimeFilter<"Nutrient"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Nutrient"> | Date | string
   values?: Prisma.NutritionValueListRelationFilter
   foodValues?: Prisma.FoodNutritionValueListRelationFilter
 }, "id" | "name">
@@ -227,6 +247,8 @@ export type NutrientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.NutrientCountOrderByAggregateInput
   _avg?: Prisma.NutrientAvgOrderByAggregateInput
   _max?: Prisma.NutrientMaxOrderByAggregateInput
@@ -241,11 +263,15 @@ export type NutrientScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Nutrient"> | number
   name?: Prisma.StringWithAggregatesFilter<"Nutrient"> | string
   unit?: Prisma.StringWithAggregatesFilter<"Nutrient"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Nutrient"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Nutrient"> | Date | string
 }
 
 export type NutrientCreateInput = {
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
   foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
@@ -254,6 +280,8 @@ export type NutrientUncheckedCreateInput = {
   id?: number
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
   foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
@@ -261,6 +289,8 @@ export type NutrientUncheckedCreateInput = {
 export type NutrientUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
   foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
@@ -269,6 +299,8 @@ export type NutrientUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
   foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
@@ -277,17 +309,23 @@ export type NutrientCreateManyInput = {
   id?: number
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type NutrientUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type NutrientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type NutrientScalarRelationFilter = {
@@ -299,6 +337,8 @@ export type NutrientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type NutrientAvgOrderByAggregateInput = {
@@ -309,12 +349,16 @@ export type NutrientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type NutrientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type NutrientSumOrderByAggregateInput = {
@@ -352,6 +396,8 @@ export type NutrientUpdateOneRequiredWithoutValuesNestedInput = {
 export type NutrientCreateWithoutFoodValuesInput = {
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   values?: Prisma.NutritionValueCreateNestedManyWithoutNutrientInput
 }
 
@@ -359,6 +405,8 @@ export type NutrientUncheckedCreateWithoutFoodValuesInput = {
   id?: number
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   values?: Prisma.NutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
@@ -381,6 +429,8 @@ export type NutrientUpdateToOneWithWhereWithoutFoodValuesInput = {
 export type NutrientUpdateWithoutFoodValuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   values?: Prisma.NutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
@@ -388,12 +438,16 @@ export type NutrientUncheckedUpdateWithoutFoodValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   values?: Prisma.NutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
 export type NutrientCreateWithoutValuesInput = {
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   foodValues?: Prisma.FoodNutritionValueCreateNestedManyWithoutNutrientInput
 }
 
@@ -401,6 +455,8 @@ export type NutrientUncheckedCreateWithoutValuesInput = {
   id?: number
   name: string
   unit: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   foodValues?: Prisma.FoodNutritionValueUncheckedCreateNestedManyWithoutNutrientInput
 }
 
@@ -423,6 +479,8 @@ export type NutrientUpdateToOneWithWhereWithoutValuesInput = {
 export type NutrientUpdateWithoutValuesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodValues?: Prisma.FoodNutritionValueUpdateManyWithoutNutrientNestedInput
 }
 
@@ -430,6 +488,8 @@ export type NutrientUncheckedUpdateWithoutValuesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   unit?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foodValues?: Prisma.FoodNutritionValueUncheckedUpdateManyWithoutNutrientNestedInput
 }
 
@@ -477,6 +537,8 @@ export type NutrientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   name?: boolean
   unit?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   values?: boolean | Prisma.Nutrient$valuesArgs<ExtArgs>
   foodValues?: boolean | Prisma.Nutrient$foodValuesArgs<ExtArgs>
   _count?: boolean | Prisma.NutrientCountOutputTypeDefaultArgs<ExtArgs>
@@ -486,21 +548,27 @@ export type NutrientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   unit?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["nutrient"]>
 
 export type NutrientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   unit?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["nutrient"]>
 
 export type NutrientSelectScalar = {
   id?: boolean
   name?: boolean
   unit?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type NutrientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "unit", ExtArgs["result"]["nutrient"]>
+export type NutrientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "unit" | "createdAt" | "updatedAt", ExtArgs["result"]["nutrient"]>
 export type NutrientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   values?: boolean | Prisma.Nutrient$valuesArgs<ExtArgs>
   foodValues?: boolean | Prisma.Nutrient$foodValuesArgs<ExtArgs>
@@ -519,6 +587,8 @@ export type $NutrientPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     name: string
     unit: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["nutrient"]>
   composites: {}
 }
@@ -947,6 +1017,8 @@ export interface NutrientFieldRefs {
   readonly id: Prisma.FieldRef<"Nutrient", 'Int'>
   readonly name: Prisma.FieldRef<"Nutrient", 'String'>
   readonly unit: Prisma.FieldRef<"Nutrient", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Nutrient", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Nutrient", 'DateTime'>
 }
     
 

@@ -34,4 +34,26 @@ export class CloudinaryService {
       url: dataUpload.secure_url,
     };
   }
+
+  async uploadFileWithStatus(file: Express.Multer.File): Promise<{
+    success: boolean;
+    message: string;
+    url: string | null;
+  }> {
+    try {
+      const { url } = await this.uploadFile(file);
+      return {
+        success: true,
+        message: 'Upload image to Cloudinary successfully',
+        url,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error instanceof Error ? error.message : 'Upload image failed',
+        url: null,
+      };
+    }
+  }
 }

@@ -1,26 +1,181 @@
 import {
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import aqp from 'api-query-params';
 import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
-import { StatusType } from '../../generated/prisma/enums';
-import { AllCodeLookupService } from '../../common/services/allcode-lookup.service';
+import { MealType, StatusType } from '../../generated/prisma/enums';
+import {
+  AllCodeLookupService,
+  type AllCodeInfo,
+} from '../../common/services/allcode-lookup.service';
 import {
   prismaSortFromAqp,
   stripAdminPaginationFilter,
 } from '../../common/utils/admin-pagination.util';
 
+type MealGroupRow = {
+  mealType: string;
+  mealTypeInfo: {
+    keyMap: string;
+    value: string;
+    description: string | null;
+    type: string;
+  } | null;
+  meals: any[];
+};
+
+/** Thứ tự hiển thị buổi: sáng → trưa → tối → snack; loại khác xếp sau. */
+const MEAL_TYPE_DISPLAY_ORDER: readonly string[] = [
+  MealType.MEAL_BREAKFAST,
+  MealType.MEAL_LUNCH,
+  MealType.MEAL_DINNER,
+  MealType.MEAL_SNACK,
+];
+
 @Injectable()
 export class DailyLogService {
+  private readonly logger = new Logger(DailyLogService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly allCodeLookup: AllCodeLookupService,
   ) {}
 
   // ─── Private helpers ──────────────────────────────────────────────────────
+
+  /** Cùng công thức với formatDailyLogSimple: P×4 + netCarbs×4 + F×9, nhân quantity. */
+  private computeMealTotalCaloriesFromItems(
+    mealItems:
+      | {
+          quantity?: number | null;
+          protein?: number | null;
+          carbs?: number | null;
+          fat?: number | null;
+          fiber?: number | null;
+        }[]
+      | undefined
+      | null,
+  ): number {
+    if (!mealItems?.length) return 0;
+    let sum = 0;
+    for (const item of mealItems) {
+      const quantity = item.quantity || 1;
+      const netCarbs = (Number(item.carbs) || 0) - (Number(item.fiber) || 0);
+      const itemCalories =
+        ((Number(item.protein) || 0) * 4 + netCarbs * 4 + (Number(item.fat) || 0) * 9) *
+        quantity;
+      sum += itemCalories;
+    }
+    return Math.round(sum * 100) / 100;
+  }
+
+  private orderMealTypesPresent(present: Set<string>): string[] {
+    return [
+      ...MEAL_TYPE_DISPLAY_ORDER.filter((t) => present.has(t)),
+      ...[...present]
+        .filter((t) => !MEAL_TYPE_DISPLAY_ORDER.includes(t))
+        .sort(),
+    ];
+  }
+
+  /**
+   * Gom meal theo buổi cho admin pagination: mỗi nhóm có totalCalories (tổng buổi),
+   * từng meal có totalCalories.
+   */
+  private buildAdminMealCalorieGroups(
+    meals: {
+      id: number;
+      mealType: string;
+      mealDateTime: Date;
+      totalCalories: number;
+    }[],
+    mealTypeInfoMap: Map<string, AllCodeInfo>,
+  ): {
+    mealType: string;
+    mealTypeInfo: AllCodeInfo | null;
+    totalCalories: number;
+    meals: { id: number; mealDateTime: Date; totalCalories: number }[];
+  }[] {
+    if (!meals.length) return [];
+
+    const sorted = [...meals].sort(
+      (a, b) =>
+        new Date(a.mealDateTime).getTime() -
+        new Date(b.mealDateTime).getTime(),
+    );
+
+    const byType = new Map<string, typeof meals>();
+    for (const m of sorted) {
+      if (!byType.has(m.mealType)) byType.set(m.mealType, []);
+      byType.get(m.mealType)!.push(m);
+    }
+
+    const orderedTypes = this.orderMealTypesPresent(new Set(byType.keys()));
+
+    return orderedTypes.map((mealType) => {
+      const groupMeals = byType.get(mealType) ?? [];
+      const groupTotal = Math.round(
+        groupMeals.reduce((s, m) => s + m.totalCalories, 0) * 100,
+      ) / 100;
+      return {
+        mealType,
+        mealTypeInfo: mealTypeInfoMap.get(mealType) ?? null,
+        totalCalories: groupTotal,
+        meals: groupMeals.map((m) => ({
+          id: m.id,
+          mealDateTime: m.mealDateTime,
+          totalCalories: m.totalCalories,
+        })),
+      };
+    });
+  }
+
+  /**
+   * Gom các meal theo mealType (buổi), trong mỗi nhóm giữ thứ tự mealDateTime.
+   */
+  private async buildMealGroups(
+    meals: any[] | undefined,
+  ): Promise<MealGroupRow[]> {
+    if (!meals?.length) {
+      return [];
+    }
+
+    const sorted = [...meals].sort(
+      (a, b) =>
+        new Date(a.mealDateTime).getTime() -
+        new Date(b.mealDateTime).getTime(),
+    );
+
+    const byType = new Map<string, any[]>();
+    for (const m of sorted) {
+      const key = m.mealType;
+      if (!byType.has(key)) byType.set(key, []);
+      byType.get(key)!.push(m);
+    }
+
+    const orderedTypes = this.orderMealTypesPresent(new Set(byType.keys()));
+
+    const infoMap = await this.allCodeLookup.mapByKeyMaps(orderedTypes);
+
+    return orderedTypes.map((mealType) => ({
+      mealType,
+      mealTypeInfo: infoMap.get(mealType) ?? null,
+      meals: byType.get(mealType) ?? [],
+    }));
+  }
+
+  /** Thêm `mealGroups` vào payload đã có `meals` (flat). */
+  private async finalizeDailyLogResponse<T extends { meals?: any[] }>(
+    payload: T,
+  ): Promise<T & { mealGroups: MealGroupRow[] }> {
+    const mealGroups = await this.buildMealGroups(payload.meals);
+    return { ...payload, mealGroups };
+  }
 
   /** Chuẩn hoá Date về đầu ngày UTC (consistent với database) */
   private toDateOnly(date: Date): Date {
@@ -43,6 +198,7 @@ export class DailyLogService {
       where: { userId_logDate: { userId, logDate } },
       include: {
         meals: {
+          orderBy: { mealDateTime: 'asc' },
           include: {
             mealItems: {
               include: { food: { select: { foodName: true, imageUrl: true } } },
@@ -55,7 +211,8 @@ export class DailyLogService {
     const nutritionGoal = await this.getActiveNutritionGoal(userId, logDate);
 
     if (existing) {
-      return this.formatDailyLogWithTotals(existing, nutritionGoal);
+      const base = this.formatDailyLogWithTotals(existing, nutritionGoal);
+      return this.finalizeDailyLogResponse(base);
     }
 
     const newLog = await this.prisma.dailyLog.create({
@@ -66,6 +223,7 @@ export class DailyLogService {
       },
       include: {
         meals: {
+          orderBy: { mealDateTime: 'asc' },
           include: {
             mealItems: { include: { food: true } },
           },
@@ -73,7 +231,8 @@ export class DailyLogService {
       },
     });
 
-    return this.formatDailyLogWithTotals(newLog, nutritionGoal);
+    const base = this.formatDailyLogWithTotals(newLog, nutritionGoal);
+    return this.finalizeDailyLogResponse(base);
   }
 
   /** Lấy nutrition goal đang active cho ngày cụ thể */
@@ -169,6 +328,7 @@ export class DailyLogService {
       where: { userId_logDate: { userId, logDate } },
       include: {
         meals: {
+          orderBy: { mealDateTime: 'asc' },
           include: {
             mealItems: {
               include: {
@@ -189,32 +349,17 @@ export class DailyLogService {
       throw new NotFoundException(`Không tìm thấy DailyLog cho ngày ${date}`);
     }
 
-    return this.formatDailyLogSimple(log);
+    const simple = this.formatDailyLogSimple(log);
+    return this.finalizeDailyLogResponse(simple);
   }
 
   /** Format DailyLog không bao gồm totals và nutritionGoal */
   private formatDailyLogSimple(log: any) {
     const mealsWithTotals = log.meals
-      ? log.meals.map((meal) => {
-          let mealTotalCalories = 0;
-
-          if (meal.mealItems) {
-            meal.mealItems.forEach((item) => {
-              const quantity = item.quantity || 1;
-              const netCarbs = (item.carbs || 0) - (item.fiber || 0);
-              const itemCalories =
-                ((item.protein || 0) * 4 + netCarbs * 4 + (item.fat || 0) * 9) *
-                quantity;
-
-              mealTotalCalories += itemCalories;
-            });
-          }
-
-          return {
-            ...meal,
-            totalCalories: Math.round(mealTotalCalories * 100) / 100,
-          };
-        })
+      ? log.meals.map((meal) => ({
+          ...meal,
+          totalCalories: this.computeMealTotalCaloriesFromItems(meal.mealItems),
+        }))
       : [];
 
     return {
@@ -246,14 +391,36 @@ export class DailyLogService {
       const offset = (page - 1) * limit;
       const defaultLimit = limit ? limit : 10;
 
-      const totalItems = await this.prisma.dailyLog.count({ where: filter });
+      /** Chỉ daily log của user thường (không lấy user admin). */
+      const where = {
+        AND: [filter, { user: { isAdmin: false } }],
+      };
+
+      const totalItems = await this.prisma.dailyLog.count({ where });
       const totalPages = Math.ceil(totalItems / defaultLimit);
 
       const rows = await this.prisma.dailyLog.findMany({
-        where: filter,
+        where,
         orderBy: sort,
         include: {
           user: { select: { id: true, fullName: true, email: true } },
+          meals: {
+            orderBy: { mealDateTime: 'asc' },
+            select: {
+              id: true,
+              mealType: true,
+              mealDateTime: true,
+              mealItems: {
+                select: {
+                  quantity: true,
+                  protein: true,
+                  carbs: true,
+                  fat: true,
+                  fiber: true,
+                },
+              },
+            },
+          },
         },
         skip: offset,
         take: defaultLimit,
@@ -263,10 +430,41 @@ export class DailyLogService {
         rows.map((r) => r.status),
       );
 
-      const result = rows.map((r) => ({
-        ...r,
-        statusInfo: statusMap.get(r.status) ?? null,
-      }));
+      const allMealTypes = new Set<string>();
+      for (const r of rows) {
+        for (const m of r.meals) {
+          allMealTypes.add(m.mealType);
+        }
+      }
+      const mealTypeInfoMap = await this.allCodeLookup.mapByKeyMaps(allMealTypes);
+
+      const result = rows.map((r) => {
+        const mealsCal = (r.meals ?? []).map((m) => ({
+          id: m.id,
+          mealType: m.mealType,
+          mealDateTime: m.mealDateTime,
+          totalCalories: this.computeMealTotalCaloriesFromItems(m.mealItems),
+        }));
+        const dayTotalCalories = Math.round(
+          mealsCal.reduce((s, m) => s + m.totalCalories, 0) * 100,
+        ) / 100;
+        const mealGroups = this.buildAdminMealCalorieGroups(
+          mealsCal,
+          mealTypeInfoMap,
+        );
+        const { meals: _omitMeals, ...rest } = r;
+        void _omitMeals;
+        return {
+          ...rest,
+          dayTotalCalories,
+          mealGroups,
+          statusInfo: statusMap.get(r.status) ?? null,
+        };
+      });
+
+      this.logger.log(
+        `daily-logs/admin paginate: current=${page} pageSize=${defaultLimit} total(non-admin users only)=${totalItems} rows=${result.length}`,
+      );
 
       return {
         EC: 0,
@@ -301,6 +499,47 @@ export class DailyLogService {
     });
     if (!log) throw new NotFoundException(`DailyLog #${id} không tồn tại`);
     return log;
+  }
+
+  /**
+   * [Admin] Lấy DailyLog theo dailyLogId, bắt buộc khớp userId (chủ sở hữu).
+   * Trả về meals → mealItems → food và totalCalories mỗi bữa, kèm statusInfo.
+   */
+  async findOneForUserAdmin(userId: number, dailyLogId: number) {
+    const log = await this.prisma.dailyLog.findUnique({
+      where: { id: dailyLogId },
+      include: {
+        user: { select: { id: true, fullName: true, email: true } },
+        meals: {
+          orderBy: { mealDateTime: 'asc' },
+          include: {
+            mealItems: {
+              include: {
+                food: {
+                  select: { foodName: true, imageUrl: true },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!log) {
+      throw new NotFoundException(`DailyLog #${dailyLogId} không tồn tại`);
+    }
+    if (log.userId !== userId) {
+      throw new ForbiddenException(
+        'DailyLog này không thuộc user đã chỉ định',
+      );
+    }
+
+    const statusMap = await this.allCodeLookup.mapByKeyMaps([log.status]);
+    const formatted = this.formatDailyLogSimple(log);
+    const withGroups = await this.finalizeDailyLogResponse(formatted);
+    return {
+      ...withGroups,
+      statusInfo: statusMap.get(log.status) ?? null,
+    };
   }
 
   /** Lấy DailyLog của user theo tuần (7 ngày gần nhất) */

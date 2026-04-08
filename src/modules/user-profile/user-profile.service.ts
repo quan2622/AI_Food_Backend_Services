@@ -4,7 +4,7 @@ import type { AqpQuery } from 'api-query-params';
 import { isEmpty } from 'lodash';
 import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
-import type { UserProfile } from '../../generated/prisma/client.js';
+import type { GenderType, UserProfile } from '../../generated/prisma/client.js';
 import type { CreateUserProfileDto } from './dto/create-user-profile.dto.js';
 import type { UpdateUserProfileDto } from './dto/update-user-profile.dto.js';
 import { UserProfilePaginationDto } from './dto/user-profile-pagination.dto';
@@ -158,14 +158,18 @@ export class UserProfileService {
       const activityLevelMap = new Map(activityLevelCodes.map((c) => [c.keyMap, c]));
 
       // Fetch gender data from AllCode for each profile
-      const genderCodes = await this.prisma.allCode.findMany({
-        where: {
-          type: 'GENDER',
-          keyMap: {
-            in: result.map((p) => p.gender),
-          },
-        },
-      });
+      const genderKeyMaps = result
+        .map((p) => p.gender)
+        .filter((g): g is GenderType => g !== null && g !== undefined);
+      const genderCodes =
+        genderKeyMaps.length > 0
+          ? await this.prisma.allCode.findMany({
+              where: {
+                type: 'GENDER',
+                keyMap: { in: [...new Set(genderKeyMaps)] },
+              },
+            })
+          : [];
 
       const genderMap = new Map(genderCodes.map((c) => [c.keyMap, c]));
 

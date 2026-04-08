@@ -52,6 +52,19 @@ export class MealController {
     return this.mealService.findAllAdmin(page, limit, qs);
   }
 
+  /**
+   * [Admin] Chi tiết meal khi biết userId và mealId (đối chiếu chủ sở hữu qua dailyLog).
+   * Đặt trước `:id` để không bị nuốt nhầm.
+   */
+  @UseGuards(AdminGuard)
+  @Get('users/:userId/meals/:mealId')
+  findOneForUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('mealId', ParseIntPipe) mealId: number,
+  ) {
+    return this.mealService.findOneForUserAdmin(userId, mealId);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.mealService.findOne(id);

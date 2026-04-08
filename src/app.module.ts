@@ -24,6 +24,7 @@ import { WorkoutLogModule } from './modules/workout-log/workout-log.module';
 import { RecommendModule } from './modules/recommend/recommend.module';
 import { RedisModule } from './redis/redis.module';
 import { UserReportModule } from './modules/user-report/user-report.module';
+import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { UserReportModule } from './modules/user-report/user-report.module';
     RecommendModule,
     RedisModule,
     UserReportModule,
+    AdminDashboardModule,
   ],
 
   controllers: [AppController],

@@ -256,6 +256,31 @@ export class MealService {
     return enriched;
   }
 
+  /**
+   * [Admin] Chi tiết meal theo userId + mealId (meal phải thuộc daily log của user đó).
+   */
+  async findOneForUserAdmin(userId: number, mealId: number) {
+    const meal = await this.prisma.meal.findUnique({
+      where: { id: mealId },
+      include: {
+        dailyLog: {
+          select: { id: true, logDate: true, userId: true },
+        },
+        ...this.mealInclude,
+      },
+    });
+    if (!meal) {
+      throw new NotFoundException(`Meal #${mealId} không tồn tại`);
+    }
+    if (meal.dailyLog.userId !== userId) {
+      throw new ForbiddenException(
+        'Bữa ăn này không thuộc user đã chỉ định',
+      );
+    }
+    const [enriched] = await this.enrichMealType([meal]);
+    return enriched;
+  }
+
   async update(id: number, userId: number, dto: UpdateMealDto) {
     const meal = await this.prisma.meal.findUnique({
       where: { id },

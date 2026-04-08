@@ -43,6 +43,13 @@ export class AllergenService {
         orderBy: sort,
         skip: offset,
         take: defaultLimit,
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
 
       return {

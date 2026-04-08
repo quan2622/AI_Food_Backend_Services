@@ -989,6 +989,45 @@ Authorization: Bearer <admin_token>
 
 ---
 
+### 3.6 Upload ảnh lên Cloudinary (không lưu DB)
+
+```
+POST /cloudinary/upload
+```
+
+**Mô tả**: Upload file ảnh lên Cloudinary và trả về trạng thái upload + URL ảnh. API này **không** tạo bản ghi `food_images`.
+
+**Headers**:
+```
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+```
+
+**Form Data**:
+| Field | Kiểu | Bắt buộc | Mô tả |
+|-------|------|----------|-------|
+| image | File | ✅ | Ảnh `jpeg/png/webp`, tối đa 5MB |
+
+**Response** (200 OK):
+```json
+{
+  "success": true,
+  "message": "Upload image to Cloudinary successfully",
+  "url": "https://res.cloudinary.com/.../image.jpg"
+}
+```
+
+**Response khi lỗi upload**:
+```json
+{
+  "success": false,
+  "message": "Cloudinary upload failed: ...",
+  "url": null
+}
+```
+
+---
+
 ## 🔐 Authentication & Authorization
 
 ### Admin Guard

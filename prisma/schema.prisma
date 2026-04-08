@@ -289,9 +289,11 @@ model IngredientNutrition {
 
 /// A single nutrient (e.g., Protein, Fat, Carbohydrates).
 model Nutrient {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-  unit String
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  unit      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   values NutritionValue[]
   foodValues FoodNutritionValue[]

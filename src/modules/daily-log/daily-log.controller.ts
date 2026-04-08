@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   HttpCode,
   HttpStatus,
   UseGuards,
@@ -57,6 +58,19 @@ export class DailyLogController {
   @Get('id/:id')
   findOne(@Param('id') id: string) {
     return this.dailyLogService.findOne(+id);
+  }
+
+  /**
+   * [Admin] Lấy DailyLog khi biết userId và dailyLogId (đối chiếu chủ sở hữu).
+   * Phải đặt trước route `:date` để không bị nuốt nhầm.
+   */
+  @UseGuards(AdminGuard)
+  @Get('users/:userId/logs/:dailyLogId')
+  findOneForUser(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('dailyLogId', ParseIntPipe) dailyLogId: number,
+  ) {
+    return this.dailyLogService.findOneForUserAdmin(userId, dailyLogId);
   }
 
   /** Lấy DailyLog theo ngày (format: YYYY-MM-DD) */

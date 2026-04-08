@@ -1,5 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import aqp from 'api-query-params';
+import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../../prisma/prisma.service';
+import {
+  prismaSortFromAqp,
+  stripAdminPaginationFilter,
+} from '../../../common/utils/admin-pagination.util';
 import { CreateNutritionComponentDto } from '../dto/food-nutrition/create-nutrition-component.dto.js';
 import { CreateFoodNutritionDto } from '../dto/food-nutrition/create-food-nutrition.dto.js';
 import { UpdateFoodNutritionDto } from '../dto/food-nutrition/update-food-nutrition.dto.js';
@@ -16,6 +26,51 @@ export class FoodNutritionService {
     return this.prisma.nutrient.findMany({
       orderBy: { name: 'asc' },
     });
+  }
+
+  async findAllComponentsAdmin(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { updatedAt: 'desc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.nutrient.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.nutrient.findMany({
+        where: filter,
+        orderBy: sort,
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get nutrients with query paginate success (admin)',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in food nutrition service get nutrients paginate (admin):',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in nutrients get paginate',
+      });
+    }
   }
 
   createComponent(dto: CreateNutritionComponentDto) {

@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { FoodNutritionService } from '../services/food-nutrition.service.js';
@@ -21,6 +22,16 @@ export class FoodNutritionController {
   constructor(private readonly foodNutritionService: FoodNutritionService) {}
 
   // NutritionComponent
+  @UseGuards(AdminGuard)
+  @Get('nutrition-components/admin')
+  findAllComponentsAdmin(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.foodNutritionService.findAllComponentsAdmin(page, limit, qs);
+  }
+
   @Get('nutrition-components')
   findAllComponents() {
     return this.foodNutritionService.findAllComponents();

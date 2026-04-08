@@ -2412,7 +2412,9 @@ export type IngredientNutritionScalarFieldEnum = (typeof IngredientNutritionScal
 export const NutrientScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  unit: 'unit'
+  unit: 'unit',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type NutrientScalarFieldEnum = (typeof NutrientScalarFieldEnum)[keyof typeof NutrientScalarFieldEnum]
