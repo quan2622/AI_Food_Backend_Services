@@ -132,3 +132,15 @@ export const SubmissionStatus = {
 } as const
 
 export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
+
+
+export const AITrainingJobStatus = {
+  TRAIN_PENDING: 'TRAIN_PENDING',
+  TRAIN_PREPARING: 'TRAIN_PREPARING',
+  TRAIN_RUNNING: 'TRAIN_RUNNING',
+  TRAIN_DONE: 'TRAIN_DONE',
+  TRAIN_FAILED: 'TRAIN_FAILED',
+  TRAIN_CANCELLED: 'TRAIN_CANCELLED'
+} as const
+
+export type AITrainingJobStatus = (typeof AITrainingJobStatus)[keyof typeof AITrainingJobStatus]

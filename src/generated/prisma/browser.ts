@@ -134,11 +134,11 @@ export type Report = Prisma.ReportModel
 export type UserSubmission = Prisma.UserSubmissionModel
 /**
  * Model AIModel
- * 
+ * Represents a trained AI model snapshot that can be deployed for inference.
  */
 export type AIModel = Prisma.AIModelModel
 /**
  * Model AITrainingJob
- * 
+ * Represents an admin-initiated training session.
  */
 export type AITrainingJob = Prisma.AITrainingJobModel

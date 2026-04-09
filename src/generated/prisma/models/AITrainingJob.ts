@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model AITrainingJob
- * 
+ * Represents an admin-initiated training session.
  */
 export type AITrainingJobModel = runtime.Types.Result.DefaultSelection<Prisma.$AITrainingJobPayload>
 
@@ -28,40 +28,80 @@ export type AggregateAITrainingJob = {
 
 export type AITrainingJobAvgAggregateOutputType = {
   id: number | null
-  modelId: number | null
+  numClasses: number | null
+  trainSize: number | null
+  valSize: number | null
+  testSize: number | null
+  triggeredById: number | null
 }
 
 export type AITrainingJobSumAggregateOutputType = {
   id: number | null
-  modelId: number | null
+  numClasses: number | null
+  trainSize: number | null
+  valSize: number | null
+  testSize: number | null
+  triggeredById: number | null
 }
 
 export type AITrainingJobMinAggregateOutputType = {
   id: number | null
+  status: $Enums.AITrainingJobStatus | null
+  modelName: string | null
+  datasetZipUrl: string | null
+  datasetPath: string | null
+  numClasses: number | null
+  trainSize: number | null
+  valSize: number | null
+  testSize: number | null
   startedAt: Date | null
   finishedAt: Date | null
-  status: string | null
-  modelId: number | null
+  errorMessage: string | null
+  logText: string | null
+  outputModelPath: string | null
+  triggeredById: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type AITrainingJobMaxAggregateOutputType = {
   id: number | null
+  status: $Enums.AITrainingJobStatus | null
+  modelName: string | null
+  datasetZipUrl: string | null
+  datasetPath: string | null
+  numClasses: number | null
+  trainSize: number | null
+  valSize: number | null
+  testSize: number | null
   startedAt: Date | null
   finishedAt: Date | null
-  status: string | null
-  modelId: number | null
+  errorMessage: string | null
+  logText: string | null
+  outputModelPath: string | null
+  triggeredById: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type AITrainingJobCountAggregateOutputType = {
   id: number
+  status: number
+  modelName: number
+  datasetZipUrl: number
+  datasetPath: number
+  numClasses: number
+  classNames: number
+  trainSize: number
+  valSize: number
+  testSize: number
   startedAt: number
   finishedAt: number
-  status: number
-  modelId: number
+  errorMessage: number
+  logText: number
+  metrics: number
+  outputModelPath: number
+  triggeredById: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,40 +110,80 @@ export type AITrainingJobCountAggregateOutputType = {
 
 export type AITrainingJobAvgAggregateInputType = {
   id?: true
-  modelId?: true
+  numClasses?: true
+  trainSize?: true
+  valSize?: true
+  testSize?: true
+  triggeredById?: true
 }
 
 export type AITrainingJobSumAggregateInputType = {
   id?: true
-  modelId?: true
+  numClasses?: true
+  trainSize?: true
+  valSize?: true
+  testSize?: true
+  triggeredById?: true
 }
 
 export type AITrainingJobMinAggregateInputType = {
   id?: true
+  status?: true
+  modelName?: true
+  datasetZipUrl?: true
+  datasetPath?: true
+  numClasses?: true
+  trainSize?: true
+  valSize?: true
+  testSize?: true
   startedAt?: true
   finishedAt?: true
-  status?: true
-  modelId?: true
+  errorMessage?: true
+  logText?: true
+  outputModelPath?: true
+  triggeredById?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type AITrainingJobMaxAggregateInputType = {
   id?: true
+  status?: true
+  modelName?: true
+  datasetZipUrl?: true
+  datasetPath?: true
+  numClasses?: true
+  trainSize?: true
+  valSize?: true
+  testSize?: true
   startedAt?: true
   finishedAt?: true
-  status?: true
-  modelId?: true
+  errorMessage?: true
+  logText?: true
+  outputModelPath?: true
+  triggeredById?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type AITrainingJobCountAggregateInputType = {
   id?: true
+  status?: true
+  modelName?: true
+  datasetZipUrl?: true
+  datasetPath?: true
+  numClasses?: true
+  classNames?: true
+  trainSize?: true
+  valSize?: true
+  testSize?: true
   startedAt?: true
   finishedAt?: true
-  status?: true
-  modelId?: true
+  errorMessage?: true
+  logText?: true
+  metrics?: true
+  outputModelPath?: true
+  triggeredById?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -197,10 +277,22 @@ export type AITrainingJobGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type AITrainingJobGroupByOutputType = {
   id: number
-  startedAt: Date
+  status: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl: string | null
+  datasetPath: string | null
+  numClasses: number | null
+  classNames: string[]
+  trainSize: number | null
+  valSize: number | null
+  testSize: number | null
+  startedAt: Date | null
   finishedAt: Date | null
-  status: string
-  modelId: number
+  errorMessage: string | null
+  logText: string | null
+  metrics: runtime.JsonValue | null
+  outputModelPath: string | null
+  triggeredById: number
   createdAt: Date
   updatedAt: Date
   _count: AITrainingJobCountAggregateOutputType | null
@@ -230,24 +322,50 @@ export type AITrainingJobWhereInput = {
   OR?: Prisma.AITrainingJobWhereInput[]
   NOT?: Prisma.AITrainingJobWhereInput | Prisma.AITrainingJobWhereInput[]
   id?: Prisma.IntFilter<"AITrainingJob"> | number
-  startedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFilter<"AITrainingJob"> | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFilter<"AITrainingJob"> | string
+  datasetZipUrl?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  datasetPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  numClasses?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  classNames?: Prisma.StringNullableListFilter<"AITrainingJob">
+  trainSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  valSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  testSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  startedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
-  status?: Prisma.StringFilter<"AITrainingJob"> | string
-  modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  errorMessage?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  logText?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  metrics?: Prisma.JsonNullableFilter<"AITrainingJob">
+  outputModelPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  triggeredById?: Prisma.IntFilter<"AITrainingJob"> | number
   createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
-  model?: Prisma.XOR<Prisma.AIModelScalarRelationFilter, Prisma.AIModelWhereInput>
+  triggeredBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deployedModel?: Prisma.XOR<Prisma.AIModelNullableScalarRelationFilter, Prisma.AIModelWhereInput> | null
 }
 
 export type AITrainingJobOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
+  datasetZipUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  datasetPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  numClasses?: Prisma.SortOrderInput | Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  valSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  testSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logText?: Prisma.SortOrderInput | Prisma.SortOrder
+  metrics?: Prisma.SortOrderInput | Prisma.SortOrder
+  outputModelPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  model?: Prisma.AIModelOrderByWithRelationInput
+  triggeredBy?: Prisma.UserOrderByWithRelationInput
+  deployedModel?: Prisma.AIModelOrderByWithRelationInput
 }
 
 export type AITrainingJobWhereUniqueInput = Prisma.AtLeast<{
@@ -255,21 +373,46 @@ export type AITrainingJobWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AITrainingJobWhereInput | Prisma.AITrainingJobWhereInput[]
   OR?: Prisma.AITrainingJobWhereInput[]
   NOT?: Prisma.AITrainingJobWhereInput | Prisma.AITrainingJobWhereInput[]
-  startedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFilter<"AITrainingJob"> | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFilter<"AITrainingJob"> | string
+  datasetZipUrl?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  datasetPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  numClasses?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  classNames?: Prisma.StringNullableListFilter<"AITrainingJob">
+  trainSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  valSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  testSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  startedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
-  status?: Prisma.StringFilter<"AITrainingJob"> | string
-  modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  errorMessage?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  logText?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  metrics?: Prisma.JsonNullableFilter<"AITrainingJob">
+  outputModelPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  triggeredById?: Prisma.IntFilter<"AITrainingJob"> | number
   createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
-  model?: Prisma.XOR<Prisma.AIModelScalarRelationFilter, Prisma.AIModelWhereInput>
+  triggeredBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deployedModel?: Prisma.XOR<Prisma.AIModelNullableScalarRelationFilter, Prisma.AIModelWhereInput> | null
 }, "id">
 
 export type AITrainingJobOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
+  datasetZipUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  datasetPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  numClasses?: Prisma.SortOrderInput | Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  valSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  testSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logText?: Prisma.SortOrderInput | Prisma.SortOrder
+  metrics?: Prisma.SortOrderInput | Prisma.SortOrder
+  outputModelPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AITrainingJobCountOrderByAggregateInput
@@ -284,76 +427,176 @@ export type AITrainingJobScalarWhereWithAggregatesInput = {
   OR?: Prisma.AITrainingJobScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AITrainingJobScalarWhereWithAggregatesInput | Prisma.AITrainingJobScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AITrainingJob"> | number
-  startedAt?: Prisma.DateTimeWithAggregatesFilter<"AITrainingJob"> | Date | string
+  status?: Prisma.EnumAITrainingJobStatusWithAggregatesFilter<"AITrainingJob"> | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringWithAggregatesFilter<"AITrainingJob"> | string
+  datasetZipUrl?: Prisma.StringNullableWithAggregatesFilter<"AITrainingJob"> | string | null
+  datasetPath?: Prisma.StringNullableWithAggregatesFilter<"AITrainingJob"> | string | null
+  numClasses?: Prisma.IntNullableWithAggregatesFilter<"AITrainingJob"> | number | null
+  classNames?: Prisma.StringNullableListFilter<"AITrainingJob">
+  trainSize?: Prisma.IntNullableWithAggregatesFilter<"AITrainingJob"> | number | null
+  valSize?: Prisma.IntNullableWithAggregatesFilter<"AITrainingJob"> | number | null
+  testSize?: Prisma.IntNullableWithAggregatesFilter<"AITrainingJob"> | number | null
+  startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AITrainingJob"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AITrainingJob"> | Date | string | null
-  status?: Prisma.StringWithAggregatesFilter<"AITrainingJob"> | string
-  modelId?: Prisma.IntWithAggregatesFilter<"AITrainingJob"> | number
+  errorMessage?: Prisma.StringNullableWithAggregatesFilter<"AITrainingJob"> | string | null
+  logText?: Prisma.StringNullableWithAggregatesFilter<"AITrainingJob"> | string | null
+  metrics?: Prisma.JsonNullableWithAggregatesFilter<"AITrainingJob">
+  outputModelPath?: Prisma.StringNullableWithAggregatesFilter<"AITrainingJob"> | string | null
+  triggeredById?: Prisma.IntWithAggregatesFilter<"AITrainingJob"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AITrainingJob"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AITrainingJob"> | Date | string
 }
 
 export type AITrainingJobCreateInput = {
-  startedAt: Date | string
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  model: Prisma.AIModelCreateNestedOneWithoutJobsInput
+  triggeredBy: Prisma.UserCreateNestedOneWithoutAiTrainingJobsInput
+  deployedModel?: Prisma.AIModelCreateNestedOneWithoutTrainingJobInput
 }
 
 export type AITrainingJobUncheckedCreateInput = {
   id?: number
-  startedAt: Date | string
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
-  modelId: number
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
+  triggeredById: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  deployedModel?: Prisma.AIModelUncheckedCreateNestedOneWithoutTrainingJobInput
 }
 
 export type AITrainingJobUpdateInput = {
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  model?: Prisma.AIModelUpdateOneRequiredWithoutJobsNestedInput
+  triggeredBy?: Prisma.UserUpdateOneRequiredWithoutAiTrainingJobsNestedInput
+  deployedModel?: Prisma.AIModelUpdateOneWithoutTrainingJobNestedInput
 }
 
 export type AITrainingJobUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggeredById?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deployedModel?: Prisma.AIModelUncheckedUpdateOneWithoutTrainingJobNestedInput
 }
 
 export type AITrainingJobCreateManyInput = {
   id?: number
-  startedAt: Date | string
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
-  modelId: number
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
+  triggeredById: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type AITrainingJobUpdateManyMutationInput = {
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AITrainingJobUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  modelId?: Prisma.IntFieldUpdateOperationsInput | number
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggeredById?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -368,129 +611,229 @@ export type AITrainingJobOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type AITrainingJobNullableScalarRelationFilter = {
+  is?: Prisma.AITrainingJobWhereInput | null
+  isNot?: Prisma.AITrainingJobWhereInput | null
+}
+
 export type AITrainingJobCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
+  datasetZipUrl?: Prisma.SortOrder
+  datasetPath?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrder
+  valSize?: Prisma.SortOrder
+  testSize?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  errorMessage?: Prisma.SortOrder
+  logText?: Prisma.SortOrder
+  metrics?: Prisma.SortOrder
+  outputModelPath?: Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrder
+  valSize?: Prisma.SortOrder
+  testSize?: Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
 }
 
 export type AITrainingJobMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
+  datasetZipUrl?: Prisma.SortOrder
+  datasetPath?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrder
+  valSize?: Prisma.SortOrder
+  testSize?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  errorMessage?: Prisma.SortOrder
+  logText?: Prisma.SortOrder
+  outputModelPath?: Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
+  datasetZipUrl?: Prisma.SortOrder
+  datasetPath?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrder
+  valSize?: Prisma.SortOrder
+  testSize?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  errorMessage?: Prisma.SortOrder
+  logText?: Prisma.SortOrder
+  outputModelPath?: Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AITrainingJobSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  modelId?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainSize?: Prisma.SortOrder
+  valSize?: Prisma.SortOrder
+  testSize?: Prisma.SortOrder
+  triggeredById?: Prisma.SortOrder
 }
 
-export type AITrainingJobCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput> | Prisma.AITrainingJobCreateWithoutModelInput[] | Prisma.AITrainingJobUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutModelInput | Prisma.AITrainingJobCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.AITrainingJobCreateManyModelInputEnvelope
+export type AITrainingJobCreateNestedManyWithoutTriggeredByInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput> | Prisma.AITrainingJobCreateWithoutTriggeredByInput[] | Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput[]
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput | Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput[]
+  createMany?: Prisma.AITrainingJobCreateManyTriggeredByInputEnvelope
   connect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
 }
 
-export type AITrainingJobUncheckedCreateNestedManyWithoutModelInput = {
-  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput> | Prisma.AITrainingJobCreateWithoutModelInput[] | Prisma.AITrainingJobUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutModelInput | Prisma.AITrainingJobCreateOrConnectWithoutModelInput[]
-  createMany?: Prisma.AITrainingJobCreateManyModelInputEnvelope
+export type AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput> | Prisma.AITrainingJobCreateWithoutTriggeredByInput[] | Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput[]
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput | Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput[]
+  createMany?: Prisma.AITrainingJobCreateManyTriggeredByInputEnvelope
   connect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
 }
 
-export type AITrainingJobUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput> | Prisma.AITrainingJobCreateWithoutModelInput[] | Prisma.AITrainingJobUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutModelInput | Prisma.AITrainingJobCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.AITrainingJobUpsertWithWhereUniqueWithoutModelInput | Prisma.AITrainingJobUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.AITrainingJobCreateManyModelInputEnvelope
+export type AITrainingJobUpdateManyWithoutTriggeredByNestedInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput> | Prisma.AITrainingJobCreateWithoutTriggeredByInput[] | Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput[]
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput | Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput[]
+  upsert?: Prisma.AITrainingJobUpsertWithWhereUniqueWithoutTriggeredByInput | Prisma.AITrainingJobUpsertWithWhereUniqueWithoutTriggeredByInput[]
+  createMany?: Prisma.AITrainingJobCreateManyTriggeredByInputEnvelope
   set?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   disconnect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   delete?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   connect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
-  update?: Prisma.AITrainingJobUpdateWithWhereUniqueWithoutModelInput | Prisma.AITrainingJobUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.AITrainingJobUpdateManyWithWhereWithoutModelInput | Prisma.AITrainingJobUpdateManyWithWhereWithoutModelInput[]
+  update?: Prisma.AITrainingJobUpdateWithWhereUniqueWithoutTriggeredByInput | Prisma.AITrainingJobUpdateWithWhereUniqueWithoutTriggeredByInput[]
+  updateMany?: Prisma.AITrainingJobUpdateManyWithWhereWithoutTriggeredByInput | Prisma.AITrainingJobUpdateManyWithWhereWithoutTriggeredByInput[]
   deleteMany?: Prisma.AITrainingJobScalarWhereInput | Prisma.AITrainingJobScalarWhereInput[]
 }
 
-export type AITrainingJobUncheckedUpdateManyWithoutModelNestedInput = {
-  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput> | Prisma.AITrainingJobCreateWithoutModelInput[] | Prisma.AITrainingJobUncheckedCreateWithoutModelInput[]
-  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutModelInput | Prisma.AITrainingJobCreateOrConnectWithoutModelInput[]
-  upsert?: Prisma.AITrainingJobUpsertWithWhereUniqueWithoutModelInput | Prisma.AITrainingJobUpsertWithWhereUniqueWithoutModelInput[]
-  createMany?: Prisma.AITrainingJobCreateManyModelInputEnvelope
+export type AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput> | Prisma.AITrainingJobCreateWithoutTriggeredByInput[] | Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput[]
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput | Prisma.AITrainingJobCreateOrConnectWithoutTriggeredByInput[]
+  upsert?: Prisma.AITrainingJobUpsertWithWhereUniqueWithoutTriggeredByInput | Prisma.AITrainingJobUpsertWithWhereUniqueWithoutTriggeredByInput[]
+  createMany?: Prisma.AITrainingJobCreateManyTriggeredByInputEnvelope
   set?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   disconnect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   delete?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
   connect?: Prisma.AITrainingJobWhereUniqueInput | Prisma.AITrainingJobWhereUniqueInput[]
-  update?: Prisma.AITrainingJobUpdateWithWhereUniqueWithoutModelInput | Prisma.AITrainingJobUpdateWithWhereUniqueWithoutModelInput[]
-  updateMany?: Prisma.AITrainingJobUpdateManyWithWhereWithoutModelInput | Prisma.AITrainingJobUpdateManyWithWhereWithoutModelInput[]
+  update?: Prisma.AITrainingJobUpdateWithWhereUniqueWithoutTriggeredByInput | Prisma.AITrainingJobUpdateWithWhereUniqueWithoutTriggeredByInput[]
+  updateMany?: Prisma.AITrainingJobUpdateManyWithWhereWithoutTriggeredByInput | Prisma.AITrainingJobUpdateManyWithWhereWithoutTriggeredByInput[]
   deleteMany?: Prisma.AITrainingJobScalarWhereInput | Prisma.AITrainingJobScalarWhereInput[]
 }
 
-export type AITrainingJobCreateWithoutModelInput = {
-  startedAt: Date | string
+export type AITrainingJobCreateNestedOneWithoutDeployedModelInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedCreateWithoutDeployedModelInput>
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutDeployedModelInput
+  connect?: Prisma.AITrainingJobWhereUniqueInput
+}
+
+export type AITrainingJobUpdateOneWithoutDeployedModelNestedInput = {
+  create?: Prisma.XOR<Prisma.AITrainingJobCreateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedCreateWithoutDeployedModelInput>
+  connectOrCreate?: Prisma.AITrainingJobCreateOrConnectWithoutDeployedModelInput
+  upsert?: Prisma.AITrainingJobUpsertWithoutDeployedModelInput
+  disconnect?: Prisma.AITrainingJobWhereInput | boolean
+  delete?: Prisma.AITrainingJobWhereInput | boolean
+  connect?: Prisma.AITrainingJobWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AITrainingJobUpdateToOneWithWhereWithoutDeployedModelInput, Prisma.AITrainingJobUpdateWithoutDeployedModelInput>, Prisma.AITrainingJobUncheckedUpdateWithoutDeployedModelInput>
+}
+
+export type AITrainingJobCreateclassNamesInput = {
+  set: string[]
+}
+
+export type EnumAITrainingJobStatusFieldUpdateOperationsInput = {
+  set?: $Enums.AITrainingJobStatus
+}
+
+export type AITrainingJobUpdateclassNamesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type AITrainingJobCreateWithoutTriggeredByInput = {
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deployedModel?: Prisma.AIModelCreateNestedOneWithoutTrainingJobInput
 }
 
-export type AITrainingJobUncheckedCreateWithoutModelInput = {
+export type AITrainingJobUncheckedCreateWithoutTriggeredByInput = {
   id?: number
-  startedAt: Date | string
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  deployedModel?: Prisma.AIModelUncheckedCreateNestedOneWithoutTrainingJobInput
 }
 
-export type AITrainingJobCreateOrConnectWithoutModelInput = {
+export type AITrainingJobCreateOrConnectWithoutTriggeredByInput = {
   where: Prisma.AITrainingJobWhereUniqueInput
-  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput>
+  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput>
 }
 
-export type AITrainingJobCreateManyModelInputEnvelope = {
-  data: Prisma.AITrainingJobCreateManyModelInput | Prisma.AITrainingJobCreateManyModelInput[]
+export type AITrainingJobCreateManyTriggeredByInputEnvelope = {
+  data: Prisma.AITrainingJobCreateManyTriggeredByInput | Prisma.AITrainingJobCreateManyTriggeredByInput[]
   skipDuplicates?: boolean
 }
 
-export type AITrainingJobUpsertWithWhereUniqueWithoutModelInput = {
+export type AITrainingJobUpsertWithWhereUniqueWithoutTriggeredByInput = {
   where: Prisma.AITrainingJobWhereUniqueInput
-  update: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutModelInput, Prisma.AITrainingJobUncheckedUpdateWithoutModelInput>
-  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutModelInput, Prisma.AITrainingJobUncheckedCreateWithoutModelInput>
+  update: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedUpdateWithoutTriggeredByInput>
+  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedCreateWithoutTriggeredByInput>
 }
 
-export type AITrainingJobUpdateWithWhereUniqueWithoutModelInput = {
+export type AITrainingJobUpdateWithWhereUniqueWithoutTriggeredByInput = {
   where: Prisma.AITrainingJobWhereUniqueInput
-  data: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutModelInput, Prisma.AITrainingJobUncheckedUpdateWithoutModelInput>
+  data: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutTriggeredByInput, Prisma.AITrainingJobUncheckedUpdateWithoutTriggeredByInput>
 }
 
-export type AITrainingJobUpdateManyWithWhereWithoutModelInput = {
+export type AITrainingJobUpdateManyWithWhereWithoutTriggeredByInput = {
   where: Prisma.AITrainingJobScalarWhereInput
-  data: Prisma.XOR<Prisma.AITrainingJobUpdateManyMutationInput, Prisma.AITrainingJobUncheckedUpdateManyWithoutModelInput>
+  data: Prisma.XOR<Prisma.AITrainingJobUpdateManyMutationInput, Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByInput>
 }
 
 export type AITrainingJobScalarWhereInput = {
@@ -498,45 +841,209 @@ export type AITrainingJobScalarWhereInput = {
   OR?: Prisma.AITrainingJobScalarWhereInput[]
   NOT?: Prisma.AITrainingJobScalarWhereInput | Prisma.AITrainingJobScalarWhereInput[]
   id?: Prisma.IntFilter<"AITrainingJob"> | number
-  startedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
+  status?: Prisma.EnumAITrainingJobStatusFilter<"AITrainingJob"> | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFilter<"AITrainingJob"> | string
+  datasetZipUrl?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  datasetPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  numClasses?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  classNames?: Prisma.StringNullableListFilter<"AITrainingJob">
+  trainSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  valSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  testSize?: Prisma.IntNullableFilter<"AITrainingJob"> | number | null
+  startedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
   finishedAt?: Prisma.DateTimeNullableFilter<"AITrainingJob"> | Date | string | null
-  status?: Prisma.StringFilter<"AITrainingJob"> | string
-  modelId?: Prisma.IntFilter<"AITrainingJob"> | number
+  errorMessage?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  logText?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  metrics?: Prisma.JsonNullableFilter<"AITrainingJob">
+  outputModelPath?: Prisma.StringNullableFilter<"AITrainingJob"> | string | null
+  triggeredById?: Prisma.IntFilter<"AITrainingJob"> | number
   createdAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AITrainingJob"> | Date | string
 }
 
-export type AITrainingJobCreateManyModelInput = {
-  id?: number
-  startedAt: Date | string
+export type AITrainingJobCreateWithoutDeployedModelInput = {
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
   finishedAt?: Date | string | null
-  status: string
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  triggeredBy: Prisma.UserCreateNestedOneWithoutAiTrainingJobsInput
+}
+
+export type AITrainingJobUncheckedCreateWithoutDeployedModelInput = {
+  id?: number
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
+  triggeredById: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type AITrainingJobUpdateWithoutModelInput = {
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type AITrainingJobCreateOrConnectWithoutDeployedModelInput = {
+  where: Prisma.AITrainingJobWhereUniqueInput
+  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedCreateWithoutDeployedModelInput>
+}
+
+export type AITrainingJobUpsertWithoutDeployedModelInput = {
+  update: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedUpdateWithoutDeployedModelInput>
+  create: Prisma.XOR<Prisma.AITrainingJobCreateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedCreateWithoutDeployedModelInput>
+  where?: Prisma.AITrainingJobWhereInput
+}
+
+export type AITrainingJobUpdateToOneWithWhereWithoutDeployedModelInput = {
+  where?: Prisma.AITrainingJobWhereInput
+  data: Prisma.XOR<Prisma.AITrainingJobUpdateWithoutDeployedModelInput, Prisma.AITrainingJobUncheckedUpdateWithoutDeployedModelInput>
+}
+
+export type AITrainingJobUpdateWithoutDeployedModelInput = {
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  triggeredBy?: Prisma.UserUpdateOneRequiredWithoutAiTrainingJobsNestedInput
+}
+
+export type AITrainingJobUncheckedUpdateWithoutDeployedModelInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  triggeredById?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type AITrainingJobUncheckedUpdateWithoutModelInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type AITrainingJobCreateManyTriggeredByInput = {
+  id?: number
+  status?: $Enums.AITrainingJobStatus
+  modelName: string
+  datasetZipUrl?: string | null
+  datasetPath?: string | null
+  numClasses?: number | null
+  classNames?: Prisma.AITrainingJobCreateclassNamesInput | string[]
+  trainSize?: number | null
+  valSize?: number | null
+  testSize?: number | null
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
+  errorMessage?: string | null
+  logText?: string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
-export type AITrainingJobUncheckedUpdateManyWithoutModelInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type AITrainingJobUpdateWithoutTriggeredByInput = {
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deployedModel?: Prisma.AIModelUpdateOneWithoutTrainingJobNestedInput
+}
+
+export type AITrainingJobUncheckedUpdateWithoutTriggeredByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deployedModel?: Prisma.AIModelUncheckedUpdateOneWithoutTrainingJobNestedInput
+}
+
+export type AITrainingJobUncheckedUpdateManyWithoutTriggeredByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumAITrainingJobStatusFieldUpdateOperationsInput | $Enums.AITrainingJobStatus
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  datasetZipUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  datasetPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numClasses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  classNames?: Prisma.AITrainingJobUpdateclassNamesInput | string[]
+  trainSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  valSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  testSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metrics?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  outputModelPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -545,69 +1052,132 @@ export type AITrainingJobUncheckedUpdateManyWithoutModelInput = {
 
 export type AITrainingJobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  status?: boolean
+  modelName?: boolean
+  datasetZipUrl?: boolean
+  datasetPath?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  trainSize?: boolean
+  valSize?: boolean
+  testSize?: boolean
   startedAt?: boolean
   finishedAt?: boolean
-  status?: boolean
-  modelId?: boolean
+  errorMessage?: boolean
+  logText?: boolean
+  metrics?: boolean
+  outputModelPath?: boolean
+  triggeredById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deployedModel?: boolean | Prisma.AITrainingJob$deployedModelArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
 export type AITrainingJobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  status?: boolean
+  modelName?: boolean
+  datasetZipUrl?: boolean
+  datasetPath?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  trainSize?: boolean
+  valSize?: boolean
+  testSize?: boolean
   startedAt?: boolean
   finishedAt?: boolean
-  status?: boolean
-  modelId?: boolean
+  errorMessage?: boolean
+  logText?: boolean
+  metrics?: boolean
+  outputModelPath?: boolean
+  triggeredById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
 export type AITrainingJobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  status?: boolean
+  modelName?: boolean
+  datasetZipUrl?: boolean
+  datasetPath?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  trainSize?: boolean
+  valSize?: boolean
+  testSize?: boolean
   startedAt?: boolean
   finishedAt?: boolean
-  status?: boolean
-  modelId?: boolean
+  errorMessage?: boolean
+  logText?: boolean
+  metrics?: boolean
+  outputModelPath?: boolean
+  triggeredById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aITrainingJob"]>
 
 export type AITrainingJobSelectScalar = {
   id?: boolean
+  status?: boolean
+  modelName?: boolean
+  datasetZipUrl?: boolean
+  datasetPath?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  trainSize?: boolean
+  valSize?: boolean
+  testSize?: boolean
   startedAt?: boolean
   finishedAt?: boolean
-  status?: boolean
-  modelId?: boolean
+  errorMessage?: boolean
+  logText?: boolean
+  metrics?: boolean
+  outputModelPath?: boolean
+  triggeredById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AITrainingJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startedAt" | "finishedAt" | "status" | "modelId" | "createdAt" | "updatedAt", ExtArgs["result"]["aITrainingJob"]>
+export type AITrainingJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "modelName" | "datasetZipUrl" | "datasetPath" | "numClasses" | "classNames" | "trainSize" | "valSize" | "testSize" | "startedAt" | "finishedAt" | "errorMessage" | "logText" | "metrics" | "outputModelPath" | "triggeredById" | "createdAt" | "updatedAt", ExtArgs["result"]["aITrainingJob"]>
 export type AITrainingJobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deployedModel?: boolean | Prisma.AITrainingJob$deployedModelArgs<ExtArgs>
 }
 export type AITrainingJobIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type AITrainingJobIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  model?: boolean | Prisma.AIModelDefaultArgs<ExtArgs>
+  triggeredBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $AITrainingJobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AITrainingJob"
   objects: {
-    model: Prisma.$AIModelPayload<ExtArgs>
+    triggeredBy: Prisma.$UserPayload<ExtArgs>
+    deployedModel: Prisma.$AIModelPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    startedAt: Date
+    status: $Enums.AITrainingJobStatus
+    modelName: string
+    datasetZipUrl: string | null
+    datasetPath: string | null
+    numClasses: number | null
+    classNames: string[]
+    trainSize: number | null
+    valSize: number | null
+    testSize: number | null
+    startedAt: Date | null
     finishedAt: Date | null
-    status: string
-    modelId: number
+    errorMessage: string | null
+    logText: string | null
+    metrics: runtime.JsonValue | null
+    outputModelPath: string | null
+    triggeredById: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["aITrainingJob"]>
@@ -1004,7 +1574,8 @@ readonly fields: AITrainingJobFieldRefs;
  */
 export interface Prisma__AITrainingJobClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  model<T extends Prisma.AIModelDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AIModelDefaultArgs<ExtArgs>>): Prisma.Prisma__AIModelClient<runtime.Types.Result.GetResult<Prisma.$AIModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  triggeredBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  deployedModel<T extends Prisma.AITrainingJob$deployedModelArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AITrainingJob$deployedModelArgs<ExtArgs>>): Prisma.Prisma__AIModelClient<runtime.Types.Result.GetResult<Prisma.$AIModelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1035,10 +1606,22 @@ export interface Prisma__AITrainingJobClient<T, Null = never, ExtArgs extends ru
  */
 export interface AITrainingJobFieldRefs {
   readonly id: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly status: Prisma.FieldRef<"AITrainingJob", 'AITrainingJobStatus'>
+  readonly modelName: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly datasetZipUrl: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly datasetPath: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly numClasses: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly classNames: Prisma.FieldRef<"AITrainingJob", 'String[]'>
+  readonly trainSize: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly valSize: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly testSize: Prisma.FieldRef<"AITrainingJob", 'Int'>
   readonly startedAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
   readonly finishedAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
-  readonly status: Prisma.FieldRef<"AITrainingJob", 'String'>
-  readonly modelId: Prisma.FieldRef<"AITrainingJob", 'Int'>
+  readonly errorMessage: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly logText: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly metrics: Prisma.FieldRef<"AITrainingJob", 'Json'>
+  readonly outputModelPath: Prisma.FieldRef<"AITrainingJob", 'String'>
+  readonly triggeredById: Prisma.FieldRef<"AITrainingJob", 'Int'>
   readonly createdAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AITrainingJob", 'DateTime'>
 }
@@ -1434,6 +2017,25 @@ export type AITrainingJobDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many AITrainingJobs to delete.
    */
   limit?: number
+}
+
+/**
+ * AITrainingJob.deployedModel
+ */
+export type AITrainingJob$deployedModelArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIModel
+   */
+  select?: Prisma.AIModelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIModel
+   */
+  omit?: Prisma.AIModelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIModelInclude<ExtArgs> | null
+  where?: Prisma.AIModelWhereInput
 }
 
 /**

@@ -5,6 +5,7 @@ import {
   Min,
   IsString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { SubmissionType, SubmissionCategory, SubmissionStatus } from '../../../generated/prisma/enums';
 
 export class QuerySubmissionDto {
@@ -21,21 +22,25 @@ export class QuerySubmissionDto {
   status?: SubmissionStatus;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   userId?: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   targetFoodId?: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   current?: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   pageSize?: number;

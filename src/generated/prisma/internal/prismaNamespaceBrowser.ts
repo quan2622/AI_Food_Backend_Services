@@ -414,9 +414,16 @@ export type UserSubmissionScalarFieldEnum = (typeof UserSubmissionScalarFieldEnu
 
 export const AIModelScalarFieldEnum = {
   id: 'id',
+  modelName: 'modelName',
   version: 'version',
   accuracy: 'accuracy',
-  loss: 'loss',
+  valLoss: 'valLoss',
+  bestEpoch: 'bestEpoch',
+  numClasses: 'numClasses',
+  classNames: 'classNames',
+  isActive: 'isActive',
+  modelFilePath: 'modelFilePath',
+  trainingJobId: 'trainingJobId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -426,10 +433,22 @@ export type AIModelScalarFieldEnum = (typeof AIModelScalarFieldEnum)[keyof typeo
 
 export const AITrainingJobScalarFieldEnum = {
   id: 'id',
+  status: 'status',
+  modelName: 'modelName',
+  datasetZipUrl: 'datasetZipUrl',
+  datasetPath: 'datasetPath',
+  numClasses: 'numClasses',
+  classNames: 'classNames',
+  trainSize: 'trainSize',
+  valSize: 'valSize',
+  testSize: 'testSize',
   startedAt: 'startedAt',
   finishedAt: 'finishedAt',
-  status: 'status',
-  modelId: 'modelId',
+  errorMessage: 'errorMessage',
+  logText: 'logText',
+  metrics: 'metrics',
+  outputModelPath: 'outputModelPath',
+  triggeredById: 'triggeredById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -450,6 +469,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

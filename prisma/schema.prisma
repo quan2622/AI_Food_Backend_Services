@@ -102,6 +102,15 @@ enum SubmissionStatus {
   REJECTED
 }
 
+enum AITrainingJobStatus {
+  TRAIN_PENDING
+  TRAIN_PREPARING
+  TRAIN_RUNNING
+  TRAIN_DONE
+  TRAIN_FAILED
+  TRAIN_CANCELLED
+}
+
 // ─── Models ─────────────────────────────────────────────────────────────────
 
 model AllCode {
@@ -138,6 +147,7 @@ model User {
   foodImages     FoodImage[]
   workoutLogs    WorkoutLog[]
   submissions    UserSubmission[]
+  aiTrainingJobs AITrainingJob[]
 
   @@map("users")
 }
@@ -491,28 +501,51 @@ model UserSubmission {
 
 // ─── AI ──────────────────────────────────────────────────────────────────────
 
+/// Represents a trained AI model snapshot that can be deployed for inference.
 model AIModel {
-  id        Int             @id @default(autoincrement())
-  version   String
-  accuracy  Decimal
-  loss      Decimal
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-
-  jobs      AITrainingJob[]
+  id            Int             @id @default(autoincrement())
+  modelName     String          // 'efficientnet_b3' | 'resnet50' | 'inceptionv3'
+  version       String          // e.g. "v1", "v2"
+  accuracy      Decimal?
+  valLoss       Decimal?
+  bestEpoch     Int?
+  numClasses    Int             @default(0)
+  classNames    String[]        @default([])
+  isActive      Boolean         @default(false)
+  modelFilePath String?         // absolute path to .pth on the core service
+  trainingJobId Int?            @unique
+  trainingJob   AITrainingJob?  @relation("JobToModel", fields: [trainingJobId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   @@map("ai_models")
 }
 
+/// Represents an admin-initiated training session.
 model AITrainingJob {
-  id         Int       @id @default(autoincrement())
-  startedAt  DateTime
-  finishedAt DateTime?
-  status     String
-  modelId    Int
-  model      AIModel   @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id              Int                  @id @default(autoincrement())
+  status          AITrainingJobStatus  @default(TRAIN_PENDING)
+  modelName       String               // architecture to train
+  datasetZipUrl   String?              // Cloudinary URL of uploaded dataset zip
+  datasetPath     String?              // path on core service after extraction
+  numClasses      Int?
+  classNames      String[]             @default([])
+  trainSize       Int?
+  valSize         Int?
+  testSize        Int?
+  startedAt       DateTime?
+  finishedAt      DateTime?
+  errorMessage    String?              @db.Text
+  logText         String?              @db.Text
+  metrics         Json?
+  outputModelPath String?
+  triggeredById   Int
+  triggeredBy     User                 @relation(fields: [triggeredById], references: [id], onDelete: Restrict)
+  deployedModel   AIModel?             @relation("JobToModel")
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
 
+  @@index([status])
+  @@index([triggeredById])
   @@map("ai_training_jobs")
 }

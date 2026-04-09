@@ -187,7 +187,7 @@ export class AdminDashboardService {
     const lastJob = await this.prisma.aITrainingJob.findFirst({
       where: { finishedAt: { not: null } },
       orderBy: { finishedAt: 'desc' },
-      include: { model: { select: { version: true } } },
+      include: { deployedModel: { select: { version: true } } },
     });
     if (lastJob) {
       out.push({
@@ -195,7 +195,7 @@ export class AdminDashboardService {
         severity: 'info',
         type: 'AI_TRAINING_SUCCESS',
         title: 'Huấn luyện mô hình gần nhất',
-        detail: `Model ${lastJob.model.version} — hoàn tất ${lastJob.finishedAt?.toISOString() ?? ''}`,
+        detail: `Model ${lastJob.deployedModel?.version ?? lastJob.modelName} — hoàn tất ${lastJob.finishedAt?.toISOString() ?? ''}`,
       });
     }
 

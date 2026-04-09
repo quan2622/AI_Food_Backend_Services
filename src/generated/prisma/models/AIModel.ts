@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model AIModel
- * 
+ * Represents a trained AI model snapshot that can be deployed for inference.
  */
 export type AIModelModel = runtime.Types.Result.DefaultSelection<Prisma.$AIModelPayload>
 
@@ -29,38 +29,63 @@ export type AggregateAIModel = {
 export type AIModelAvgAggregateOutputType = {
   id: number | null
   accuracy: runtime.Decimal | null
-  loss: runtime.Decimal | null
+  valLoss: runtime.Decimal | null
+  bestEpoch: number | null
+  numClasses: number | null
+  trainingJobId: number | null
 }
 
 export type AIModelSumAggregateOutputType = {
   id: number | null
   accuracy: runtime.Decimal | null
-  loss: runtime.Decimal | null
+  valLoss: runtime.Decimal | null
+  bestEpoch: number | null
+  numClasses: number | null
+  trainingJobId: number | null
 }
 
 export type AIModelMinAggregateOutputType = {
   id: number | null
+  modelName: string | null
   version: string | null
   accuracy: runtime.Decimal | null
-  loss: runtime.Decimal | null
+  valLoss: runtime.Decimal | null
+  bestEpoch: number | null
+  numClasses: number | null
+  isActive: boolean | null
+  modelFilePath: string | null
+  trainingJobId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type AIModelMaxAggregateOutputType = {
   id: number | null
+  modelName: string | null
   version: string | null
   accuracy: runtime.Decimal | null
-  loss: runtime.Decimal | null
+  valLoss: runtime.Decimal | null
+  bestEpoch: number | null
+  numClasses: number | null
+  isActive: boolean | null
+  modelFilePath: string | null
+  trainingJobId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type AIModelCountAggregateOutputType = {
   id: number
+  modelName: number
   version: number
   accuracy: number
-  loss: number
+  valLoss: number
+  bestEpoch: number
+  numClasses: number
+  classNames: number
+  isActive: number
+  modelFilePath: number
+  trainingJobId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,38 +95,63 @@ export type AIModelCountAggregateOutputType = {
 export type AIModelAvgAggregateInputType = {
   id?: true
   accuracy?: true
-  loss?: true
+  valLoss?: true
+  bestEpoch?: true
+  numClasses?: true
+  trainingJobId?: true
 }
 
 export type AIModelSumAggregateInputType = {
   id?: true
   accuracy?: true
-  loss?: true
+  valLoss?: true
+  bestEpoch?: true
+  numClasses?: true
+  trainingJobId?: true
 }
 
 export type AIModelMinAggregateInputType = {
   id?: true
+  modelName?: true
   version?: true
   accuracy?: true
-  loss?: true
+  valLoss?: true
+  bestEpoch?: true
+  numClasses?: true
+  isActive?: true
+  modelFilePath?: true
+  trainingJobId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type AIModelMaxAggregateInputType = {
   id?: true
+  modelName?: true
   version?: true
   accuracy?: true
-  loss?: true
+  valLoss?: true
+  bestEpoch?: true
+  numClasses?: true
+  isActive?: true
+  modelFilePath?: true
+  trainingJobId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type AIModelCountAggregateInputType = {
   id?: true
+  modelName?: true
   version?: true
   accuracy?: true
-  loss?: true
+  valLoss?: true
+  bestEpoch?: true
+  numClasses?: true
+  classNames?: true
+  isActive?: true
+  modelFilePath?: true
+  trainingJobId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -195,9 +245,16 @@ export type AIModelGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type AIModelGroupByOutputType = {
   id: number
+  modelName: string
   version: string
-  accuracy: runtime.Decimal
-  loss: runtime.Decimal
+  accuracy: runtime.Decimal | null
+  valLoss: runtime.Decimal | null
+  bestEpoch: number | null
+  numClasses: number
+  classNames: string[]
+  isActive: boolean
+  modelFilePath: string | null
+  trainingJobId: number | null
   createdAt: Date
   updatedAt: Date
   _count: AIModelCountAggregateOutputType | null
@@ -227,42 +284,70 @@ export type AIModelWhereInput = {
   OR?: Prisma.AIModelWhereInput[]
   NOT?: Prisma.AIModelWhereInput | Prisma.AIModelWhereInput[]
   id?: Prisma.IntFilter<"AIModel"> | number
+  modelName?: Prisma.StringFilter<"AIModel"> | string
   version?: Prisma.StringFilter<"AIModel"> | string
-  accuracy?: Prisma.DecimalFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.DecimalNullableFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.DecimalNullableFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.IntNullableFilter<"AIModel"> | number | null
+  numClasses?: Prisma.IntFilter<"AIModel"> | number
+  classNames?: Prisma.StringNullableListFilter<"AIModel">
+  isActive?: Prisma.BoolFilter<"AIModel"> | boolean
+  modelFilePath?: Prisma.StringNullableFilter<"AIModel"> | string | null
+  trainingJobId?: Prisma.IntNullableFilter<"AIModel"> | number | null
   createdAt?: Prisma.DateTimeFilter<"AIModel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AIModel"> | Date | string
-  jobs?: Prisma.AITrainingJobListRelationFilter
+  trainingJob?: Prisma.XOR<Prisma.AITrainingJobNullableScalarRelationFilter, Prisma.AITrainingJobWhereInput> | null
 }
 
 export type AIModelOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  valLoss?: Prisma.SortOrderInput | Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrderInput | Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  modelFilePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  jobs?: Prisma.AITrainingJobOrderByRelationAggregateInput
+  trainingJob?: Prisma.AITrainingJobOrderByWithRelationInput
 }
 
 export type AIModelWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  trainingJobId?: number
   AND?: Prisma.AIModelWhereInput | Prisma.AIModelWhereInput[]
   OR?: Prisma.AIModelWhereInput[]
   NOT?: Prisma.AIModelWhereInput | Prisma.AIModelWhereInput[]
+  modelName?: Prisma.StringFilter<"AIModel"> | string
   version?: Prisma.StringFilter<"AIModel"> | string
-  accuracy?: Prisma.DecimalFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.DecimalNullableFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.DecimalNullableFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.IntNullableFilter<"AIModel"> | number | null
+  numClasses?: Prisma.IntFilter<"AIModel"> | number
+  classNames?: Prisma.StringNullableListFilter<"AIModel">
+  isActive?: Prisma.BoolFilter<"AIModel"> | boolean
+  modelFilePath?: Prisma.StringNullableFilter<"AIModel"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AIModel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AIModel"> | Date | string
-  jobs?: Prisma.AITrainingJobListRelationFilter
-}, "id">
+  trainingJob?: Prisma.XOR<Prisma.AITrainingJobNullableScalarRelationFilter, Prisma.AITrainingJobWhereInput> | null
+}, "id" | "trainingJobId">
 
 export type AIModelOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  valLoss?: Prisma.SortOrderInput | Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrderInput | Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  modelFilePath?: Prisma.SortOrderInput | Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AIModelCountOrderByAggregateInput
@@ -277,82 +362,148 @@ export type AIModelScalarWhereWithAggregatesInput = {
   OR?: Prisma.AIModelScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AIModelScalarWhereWithAggregatesInput | Prisma.AIModelScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AIModel"> | number
+  modelName?: Prisma.StringWithAggregatesFilter<"AIModel"> | string
   version?: Prisma.StringWithAggregatesFilter<"AIModel"> | string
-  accuracy?: Prisma.DecimalWithAggregatesFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalWithAggregatesFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.DecimalNullableWithAggregatesFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.DecimalNullableWithAggregatesFilter<"AIModel"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.IntNullableWithAggregatesFilter<"AIModel"> | number | null
+  numClasses?: Prisma.IntWithAggregatesFilter<"AIModel"> | number
+  classNames?: Prisma.StringNullableListFilter<"AIModel">
+  isActive?: Prisma.BoolWithAggregatesFilter<"AIModel"> | boolean
+  modelFilePath?: Prisma.StringNullableWithAggregatesFilter<"AIModel"> | string | null
+  trainingJobId?: Prisma.IntNullableWithAggregatesFilter<"AIModel"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AIModel"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AIModel"> | Date | string
 }
 
 export type AIModelCreateInput = {
+  modelName: string
   version: string
-  accuracy: runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: number | null
+  numClasses?: number
+  classNames?: Prisma.AIModelCreateclassNamesInput | string[]
+  isActive?: boolean
+  modelFilePath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  jobs?: Prisma.AITrainingJobCreateNestedManyWithoutModelInput
+  trainingJob?: Prisma.AITrainingJobCreateNestedOneWithoutDeployedModelInput
 }
 
 export type AIModelUncheckedCreateInput = {
   id?: number
+  modelName: string
   version: string
-  accuracy: runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: number | null
+  numClasses?: number
+  classNames?: Prisma.AIModelCreateclassNamesInput | string[]
+  isActive?: boolean
+  modelFilePath?: string | null
+  trainingJobId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  jobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutModelInput
 }
 
 export type AIModelUpdateInput = {
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobs?: Prisma.AITrainingJobUpdateManyWithoutModelNestedInput
+  trainingJob?: Prisma.AITrainingJobUpdateOneWithoutDeployedModelNestedInput
 }
 
 export type AIModelUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingJobId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutModelNestedInput
 }
 
 export type AIModelCreateManyInput = {
   id?: number
+  modelName: string
   version: string
-  accuracy: runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: number | null
+  numClasses?: number
+  classNames?: Prisma.AIModelCreateclassNamesInput | string[]
+  isActive?: boolean
+  modelFilePath?: string | null
+  trainingJobId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type AIModelUpdateManyMutationInput = {
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AIModelUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trainingJobId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type AIModelCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
   version?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  valLoss?: Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  classNames?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  modelFilePath?: Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -360,23 +511,38 @@ export type AIModelCountOrderByAggregateInput = {
 export type AIModelAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  valLoss?: Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrder
 }
 
 export type AIModelMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
   version?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  valLoss?: Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  modelFilePath?: Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AIModelMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  modelName?: Prisma.SortOrder
   version?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  valLoss?: Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  modelFilePath?: Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -384,173 +550,237 @@ export type AIModelMinOrderByAggregateInput = {
 export type AIModelSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
-  loss?: Prisma.SortOrder
+  valLoss?: Prisma.SortOrder
+  bestEpoch?: Prisma.SortOrder
+  numClasses?: Prisma.SortOrder
+  trainingJobId?: Prisma.SortOrder
 }
 
-export type AIModelScalarRelationFilter = {
-  is?: Prisma.AIModelWhereInput
-  isNot?: Prisma.AIModelWhereInput
+export type AIModelNullableScalarRelationFilter = {
+  is?: Prisma.AIModelWhereInput | null
+  isNot?: Prisma.AIModelWhereInput | null
 }
 
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+export type AIModelCreateclassNamesInput = {
+  set: string[]
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type AIModelCreateNestedOneWithoutJobsInput = {
-  create?: Prisma.XOR<Prisma.AIModelCreateWithoutJobsInput, Prisma.AIModelUncheckedCreateWithoutJobsInput>
-  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutJobsInput
+export type AIModelUpdateclassNamesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type AIModelCreateNestedOneWithoutTrainingJobInput = {
+  create?: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
+  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutTrainingJobInput
   connect?: Prisma.AIModelWhereUniqueInput
 }
 
-export type AIModelUpdateOneRequiredWithoutJobsNestedInput = {
-  create?: Prisma.XOR<Prisma.AIModelCreateWithoutJobsInput, Prisma.AIModelUncheckedCreateWithoutJobsInput>
-  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutJobsInput
-  upsert?: Prisma.AIModelUpsertWithoutJobsInput
+export type AIModelUncheckedCreateNestedOneWithoutTrainingJobInput = {
+  create?: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
+  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutTrainingJobInput
   connect?: Prisma.AIModelWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AIModelUpdateToOneWithWhereWithoutJobsInput, Prisma.AIModelUpdateWithoutJobsInput>, Prisma.AIModelUncheckedUpdateWithoutJobsInput>
 }
 
-export type AIModelCreateWithoutJobsInput = {
+export type AIModelUpdateOneWithoutTrainingJobNestedInput = {
+  create?: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
+  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutTrainingJobInput
+  upsert?: Prisma.AIModelUpsertWithoutTrainingJobInput
+  disconnect?: Prisma.AIModelWhereInput | boolean
+  delete?: Prisma.AIModelWhereInput | boolean
+  connect?: Prisma.AIModelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AIModelUpdateToOneWithWhereWithoutTrainingJobInput, Prisma.AIModelUpdateWithoutTrainingJobInput>, Prisma.AIModelUncheckedUpdateWithoutTrainingJobInput>
+}
+
+export type AIModelUncheckedUpdateOneWithoutTrainingJobNestedInput = {
+  create?: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
+  connectOrCreate?: Prisma.AIModelCreateOrConnectWithoutTrainingJobInput
+  upsert?: Prisma.AIModelUpsertWithoutTrainingJobInput
+  disconnect?: Prisma.AIModelWhereInput | boolean
+  delete?: Prisma.AIModelWhereInput | boolean
+  connect?: Prisma.AIModelWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AIModelUpdateToOneWithWhereWithoutTrainingJobInput, Prisma.AIModelUpdateWithoutTrainingJobInput>, Prisma.AIModelUncheckedUpdateWithoutTrainingJobInput>
+}
+
+export type AIModelCreateWithoutTrainingJobInput = {
+  modelName: string
   version: string
-  accuracy: runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: number | null
+  numClasses?: number
+  classNames?: Prisma.AIModelCreateclassNamesInput | string[]
+  isActive?: boolean
+  modelFilePath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type AIModelUncheckedCreateWithoutJobsInput = {
+export type AIModelUncheckedCreateWithoutTrainingJobInput = {
   id?: number
+  modelName: string
   version: string
-  accuracy: runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss: runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: number | null
+  numClasses?: number
+  classNames?: Prisma.AIModelCreateclassNamesInput | string[]
+  isActive?: boolean
+  modelFilePath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type AIModelCreateOrConnectWithoutJobsInput = {
+export type AIModelCreateOrConnectWithoutTrainingJobInput = {
   where: Prisma.AIModelWhereUniqueInput
-  create: Prisma.XOR<Prisma.AIModelCreateWithoutJobsInput, Prisma.AIModelUncheckedCreateWithoutJobsInput>
+  create: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
 }
 
-export type AIModelUpsertWithoutJobsInput = {
-  update: Prisma.XOR<Prisma.AIModelUpdateWithoutJobsInput, Prisma.AIModelUncheckedUpdateWithoutJobsInput>
-  create: Prisma.XOR<Prisma.AIModelCreateWithoutJobsInput, Prisma.AIModelUncheckedCreateWithoutJobsInput>
+export type AIModelUpsertWithoutTrainingJobInput = {
+  update: Prisma.XOR<Prisma.AIModelUpdateWithoutTrainingJobInput, Prisma.AIModelUncheckedUpdateWithoutTrainingJobInput>
+  create: Prisma.XOR<Prisma.AIModelCreateWithoutTrainingJobInput, Prisma.AIModelUncheckedCreateWithoutTrainingJobInput>
   where?: Prisma.AIModelWhereInput
 }
 
-export type AIModelUpdateToOneWithWhereWithoutJobsInput = {
+export type AIModelUpdateToOneWithWhereWithoutTrainingJobInput = {
   where?: Prisma.AIModelWhereInput
-  data: Prisma.XOR<Prisma.AIModelUpdateWithoutJobsInput, Prisma.AIModelUncheckedUpdateWithoutJobsInput>
+  data: Prisma.XOR<Prisma.AIModelUpdateWithoutTrainingJobInput, Prisma.AIModelUncheckedUpdateWithoutTrainingJobInput>
 }
 
-export type AIModelUpdateWithoutJobsInput = {
+export type AIModelUpdateWithoutTrainingJobInput = {
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type AIModelUncheckedUpdateWithoutJobsInput = {
+export type AIModelUncheckedUpdateWithoutTrainingJobInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
   version?: Prisma.StringFieldUpdateOperationsInput | string
-  accuracy?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  loss?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  accuracy?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  valLoss?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  bestEpoch?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  numClasses?: Prisma.IntFieldUpdateOperationsInput | number
+  classNames?: Prisma.AIModelUpdateclassNamesInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  modelFilePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type AIModelCountOutputType
- */
-
-export type AIModelCountOutputType = {
-  jobs: number
-}
-
-export type AIModelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  jobs?: boolean | AIModelCountOutputTypeCountJobsArgs
-}
-
-/**
- * AIModelCountOutputType without action
- */
-export type AIModelCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AIModelCountOutputType
-   */
-  select?: Prisma.AIModelCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * AIModelCountOutputType without action
- */
-export type AIModelCountOutputTypeCountJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AITrainingJobWhereInput
-}
 
 
 export type AIModelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  modelName?: boolean
   version?: boolean
   accuracy?: boolean
-  loss?: boolean
+  valLoss?: boolean
+  bestEpoch?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  isActive?: boolean
+  modelFilePath?: boolean
+  trainingJobId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  jobs?: boolean | Prisma.AIModel$jobsArgs<ExtArgs>
-  _count?: boolean | Prisma.AIModelCountOutputTypeDefaultArgs<ExtArgs>
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
 }, ExtArgs["result"]["aIModel"]>
 
 export type AIModelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  modelName?: boolean
   version?: boolean
   accuracy?: boolean
-  loss?: boolean
+  valLoss?: boolean
+  bestEpoch?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  isActive?: boolean
+  modelFilePath?: boolean
+  trainingJobId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
 }, ExtArgs["result"]["aIModel"]>
 
 export type AIModelSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  modelName?: boolean
   version?: boolean
   accuracy?: boolean
-  loss?: boolean
+  valLoss?: boolean
+  bestEpoch?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  isActive?: boolean
+  modelFilePath?: boolean
+  trainingJobId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
 }, ExtArgs["result"]["aIModel"]>
 
 export type AIModelSelectScalar = {
   id?: boolean
+  modelName?: boolean
   version?: boolean
   accuracy?: boolean
-  loss?: boolean
+  valLoss?: boolean
+  bestEpoch?: boolean
+  numClasses?: boolean
+  classNames?: boolean
+  isActive?: boolean
+  modelFilePath?: boolean
+  trainingJobId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AIModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "version" | "accuracy" | "loss" | "createdAt" | "updatedAt", ExtArgs["result"]["aIModel"]>
+export type AIModelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "modelName" | "version" | "accuracy" | "valLoss" | "bestEpoch" | "numClasses" | "classNames" | "isActive" | "modelFilePath" | "trainingJobId" | "createdAt" | "updatedAt", ExtArgs["result"]["aIModel"]>
 export type AIModelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  jobs?: boolean | Prisma.AIModel$jobsArgs<ExtArgs>
-  _count?: boolean | Prisma.AIModelCountOutputTypeDefaultArgs<ExtArgs>
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
 }
-export type AIModelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type AIModelIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type AIModelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
+}
+export type AIModelIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trainingJob?: boolean | Prisma.AIModel$trainingJobArgs<ExtArgs>
+}
 
 export type $AIModelPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AIModel"
   objects: {
-    jobs: Prisma.$AITrainingJobPayload<ExtArgs>[]
+    trainingJob: Prisma.$AITrainingJobPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    modelName: string
     version: string
-    accuracy: runtime.Decimal
-    loss: runtime.Decimal
+    accuracy: runtime.Decimal | null
+    valLoss: runtime.Decimal | null
+    bestEpoch: number | null
+    numClasses: number
+    classNames: string[]
+    isActive: boolean
+    modelFilePath: string | null
+    trainingJobId: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["aIModel"]>
@@ -947,7 +1177,7 @@ readonly fields: AIModelFieldRefs;
  */
 export interface Prisma__AIModelClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  jobs<T extends Prisma.AIModel$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AIModel$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AITrainingJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  trainingJob<T extends Prisma.AIModel$trainingJobArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AIModel$trainingJobArgs<ExtArgs>>): Prisma.Prisma__AITrainingJobClient<runtime.Types.Result.GetResult<Prisma.$AITrainingJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -978,9 +1208,16 @@ export interface Prisma__AIModelClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface AIModelFieldRefs {
   readonly id: Prisma.FieldRef<"AIModel", 'Int'>
+  readonly modelName: Prisma.FieldRef<"AIModel", 'String'>
   readonly version: Prisma.FieldRef<"AIModel", 'String'>
   readonly accuracy: Prisma.FieldRef<"AIModel", 'Decimal'>
-  readonly loss: Prisma.FieldRef<"AIModel", 'Decimal'>
+  readonly valLoss: Prisma.FieldRef<"AIModel", 'Decimal'>
+  readonly bestEpoch: Prisma.FieldRef<"AIModel", 'Int'>
+  readonly numClasses: Prisma.FieldRef<"AIModel", 'Int'>
+  readonly classNames: Prisma.FieldRef<"AIModel", 'String[]'>
+  readonly isActive: Prisma.FieldRef<"AIModel", 'Boolean'>
+  readonly modelFilePath: Prisma.FieldRef<"AIModel", 'String'>
+  readonly trainingJobId: Prisma.FieldRef<"AIModel", 'Int'>
   readonly createdAt: Prisma.FieldRef<"AIModel", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AIModel", 'DateTime'>
 }
@@ -1232,6 +1469,10 @@ export type AIModelCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.AIModelCreateManyInput | Prisma.AIModelCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIModelIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1302,6 +1543,10 @@ export type AIModelUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many AIModels to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIModelIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1371,9 +1616,9 @@ export type AIModelDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * AIModel.jobs
+ * AIModel.trainingJob
  */
-export type AIModel$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type AIModel$trainingJobArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the AITrainingJob
    */
@@ -1387,11 +1632,6 @@ export type AIModel$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   include?: Prisma.AITrainingJobInclude<ExtArgs> | null
   where?: Prisma.AITrainingJobWhereInput
-  orderBy?: Prisma.AITrainingJobOrderByWithRelationInput | Prisma.AITrainingJobOrderByWithRelationInput[]
-  cursor?: Prisma.AITrainingJobWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AITrainingJobScalarFieldEnum | Prisma.AITrainingJobScalarFieldEnum[]
 }
 
 /**

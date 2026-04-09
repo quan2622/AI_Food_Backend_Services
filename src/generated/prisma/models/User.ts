@@ -280,6 +280,7 @@ export type UserWhereInput = {
   foodImages?: Prisma.FoodImageListRelationFilter
   workoutLogs?: Prisma.WorkoutLogListRelationFilter
   submissions?: Prisma.UserSubmissionListRelationFilter
+  aiTrainingJobs?: Prisma.AITrainingJobListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -303,6 +304,7 @@ export type UserOrderByWithRelationInput = {
   foodImages?: Prisma.FoodImageOrderByRelationAggregateInput
   workoutLogs?: Prisma.WorkoutLogOrderByRelationAggregateInput
   submissions?: Prisma.UserSubmissionOrderByRelationAggregateInput
+  aiTrainingJobs?: Prisma.AITrainingJobOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -329,6 +331,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   foodImages?: Prisma.FoodImageListRelationFilter
   workoutLogs?: Prisma.WorkoutLogListRelationFilter
   submissions?: Prisma.UserSubmissionListRelationFilter
+  aiTrainingJobs?: Prisma.AITrainingJobListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -389,6 +392,7 @@ export type UserCreateInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -412,6 +416,7 @@ export type UserUncheckedCreateInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUpdateInput = {
@@ -434,6 +439,7 @@ export type UserUpdateInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -457,6 +463,7 @@ export type UserUncheckedUpdateInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -681,6 +688,20 @@ export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.UserUpdateWithoutSubmissionsInput>, Prisma.UserUncheckedUpdateWithoutSubmissionsInput>
 }
 
+export type UserCreateNestedOneWithoutAiTrainingJobsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiTrainingJobsInput, Prisma.UserUncheckedCreateWithoutAiTrainingJobsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiTrainingJobsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiTrainingJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiTrainingJobsInput, Prisma.UserUncheckedCreateWithoutAiTrainingJobsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiTrainingJobsInput
+  upsert?: Prisma.UserUpsertWithoutAiTrainingJobsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiTrainingJobsInput, Prisma.UserUpdateWithoutAiTrainingJobsInput>, Prisma.UserUncheckedUpdateWithoutAiTrainingJobsInput>
+}
+
 export type UserCreateWithoutUserProfileInput = {
   email: string
   password: string
@@ -700,6 +721,7 @@ export type UserCreateWithoutUserProfileInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutUserProfileInput = {
@@ -722,6 +744,7 @@ export type UserUncheckedCreateWithoutUserProfileInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutUserProfileInput = {
@@ -759,6 +782,7 @@ export type UserUpdateWithoutUserProfileInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUserProfileInput = {
@@ -781,6 +805,7 @@ export type UserUncheckedUpdateWithoutUserProfileInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutNutritionGoalsInput = {
@@ -802,6 +827,7 @@ export type UserCreateWithoutNutritionGoalsInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutNutritionGoalsInput = {
@@ -824,6 +850,7 @@ export type UserUncheckedCreateWithoutNutritionGoalsInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutNutritionGoalsInput = {
@@ -861,6 +888,7 @@ export type UserUpdateWithoutNutritionGoalsInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNutritionGoalsInput = {
@@ -883,6 +911,7 @@ export type UserUncheckedUpdateWithoutNutritionGoalsInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutAllergiesInput = {
@@ -904,6 +933,7 @@ export type UserCreateWithoutAllergiesInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutAllergiesInput = {
@@ -926,6 +956,7 @@ export type UserUncheckedCreateWithoutAllergiesInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutAllergiesInput = {
@@ -963,6 +994,7 @@ export type UserUpdateWithoutAllergiesInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAllergiesInput = {
@@ -985,6 +1017,7 @@ export type UserUncheckedUpdateWithoutAllergiesInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutDailyLogsInput = {
@@ -1006,6 +1039,7 @@ export type UserCreateWithoutDailyLogsInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutDailyLogsInput = {
@@ -1028,6 +1062,7 @@ export type UserUncheckedCreateWithoutDailyLogsInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutDailyLogsInput = {
@@ -1065,6 +1100,7 @@ export type UserUpdateWithoutDailyLogsInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDailyLogsInput = {
@@ -1087,6 +1123,7 @@ export type UserUncheckedUpdateWithoutDailyLogsInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutFoodImagesInput = {
@@ -1108,6 +1145,7 @@ export type UserCreateWithoutFoodImagesInput = {
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutFoodImagesInput = {
@@ -1130,6 +1168,7 @@ export type UserUncheckedCreateWithoutFoodImagesInput = {
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutFoodImagesInput = {
@@ -1167,6 +1206,7 @@ export type UserUpdateWithoutFoodImagesInput = {
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFoodImagesInput = {
@@ -1189,6 +1229,7 @@ export type UserUncheckedUpdateWithoutFoodImagesInput = {
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutWorkoutLogsInput = {
@@ -1210,6 +1251,7 @@ export type UserCreateWithoutWorkoutLogsInput = {
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutWorkoutLogsInput = {
@@ -1232,6 +1274,7 @@ export type UserUncheckedCreateWithoutWorkoutLogsInput = {
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutWorkoutLogsInput = {
@@ -1269,6 +1312,7 @@ export type UserUpdateWithoutWorkoutLogsInput = {
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkoutLogsInput = {
@@ -1291,6 +1335,7 @@ export type UserUncheckedUpdateWithoutWorkoutLogsInput = {
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutReportsInput = {
@@ -1312,6 +1357,7 @@ export type UserCreateWithoutReportsInput = {
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutReportsInput = {
@@ -1334,6 +1380,7 @@ export type UserUncheckedCreateWithoutReportsInput = {
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
   submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutReportsInput = {
@@ -1371,6 +1418,7 @@ export type UserUpdateWithoutReportsInput = {
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportsInput = {
@@ -1393,6 +1441,7 @@ export type UserUncheckedUpdateWithoutReportsInput = {
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
   submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -1414,6 +1463,7 @@ export type UserCreateWithoutSubmissionsInput = {
   reports?: Prisma.ReportCreateNestedManyWithoutUserInput
   foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -1436,6 +1486,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
   foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
   workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedCreateNestedManyWithoutTriggeredByInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -1473,6 +1524,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
   foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUpdateManyWithoutTriggeredByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -1495,6 +1547,113 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
   foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
   workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
+  aiTrainingJobs?: Prisma.AITrainingJobUncheckedUpdateManyWithoutTriggeredByNestedInput
+}
+
+export type UserCreateWithoutAiTrainingJobsInput = {
+  email: string
+  password: string
+  avatarUrl?: string | null
+  fullName: string
+  accessToken?: string | null
+  refreshToken?: string | null
+  dateOfBirth?: Date | string | null
+  isAdmin?: boolean
+  status?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userProfile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  allergies?: Prisma.UserAllergyCreateNestedManyWithoutUserInput
+  nutritionGoals?: Prisma.NutritionGoalCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportCreateNestedManyWithoutUserInput
+  foodImages?: Prisma.FoodImageCreateNestedManyWithoutUserInput
+  workoutLogs?: Prisma.WorkoutLogCreateNestedManyWithoutUserInput
+  submissions?: Prisma.UserSubmissionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAiTrainingJobsInput = {
+  id?: number
+  email: string
+  password: string
+  avatarUrl?: string | null
+  fullName: string
+  accessToken?: string | null
+  refreshToken?: string | null
+  dateOfBirth?: Date | string | null
+  isAdmin?: boolean
+  status?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userProfile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  allergies?: Prisma.UserAllergyUncheckedCreateNestedManyWithoutUserInput
+  nutritionGoals?: Prisma.NutritionGoalUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reports?: Prisma.ReportUncheckedCreateNestedManyWithoutUserInput
+  foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutUserInput
+  workoutLogs?: Prisma.WorkoutLogUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.UserSubmissionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAiTrainingJobsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiTrainingJobsInput, Prisma.UserUncheckedCreateWithoutAiTrainingJobsInput>
+}
+
+export type UserUpsertWithoutAiTrainingJobsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiTrainingJobsInput, Prisma.UserUncheckedUpdateWithoutAiTrainingJobsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiTrainingJobsInput, Prisma.UserUncheckedCreateWithoutAiTrainingJobsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiTrainingJobsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiTrainingJobsInput, Prisma.UserUncheckedUpdateWithoutAiTrainingJobsInput>
+}
+
+export type UserUpdateWithoutAiTrainingJobsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  allergies?: Prisma.UserAllergyUpdateManyWithoutUserNestedInput
+  nutritionGoals?: Prisma.NutritionGoalUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUpdateManyWithoutUserNestedInput
+  foodImages?: Prisma.FoodImageUpdateManyWithoutUserNestedInput
+  workoutLogs?: Prisma.WorkoutLogUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.UserSubmissionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiTrainingJobsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  accessToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProfile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  allergies?: Prisma.UserAllergyUncheckedUpdateManyWithoutUserNestedInput
+  nutritionGoals?: Prisma.NutritionGoalUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reports?: Prisma.ReportUncheckedUpdateManyWithoutUserNestedInput
+  foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutUserNestedInput
+  workoutLogs?: Prisma.WorkoutLogUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.UserSubmissionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1510,6 +1669,7 @@ export type UserCountOutputType = {
   foodImages: number
   workoutLogs: number
   submissions: number
+  aiTrainingJobs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1520,6 +1680,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   foodImages?: boolean | UserCountOutputTypeCountFoodImagesArgs
   workoutLogs?: boolean | UserCountOutputTypeCountWorkoutLogsArgs
   submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
+  aiTrainingJobs?: boolean | UserCountOutputTypeCountAiTrainingJobsArgs
 }
 
 /**
@@ -1581,6 +1742,13 @@ export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.Type
   where?: Prisma.UserSubmissionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiTrainingJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AITrainingJobWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1603,6 +1771,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   foodImages?: boolean | Prisma.User$foodImagesArgs<ExtArgs>
   workoutLogs?: boolean | Prisma.User$workoutLogsArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
+  aiTrainingJobs?: boolean | Prisma.User$aiTrainingJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1661,6 +1830,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   foodImages?: boolean | Prisma.User$foodImagesArgs<ExtArgs>
   workoutLogs?: boolean | Prisma.User$workoutLogsArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
+  aiTrainingJobs?: boolean | Prisma.User$aiTrainingJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1677,6 +1847,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     foodImages: Prisma.$FoodImagePayload<ExtArgs>[]
     workoutLogs: Prisma.$WorkoutLogPayload<ExtArgs>[]
     submissions: Prisma.$UserSubmissionPayload<ExtArgs>[]
+    aiTrainingJobs: Prisma.$AITrainingJobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2093,6 +2264,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   foodImages<T extends Prisma.User$foodImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$foodImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FoodImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workoutLogs<T extends Prisma.User$workoutLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workoutLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkoutLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submissions<T extends Prisma.User$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiTrainingJobs<T extends Prisma.User$aiTrainingJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiTrainingJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AITrainingJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2706,6 +2878,30 @@ export type User$submissionsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.UserSubmissionScalarFieldEnum | Prisma.UserSubmissionScalarFieldEnum[]
+}
+
+/**
+ * User.aiTrainingJobs
+ */
+export type User$aiTrainingJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AITrainingJob
+   */
+  select?: Prisma.AITrainingJobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AITrainingJob
+   */
+  omit?: Prisma.AITrainingJobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AITrainingJobInclude<ExtArgs> | null
+  where?: Prisma.AITrainingJobWhereInput
+  orderBy?: Prisma.AITrainingJobOrderByWithRelationInput | Prisma.AITrainingJobOrderByWithRelationInput[]
+  cursor?: Prisma.AITrainingJobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AITrainingJobScalarFieldEnum | Prisma.AITrainingJobScalarFieldEnum[]
 }
 
 /**
