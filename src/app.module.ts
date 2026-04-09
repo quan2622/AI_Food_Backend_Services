@@ -25,6 +25,7 @@ import { RecommendModule } from './modules/recommend/recommend.module';
 import { RedisModule } from './redis/redis.module';
 import { UserReportModule } from './modules/user-report/user-report.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
+import { AdminDashboardV2Module } from './modules/admin-dashboard-v2/admin-dashboard-v2.module';
 import { UserSubmissionModule } from './modules/user-submission/user-submission.module';
 
 @Module({
@@ -54,6 +55,7 @@ import { UserSubmissionModule } from './modules/user-submission/user-submission.
     RedisModule,
     UserReportModule,
     AdminDashboardModule,
+    AdminDashboardV2Module,
     UserSubmissionModule,
   ],
 

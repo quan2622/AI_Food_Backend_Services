@@ -5,7 +5,7 @@ import {
   Min,
   IsString,
 } from 'class-validator';
-import { SubmissionType, SubmissionCategory, SubmissionStatus } from '@prisma/client';
+import { SubmissionType, SubmissionCategory, SubmissionStatus } from '../../../generated/prisma/enums';
 
 export class QuerySubmissionDto {
   @IsOptional()

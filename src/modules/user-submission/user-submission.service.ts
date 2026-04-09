@@ -16,21 +16,20 @@ import {
   SubmissionType,
   SubmissionCategory,
   SubmissionStatus,
-  UserSubmission,
-  Prisma,
-} from '@prisma/client';
+} from '../../generated/prisma/enums';
+import type { UserSubmission, Prisma } from '../../generated/prisma/client';
 
 export interface SubmissionWithRelations extends UserSubmission {
   user?: {
     id: number;
     fullName: string;
     email: string;
-    avatarUrl?: string;
+    avatarUrl?: string | null;
   };
   targetFood?: {
     id: number;
     foodName: string;
-    imageUrl?: string;
+    imageUrl?: string | null;
   } | null;
 }
 
@@ -534,7 +533,9 @@ export class UserSubmissionService {
       updateData.imageUrl = payload.imageUrl;
     }
     if (payload.categoryId !== undefined) {
-      updateData.categoryId = payload.categoryId;
+      updateData.foodCategory = payload.categoryId
+        ? { connect: { id: payload.categoryId } }
+        : { disconnect: true };
     }
     if (payload.defaultServingGrams !== undefined) {
       updateData.defaultServingGrams = payload.defaultServingGrams;

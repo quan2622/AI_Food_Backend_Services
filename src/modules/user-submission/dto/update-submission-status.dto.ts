@@ -5,7 +5,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import { SubmissionStatus } from '@prisma/client';
+import { SubmissionStatus } from '../../../generated/prisma/enums';
 
 export class UpdateSubmissionStatusDto {
   @IsEnum(SubmissionStatus, {

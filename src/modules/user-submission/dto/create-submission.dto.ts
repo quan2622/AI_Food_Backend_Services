@@ -9,7 +9,7 @@ import {
   MaxLength,
   ValidateIf,
 } from 'class-validator';
-import { SubmissionType, SubmissionCategory } from '@prisma/client';
+import { SubmissionType, SubmissionCategory } from '../../../generated/prisma/enums';
 
 export class CreateSubmissionDto {
   @IsEnum(SubmissionType, {
