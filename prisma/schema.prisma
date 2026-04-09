@@ -84,6 +84,24 @@ enum GenderType {
   UNDEFINED
 }
 
+enum SubmissionType {
+  REPORT
+  CONTRIBUTION
+}
+
+enum SubmissionCategory {
+  WRONG_INFO
+  BAD_IMAGE
+  NEW_FOOD
+  DUPLICATE
+}
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 // ─── Models ─────────────────────────────────────────────────────────────────
 
 model AllCode {
@@ -119,6 +137,7 @@ model User {
   reports        Report[]
   foodImages     FoodImage[]
   workoutLogs    WorkoutLog[]
+  submissions    UserSubmission[]
 
   @@map("users")
 }
@@ -236,6 +255,7 @@ model Food {
   mealItems       MealItem[]
   foodIngredients FoodIngredient[]
   nutritionProfile FoodNutritionProfile?
+  submissions     UserSubmission[]
 
   @@index([foodName])
   @@map("foods")
@@ -440,6 +460,33 @@ model Report {
   updatedAt      DateTime   @updatedAt
 
   @@map("reports")
+}
+
+// ─── User Submissions ─────────────────────────────────────────────────────────
+
+model UserSubmission {
+  id             Int                @id @default(autoincrement())
+  userId         Int
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type           SubmissionType
+  targetFoodId   Int?
+  targetFood     Food?              @relation(fields: [targetFoodId], references: [id], onDelete: SetNull)
+  category       SubmissionCategory
+  payload        Json
+  description    String?            @db.Text
+  status         SubmissionStatus   @default(PENDING)
+  adminNote      String?            @db.Text
+  upvotes        Int                @default(0)
+  downvotes      Int                @default(0)
+  reliabilityScore Float            @default(0)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@index([targetFoodId])
+  @@map("user_submissions")
 }
 
 // ─── AI ──────────────────────────────────────────────────────────────────────

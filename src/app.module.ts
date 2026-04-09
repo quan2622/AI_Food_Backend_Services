@@ -25,6 +25,7 @@ import { RecommendModule } from './modules/recommend/recommend.module';
 import { RedisModule } from './redis/redis.module';
 import { UserReportModule } from './modules/user-report/user-report.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
+import { UserSubmissionModule } from './modules/user-submission/user-submission.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.
     RedisModule,
     UserReportModule,
     AdminDashboardModule,
+    UserSubmissionModule,
   ],
 
   controllers: [AppController],

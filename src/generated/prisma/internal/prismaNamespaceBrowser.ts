@@ -73,6 +73,7 @@ export const ModelName = {
   FoodImage: 'FoodImage',
   WorkoutLog: 'WorkoutLog',
   Report: 'Report',
+  UserSubmission: 'UserSubmission',
   AIModel: 'AIModel',
   AITrainingJob: 'AITrainingJob'
 } as const
@@ -391,6 +392,26 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const UserSubmissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  targetFoodId: 'targetFoodId',
+  category: 'category',
+  payload: 'payload',
+  description: 'description',
+  status: 'status',
+  adminNote: 'adminNote',
+  upvotes: 'upvotes',
+  downvotes: 'downvotes',
+  reliabilityScore: 'reliabilityScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserSubmissionScalarFieldEnum = (typeof UserSubmissionScalarFieldEnum)[keyof typeof UserSubmissionScalarFieldEnum]
+
+
 export const AIModelScalarFieldEnum = {
   id: 'id',
   version: 'version',
@@ -424,6 +445,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -438,4 +466,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

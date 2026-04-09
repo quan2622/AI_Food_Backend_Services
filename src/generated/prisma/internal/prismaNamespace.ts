@@ -406,6 +406,7 @@ export const ModelName = {
   FoodImage: 'FoodImage',
   WorkoutLog: 'WorkoutLog',
   Report: 'Report',
+  UserSubmission: 'UserSubmission',
   AIModel: 'AIModel',
   AITrainingJob: 'AITrainingJob'
 } as const
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "allCode" | "user" | "userProfile" | "nutritionGoal" | "userAllergy" | "allergen" | "ingredient" | "foodCategory" | "food" | "foodNutritionProfile" | "foodNutritionValue" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "workoutLog" | "report" | "aIModel" | "aITrainingJob"
+    modelProps: "allCode" | "user" | "userProfile" | "nutritionGoal" | "userAllergy" | "allergen" | "ingredient" | "foodCategory" | "food" | "foodNutritionProfile" | "foodNutritionValue" | "ingredientNutrition" | "nutrient" | "nutritionValue" | "foodIngredient" | "ingredientAllergen" | "dailyLog" | "meal" | "mealItem" | "foodImage" | "workoutLog" | "report" | "userSubmission" | "aIModel" | "aITrainingJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2055,6 +2056,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserSubmission: {
+      payload: Prisma.$UserSubmissionPayload<ExtArgs>
+      fields: Prisma.UserSubmissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserSubmissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserSubmissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        findFirst: {
+          args: Prisma.UserSubmissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserSubmissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        findMany: {
+          args: Prisma.UserSubmissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>[]
+        }
+        create: {
+          args: Prisma.UserSubmissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        createMany: {
+          args: Prisma.UserSubmissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserSubmissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>[]
+        }
+        delete: {
+          args: Prisma.UserSubmissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        update: {
+          args: Prisma.UserSubmissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserSubmissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserSubmissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserSubmissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserSubmissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSubmissionPayload>
+        }
+        aggregate: {
+          args: Prisma.UserSubmissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserSubmission>
+        }
+        groupBy: {
+          args: Prisma.UserSubmissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSubmissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserSubmissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSubmissionCountAggregateOutputType> | number
+        }
+      }
+    }
     AIModel: {
       payload: Prisma.$AIModelPayload<ExtArgs>
       fields: Prisma.AIModelFieldRefs
@@ -2540,6 +2615,26 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const UserSubmissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  targetFoodId: 'targetFoodId',
+  category: 'category',
+  payload: 'payload',
+  description: 'description',
+  status: 'status',
+  adminNote: 'adminNote',
+  upvotes: 'upvotes',
+  downvotes: 'downvotes',
+  reliabilityScore: 'reliabilityScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserSubmissionScalarFieldEnum = (typeof UserSubmissionScalarFieldEnum)[keyof typeof UserSubmissionScalarFieldEnum]
+
+
 export const AIModelScalarFieldEnum = {
   id: 'id',
   version: 'version',
@@ -2573,6 +2668,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -2587,6 +2689,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2683,6 +2794,62 @@ export type EnumNutritionGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'NutritionGoalStatus[]'
  */
 export type ListEnumNutritionGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NutritionGoalStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionType'
+ */
+export type EnumSubmissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionType'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionType[]'
+ */
+export type ListEnumSubmissionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionCategory'
+ */
+export type EnumSubmissionCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionCategory[]'
+ */
+export type ListEnumSubmissionCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionStatus'
+ */
+export type EnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SubmissionStatus[]'
+ */
+export type ListEnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus[]'>
     
 
 
@@ -2816,6 +2983,7 @@ export type GlobalOmitConfig = {
   foodImage?: Prisma.FoodImageOmit
   workoutLog?: Prisma.WorkoutLogOmit
   report?: Prisma.ReportOmit
+  userSubmission?: Prisma.UserSubmissionOmit
   aIModel?: Prisma.AIModelOmit
   aITrainingJob?: Prisma.AITrainingJobOmit
 }

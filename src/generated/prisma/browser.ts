@@ -128,6 +128,11 @@ export type WorkoutLog = Prisma.WorkoutLogModel
  */
 export type Report = Prisma.ReportModel
 /**
+ * Model UserSubmission
+ * 
+ */
+export type UserSubmission = Prisma.UserSubmissionModel
+/**
  * Model AIModel
  * 
  */

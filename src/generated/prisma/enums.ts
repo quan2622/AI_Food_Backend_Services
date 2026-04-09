@@ -105,3 +105,30 @@ export const GenderType = {
 } as const
 
 export type GenderType = (typeof GenderType)[keyof typeof GenderType]
+
+
+export const SubmissionType = {
+  REPORT: 'REPORT',
+  CONTRIBUTION: 'CONTRIBUTION'
+} as const
+
+export type SubmissionType = (typeof SubmissionType)[keyof typeof SubmissionType]
+
+
+export const SubmissionCategory = {
+  WRONG_INFO: 'WRONG_INFO',
+  BAD_IMAGE: 'BAD_IMAGE',
+  NEW_FOOD: 'NEW_FOOD',
+  DUPLICATE: 'DUPLICATE'
+} as const
+
+export type SubmissionCategory = (typeof SubmissionCategory)[keyof typeof SubmissionCategory]
+
+
+export const SubmissionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]

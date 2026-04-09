@@ -37,6 +37,15 @@ export class FoodNutritionController {
     return this.foodNutritionService.findAllComponents();
   }
 
+  @Get('nutrition-components/paginate')
+  findAllComponentsPaginate(
+    @Query('current') page: number,
+    @Query('pageSize') limit: number,
+    @Query() qs: string,
+  ) {
+    return this.foodNutritionService.findAllComponentsPaginate(page, limit, qs);
+  }
+
   @UseGuards(AdminGuard)
   @Post('nutrition-components')
   createComponent(@Body() dto: CreateNutritionComponentDto) {

@@ -28,6 +28,51 @@ export class FoodNutritionService {
     });
   }
 
+  async findAllComponentsPaginate(page: number, limit: number, queryString: string) {
+    try {
+      const parsed = aqp(queryString) as AqpQuery;
+      const { filter } = parsed;
+      const { sort: aqpSort } = parsed;
+
+      stripAdminPaginationFilter(filter as Record<string, unknown>);
+      const sort = prismaSortFromAqp(aqpSort, { name: 'asc' });
+
+      const offset = (page - 1) * limit;
+      const defaultLimit = limit ? limit : 10;
+
+      const totalItems = await this.prisma.nutrient.count({ where: filter });
+      const totalPages = Math.ceil(totalItems / defaultLimit);
+
+      const result = await this.prisma.nutrient.findMany({
+        where: filter,
+        orderBy: sort,
+        skip: offset,
+        take: defaultLimit,
+      });
+
+      return {
+        EC: 0,
+        EM: 'Get nutrients with pagination success',
+        meta: {
+          current: page,
+          pageSize: limit,
+          pages: totalPages,
+          total: totalItems,
+        },
+        result,
+      };
+    } catch (error) {
+      console.error(
+        'Error in food nutrition service get nutrients paginate:',
+        (error as Error).message,
+      );
+      throw new InternalServerErrorException({
+        EC: 1,
+        EM: 'Error in nutrients get paginate',
+      });
+    }
+  }
+
   async findAllComponentsAdmin(page: number, limit: number, queryString: string) {
     try {
       const parsed = aqp(queryString) as AqpQuery;
