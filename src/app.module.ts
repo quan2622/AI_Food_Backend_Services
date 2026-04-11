@@ -20,13 +20,14 @@ import { ReportModule } from './modules/report/report.module';
 import { AiModelModule } from './modules/ai-model/ai-model.module';
 import { AiTrainingJobModule } from './modules/ai-training-job/ai-training-job.module';
 import { AllergenModule } from './modules/allergen/allergen.module';
-import { WorkoutLogModule } from './modules/workout-log/workout-log.module';
 import { RecommendModule } from './modules/recommend/recommend.module';
 import { RedisModule } from './redis/redis.module';
 import { UserReportModule } from './modules/user-report/user-report.module';
 import { AdminDashboardModule } from './modules/admin-dashboard/admin-dashboard.module';
 import { AdminDashboardV2Module } from './modules/admin-dashboard-v2/admin-dashboard-v2.module';
 import { UserSubmissionModule } from './modules/user-submission/user-submission.module';
+import { SearchModule } from './modules/search/search.module';
+import { FoodRecognitionModule } from './modules/food-recognition/food-recognition.module';
 
 @Module({
   imports: [
@@ -50,13 +51,14 @@ import { UserSubmissionModule } from './modules/user-submission/user-submission.
     AiModelModule,
     AiTrainingJobModule,
     AllergenModule,
-    WorkoutLogModule,
     RecommendModule,
     RedisModule,
     UserReportModule,
     AdminDashboardModule,
     AdminDashboardV2Module,
     UserSubmissionModule,
+    SearchModule,
+    FoodRecognitionModule,
   ],
 
   controllers: [AppController],

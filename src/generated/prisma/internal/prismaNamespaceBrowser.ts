@@ -71,7 +71,6 @@ export const ModelName = {
   Meal: 'Meal',
   MealItem: 'MealItem',
   FoodImage: 'FoodImage',
-  WorkoutLog: 'WorkoutLog',
   Report: 'Report',
   UserSubmission: 'UserSubmission',
   AIModel: 'AIModel',
@@ -180,6 +179,7 @@ export const AllergenScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  imageUrl: 'imageUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -214,6 +214,7 @@ export type FoodCategoryScalarFieldEnum = (typeof FoodCategoryScalarFieldEnum)[k
 export const FoodScalarFieldEnum = {
   id: 'id',
   foodName: 'foodName',
+  classKey: 'classKey',
   description: 'description',
   imageUrl: 'imageUrl',
   categoryId: 'categoryId',
@@ -359,22 +360,6 @@ export const FoodImageScalarFieldEnum = {
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]
-
-
-export const WorkoutLogScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  workoutType: 'workoutType',
-  durationMinute: 'durationMinute',
-  burnedCalories: 'burnedCalories',
-  startedAt: 'startedAt',
-  endedAt: 'endedAt',
-  source: 'source',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type WorkoutLogScalarFieldEnum = (typeof WorkoutLogScalarFieldEnum)[keyof typeof WorkoutLogScalarFieldEnum]
 
 
 export const ReportScalarFieldEnum = {

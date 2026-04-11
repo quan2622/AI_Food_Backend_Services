@@ -145,7 +145,6 @@ model User {
   dailyLogs      DailyLog[]
   reports        Report[]
   foodImages     FoodImage[]
-  workoutLogs    WorkoutLog[]
   submissions    UserSubmission[]
   aiTrainingJobs AITrainingJob[]
 
@@ -210,6 +209,7 @@ model Allergen {
   id          Int      @id @default(autoincrement())
   name        String   @unique
   description String?
+  imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -254,6 +254,7 @@ model FoodCategory {
 model Food {
   id                  Int              @id @default(autoincrement())
   foodName            String
+  classKey            String?          @unique // AI class name, e.g. "bun_bo_hue"
   description         String?
   imageUrl            String?
   categoryId          Int?
@@ -433,26 +434,10 @@ model FoodImage {
   uploadedAt DateTime @default(now())
   userId     Int
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mealId     Int
-  meal       Meal     @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  mealId     Int?
+  meal       Meal?    @relation(fields: [mealId], references: [id], onDelete: Cascade)
 
   @@map("food_images")
-}
-
-model WorkoutLog {
-  id             Int      @id @default(autoincrement())
-  userId         Int
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workoutType    String
-  durationMinute Int?
-  burnedCalories Float    @default(0)
-  startedAt      DateTime
-  endedAt        DateTime?
-  source         String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  @@map("workout_logs")
 }
 
 // ─── Reports ─────────────────────────────────────────────────────────────────

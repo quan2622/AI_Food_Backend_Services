@@ -38,6 +38,7 @@ export type AllergenMinAggregateOutputType = {
   id: number | null
   name: string | null
   description: string | null
+  imageUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +47,7 @@ export type AllergenMaxAggregateOutputType = {
   id: number | null
   name: string | null
   description: string | null
+  imageUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +56,7 @@ export type AllergenCountAggregateOutputType = {
   id: number
   name: number
   description: number
+  imageUrl: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -72,6 +75,7 @@ export type AllergenMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  imageUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -80,6 +84,7 @@ export type AllergenMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  imageUrl?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type AllergenCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  imageUrl?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -183,6 +189,7 @@ export type AllergenGroupByOutputType = {
   id: number
   name: string
   description: string | null
+  imageUrl: string | null
   createdAt: Date
   updatedAt: Date
   _count: AllergenCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type AllergenWhereInput = {
   id?: Prisma.IntFilter<"Allergen"> | number
   name?: Prisma.StringFilter<"Allergen"> | string
   description?: Prisma.StringNullableFilter<"Allergen"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Allergen"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Allergen"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Allergen"> | Date | string
   userAllergies?: Prisma.UserAllergyListRelationFilter
@@ -224,6 +232,7 @@ export type AllergenOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userAllergies?: Prisma.UserAllergyOrderByRelationAggregateInput
@@ -237,6 +246,7 @@ export type AllergenWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AllergenWhereInput[]
   NOT?: Prisma.AllergenWhereInput | Prisma.AllergenWhereInput[]
   description?: Prisma.StringNullableFilter<"Allergen"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"Allergen"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Allergen"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Allergen"> | Date | string
   userAllergies?: Prisma.UserAllergyListRelationFilter
@@ -247,6 +257,7 @@ export type AllergenOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AllergenCountOrderByAggregateInput
@@ -263,6 +274,7 @@ export type AllergenScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Allergen"> | number
   name?: Prisma.StringWithAggregatesFilter<"Allergen"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Allergen"> | string | null
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Allergen"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Allergen"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Allergen"> | Date | string
 }
@@ -270,6 +282,7 @@ export type AllergenScalarWhereWithAggregatesInput = {
 export type AllergenCreateInput = {
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userAllergies?: Prisma.UserAllergyCreateNestedManyWithoutAllergenInput
@@ -280,6 +293,7 @@ export type AllergenUncheckedCreateInput = {
   id?: number
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userAllergies?: Prisma.UserAllergyUncheckedCreateNestedManyWithoutAllergenInput
@@ -289,6 +303,7 @@ export type AllergenUncheckedCreateInput = {
 export type AllergenUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAllergies?: Prisma.UserAllergyUpdateManyWithoutAllergenNestedInput
@@ -299,6 +314,7 @@ export type AllergenUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAllergies?: Prisma.UserAllergyUncheckedUpdateManyWithoutAllergenNestedInput
@@ -309,6 +325,7 @@ export type AllergenCreateManyInput = {
   id?: number
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -316,6 +333,7 @@ export type AllergenCreateManyInput = {
 export type AllergenUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -324,6 +342,7 @@ export type AllergenUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -337,6 +356,7 @@ export type AllergenCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -349,6 +369,7 @@ export type AllergenMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -357,6 +378,7 @@ export type AllergenMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -396,6 +418,7 @@ export type AllergenUpdateOneRequiredWithoutIngredientAllergensNestedInput = {
 export type AllergenCreateWithoutUserAllergiesInput = {
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   ingredientAllergens?: Prisma.IngredientAllergenCreateNestedManyWithoutAllergenInput
@@ -405,6 +428,7 @@ export type AllergenUncheckedCreateWithoutUserAllergiesInput = {
   id?: number
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   ingredientAllergens?: Prisma.IngredientAllergenUncheckedCreateNestedManyWithoutAllergenInput
@@ -429,6 +453,7 @@ export type AllergenUpdateToOneWithWhereWithoutUserAllergiesInput = {
 export type AllergenUpdateWithoutUserAllergiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ingredientAllergens?: Prisma.IngredientAllergenUpdateManyWithoutAllergenNestedInput
@@ -438,6 +463,7 @@ export type AllergenUncheckedUpdateWithoutUserAllergiesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ingredientAllergens?: Prisma.IngredientAllergenUncheckedUpdateManyWithoutAllergenNestedInput
@@ -446,6 +472,7 @@ export type AllergenUncheckedUpdateWithoutUserAllergiesInput = {
 export type AllergenCreateWithoutIngredientAllergensInput = {
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userAllergies?: Prisma.UserAllergyCreateNestedManyWithoutAllergenInput
@@ -455,6 +482,7 @@ export type AllergenUncheckedCreateWithoutIngredientAllergensInput = {
   id?: number
   name: string
   description?: string | null
+  imageUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userAllergies?: Prisma.UserAllergyUncheckedCreateNestedManyWithoutAllergenInput
@@ -479,6 +507,7 @@ export type AllergenUpdateToOneWithWhereWithoutIngredientAllergensInput = {
 export type AllergenUpdateWithoutIngredientAllergensInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAllergies?: Prisma.UserAllergyUpdateManyWithoutAllergenNestedInput
@@ -488,6 +517,7 @@ export type AllergenUncheckedUpdateWithoutIngredientAllergensInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAllergies?: Prisma.UserAllergyUncheckedUpdateManyWithoutAllergenNestedInput
@@ -537,6 +567,7 @@ export type AllergenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   name?: boolean
   description?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userAllergies?: boolean | Prisma.Allergen$userAllergiesArgs<ExtArgs>
@@ -548,6 +579,7 @@ export type AllergenSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   description?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["allergen"]>
@@ -556,6 +588,7 @@ export type AllergenSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   description?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["allergen"]>
@@ -564,11 +597,12 @@ export type AllergenSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
+  imageUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AllergenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["allergen"]>
+export type AllergenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["allergen"]>
 export type AllergenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userAllergies?: boolean | Prisma.Allergen$userAllergiesArgs<ExtArgs>
   ingredientAllergens?: boolean | Prisma.Allergen$ingredientAllergensArgs<ExtArgs>
@@ -587,6 +621,7 @@ export type $AllergenPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     name: string
     description: string | null
+    imageUrl: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["allergen"]>
@@ -1017,6 +1052,7 @@ export interface AllergenFieldRefs {
   readonly id: Prisma.FieldRef<"Allergen", 'Int'>
   readonly name: Prisma.FieldRef<"Allergen", 'String'>
   readonly description: Prisma.FieldRef<"Allergen", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"Allergen", 'String'>
   readonly createdAt: Prisma.FieldRef<"Allergen", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Allergen", 'DateTime'>
 }

@@ -405,6 +405,11 @@ export type MealScalarRelationFilter = {
   isNot?: Prisma.MealWhereInput
 }
 
+export type MealNullableScalarRelationFilter = {
+  is?: Prisma.MealWhereInput | null
+  isNot?: Prisma.MealWhereInput | null
+}
+
 export type MealCreateNestedManyWithoutDailyLogInput = {
   create?: Prisma.XOR<Prisma.MealCreateWithoutDailyLogInput, Prisma.MealUncheckedCreateWithoutDailyLogInput> | Prisma.MealCreateWithoutDailyLogInput[] | Prisma.MealUncheckedCreateWithoutDailyLogInput[]
   connectOrCreate?: Prisma.MealCreateOrConnectWithoutDailyLogInput | Prisma.MealCreateOrConnectWithoutDailyLogInput[]
@@ -467,10 +472,12 @@ export type MealCreateNestedOneWithoutFoodImagesInput = {
   connect?: Prisma.MealWhereUniqueInput
 }
 
-export type MealUpdateOneRequiredWithoutFoodImagesNestedInput = {
+export type MealUpdateOneWithoutFoodImagesNestedInput = {
   create?: Prisma.XOR<Prisma.MealCreateWithoutFoodImagesInput, Prisma.MealUncheckedCreateWithoutFoodImagesInput>
   connectOrCreate?: Prisma.MealCreateOrConnectWithoutFoodImagesInput
   upsert?: Prisma.MealUpsertWithoutFoodImagesInput
+  disconnect?: Prisma.MealWhereInput | boolean
+  delete?: Prisma.MealWhereInput | boolean
   connect?: Prisma.MealWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MealUpdateToOneWithWhereWithoutFoodImagesInput, Prisma.MealUpdateWithoutFoodImagesInput>, Prisma.MealUncheckedUpdateWithoutFoodImagesInput>
 }

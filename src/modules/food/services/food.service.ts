@@ -10,15 +10,19 @@ import {
   prismaSortFromAqp,
   stripAdminPaginationFilter,
 } from '../../../common/utils/admin-pagination.util';
+import { SearchService } from '../../search/search.service';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
 @Injectable()
 export class FoodService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly searchService: SearchService,
+  ) {}
 
   create(dto: CreateFoodDto) {
-    return this.prisma.food.create({
+    const created = this.prisma.food.create({
       data: {
         foodName: dto.foodName,
         description: dto.description,
@@ -27,6 +31,8 @@ export class FoodService {
         defaultServingGrams: dto.defaultServingGrams,
       },
     });
+    created.then((f) => this.searchService.indexFood(f.id).catch(() => null));
+    return created;
   }
 
   async createMany(items: CreateFoodDto[]): Promise<{ createdCount: number }> {
@@ -130,7 +136,7 @@ export class FoodService {
       throw new NotFoundException(`Food #${id} không tồn tại`);
     }
 
-    return this.prisma.food.update({
+    const updated = await this.prisma.food.update({
       where: { id },
       data: {
         ...(dto.foodName != null && { foodName: dto.foodName }),
@@ -144,6 +150,8 @@ export class FoodService {
         }),
       },
     });
+    this.searchService.indexFood(id).catch(() => null);
+    return updated;
   }
 
   async remove(id: number): Promise<void> {
@@ -154,6 +162,7 @@ export class FoodService {
     }
 
     await this.prisma.food.delete({ where: { id } });
+    this.searchService.removeFood(id).catch(() => null);
   }
 
   async removeMany(ids: number[]): Promise<{ deletedCount: number }> {

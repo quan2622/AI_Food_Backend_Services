@@ -6,6 +6,7 @@ import {
   VersioningType,
 } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
@@ -67,6 +68,18 @@ async function bootstrap() {
   const dbStatus = await app.get(PrismaService).getConnectionStatus();
   const redisStatus = await app.get(RedisService).getConnectionStatus();
 
+  // Elasticsearch status
+  let esConnected = false;
+  let esVersion = '';
+  try {
+    const esService = app.get(ElasticsearchService);
+    const esInfo = await esService.info();
+    esConnected = true;
+    esVersion = esInfo.version?.number ?? '';
+  } catch {
+    esConnected = false;
+  }
+
   const line =
     '====================================================================';
 
@@ -109,6 +122,14 @@ async function bootstrap() {
     logger.error(
       `||   • Redis       : disconnected - ${errorMsg.padEnd(20)}||`,
     );
+  }
+
+  // Elasticsearch Status
+  if (esConnected) {
+    const esLabel = esVersion ? `connected (v${esVersion})` : 'connected';
+    logger.log(`||   • Elasticsearch: ${esLabel.padEnd(44)}||`);
+  } else {
+    logger.error(`||   • Elasticsearch: disconnected${' '.repeat(32)}||`);
   }
 
   logger.log(line);

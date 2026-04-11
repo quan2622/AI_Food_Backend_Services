@@ -3,6 +3,7 @@ import {
   ConflictException,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import aqp from 'api-query-params';
@@ -212,6 +213,15 @@ export class UsersService {
 
     if (!user) {
       throw new NotFoundException(`User #${id} không tồn tại`);
+    }
+
+    const comparePassword: (data: string, encrypted: string) => Promise<boolean> = (
+      bcrypt as { compare: (data: string, encrypted: string) => Promise<boolean> }
+    ).compare;
+
+    const isMatch = await comparePassword(dto.oldPassword, user.password);
+    if (!isMatch) {
+      throw new BadRequestException('Mật khẩu cũ không đúng');
     }
 
     const hashedPassword = await hashPassword(dto.newPassword, SALT_ROUNDS);

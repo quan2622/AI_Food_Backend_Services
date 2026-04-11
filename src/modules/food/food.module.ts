@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
+import { SearchModule } from '../search/search.module';
 import { FoodService } from './services/food.service';
 import { FoodController } from './controllers/food.controller';
 import { FoodCategoryService } from './services/food-category.service';
@@ -14,7 +15,7 @@ import { IngredientAllergenController } from './controllers/ingredient-allergen.
 import { IngredientController } from './controllers/ingredient.controller';
 
 @Module({
-  imports: [CloudinaryModule],
+  imports: [CloudinaryModule, SearchModule],
   controllers: [
     FoodController,
     FoodCategoryController,

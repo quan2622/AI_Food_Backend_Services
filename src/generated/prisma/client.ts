@@ -138,11 +138,6 @@ export type MealItem = Prisma.MealItemModel
  */
 export type FoodImage = Prisma.FoodImageModel
 /**
- * Model WorkoutLog
- * 
- */
-export type WorkoutLog = Prisma.WorkoutLogModel
-/**
  * Model Report
  * 
  */

@@ -86,6 +86,18 @@ export class AllergenService {
       data: {
         name: dto.name,
         description: dto.description,
+        ...(dto.ingredientIds?.length && {
+          ingredientAllergens: {
+            create: dto.ingredientIds.map((ingredientId) => ({ ingredientId })),
+          },
+        }),
+      },
+      include: {
+        ingredientAllergens: {
+          include: {
+            ingredient: { select: { id: true, ingredientName: true, imageUrl: true } },
+          },
+        },
       },
     });
   }
@@ -94,11 +106,33 @@ export class AllergenService {
     const item = await this.prisma.allergen.findUnique({ where: { id } });
     if (!item) throw new NotFoundException(`Allergen #${id} không tồn tại`);
 
-    return this.prisma.allergen.update({
+    await this.prisma.allergen.update({
       where: { id },
       data: {
         ...(dto.name != null && { name: dto.name }),
         ...(dto.description !== undefined && { description: dto.description }),
+      },
+    });
+
+    // Sync ingredient links nếu ingredientIds được truyền vào
+    if (dto.ingredientIds !== undefined) {
+      await this.prisma.ingredientAllergen.deleteMany({ where: { allergenId: id } });
+      if (dto.ingredientIds.length > 0) {
+        await this.prisma.ingredientAllergen.createMany({
+          data: dto.ingredientIds.map((ingredientId) => ({ allergenId: id, ingredientId })),
+          skipDuplicates: true,
+        });
+      }
+    }
+
+    return this.prisma.allergen.findUnique({
+      where: { id },
+      include: {
+        ingredientAllergens: {
+          include: {
+            ingredient: { select: { id: true, ingredientName: true, imageUrl: true } },
+          },
+        },
       },
     });
   }

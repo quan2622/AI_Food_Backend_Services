@@ -30,8 +30,8 @@ export class CreateSubmissionDto {
   @IsNotEmpty({ message: 'Category không được để trống' })
   category: SubmissionCategory;
 
-  @IsNotEmpty({ message: 'Payload không được để trống' })
-  payload: Record<string, any>;
+  @IsOptional()
+  payload?: Record<string, any>;
 
   @IsOptional()
   @IsString()

@@ -19,6 +19,7 @@ import { IngredientService } from '../services/ingredient.service.js';
 import { AdminGuard } from '../../../guards/admin.guard';
 import { CreateIngredientDto } from '../dto/ingredient/create-ingredient.dto.js';
 import { UpdateIngredientDto } from '../dto/ingredient/update-ingredient.dto.js';
+import { FormDataParseInterceptor } from '../../../common';
 
 @Controller('ingredients')
 export class IngredientController {
@@ -30,6 +31,7 @@ export class IngredientController {
     FileInterceptor('image', {
       limits: { fileSize: 5 * 1024 * 1024 },
     }),
+    FormDataParseInterceptor,
   )
   create(
     @Body() dto: CreateIngredientDto,
@@ -57,6 +59,7 @@ export class IngredientController {
     FileInterceptor('image', {
       limits: { fileSize: 5 * 1024 * 1024 },
     }),
+    FormDataParseInterceptor,
   )
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -93,6 +96,16 @@ export class IngredientController {
   @Get()
   findAll() {
     return this.ingredientService.findAll();
+  }
+
+  @Get('top-allergen')
+  findTopAllergen() {
+    return this.ingredientService.findTopAllergen();
+  }
+
+  @Get('search')
+  search(@Query('name') name: string) {
+    return this.ingredientService.searchByName(name);
   }
 
   @Get(':id')

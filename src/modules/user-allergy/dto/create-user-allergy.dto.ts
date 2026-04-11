@@ -10,7 +10,7 @@ export class CreateUserAllergyDto {
   @Min(1, { message: 'allergenId không hợp lệ' })
   allergenId: number;
 
-  @IsIn(['LOW', 'MEDIUM', 'HIGH', 'LIFE_THREATENING'], { message: 'severity không hợp lệ' })
+  @IsIn(['SEV_LOW', 'SEV_MEDIUM', 'SEV_HIGH', 'SEV_LIFE_THREATENING'], { message: 'severity không hợp lệ' })
   severity: SeverityType;
 
   @IsOptional()

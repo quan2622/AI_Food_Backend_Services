@@ -86,7 +86,7 @@ export class UserSubmissionService {
         type: dto.type,
         targetFoodId: dto.targetFoodId || null,
         category: dto.category,
-        payload: dto.payload as Prisma.InputJsonValue,
+        payload: (dto.payload ?? {}) as Prisma.InputJsonValue,
         description: dto.description || null,
         reliabilityScore,
       },

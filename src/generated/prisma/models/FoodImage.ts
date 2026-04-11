@@ -217,7 +217,7 @@ export type FoodImageGroupByOutputType = {
   fileSize: number | null
   uploadedAt: Date
   userId: number
-  mealId: number
+  mealId: number | null
   _count: FoodImageCountAggregateOutputType | null
   _avg: FoodImageAvgAggregateOutputType | null
   _sum: FoodImageSumAggregateOutputType | null
@@ -251,9 +251,9 @@ export type FoodImageWhereInput = {
   fileSize?: Prisma.IntNullableFilter<"FoodImage"> | number | null
   uploadedAt?: Prisma.DateTimeFilter<"FoodImage"> | Date | string
   userId?: Prisma.IntFilter<"FoodImage"> | number
-  mealId?: Prisma.IntFilter<"FoodImage"> | number
+  mealId?: Prisma.IntNullableFilter<"FoodImage"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  meal?: Prisma.XOR<Prisma.MealScalarRelationFilter, Prisma.MealWhereInput>
+  meal?: Prisma.XOR<Prisma.MealNullableScalarRelationFilter, Prisma.MealWhereInput> | null
 }
 
 export type FoodImageOrderByWithRelationInput = {
@@ -264,7 +264,7 @@ export type FoodImageOrderByWithRelationInput = {
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  mealId?: Prisma.SortOrder
+  mealId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   meal?: Prisma.MealOrderByWithRelationInput
 }
@@ -280,9 +280,9 @@ export type FoodImageWhereUniqueInput = Prisma.AtLeast<{
   fileSize?: Prisma.IntNullableFilter<"FoodImage"> | number | null
   uploadedAt?: Prisma.DateTimeFilter<"FoodImage"> | Date | string
   userId?: Prisma.IntFilter<"FoodImage"> | number
-  mealId?: Prisma.IntFilter<"FoodImage"> | number
+  mealId?: Prisma.IntNullableFilter<"FoodImage"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  meal?: Prisma.XOR<Prisma.MealScalarRelationFilter, Prisma.MealWhereInput>
+  meal?: Prisma.XOR<Prisma.MealNullableScalarRelationFilter, Prisma.MealWhereInput> | null
 }, "id">
 
 export type FoodImageOrderByWithAggregationInput = {
@@ -293,7 +293,7 @@ export type FoodImageOrderByWithAggregationInput = {
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  mealId?: Prisma.SortOrder
+  mealId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FoodImageCountOrderByAggregateInput
   _avg?: Prisma.FoodImageAvgOrderByAggregateInput
   _max?: Prisma.FoodImageMaxOrderByAggregateInput
@@ -312,7 +312,7 @@ export type FoodImageScalarWhereWithAggregatesInput = {
   fileSize?: Prisma.IntNullableWithAggregatesFilter<"FoodImage"> | number | null
   uploadedAt?: Prisma.DateTimeWithAggregatesFilter<"FoodImage"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"FoodImage"> | number
-  mealId?: Prisma.IntWithAggregatesFilter<"FoodImage"> | number
+  mealId?: Prisma.IntNullableWithAggregatesFilter<"FoodImage"> | number | null
 }
 
 export type FoodImageCreateInput = {
@@ -322,7 +322,7 @@ export type FoodImageCreateInput = {
   fileSize?: number | null
   uploadedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutFoodImagesInput
-  meal: Prisma.MealCreateNestedOneWithoutFoodImagesInput
+  meal?: Prisma.MealCreateNestedOneWithoutFoodImagesInput
 }
 
 export type FoodImageUncheckedCreateInput = {
@@ -333,7 +333,7 @@ export type FoodImageUncheckedCreateInput = {
   fileSize?: number | null
   uploadedAt?: Date | string
   userId: number
-  mealId: number
+  mealId?: number | null
 }
 
 export type FoodImageUpdateInput = {
@@ -343,7 +343,7 @@ export type FoodImageUpdateInput = {
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutFoodImagesNestedInput
-  meal?: Prisma.MealUpdateOneRequiredWithoutFoodImagesNestedInput
+  meal?: Prisma.MealUpdateOneWithoutFoodImagesNestedInput
 }
 
 export type FoodImageUncheckedUpdateInput = {
@@ -354,7 +354,7 @@ export type FoodImageUncheckedUpdateInput = {
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  mealId?: Prisma.IntFieldUpdateOperationsInput | number
+  mealId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FoodImageCreateManyInput = {
@@ -365,7 +365,7 @@ export type FoodImageCreateManyInput = {
   fileSize?: number | null
   uploadedAt?: Date | string
   userId: number
-  mealId: number
+  mealId?: number | null
 }
 
 export type FoodImageUpdateManyMutationInput = {
@@ -384,7 +384,7 @@ export type FoodImageUncheckedUpdateManyInput = {
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  mealId?: Prisma.IntFieldUpdateOperationsInput | number
+  mealId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FoodImageListRelationFilter = {
@@ -534,7 +534,7 @@ export type FoodImageCreateWithoutUserInput = {
   mimeType?: string | null
   fileSize?: number | null
   uploadedAt?: Date | string
-  meal: Prisma.MealCreateNestedOneWithoutFoodImagesInput
+  meal?: Prisma.MealCreateNestedOneWithoutFoodImagesInput
 }
 
 export type FoodImageUncheckedCreateWithoutUserInput = {
@@ -544,7 +544,7 @@ export type FoodImageUncheckedCreateWithoutUserInput = {
   mimeType?: string | null
   fileSize?: number | null
   uploadedAt?: Date | string
-  mealId: number
+  mealId?: number | null
 }
 
 export type FoodImageCreateOrConnectWithoutUserInput = {
@@ -584,7 +584,7 @@ export type FoodImageScalarWhereInput = {
   fileSize?: Prisma.IntNullableFilter<"FoodImage"> | number | null
   uploadedAt?: Prisma.DateTimeFilter<"FoodImage"> | Date | string
   userId?: Prisma.IntFilter<"FoodImage"> | number
-  mealId?: Prisma.IntFilter<"FoodImage"> | number
+  mealId?: Prisma.IntNullableFilter<"FoodImage"> | number | null
 }
 
 export type FoodImageCreateWithoutMealInput = {
@@ -639,7 +639,7 @@ export type FoodImageCreateManyUserInput = {
   mimeType?: string | null
   fileSize?: number | null
   uploadedAt?: Date | string
-  mealId: number
+  mealId?: number | null
 }
 
 export type FoodImageUpdateWithoutUserInput = {
@@ -648,7 +648,7 @@ export type FoodImageUpdateWithoutUserInput = {
   mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  meal?: Prisma.MealUpdateOneRequiredWithoutFoodImagesNestedInput
+  meal?: Prisma.MealUpdateOneWithoutFoodImagesNestedInput
 }
 
 export type FoodImageUncheckedUpdateWithoutUserInput = {
@@ -658,7 +658,7 @@ export type FoodImageUncheckedUpdateWithoutUserInput = {
   mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mealId?: Prisma.IntFieldUpdateOperationsInput | number
+  mealId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FoodImageUncheckedUpdateManyWithoutUserInput = {
@@ -668,7 +668,7 @@ export type FoodImageUncheckedUpdateManyWithoutUserInput = {
   mimeType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mealId?: Prisma.IntFieldUpdateOperationsInput | number
+  mealId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FoodImageCreateManyMealInput = {
@@ -722,7 +722,7 @@ export type FoodImageSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   userId?: boolean
   mealId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }, ExtArgs["result"]["foodImage"]>
 
 export type FoodImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -735,7 +735,7 @@ export type FoodImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   mealId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }, ExtArgs["result"]["foodImage"]>
 
 export type FoodImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -748,7 +748,7 @@ export type FoodImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   mealId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }, ExtArgs["result"]["foodImage"]>
 
 export type FoodImageSelectScalar = {
@@ -765,22 +765,22 @@ export type FoodImageSelectScalar = {
 export type FoodImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "fileName" | "mimeType" | "fileSize" | "uploadedAt" | "userId" | "mealId", ExtArgs["result"]["foodImage"]>
 export type FoodImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }
 export type FoodImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }
 export type FoodImageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  meal?: boolean | Prisma.MealDefaultArgs<ExtArgs>
+  meal?: boolean | Prisma.FoodImage$mealArgs<ExtArgs>
 }
 
 export type $FoodImagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FoodImage"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    meal: Prisma.$MealPayload<ExtArgs>
+    meal: Prisma.$MealPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -790,7 +790,7 @@ export type $FoodImagePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     fileSize: number | null
     uploadedAt: Date
     userId: number
-    mealId: number
+    mealId: number | null
   }, ExtArgs["result"]["foodImage"]>
   composites: {}
 }
@@ -1186,7 +1186,7 @@ readonly fields: FoodImageFieldRefs;
 export interface Prisma__FoodImageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  meal<T extends Prisma.MealDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MealDefaultArgs<ExtArgs>>): Prisma.Prisma__MealClient<runtime.Types.Result.GetResult<Prisma.$MealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  meal<T extends Prisma.FoodImage$mealArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FoodImage$mealArgs<ExtArgs>>): Prisma.Prisma__MealClient<runtime.Types.Result.GetResult<Prisma.$MealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1617,6 +1617,25 @@ export type FoodImageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many FoodImages to delete.
    */
   limit?: number
+}
+
+/**
+ * FoodImage.meal
+ */
+export type FoodImage$mealArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Meal
+   */
+  select?: Prisma.MealSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Meal
+   */
+  omit?: Prisma.MealOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MealInclude<ExtArgs> | null
+  where?: Prisma.MealWhereInput
 }
 
 /**

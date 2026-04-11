@@ -1,7 +1,8 @@
 .PHONY: help install dev build start start-prod test lint lint-fix clean \
 	docker-up docker-down docker-logs docker-clean \
 	db-migrate db-push db-seed db-studio db-reset db-generate \
-	test-db-reset setup seed-allcode seed-% seed-recommender
+	test-db-reset setup seed-allcode seed-% seed-recommender \
+	es-up es-reindex
 
 # Default target
 help:
@@ -53,6 +54,7 @@ dev:
 	@echo "Checking if PostgreSQL and Redis are running..."
 	@docker compose ps --services --filter "status=running" | grep -q "^postgres$$" || (echo "PostgreSQL not running, starting services..." && $(MAKE) docker-up)
 	@docker compose ps --services --filter "status=running" | grep -q "^redis$$" || (echo "Redis not running, starting services..." && $(MAKE) docker-up)
+	@$(MAKE) es-up
 	npm run start:dev
 
 build:
@@ -79,6 +81,25 @@ docker-up:
 	@sleep 3
 	@docker compose exec -T postgres pg_isready -U postgres || (echo "Waiting a bit more..." && sleep 5)
 	@echo "PostgreSQL is ready!"
+
+es-up:
+	@echo "Starting Elasticsearch..."
+	@docker compose ps --services --filter "status=running" | grep -q "^elasticsearch$$" \
+		|| docker compose up -d elasticsearch
+	@echo "Waiting for Elasticsearch to be ready..."
+	@for i in 1 2 3 4 5 6 7 8 9 10; do \
+		curl -s http://localhost:9200/_cluster/health > /dev/null 2>&1 && break; \
+		echo "  Waiting... ($$i/10)"; sleep 3; \
+	done
+	@echo "Elasticsearch is ready!"
+
+es-reindex:
+	@echo "Reindexing foods and ingredients into Elasticsearch..."
+	@curl -s -X POST http://localhost:8080/api/v1/search/admin/reindex/foods | cat
+	@echo ""
+	@curl -s -X POST http://localhost:8080/api/v1/search/admin/reindex/ingredients | cat
+	@echo ""
+	@echo "Reindex complete!"
 
 docker-down:
 	docker compose down

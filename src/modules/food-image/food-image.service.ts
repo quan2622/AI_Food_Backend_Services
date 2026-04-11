@@ -89,7 +89,7 @@ export class FoodImageService {
       },
     });
     if (!image) throw new NotFoundException(`FoodImage #${id} không tồn tại`);
-    if (image.meal.dailyLog.userId !== userId)
+    if (!image.meal || image.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa ảnh này');
 
     await this.prisma.foodImage.delete({ where: { id } });
