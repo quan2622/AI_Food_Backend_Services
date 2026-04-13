@@ -3,10 +3,14 @@ import {
   IsNotEmpty,
   IsOptional,
   IsInt,
+  IsArray,
   IsNumber,
   Min,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateFoodIngredientInputDto } from './create-food-with-ingredients.dto.js';
 
 export class CreateFoodDto {
   @IsString()
@@ -33,4 +37,11 @@ export class CreateFoodDto {
   @IsNumber({}, { message: 'defaultServingGrams phải là số' })
   @Min(0, { message: 'defaultServingGrams không được âm' })
   defaultServingGrams: number;
+
+  /** Optional: cho phép tạo món kèm thành phần ngay trong 1 request */
+  @IsOptional()
+  @IsArray({ message: 'ingredients phải là mảng' })
+  @ValidateNested({ each: true })
+  @Type(() => CreateFoodIngredientInputDto)
+  ingredients?: CreateFoodIngredientInputDto[];
 }

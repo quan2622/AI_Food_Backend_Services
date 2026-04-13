@@ -8,6 +8,8 @@ const INGREDIENT_INDEX = 'ingredients';
 @Injectable()
 export class SearchService implements OnModuleInit {
   private readonly logger = new Logger(SearchService.name);
+  private esAvailable = true;
+  private warnedUnavailable = false;
 
   constructor(
     private readonly es: ElasticsearchService,
@@ -17,7 +19,32 @@ export class SearchService implements OnModuleInit {
   // ─── Lifecycle ─────────────────────────────────────────────────────────────
 
   async onModuleInit() {
-    await this.ensureIndices();
+    try {
+      await this.ensureIndices();
+      this.esAvailable = true;
+      this.warnedUnavailable = false;
+    } catch (error) {
+      this.markUnavailable(error, 'init indices');
+    }
+  }
+
+  private markUnavailable(error: unknown, action: string) {
+    this.esAvailable = false;
+    if (!this.warnedUnavailable) {
+      const msg = error instanceof Error ? error.message : String(error);
+      this.logger.warn(
+        `Elasticsearch unavailable while ${action}. Search indexing is disabled temporarily. Error: ${msg}`,
+      );
+      this.warnedUnavailable = true;
+    }
+  }
+
+  private markAvailable() {
+    if (!this.esAvailable) {
+      this.logger.log('Elasticsearch connection restored');
+    }
+    this.esAvailable = true;
+    this.warnedUnavailable = false;
   }
 
   // ─── Index Setup ────────────────────────────────────────────────────────────
@@ -105,23 +132,30 @@ export class SearchService implements OnModuleInit {
     const getNutrient = (name: string) =>
       food.nutritionProfile?.values.find((v) => v.nutrient.name === name)?.value ?? null;
 
-    await this.es.index({
-      index: FOOD_INDEX,
-      id: String(food.id),
-      document: {
-        id: food.id,
-        foodName: food.foodName,
-        description: food.description,
-        imageUrl: food.imageUrl,
-        categoryId: food.categoryId,
-        categoryName: food.foodCategory?.name ?? null,
-        calories: getNutrient('Calories'),
-        protein: getNutrient('Protein'),
-        carbs: getNutrient('Carbohydrates'),
-        fat: getNutrient('Fat'),
-        fiber: getNutrient('Fiber'),
-      },
-    });
+    if (!this.esAvailable) return;
+
+    try {
+      await this.es.index({
+        index: FOOD_INDEX,
+        id: String(food.id),
+        document: {
+          id: food.id,
+          foodName: food.foodName,
+          description: food.description,
+          imageUrl: food.imageUrl,
+          categoryId: food.categoryId,
+          categoryName: food.foodCategory?.name ?? null,
+          calories: getNutrient('Calories'),
+          protein: getNutrient('Protein'),
+          carbs: getNutrient('Carbohydrates'),
+          fat: getNutrient('Fat'),
+          fiber: getNutrient('Fiber'),
+        },
+      });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'indexing food');
+    }
   }
 
   async indexIngredient(ingredientId: number) {
@@ -133,25 +167,46 @@ export class SearchService implements OnModuleInit {
     });
     if (!ingredient) return;
 
-    await this.es.index({
-      index: INGREDIENT_INDEX,
-      id: String(ingredient.id),
-      document: {
-        id: ingredient.id,
-        ingredientName: ingredient.ingredientName,
-        description: ingredient.description,
-        imageUrl: ingredient.imageUrl,
-        allergenNames: ingredient.ingredientAllergens.map((ia) => ia.allergen.name),
-      },
-    });
+    if (!this.esAvailable) return;
+
+    try {
+      await this.es.index({
+        index: INGREDIENT_INDEX,
+        id: String(ingredient.id),
+        document: {
+          id: ingredient.id,
+          ingredientName: ingredient.ingredientName,
+          description: ingredient.description,
+          imageUrl: ingredient.imageUrl,
+          allergenNames: ingredient.ingredientAllergens.map(
+            (ia) => ia.allergen.name,
+          ),
+        },
+      });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'indexing ingredient');
+    }
   }
 
   async removeFood(foodId: number) {
-    await this.es.delete({ index: FOOD_INDEX, id: String(foodId) }).catch(() => null);
+    if (!this.esAvailable) return;
+    try {
+      await this.es.delete({ index: FOOD_INDEX, id: String(foodId) });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'removing food from index');
+    }
   }
 
   async removeIngredient(ingredientId: number) {
-    await this.es.delete({ index: INGREDIENT_INDEX, id: String(ingredientId) }).catch(() => null);
+    if (!this.esAvailable) return;
+    try {
+      await this.es.delete({ index: INGREDIENT_INDEX, id: String(ingredientId) });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'removing ingredient from index');
+    }
   }
 
   // ─── Bulk Reindex ───────────────────────────────────────────────────────────
@@ -179,20 +234,29 @@ export class SearchService implements OnModuleInit {
   // ─── Search ─────────────────────────────────────────────────────────────────
 
   async searchFoods(query: string, size = 20) {
-    const result = await this.es.search({
-      index: FOOD_INDEX,
-      size,
-      query: {
-        multi_match: {
-          query,
-          fields: ['foodName^3', 'description', 'categoryName'],
-          fuzziness: 'AUTO',
+    if (!this.esAvailable) return [];
+
+    let result;
+    try {
+      result = await this.es.search({
+        index: FOOD_INDEX,
+        size,
+        query: {
+          multi_match: {
+            query,
+            fields: ['foodName^3', 'description', 'categoryName'],
+            fuzziness: 'AUTO',
+          },
         },
-      },
-      highlight: {
-        fields: { foodName: {}, description: {} },
-      },
-    });
+        highlight: {
+          fields: { foodName: {}, description: {} },
+        },
+      });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'searching foods');
+      return [];
+    }
 
     return result.hits.hits.map((hit) => ({
       ...(hit._source as object),
@@ -202,20 +266,29 @@ export class SearchService implements OnModuleInit {
   }
 
   async searchIngredients(query: string, size = 20) {
-    const result = await this.es.search({
-      index: INGREDIENT_INDEX,
-      size,
-      query: {
-        multi_match: {
-          query,
-          fields: ['ingredientName^3', 'description', 'allergenNames'],
-          fuzziness: 'AUTO',
+    if (!this.esAvailable) return [];
+
+    let result;
+    try {
+      result = await this.es.search({
+        index: INGREDIENT_INDEX,
+        size,
+        query: {
+          multi_match: {
+            query,
+            fields: ['ingredientName^3', 'description', 'allergenNames'],
+            fuzziness: 'AUTO',
+          },
         },
-      },
-      highlight: {
-        fields: { ingredientName: {}, description: {} },
-      },
-    });
+        highlight: {
+          fields: { ingredientName: {}, description: {} },
+        },
+      });
+      this.markAvailable();
+    } catch (error) {
+      this.markUnavailable(error, 'searching ingredients');
+      return [];
+    }
 
     return result.hits.hits.map((hit) => ({
       ...(hit._source as object),

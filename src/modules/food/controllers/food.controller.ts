@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { FoodService } from '../services/food.service.js';
 import { CreateFoodDto } from '../dto/create-food.dto.js';
+import { CreateFoodWithIngredientsDto } from '../dto/create-food-with-ingredients.dto.js';
 import { UpdateFoodDto } from '../dto/update-food.dto.js';
 import { BulkDeleteFoodDto } from '../dto/bulk-delete-food.dto.js';
 import { BulkCreateFoodDto } from '../dto/bulk-create-food.dto.js';
@@ -29,6 +30,13 @@ export class FoodController {
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createFoodDto: CreateFoodDto) {
     return this.foodService.create(createFoodDto);
+  }
+
+  @UseGuards(AdminGuard)
+  @Post('with-ingredients')
+  @HttpCode(HttpStatus.CREATED)
+  createWithIngredients(@Body() dto: CreateFoodWithIngredientsDto) {
+    return this.foodService.createWithIngredients(dto);
   }
 
   @UseGuards(AdminGuard)

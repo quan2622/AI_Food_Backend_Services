@@ -1,11 +1,45 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateDishIngredientDto } from '../dto/dish-ingredient/create-dish-ingredient.dto.js';
 import { UpdateDishIngredientDto } from '../dto/dish-ingredient/update-dish-ingredient.dto.js';
+import { type FoodIngredientUnit } from '../dto/dish-ingredient/create-dish-ingredient.dto.js';
 
 @Injectable()
 export class FoodIngredientService {
+  private static readonly UNIT_TO_GRAMS: Record<FoodIngredientUnit, number> = {
+    UNIT_G: 1,
+    UNIT_KG: 1000,
+    UNIT_MG: 0.001,
+    UNIT_OZ: 28.349523125,
+    UNIT_LB: 453.59237,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
+
+  private toGrams(quantity: number, unit: FoodIngredientUnit): number {
+    const factor = FoodIngredientService.UNIT_TO_GRAMS[unit];
+    return Math.round(quantity * factor * 1000) / 1000;
+  }
+
+  private normalizeQuantityGrams(
+    dto: Pick<CreateDishIngredientDto, 'quantity' | 'unit' | 'quantityGrams'>,
+  ): number {
+    if (dto.quantityGrams != null) {
+      return dto.quantityGrams;
+    }
+
+    if (dto.quantity != null && dto.unit) {
+      return this.toGrams(dto.quantity, dto.unit);
+    }
+
+    throw new BadRequestException(
+      'Cần truyền quantityGrams hoặc cặp quantity + unit',
+    );
+  }
 
   async findByDish(dishId: number) {
     return this.prisma.foodIngredient.findMany({
@@ -31,7 +65,7 @@ export class FoodIngredientService {
       data: {
         foodId: dishId,
         ingredientId: dto.ingredientId,
-        quantityGrams: dto.quantityGrams,
+        quantityGrams: this.normalizeQuantityGrams(dto),
       },
     });
   }
@@ -47,7 +81,10 @@ export class FoodIngredientService {
     return this.prisma.foodIngredient.update({
       where: { id },
       data: {
-        ...(dto.quantityGrams != null && { quantityGrams: dto.quantityGrams }),
+        ...((dto.quantityGrams != null ||
+          (dto.quantity != null && dto.unit != null)) && {
+          quantityGrams: this.normalizeQuantityGrams(dto),
+        }),
       },
     });
   }

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -12,16 +13,44 @@ import {
 } from '../../../common/utils/admin-pagination.util';
 import { SearchService } from '../../search/search.service';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
+import {
+  type FoodIngredientUnit,
+  type CreateFoodWithIngredientsDto,
+} from '../dto/create-food-with-ingredients.dto.js';
 import type { UpdateFoodDto } from '../dto/update-food.dto.js';
 
 @Injectable()
 export class FoodService {
+  private static readonly UNIT_TO_GRAMS: Record<FoodIngredientUnit, number> = {
+    UNIT_G: 1,
+    UNIT_KG: 1000,
+    UNIT_MG: 0.001,
+    UNIT_OZ: 28.349523125,
+    UNIT_LB: 453.59237,
+  };
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly searchService: SearchService,
   ) {}
 
+  private toGrams(quantity: number, unit: FoodIngredientUnit): number {
+    const factor = FoodService.UNIT_TO_GRAMS[unit];
+    return Math.round(quantity * factor * 1000) / 1000;
+  }
+
   create(dto: CreateFoodDto) {
+    if (dto.ingredients && dto.ingredients.length > 0) {
+      return this.createWithIngredients({
+        foodName: dto.foodName,
+        description: dto.description,
+        imageUrl: dto.imageUrl,
+        categoryId: dto.categoryId,
+        defaultServingGrams: dto.defaultServingGrams,
+        ingredients: dto.ingredients,
+      });
+    }
+
     const created = this.prisma.food.create({
       data: {
         foodName: dto.foodName,
@@ -33,6 +62,72 @@ export class FoodService {
     });
     created.then((f) => this.searchService.indexFood(f.id).catch(() => null));
     return created;
+  }
+
+  async createWithIngredients(dto: CreateFoodWithIngredientsDto) {
+    if (dto.ingredients.length === 0) {
+      throw new BadRequestException('ingredients không được rỗng');
+    }
+
+    const ingredientIds = dto.ingredients.map((i) => i.ingredientId);
+    const duplicateIds = ingredientIds.filter(
+      (id, index) => ingredientIds.indexOf(id) !== index,
+    );
+    if (duplicateIds.length > 0) {
+      throw new BadRequestException(
+        `ingredientId bị trùng: ${[...new Set(duplicateIds)].join(', ')}`,
+      );
+    }
+
+    const existingIngredients = await this.prisma.ingredient.findMany({
+      where: { id: { in: ingredientIds } },
+      select: { id: true },
+    });
+    const existingIdSet = new Set(existingIngredients.map((i) => i.id));
+    const missingIds = ingredientIds.filter((id) => !existingIdSet.has(id));
+    if (missingIds.length > 0) {
+      throw new NotFoundException(
+        `Nguyên liệu không tồn tại: ${[...new Set(missingIds)].join(', ')}`,
+      );
+    }
+
+    const result = await this.prisma.$transaction(async (tx) => {
+      const food = await tx.food.create({
+        data: {
+          foodName: dto.foodName,
+          description: dto.description,
+          categoryId: dto.categoryId ?? null,
+          imageUrl: dto.imageUrl,
+          defaultServingGrams: dto.defaultServingGrams,
+        },
+      });
+
+      await tx.foodIngredient.createMany({
+        data: dto.ingredients.map((item) => ({
+          foodId: food.id,
+          ingredientId: item.ingredientId,
+          quantityGrams: this.toGrams(item.quantity, item.unit),
+        })),
+      });
+
+      return tx.food.findUnique({
+        where: { id: food.id },
+        include: {
+          foodCategory: {
+            select: { id: true, name: true, description: true, parentId: true },
+          },
+          foodIngredients: {
+            include: { ingredient: true },
+            orderBy: { id: 'asc' },
+          },
+        },
+      });
+    });
+
+    if (result) {
+      this.searchService.indexFood(result.id).catch(() => null);
+    }
+    return result;
   }
 
   async createMany(items: CreateFoodDto[]): Promise<{ createdCount: number }> {
