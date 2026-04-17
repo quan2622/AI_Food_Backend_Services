@@ -11,6 +11,7 @@ import type { AqpQuery } from 'api-query-params';
 import { isEmpty } from 'lodash';
 import { plainToInstance } from 'class-transformer';
 import { PrismaService } from '../../prisma/prisma.service';
+import { NutritionGoalStatus } from '@/generated/prisma/enums';
 import type { User } from '../../generated/prisma/client.js';
 import type { CreateUserDto } from './dto/create-user.dto.js';
 import type { UpdateUserDto } from './dto/update-user.dto.js';
@@ -138,6 +139,36 @@ export class UsersService {
     return result;
   }
 
+  async findOneAdmin(
+    id: number,
+  ): Promise<Omit<User, 'password'> & { userProfile: any; currentGoal: any | null }> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        userProfile: true,
+        nutritionGoals: {
+          where: { status: NutritionGoalStatus.NUTR_GOAL_ONGOING },
+          orderBy: { updatedAt: 'desc' },
+          take: 1,
+        },
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User #${id} không tồn tại`);
+    }
+
+    const { password: _pw, accessToken: _at, refreshToken: _rt, nutritionGoals, ...result } = user;
+    const currentGoal = nutritionGoals?.[0] ?? null;
+
+    return {
+      ...result,
+      accessToken: _at,
+      refreshToken: _rt,
+      currentGoal,
+    };
+  }
+
   async getMe(
     id: number,
   ): Promise<Omit<User, 'password'> & { userProfile: any }> {
@@ -183,6 +214,7 @@ export class UsersService {
         dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
       }),
       ...(dto.isAdmin !== undefined && { isAdmin: dto.isAdmin }),
+      ...(dto.status !== undefined && { status: dto.status }),
     };
 
     const updated = await this.prisma.user.update({

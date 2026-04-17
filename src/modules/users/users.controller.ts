@@ -54,6 +54,12 @@ export class UsersController {
     return this.usersService.getMe(user.id);
   }
 
+  @UseGuards(AdminGuard)
+  @Get('/admin/:id')
+  findOneAdmin(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOneAdmin(id);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
