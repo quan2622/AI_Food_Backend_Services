@@ -8,20 +8,19 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import type { FoodImage } from '../../generated/prisma/client';
 
+export interface PredictionItem {
+  rank: number;
+  class_name: string;
+  name?: string | null;
+  confidence: number;
+}
+
 export interface PredictionResult {
   image_id: string;
   filename: string;
   stored_path: string;
-  top1: {
-    class_name: string;
-    confidence: number;
-    index: number;
-  };
-  predictions: Array<{
-    class_name: string;
-    confidence: number;
-    index: number;
-  }>;
+  top1: PredictionItem;
+  predictions: PredictionItem[];
   savedImage?: FoodImage;
   matchedFood?: Record<string, unknown> | null;
 }
@@ -79,7 +78,8 @@ export class FoodRecognitionService {
       this.cloudinaryService.uploadFile(file),
     ]);
 
-    const [savedImage, matchedFood] = await Promise.all([
+    const predictionClassKeys = predictionResult.predictions.map((p) => p.class_name);
+    const [savedImage, matchedFood, foodNames] = await Promise.all([
       this.prisma.foodImage.create({
         data: {
           userId,
@@ -111,9 +111,19 @@ export class FoodRecognitionService {
           },
         },
       }),
+      this.prisma.food.findMany({
+        where: { classKey: { in: predictionClassKeys } },
+        select: { classKey: true, foodName: true },
+      }),
     ]);
 
-    return { ...predictionResult, savedImage, matchedFood };
+    const nameMap = new Map(foodNames.map((f) => [f.classKey, f.foodName]));
+    const enrichedPredictions = predictionResult.predictions.map((p) => ({
+      ...p,
+      name: nameMap.get(p.class_name) ?? null,
+    }));
+
+    return { ...predictionResult, predictions: enrichedPredictions, savedImage, matchedFood };
   }
 
   async getClasses(): Promise<{ classes: string[] }> {
