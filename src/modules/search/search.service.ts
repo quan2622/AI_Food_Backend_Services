@@ -59,30 +59,41 @@ export class SearchService implements OnModuleInit {
     if (!exists) {
       await this.es.indices.create({
         index: FOOD_INDEX,
+        settings: {
+          analysis: {
+            filter: {
+              ascii_fold: { type: 'asciifolding', preserve_original: true },
+            },
+            analyzer: {
+              vi_analyzer: {
+                type: 'custom',
+                tokenizer: 'standard',
+                filter: ['lowercase', 'ascii_fold'],
+              },
+            },
+          },
+        },
         mappings: {
           properties: {
             id: { type: 'integer' },
             foodName: {
               type: 'text',
-              analyzer: 'standard',
+              analyzer: 'vi_analyzer',
               fields: { keyword: { type: 'keyword' } },
             },
-            description: { type: 'text', analyzer: 'standard' },
+            description: { type: 'text', analyzer: 'vi_analyzer' },
             imageUrl: { type: 'keyword', index: false },
             categoryId: { type: 'integer' },
-            categoryName: { type: 'keyword' },
+            categoryName: {
+              type: 'text',
+              analyzer: 'vi_analyzer',
+              fields: { keyword: { type: 'keyword' } },
+            },
             calories: { type: 'float' },
             protein: { type: 'float' },
             carbs: { type: 'float' },
             fat: { type: 'float' },
             fiber: { type: 'float' },
-          },
-        },
-        settings: {
-          analysis: {
-            analyzer: {
-              standard: { type: 'standard' },
-            },
           },
         },
       });
@@ -95,15 +106,29 @@ export class SearchService implements OnModuleInit {
     if (!exists) {
       await this.es.indices.create({
         index: INGREDIENT_INDEX,
+        settings: {
+          analysis: {
+            filter: {
+              ascii_fold: { type: 'asciifolding', preserve_original: true },
+            },
+            analyzer: {
+              vi_analyzer: {
+                type: 'custom',
+                tokenizer: 'standard',
+                filter: ['lowercase', 'ascii_fold'],
+              },
+            },
+          },
+        },
         mappings: {
           properties: {
             id: { type: 'integer' },
             ingredientName: {
               type: 'text',
-              analyzer: 'standard',
+              analyzer: 'vi_analyzer',
               fields: { keyword: { type: 'keyword' } },
             },
-            description: { type: 'text', analyzer: 'standard' },
+            description: { type: 'text', analyzer: 'vi_analyzer' },
             imageUrl: { type: 'keyword', index: false },
             allergenNames: { type: 'keyword' },
           },
@@ -213,6 +238,11 @@ export class SearchService implements OnModuleInit {
 
   async reindexAllFoods() {
     this.logger.log('Reindexing all foods...');
+    try {
+      await this.es.indices.delete({ index: FOOD_INDEX });
+      this.logger.log(`Index "${FOOD_INDEX}" deleted for recreation`);
+    } catch { /* ignore if not exists */ }
+    await this.ensureFoodIndex();
     const foods = await this.prisma.food.findMany({ select: { id: true } });
     for (const f of foods) {
       await this.indexFood(f.id);
@@ -223,12 +253,34 @@ export class SearchService implements OnModuleInit {
 
   async reindexAllIngredients() {
     this.logger.log('Reindexing all ingredients...');
+    try {
+      await this.es.indices.delete({ index: INGREDIENT_INDEX });
+      this.logger.log(`Index "${INGREDIENT_INDEX}" deleted for recreation`);
+    } catch { /* ignore if not exists */ }
+    await this.ensureIngredientIndex();
     const ingredients = await this.prisma.ingredient.findMany({ select: { id: true } });
     for (const i of ingredients) {
       await this.indexIngredient(i.id);
     }
     this.logger.log(`Reindexed ${ingredients.length} ingredients`);
     return { indexed: ingredients.length };
+  }
+
+  // ─── Status ────────────────────────────────────────────────────────────────
+
+  async getStatus() {
+    if (!this.esAvailable) {
+      return { elasticsearch: 'disconnected', foodsIndexed: 0, ingredientsIndexed: 0 };
+    }
+    try {
+      const [foodCount, ingredientCount] = await Promise.all([
+        this.es.count({ index: FOOD_INDEX }).then((r) => r.count).catch(() => 0),
+        this.es.count({ index: INGREDIENT_INDEX }).then((r) => r.count).catch(() => 0),
+      ]);
+      return { elasticsearch: 'connected', foodsIndexed: foodCount, ingredientsIndexed: ingredientCount };
+    } catch {
+      return { elasticsearch: 'error', foodsIndexed: 0, ingredientsIndexed: 0 };
+    }
   }
 
   // ─── Search ─────────────────────────────────────────────────────────────────

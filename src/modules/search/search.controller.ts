@@ -7,6 +7,7 @@ import {
   DefaultValuePipe,
 } from '@nestjs/common';
 import { SearchService } from './search.service';
+import { Public } from '../../common/decorators';
 
 @Controller('search')
 export class SearchController {
@@ -39,15 +40,23 @@ export class SearchController {
     return this.searchService.searchAll(q ?? '', size);
   }
 
+  /** Kiểm tra trạng thái Elasticsearch và số lượng document đã index */
+  @Get('status')
+  getStatus() {
+    return this.searchService.getStatus();
+  }
+
   // ─── Admin: Reindex ──────────────────────────────────────────────────────
 
   /** Reindex toàn bộ foods vào Elasticsearch */
+  @Public()
   @Post('admin/reindex/foods')
   reindexFoods() {
     return this.searchService.reindexAllFoods();
   }
 
   /** Reindex toàn bộ ingredients vào Elasticsearch */
+  @Public()
   @Post('admin/reindex/ingredients')
   reindexIngredients() {
     return this.searchService.reindexAllIngredients();
