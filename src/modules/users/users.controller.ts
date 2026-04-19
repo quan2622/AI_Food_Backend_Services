@@ -11,7 +11,13 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  FileTypeValidator,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
@@ -52,6 +58,30 @@ export class UsersController {
     user: UserAuthPayload,
   ) {
     return this.usersService.getMe(user.id);
+  }
+
+  @Patch('me')
+  @UseInterceptors(
+    FileInterceptor('avatar', { limits: { fileSize: 5 * 1024 * 1024 } }),
+  )
+  updateMe(
+    @User() user: UserAuthPayload,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 5 * 1024 * 1024,
+            message: 'Ảnh không được vượt quá 5MB',
+          }),
+          new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp)$/ }),
+        ],
+      }),
+    )
+    avatar?: Express.Multer.File,
+  ) {
+    return this.usersService.updateMe(user.id, updateUserDto, avatar);
   }
 
   @UseGuards(AdminGuard)

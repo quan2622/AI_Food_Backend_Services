@@ -9,7 +9,7 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { CreateFoodIngredientInputDto } from './create-food-with-ingredients.dto.js';
 
 export class CreateFoodDto {
@@ -29,17 +29,29 @@ export class CreateFoodDto {
   imageUrl?: string;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt({ message: 'categoryId phải là số nguyên' })
   @Min(1, { message: 'categoryId phải lớn hơn 0' })
   categoryId?: number;
 
   /** Khẩu phần mặc định (gram) cho 1 phần ăn — khớp `Food.defaultServingGrams` trong schema */
+  @Type(() => Number)
   @IsNumber({}, { message: 'defaultServingGrams phải là số' })
   @Min(0, { message: 'defaultServingGrams không được âm' })
   defaultServingGrams: number;
 
   /** Optional: cho phép tạo món kèm thành phần ngay trong 1 request */
   @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return value;
+      }
+    }
+    return value;
+  })
   @IsArray({ message: 'ingredients phải là mảng' })
   @ValidateNested({ each: true })
   @Type(() => CreateFoodIngredientInputDto)

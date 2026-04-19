@@ -8,7 +8,12 @@ import {
 import aqp from 'api-query-params';
 import type { AqpQuery } from 'api-query-params';
 import { PrismaService } from '../../prisma/prisma.service';
-import { MealType, StatusType } from '../../generated/prisma/enums';
+import {
+  GoalType,
+  MealType,
+  NutritionGoalStatus,
+  StatusType,
+} from '../../generated/prisma/enums';
 import {
   AllCodeLookupService,
   type AllCodeInfo,
@@ -208,7 +213,9 @@ export class DailyLogService {
       },
     });
 
-    const nutritionGoal = await this.getActiveNutritionGoal(userId, logDate);
+    const nutritionGoal =
+      (await this.getActiveNutritionGoal(userId, logDate)) ??
+      (await this.buildMaintenanceNutritionGoal(userId, logDate));
 
     if (existing) {
       const base = this.formatDailyLogWithTotals(existing, nutritionGoal);
@@ -246,6 +253,50 @@ export class DailyLogService {
       orderBy: { startDate: 'desc' },
     });
     return goal;
+  }
+
+  private async buildMaintenanceNutritionGoal(userId: number, date: Date) {
+    const profile = await this.prisma.userProfile.findUnique({
+      where: { userId },
+    });
+
+    const weight = profile?.weight ?? 70;
+    const bmr = profile?.bmr ?? 0;
+    const tdee =
+      profile?.tdee && profile.tdee > 0
+        ? profile.tdee
+        : bmr && bmr > 0
+        ? bmr * 1.2
+        : weight * 30;
+
+    const targetCalories = Math.round(tdee);
+    const targetProtein = Math.round(weight * 1.2 * 10) / 10;
+    const targetFat = Math.round(((targetCalories * 0.25) / 9) * 10) / 10;
+    const targetFiber = Math.max(
+      Math.round((targetCalories / 1000) * 14),
+      25,
+    );
+    const targetCarbs = Math.max(
+      Math.round(((targetCalories - targetProtein * 4 - targetFat * 9) / 4) * 10) / 10,
+      0,
+    );
+
+    return {
+      id: 0,
+      goalType: GoalType.GOAL_MAINTAIN,
+      status: NutritionGoalStatus.NUTR_GOAL_ONGOING,
+      targetWeight: null,
+      targetCalories,
+      targetProtein,
+      targetCarbs,
+      targetFat,
+      targetFiber,
+      startDate: date,
+      endDate: date,
+      userId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   }
 
   /** Helper tính tổng dinh dưỡng để trả về kèm JSON */

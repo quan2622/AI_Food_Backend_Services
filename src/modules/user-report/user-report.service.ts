@@ -11,19 +11,25 @@ export interface NutritionData {
   fiber: number;
 }
 
+export interface MealTimeData extends NutritionData {
+  mealId: number;
+  mealType: string;
+  mealTypeLabel: string;
+  mealDateTime: string;
+}
+
 export interface DayData extends NutritionData {
   date: string;
   label: string;
 }
 
-export interface WeekData extends NutritionData {
-  weekStart: string;
-  weekEnd: string;
+export interface MonthData extends NutritionData {
+  month: string;
   label: string;
   trend: NutritionData | null;
 }
 
-export interface MonthData extends NutritionData {
+export interface YearData extends NutritionData {
   month: string;
   label: string;
   trend: NutritionData | null;
@@ -171,7 +177,7 @@ export class UserReportService {
   async getNutritionTrend(
     userId: number,
     option: TrendOption,
-  ): Promise<DayData[] | WeekData[] | MonthData[]> {
+  ): Promise<MealTimeData[] | DayData[] | MonthData[] | YearData[]> {
     switch (option) {
       case TrendOption.DAY:
         return this.getDailyTrend(userId);
@@ -179,12 +185,49 @@ export class UserReportService {
         return this.getWeeklyTrend(userId);
       case TrendOption.MONTH:
         return this.getMonthlyTrend(userId);
+      case TrendOption.YEAR:
+        return this.getYearlyTrend(userId);
       default:
         return [];
     }
   }
 
-  private async getDailyTrend(userId: number): Promise<DayData[]> {
+  private static readonly MEAL_TYPE_LABELS: Record<string, string> = {
+    MEAL_BREAKFAST: 'Bữa sáng',
+    MEAL_LUNCH: 'Bữa trưa',
+    MEAL_DINNER: 'Bữa tối',
+    MEAL_SNACK: 'Bữa phụ',
+  };
+
+  private async getDailyTrend(userId: number): Promise<MealTimeData[]> {
+    const today = this.toDateOnly(new Date());
+
+    const dailyLog = await this.prisma.dailyLog.findFirst({
+      where: { userId, logDate: today },
+      include: {
+        meals: {
+          include: { mealItems: true },
+          orderBy: { mealDateTime: 'asc' },
+        },
+      },
+    });
+
+    if (!dailyLog) return [];
+
+    return dailyLog.meals.map((meal) => {
+      const nutrition = this.calculateNutritionFromMealItems(meal.mealItems);
+      return {
+        mealId: meal.id,
+        mealType: meal.mealType,
+        mealTypeLabel:
+          UserReportService.MEAL_TYPE_LABELS[meal.mealType] ?? meal.mealType,
+        mealDateTime: meal.mealDateTime.toISOString(),
+        ...nutrition,
+      };
+    });
+  }
+
+  private async getWeeklyTrend(userId: number): Promise<DayData[]> {
     const today = this.toDateOnly(new Date());
     const monday = this.getMondayOfWeek(new Date(today));
 
@@ -195,107 +238,109 @@ export class UserReportService {
       },
       include: {
         meals: {
-          include: {
-            mealItems: true,
-          },
+          include: { mealItems: true },
         },
       },
       orderBy: { logDate: 'asc' },
     });
 
-    return dailyLogs.map((log) => {
-      const allMealItems = log.meals.flatMap((meal) => meal.mealItems);
-      const nutrition = this.calculateNutritionFromMealItems(allMealItems);
+    // Build a map date → nutrition
+    const logsByDate = new Map<string, (typeof dailyLogs)[0]>();
+    for (const log of dailyLogs) {
+      logsByDate.set(this.formatDate(log.logDate), log);
+    }
 
-      return {
-        date: this.formatDate(log.logDate),
-        label: this.getDayLabel(log.logDate),
-        ...nutrition,
+    const result: DayData[] = [];
+    const todayDayIndex = today.getDay(); // 0=Sun, 1=Mon…
+    const daysFromMonday = todayDayIndex === 0 ? 6 : todayDayIndex - 1;
+
+    for (let i = 0; i <= daysFromMonday; i++) {
+      const currentDate = new Date(monday);
+      currentDate.setDate(monday.getDate() + i);
+      const dateStr = this.formatDate(currentDate);
+      const log = logsByDate.get(dateStr);
+
+      let nutrition: NutritionData = {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
       };
+      if (log) {
+        const allMealItems = log.meals.flatMap((m) => m.mealItems);
+        nutrition = this.calculateNutritionFromMealItems(allMealItems);
+      }
+
+      result.push({
+        date: dateStr,
+        label: this.getDayLabel(currentDate),
+        ...nutrition,
+      });
+    }
+
+    return result;
+  }
+
+  private async getMonthlyTrend(userId: number): Promise<DayData[]> {
+    const today = this.toDateOnly(new Date());
+    const monthStart = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1),
+    );
+
+    const dailyLogs = await this.prisma.dailyLog.findMany({
+      where: {
+        userId,
+        logDate: { gte: monthStart, lte: today },
+      },
+      include: {
+        meals: { include: { mealItems: true } },
+      },
+      orderBy: { logDate: 'asc' },
     });
-  }
 
-  private async getWeeklyTrend(userId: number): Promise<WeekData[]> {
-    const today = this.toDateOnly(new Date());
-    const weeks: WeekData[] = [];
+    const logsByDate = new Map<string, (typeof dailyLogs)[0]>();
+    for (const log of dailyLogs) {
+      logsByDate.set(this.formatDate(log.logDate), log);
+    }
 
-    // Calculate 6 weeks period
-    for (let i = 5; i >= 0; i--) {
-      const weekEnd = new Date(today);
-      weekEnd.setDate(today.getDate() - i * 7);
-      const weekStart = this.getMondayOfWeek(weekEnd);
-      const actualWeekEnd = i === 0 ? today : this.getSundayOfWeek(weekEnd);
+    const result: DayData[] = [];
+    const currentDay = today.getUTCDate();
 
-      const dailyLogs = await this.prisma.dailyLog.findMany({
-        where: {
-          userId,
-          logDate: { gte: weekStart, lte: actualWeekEnd },
-        },
-        include: {
-          meals: {
-            include: {
-              mealItems: true,
-            },
-          },
-        },
-      });
+    for (let day = 1; day <= currentDay; day++) {
+      const currentDate = new Date(
+        Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), day),
+      );
+      const dateStr = this.formatDate(currentDate);
+      const log = logsByDate.get(dateStr);
 
-      const nutritionData: NutritionData[] = [];
-      let daysWithData = 0;
-
-      for (const log of dailyLogs) {
-        const allMealItems = log.meals.flatMap((meal) => meal.mealItems);
-        if (allMealItems.length > 0) {
-          nutritionData.push(
-            this.calculateNutritionFromMealItems(allMealItems),
-          );
-          daysWithData++;
-        }
+      let nutrition: NutritionData = {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+      };
+      if (log) {
+        const allMealItems = log.meals.flatMap((m) => m.mealItems);
+        nutrition = this.calculateNutritionFromMealItems(allMealItems);
       }
 
-      const avg = this.calculateAverage(nutritionData, daysWithData);
-
-      weeks.push({
-        weekStart: this.formatDate(weekStart),
-        weekEnd: this.formatDate(actualWeekEnd),
-        label: this.getWeekLabel(i, 6),
-        ...avg,
-        trend: null, // Will be calculated after
+      result.push({
+        date: dateStr,
+        label: String(day).padStart(2, '0'),
+        ...nutrition,
       });
     }
 
-    // Calculate trend
-    for (let i = 0; i < weeks.length; i++) {
-      if (i === 0) {
-        weeks[i].trend = null;
-      } else {
-        const prev = {
-          calories: weeks[i - 1].calories,
-          protein: weeks[i - 1].protein,
-          carbs: weeks[i - 1].carbs,
-          fat: weeks[i - 1].fat,
-          fiber: weeks[i - 1].fiber,
-        };
-        const curr = {
-          calories: weeks[i].calories,
-          protein: weeks[i].protein,
-          carbs: weeks[i].carbs,
-          fat: weeks[i].fat,
-          fiber: weeks[i].fiber,
-        };
-        weeks[i].trend = this.calculateTrend(curr, prev);
-      }
-    }
-
-    return weeks;
+    return result;
   }
 
-  private async getMonthlyTrend(userId: number): Promise<MonthData[]> {
+  private async getYearlyTrend(userId: number): Promise<YearData[]> {
     const today = this.toDateOnly(new Date());
-    const months: MonthData[] = [];
-    const currentMonth = today.getMonth(); // 0-11
+    const currentMonth = today.getUTCMonth(); // 0-11
+    const result: YearData[] = [];
 
-    // From January to current month
     for (let i = 0; i <= currentMonth; i++) {
       const monthStart = new Date(Date.UTC(today.getUTCFullYear(), i, 1));
       const monthEnd =
@@ -309,11 +354,7 @@ export class UserReportService {
           logDate: { gte: monthStart, lte: monthEnd },
         },
         include: {
-          meals: {
-            include: {
-              mealItems: true,
-            },
-          },
+          meals: { include: { mealItems: true } },
         },
       });
 
@@ -321,18 +362,15 @@ export class UserReportService {
       let daysWithData = 0;
 
       for (const log of dailyLogs) {
-        const allMealItems = log.meals.flatMap((meal) => meal.mealItems);
+        const allMealItems = log.meals.flatMap((m) => m.mealItems);
         if (allMealItems.length > 0) {
-          nutritionData.push(
-            this.calculateNutritionFromMealItems(allMealItems),
-          );
+          nutritionData.push(this.calculateNutritionFromMealItems(allMealItems));
           daysWithData++;
         }
       }
 
       const avg = this.calculateAverage(nutritionData, daysWithData);
-
-      months.push({
+      result.push({
         month: this.formatMonth(monthStart),
         label: this.getMonthLabel(monthStart),
         ...avg,
@@ -341,29 +379,25 @@ export class UserReportService {
     }
 
     // Calculate trend
-    for (let i = 0; i < months.length; i++) {
-      if (i === 0) {
-        months[i].trend = null;
-      } else {
-        const prev = {
-          calories: months[i - 1].calories,
-          protein: months[i - 1].protein,
-          carbs: months[i - 1].carbs,
-          fat: months[i - 1].fat,
-          fiber: months[i - 1].fiber,
-        };
-        const curr = {
-          calories: months[i].calories,
-          protein: months[i].protein,
-          carbs: months[i].carbs,
-          fat: months[i].fat,
-          fiber: months[i].fiber,
-        };
-        months[i].trend = this.calculateTrend(curr, prev);
-      }
+    for (let i = 1; i < result.length; i++) {
+      const prev: NutritionData = {
+        calories: result[i - 1].calories,
+        protein: result[i - 1].protein,
+        carbs: result[i - 1].carbs,
+        fat: result[i - 1].fat,
+        fiber: result[i - 1].fiber,
+      };
+      const curr: NutritionData = {
+        calories: result[i].calories,
+        protein: result[i].protein,
+        carbs: result[i].carbs,
+        fat: result[i].fat,
+        fiber: result[i].fiber,
+      };
+      result[i].trend = this.calculateTrend(curr, prev);
     }
 
-    return months;
+    return result;
   }
 
   // ─── Public API: Metric Trend ─────────────────────────────────────────────
@@ -374,10 +408,14 @@ export class UserReportService {
     metric: NutritionMetric,
   ): Promise<MetricTrendResult> {
     switch (type) {
+      case TrendType.DAY:
+        return this.getDailyMetricTrend(userId, metric);
       case TrendType.WEEK:
         return this.getWeeklyMetricTrend(userId, metric);
       case TrendType.MONTH:
         return this.getMonthlyMetricTrend(userId, metric);
+      case TrendType.YEAR:
+        return this.getYearlyMetricTrend(userId, metric);
       default:
         return {
           type,
@@ -386,6 +424,50 @@ export class UserReportService {
           data: [],
         };
     }
+  }
+
+  private async getDailyMetricTrend(
+    userId: number,
+    metric: NutritionMetric,
+  ): Promise<MetricTrendResult> {
+    const today = this.toDateOnly(new Date());
+
+    const dailyLog = await this.prisma.dailyLog.findFirst({
+      where: { userId, logDate: today },
+      include: {
+        meals: {
+          include: { mealItems: true },
+          orderBy: { mealDateTime: 'asc' },
+        },
+      },
+    });
+
+    const data: MetricTrendDataPoint[] = [];
+
+    if (dailyLog) {
+      for (const meal of dailyLog.meals) {
+        const nutrition = this.calculateNutritionFromMealItems(meal.mealItems);
+        data.push({
+          label:
+            UserReportService.MEAL_TYPE_LABELS[meal.mealType] ?? meal.mealType,
+          date: meal.mealDateTime.toISOString(),
+          value: Math.round(nutrition[metric] * 100) / 100,
+        });
+      }
+    }
+
+    const summary = this.calculateMetricSummary(data);
+
+    return {
+      type: TrendType.DAY,
+      metric,
+      range: {
+        start: this.formatDate(today),
+        end: this.formatDate(today),
+      },
+      data,
+      summary,
+    };
   }
 
   private async getWeeklyMetricTrend(
@@ -533,6 +615,67 @@ export class UserReportService {
       metric,
       range: {
         start: this.formatDate(monthStart),
+        end: this.formatDate(today),
+      },
+      data,
+      summary,
+    };
+  }
+
+  private async getYearlyMetricTrend(
+    userId: number,
+    metric: NutritionMetric,
+  ): Promise<MetricTrendResult> {
+    const today = this.toDateOnly(new Date());
+    const yearStart = new Date(Date.UTC(today.getUTCFullYear(), 0, 1));
+    const currentMonth = today.getUTCMonth(); // 0-11
+
+    const data: MetricTrendDataPoint[] = [];
+
+    for (let i = 0; i <= currentMonth; i++) {
+      const monthStart = new Date(Date.UTC(today.getUTCFullYear(), i, 1));
+      const monthEnd =
+        i === currentMonth
+          ? today
+          : new Date(Date.UTC(today.getUTCFullYear(), i + 1, 0));
+
+      const dailyLogs = await this.prisma.dailyLog.findMany({
+        where: {
+          userId,
+          logDate: { gte: monthStart, lte: monthEnd },
+        },
+        include: {
+          meals: { include: { mealItems: true } },
+        },
+      });
+
+      const nutritionData: NutritionData[] = [];
+      let daysWithData = 0;
+
+      for (const log of dailyLogs) {
+        const allMealItems = log.meals.flatMap((m) => m.mealItems);
+        if (allMealItems.length > 0) {
+          nutritionData.push(this.calculateNutritionFromMealItems(allMealItems));
+          daysWithData++;
+        }
+      }
+
+      const avg = this.calculateAverage(nutritionData, daysWithData);
+
+      data.push({
+        label: this.getMonthLabel(monthStart),
+        date: this.formatMonth(monthStart),
+        value: Math.round(avg[metric] * 100) / 100,
+      });
+    }
+
+    const summary = this.calculateMetricSummary(data);
+
+    return {
+      type: TrendType.YEAR,
+      metric,
+      range: {
+        start: this.formatDate(yearStart),
         end: this.formatDate(today),
       },
       data,

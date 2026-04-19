@@ -96,6 +96,8 @@ const FOODS_FIXED = [
     cal: 185, pro: 18, carb: 20, fat: 4.5, fib: 0.8,
     allergens: [],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://vnn-imgs-a1.vgcloud.vn/danviet.mediacdn.vn/2020/6/23/9422452929815248885611441751228032535756800n-15928836781731274871886-crop-15928838303191040780325.jpg?width=0&s=YEMMkktGaCDgRlvptVJ5fQ',
   },
   {
     foodName: 'Phở gà',
@@ -103,6 +105,8 @@ const FOODS_FIXED = [
     cal: 165, pro: 14, carb: 20, fat: 3.5, fib: 0.8,
     allergens: [],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://cdn.zsoft.solutions/poseidon-web/app/media/uploaded-files/200823-cach-lam-pho-ga-buffet-poseidon.jpg',
   },
   {
     foodName: 'Phở bò chín',
@@ -110,6 +114,8 @@ const FOODS_FIXED = [
     cal: 190, pro: 19, carb: 20, fat: 5.0, fib: 0.8,
     allergens: [],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://toinayangivn.wordpress.com/wp-content/uploads/2014/12/cach-nau-pho-bo-2.jpg?w=593',
   },
   {
     foodName: 'Phở cuốn',
@@ -118,6 +124,8 @@ const FOODS_FIXED = [
     allergens: [],
     defaultServingGrams: 300,
     isNew: true,
+    imageUrl:
+      'https://barona.vn/storage/meo-vat/51/cach-lam-pho-cuon-thit-bo.jpg',
   },
   {
     foodName: 'Phở xào',
@@ -125,6 +133,8 @@ const FOODS_FIXED = [
     cal: 310, pro: 20, carb: 38, fat: 9.0, fib: 1.5,
     allergens: ['Trứng'],
     defaultServingGrams: 400,
+    imageUrl:
+      'https://i.ytimg.com/vi/5DZzojIwuG4/maxresdefault.jpg',
   },
 
   // ── BÚN ──────────────────────────────────────────────────────────────────
@@ -134,6 +144,8 @@ const FOODS_FIXED = [
     cal: 195, pro: 17, carb: 22, fat: 5.0, fib: 1.0,
     allergens: [],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://bizweb.dktcdn.net/100/603/550/articles/bun-bo-hue-anh-bia.jpg?v=1759828241660',
   },
   {
     foodName: 'Bún riêu cua',
@@ -141,6 +153,8 @@ const FOODS_FIXED = [
     cal: 185, pro: 14, carb: 22, fat: 5.0, fib: 1.5,
     allergens: ['Cua'],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://cdn.tgdd.vn/2020/08/CookProduct/Untitled-1-1200x676-10.jpg',
   },
   {
     foodName: 'Bún thịt nướng',
@@ -148,6 +162,8 @@ const FOODS_FIXED = [
     cal: 365, pro: 22, carb: 48, fat: 9.5, fib: 2.5,
     allergens: [],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://quangbinhtravel.vn/wp-content/uploads/2025/02/Top-5-quan-bun-thit-nuong-Dong-Hoi-1-1.jpeg',
   },
   {
     foodName: 'Bún mắm',
@@ -155,6 +171,8 @@ const FOODS_FIXED = [
     cal: 350, pro: 20, carb: 45, fat: 10, fib: 2.5,
     allergens: ['Cá', 'Hải sản có vỏ'],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://cdn.eva.vn/upload/4-2023/images/2023-10-27/cach-nau-bun-mam-chuan-vi-mien-tay-ngon-quen-sau-bun-mam-eva-005-1698393035-343-width780height567.jpg',
   },
   {
     foodName: 'Bún đậu mắm tôm',
@@ -163,6 +181,8 @@ const FOODS_FIXED = [
     allergens: ['Tôm', 'Đậu nành'],
     defaultServingGrams: 450,
     isNew: true,
+    imageUrl:
+      'https://dauhomemade.vn/apps/uploads/2021/10/da%CC%A3%CC%86c-bie%CC%A3%CC%82t-1-scaled-e1672555436164.jpg',
   },
   {
     foodName: 'Bún cá',
@@ -170,6 +190,8 @@ const FOODS_FIXED = [
     cal: 210, pro: 20, carb: 25, fat: 4.0, fib: 1.5,
     allergens: ['Cá'],
     defaultServingGrams: 450,
+    imageUrl:
+      'https://cdn.tgdd.vn/Files/2021/09/11/1381884/cach-nau-bun-ca-ha-noi-thom-ngon-chuan-vi-202109111452323215.jpg',
   },
   {
     foodName: 'Bún ốc',
@@ -1198,11 +1220,17 @@ async function runControlledSeed() {
       let food: { id: number };
       if (existing) {
         food = existing;
-        // Update classKey if provided and not yet set
+        const updateData: any = {};
         if ((f as any).classKey && !(existing as any).classKey) {
+          updateData.classKey = (f as any).classKey;
+        }
+        if ((f as any).imageUrl && !(existing as any).imageUrl) {
+          updateData.imageUrl = (f as any).imageUrl;
+        }
+        if (Object.keys(updateData).length > 0) {
           await prisma.food.update({
             where: { id: existing.id },
-            data: { classKey: (f as any).classKey },
+            data: updateData,
           });
         }
       } else {
@@ -1210,6 +1238,7 @@ async function runControlledSeed() {
           data: {
             foodName: f.foodName,
             classKey: (f as any).classKey ?? null,
+            imageUrl: (f as any).imageUrl ?? null,
             categoryId: CATEGORY_ID[f.cat] ?? null,
             defaultServingGrams: f.defaultServingGrams,
             createdAt: (f as any).isNew ? newItemDate : undefined,

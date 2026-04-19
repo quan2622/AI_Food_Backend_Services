@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsIn,
@@ -23,10 +23,12 @@ const FOOD_INGREDIENT_UNITS = [
 export type FoodIngredientUnit = (typeof FOOD_INGREDIENT_UNITS)[number];
 
 export class CreateFoodIngredientInputDto {
+  @Type(() => Number)
   @IsInt({ message: 'ingredientId phải là số nguyên' })
   @Min(1, { message: 'ingredientId phải lớn hơn 0' })
   ingredientId: number;
 
+  @Type(() => Number)
   @IsNumber({}, { message: 'quantity không hợp lệ' })
   @Min(0, { message: 'quantity phải lớn hơn hoặc bằng 0' })
   quantity: number;
@@ -54,14 +56,26 @@ export class CreateFoodWithIngredientsDto {
   imageUrl?: string;
 
   @IsOptional()
+  @Type(() => Number)
   @IsInt({ message: 'categoryId phải là số nguyên' })
   @Min(1, { message: 'categoryId phải lớn hơn 0' })
   categoryId?: number;
 
+  @Type(() => Number)
   @IsNumber({}, { message: 'defaultServingGrams phải là số' })
   @Min(0, { message: 'defaultServingGrams không được âm' })
   defaultServingGrams: number;
 
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      try {
+        return JSON.parse(value);
+      } catch {
+        return value;
+      }
+    }
+    return value;
+  })
   @IsArray({ message: 'ingredients phải là mảng' })
   @ValidateNested({ each: true })
   @Type(() => CreateFoodIngredientInputDto)

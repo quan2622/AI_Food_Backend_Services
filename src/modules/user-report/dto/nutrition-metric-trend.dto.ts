@@ -1,8 +1,10 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
 
 export enum TrendType {
+  DAY = 'day',
   WEEK = 'week',
   MONTH = 'month',
+  YEAR = 'year',
 }
 
 export enum NutritionMetric {
@@ -14,7 +16,7 @@ export enum NutritionMetric {
 }
 
 export class NutritionMetricTrendDto {
-  @IsEnum(TrendType, { message: 'Type phải là week hoặc month' })
+  @IsEnum(TrendType, { message: 'Type phải là day, week, month hoặc year' })
   @IsNotEmpty()
   type: TrendType;
 

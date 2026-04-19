@@ -28,6 +28,7 @@ import { AdminDashboardV2Module } from './modules/admin-dashboard-v2/admin-dashb
 import { UserSubmissionModule } from './modules/user-submission/user-submission.module';
 import { SearchModule } from './modules/search/search.module';
 import { FoodRecognitionModule } from './modules/food-recognition/food-recognition.module';
+import { NutritionNotificationModule } from './modules/nutrition-notification/nutrition-notification.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { FoodRecognitionModule } from './modules/food-recognition/food-recogniti
     UserSubmissionModule,
     SearchModule,
     FoodRecognitionModule,
+    NutritionNotificationModule,
   ],
 
   controllers: [AppController],

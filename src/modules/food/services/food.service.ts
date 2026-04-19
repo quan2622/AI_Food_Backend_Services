@@ -12,6 +12,7 @@ import {
   stripAdminPaginationFilter,
 } from '../../../common/utils/admin-pagination.util';
 import { SearchService } from '../../search/search.service';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import type { CreateFoodDto } from '../dto/create-food.dto.js';
 import {
   type FoodIngredientUnit,
@@ -32,6 +33,7 @@ export class FoodService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly searchService: SearchService,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   private toGrams(quantity: number, unit: FoodIngredientUnit): number {
@@ -39,12 +41,18 @@ export class FoodService {
     return Math.round(quantity * factor * 1000) / 1000;
   }
 
-  create(dto: CreateFoodDto) {
+  async create(dto: CreateFoodDto, image?: Express.Multer.File) {
+    let imageUrl = dto.imageUrl;
+    if (image) {
+      const uploaded = await this.cloudinaryService.uploadFile(image);
+      imageUrl = uploaded.url;
+    }
+
     if (dto.ingredients && dto.ingredients.length > 0) {
       return this.createWithIngredients({
         foodName: dto.foodName,
         description: dto.description,
-        imageUrl: dto.imageUrl,
+        imageUrl,
         categoryId: dto.categoryId,
         defaultServingGrams: dto.defaultServingGrams,
         ingredients: dto.ingredients,
@@ -56,7 +64,7 @@ export class FoodService {
         foodName: dto.foodName,
         description: dto.description,
         categoryId: dto.categoryId ?? null,
-        imageUrl: dto.imageUrl,
+        imageUrl,
         defaultServingGrams: dto.defaultServingGrams,
       },
     });
@@ -224,11 +232,103 @@ export class FoodService {
     return food;
   }
 
-  async update(id: number, dto: UpdateFoodDto) {
+  async findDetail(id: number) {
+    const food = await this.prisma.food.findUnique({
+      where: { id },
+      include: {
+        foodCategory: { select: { id: true, name: true } },
+        foodIngredients: {
+          include: {
+            ingredient: {
+              include: {
+                ingredientNutritions: {
+                  include: {
+                    values: { include: { nutrient: true } },
+                  },
+                  orderBy: { createdAt: 'desc' },
+                  take: 1,
+                },
+              },
+            },
+          },
+          orderBy: { createdAt: 'asc' },
+        },
+        nutritionProfile: {
+          include: {
+            values: { include: { nutrient: true } },
+          },
+        },
+      },
+    });
+
+    if (!food) {
+      throw new NotFoundException(`Food #${id} không tồn tại`);
+    }
+
+    const { nutritionProfile, foodIngredients, ...foodBase } = food;
+
+    const nutritionPer100g = nutritionProfile
+      ? nutritionProfile.values.reduce(
+          (acc, v) => {
+            const name = v.nutrient.name.toLowerCase();
+            if (name === 'protein') acc.protein = v.value;
+            else if (name === 'carbs' || name === 'carbohydrates') acc.carbs = v.value;
+            else if (name === 'fat') acc.fat = v.value;
+            else if (name === 'fiber') acc.fiber = v.value;
+            else if (name === 'calories' || name.includes('calorie')) acc.calories = v.value;
+            return acc;
+          },
+          { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 },
+        )
+      : null;
+
+    const ingredients = foodIngredients.map((fi) => {
+      const latestNutrition = fi.ingredient.ingredientNutritions[0] ?? null;
+      return {
+        id: fi.id,
+        ingredientId: fi.ingredientId,
+        quantityGrams: fi.quantityGrams,
+        ingredient: {
+          id: fi.ingredient.id,
+          name: fi.ingredient.ingredientName,
+          description: fi.ingredient.description,
+          imageUrl: fi.ingredient.imageUrl,
+          nutritionPer100g: latestNutrition
+            ? latestNutrition.values.reduce(
+                (acc, v) => {
+                  const name = v.nutrient.name.toLowerCase();
+                  if (name === 'protein') acc.protein = v.value;
+                  else if (name === 'carbs' || name === 'carbohydrates') acc.carbs = v.value;
+                  else if (name === 'fat') acc.fat = v.value;
+                  else if (name === 'fiber') acc.fiber = v.value;
+                  else if (name === 'calories' || name.includes('calorie')) acc.calories = v.value;
+                  return acc;
+                },
+                { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 },
+              )
+            : null,
+        },
+      };
+    });
+
+    return {
+      ...foodBase,
+      nutritionPer100g,
+      ingredients,
+    };
+  }
+
+  async update(id: number, dto: UpdateFoodDto, image?: Express.Multer.File) {
     const food = await this.prisma.food.findUnique({ where: { id } });
 
     if (!food) {
       throw new NotFoundException(`Food #${id} không tồn tại`);
+    }
+
+    let imageUrl = dto.imageUrl;
+    if (image) {
+      const uploaded = await this.cloudinaryService.uploadFile(image);
+      imageUrl = uploaded.url;
     }
 
     const updated = await this.prisma.food.update({
@@ -239,7 +339,7 @@ export class FoodService {
         ...(dto.categoryId !== undefined && {
           categoryId: dto.categoryId ?? null,
         }),
-        ...(dto.imageUrl !== undefined && { imageUrl: dto.imageUrl }),
+        ...(imageUrl !== undefined && { imageUrl }),
         ...(dto.defaultServingGrams !== undefined && {
           defaultServingGrams: dto.defaultServingGrams ?? null,
         }),

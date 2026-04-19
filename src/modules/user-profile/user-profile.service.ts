@@ -44,6 +44,18 @@ export class UserProfileService {
     return parseFloat((base + offset).toFixed(2));
   }
 
+  private calculateAgeFromBirthDate(birthOfDate: string | Date): number {
+    const birth = new Date(birthOfDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    const dayDiff = today.getDate() - birth.getDate();
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age -= 1;
+    }
+    return age;
+  }
+
   /** TDEE = BMR × hệ số hoạt động */
   private calculateTdee(bmr: number, activityLevel?: string | null): number {
     const factor = activityLevel ? ACTIVITY_FACTORS[activityLevel] : 1.55;
@@ -66,14 +78,31 @@ export class UserProfileService {
       throw new ConflictException(`User #${userId} đã có UserProfile`);
     }
 
+    const birthDateSource =
+      dto.birthOfDate ??
+      (user.dateOfBirth ? user.dateOfBirth.toISOString() : undefined);
+
+    const age = birthDateSource
+      ? this.calculateAgeFromBirthDate(birthDateSource)
+      : dto.age;
+
     const bmi = this.calculateBmi(dto.weight, dto.height);
-    const bmr = this.calculateBmr(dto.weight, dto.height, dto.age, dto.gender);
+    const bmr = this.calculateBmr(dto.weight, dto.height, age ?? 0, dto.gender);
     const tdee = this.calculateTdee(bmr, dto.activityLevel ?? null);
+
+    if (dto.birthOfDate !== undefined) {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
+        },
+      });
+    }
 
     return this.prisma.userProfile.create({
       data: {
         userId,
-        age: dto.age,
+        age: age ?? 0,
         height: dto.height,
         weight: dto.weight,
         gender: dto.gender ?? 'UNDEFINED',
@@ -242,19 +271,40 @@ export class UserProfileService {
 
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
-    const newAge = dto.age ?? profile.age;
     const newGender = dto.gender ?? profile.gender;
     const newActivityLevel: string | null =
       dto.activityLevel ?? profile.activityLevel ?? null;
+
+    const birthDateSource = dto.birthOfDate ? dto.birthOfDate : undefined;
+    const newAge = birthDateSource
+      ? this.calculateAgeFromBirthDate(birthDateSource)
+      : dto.age ?? profile.age;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
     const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
     const tdee = this.calculateTdee(bmr, newActivityLevel);
 
+    if (
+      dto.avatarUrl !== undefined ||
+      dto.fullName !== undefined ||
+      dto.birthOfDate !== undefined
+    ) {
+      await this.prisma.user.update({
+        where: { id: profile.userId },
+        data: {
+          ...(dto.avatarUrl !== undefined && { avatarUrl: dto.avatarUrl }),
+          ...(dto.fullName !== undefined && { fullName: dto.fullName }),
+          ...(dto.birthOfDate !== undefined && {
+            dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
+          }),
+        },
+      });
+    }
+
     return this.prisma.userProfile.update({
       where: { id },
       data: {
-        ...(dto.age != null && { age: dto.age }),
+        ...(dto.age != null && { age: newAge }),
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.gender !== undefined && { gender: dto.gender }),
@@ -298,19 +348,40 @@ export class UserProfileService {
 
     const newWeight = dto.weight ?? profile.weight;
     const newHeight = dto.height ?? profile.height;
-    const newAge = dto.age ?? profile.age;
     const newGender = dto.gender ?? profile.gender;
     const newActivityLevel: string | null =
       dto.activityLevel ?? profile.activityLevel ?? null;
+
+    const birthDateSource = dto.birthOfDate ? dto.birthOfDate : undefined;
+    const newAge = birthDateSource
+      ? this.calculateAgeFromBirthDate(birthDateSource)
+      : dto.age ?? profile.age;
 
     const bmi = this.calculateBmi(newWeight, newHeight);
     const bmr = this.calculateBmr(newWeight, newHeight, newAge, newGender);
     const tdee = this.calculateTdee(bmr, newActivityLevel);
 
+    if (
+      dto.avatarUrl !== undefined ||
+      dto.fullName !== undefined ||
+      dto.birthOfDate !== undefined
+    ) {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          ...(dto.avatarUrl !== undefined && { avatarUrl: dto.avatarUrl }),
+          ...(dto.fullName !== undefined && { fullName: dto.fullName }),
+          ...(dto.birthOfDate !== undefined && {
+            dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
+          }),
+        },
+      });
+    }
+
     return this.prisma.userProfile.update({
       where: { userId },
       data: {
-        ...(dto.age != null && { age: dto.age }),
+        ...(dto.age != null && { age: newAge }),
         ...(dto.height != null && { height: dto.height }),
         ...(dto.weight != null && { weight: dto.weight }),
         ...(dto.gender !== undefined && { gender: dto.gender }),

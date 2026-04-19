@@ -80,6 +80,35 @@ async function bootstrap() {
     esConnected = false;
   }
 
+  // External API status checks
+  // Gemini: chỉ kiểm tra key có được cấu hình — không gọi API để tránh tốn quota khi khởi động
+  const geminiApiKey = process.env.GEMINI_API_KEY ?? '';
+  const geminiStatus = geminiApiKey ? 'configured' : 'not configured (set GEMINI_API_KEY)';
+
+  const recommendationServiceUrl = process.env.RECOMMENDATION_SERVICE_URL ?? '';
+  let recommendationStatus = 'not configured';
+  if (recommendationServiceUrl) {
+    try {
+      const { default: axios } = await import('axios');
+      await axios.get(`${recommendationServiceUrl}/health`, { timeout: 3000 });
+      recommendationStatus = 'connected';
+    } catch {
+      recommendationStatus = 'disconnected';
+    }
+  }
+
+  const aiCoreServiceUrl = process.env.AI_CORE_SERVICE_URL?.replace(/\s*#.*$/, '').trim() ?? '';
+  let aiCoreStatus = 'not configured';
+  if (aiCoreServiceUrl) {
+    try {
+      const { default: axios } = await import('axios');
+      await axios.get(`${aiCoreServiceUrl}/health`, { timeout: 3000 });
+      aiCoreStatus = 'connected';
+    } catch {
+      aiCoreStatus = 'disconnected';
+    }
+  }
+
   const line =
     '====================================================================';
 
@@ -130,6 +159,31 @@ async function bootstrap() {
     logger.log(`||   • Elasticsearch: ${esLabel.padEnd(44)}||`);
   } else {
     logger.error(`||   • Elasticsearch: disconnected${' '.repeat(32)}||`);
+  }
+
+  // External API Status
+  logger.log(
+    '||   EXTERNAL API STATUS                                          ||',
+  );
+
+  if (geminiStatus === 'configured') {
+    logger.log(`||   • Gemini AI   : ${geminiStatus.padEnd(45)}||`);
+  } else {
+    logger.warn(`||   • Gemini AI   : ${geminiStatus.padEnd(45)}||`);
+  }
+
+  const recLabel = recommendationStatus === 'connected' ? 'connected' : recommendationStatus;
+  if (recommendationStatus === 'connected') {
+    logger.log(`||   • Recommend   : ${recLabel.padEnd(45)}||`);
+  } else {
+    logger.warn(`||   • Recommend   : ${recLabel.padEnd(45)}||`);
+  }
+
+  const aiCoreLabel = aiCoreStatus === 'connected' ? 'connected' : aiCoreStatus;
+  if (aiCoreStatus === 'connected') {
+    logger.log(`||   • AI Core     : ${aiCoreLabel.padEnd(45)}||`);
+  } else {
+    logger.warn(`||   • AI Core     : ${aiCoreLabel.padEnd(45)}||`);
   }
 
   logger.log(line);

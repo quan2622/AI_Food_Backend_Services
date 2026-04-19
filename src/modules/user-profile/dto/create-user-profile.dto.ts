@@ -4,16 +4,22 @@ import {
   IsOptional,
   IsPositive,
   IsIn,
+  IsDateString,
   Min,
   Max,
 } from 'class-validator';
 import type { UserProfile } from '../../../generated/prisma/client.js';
 
 export class CreateUserProfileDto {
+  @IsOptional()
   @IsInt({ message: 'Tuổi phải là số nguyên' })
   @Min(1, { message: 'Tuổi tối thiểu là 1' })
   @Max(100, { message: 'Tuổi tối đa là 100' })
-  age: number;
+  age?: number;
+
+  @IsOptional()
+  @IsDateString({}, { message: 'birthOfDate phải là định dạng ngày hợp lệ' })
+  birthOfDate?: string;
 
   @IsNumber({}, { message: 'Chiều cao không hợp lệ' })
   @IsPositive({ message: 'Chiều cao phải là số dương' })

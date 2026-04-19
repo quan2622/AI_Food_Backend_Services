@@ -18,6 +18,7 @@ import type { UpdateUserDto } from './dto/update-user.dto.js';
 import type { UpdatePasswordDto } from './dto/update-password.dto.js';
 import type { UpdateStatusDto } from './dto/update-status.dto.js';
 import { UserPaginationDto } from './dto/user-pagination.dto';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 const SALT_ROUNDS = 10;
 
@@ -27,7 +28,10 @@ const hashPassword: (data: string, saltRounds: number) => Promise<string> = (
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   async create(dto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const existing = await this.prisma.user.findUnique({
@@ -224,6 +228,41 @@ export class UsersService {
 
     const { password: _pw, ...result } = updated;
 
+    return result;
+  }
+
+  async updateMe(
+    id: number,
+    dto: UpdateUserDto,
+    avatar?: Express.Multer.File,
+  ) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException(`User #${id} không tồn tại`);
+
+    if (dto.email && dto.email !== user.email) {
+      const existing = await this.prisma.user.findUnique({
+        where: { email: dto.email },
+      });
+      if (existing) throw new ConflictException('Email đã được sử dụng');
+    }
+
+    let avatarUrl = dto.avatarUrl;
+    if (avatar) {
+      const uploaded = await this.cloudinaryService.uploadFile(avatar);
+      avatarUrl = uploaded.url;
+    }
+
+    const data: Parameters<PrismaService['user']['update']>[0]['data'] = {
+      ...(dto.email != null && { email: dto.email }),
+      ...(dto.fullName != null && { fullName: dto.fullName }),
+      ...(avatarUrl !== undefined && { avatarUrl }),
+      ...(dto.birthOfDate !== undefined && {
+        dateOfBirth: dto.birthOfDate ? new Date(dto.birthOfDate) : null,
+      }),
+    };
+
+    const updated = await this.prisma.user.update({ where: { id }, data });
+    const { password: _pw2, ...result } = updated;
     return result;
   }
 

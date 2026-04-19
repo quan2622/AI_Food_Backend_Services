@@ -2,16 +2,22 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
   HttpCode,
   HttpStatus,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   ParseIntPipe,
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { FoodService } from '../services/food.service.js';
 import { CreateFoodDto } from '../dto/create-food.dto.js';
 import { CreateFoodWithIngredientsDto } from '../dto/create-food-with-ingredients.dto.js';
@@ -28,8 +34,30 @@ export class FoodController {
   @UseGuards(AdminGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createFoodDto: CreateFoodDto) {
-    return this.foodService.create(createFoodDto);
+  @UseInterceptors(
+    FileInterceptor('image', {
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
+  create(
+    @Body() createFoodDto: CreateFoodDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 5 * 1024 * 1024,
+            message: 'Ảnh không được vượt quá 5MB',
+          }),
+          new FileTypeValidator({
+            fileType: /^image\/(jpeg|png|webp)$/,
+          }),
+        ],
+      }),
+    )
+    image?: Express.Multer.File,
+  ) {
+    return this.foodService.create(createFoodDto, image);
   }
 
   @UseGuards(AdminGuard)
@@ -48,11 +76,31 @@ export class FoodController {
 
   @UseGuards(AdminGuard)
   @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      limits: { fileSize: 5 * 1024 * 1024 },
+    }),
+  )
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateFoodDto: UpdateFoodDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        fileIsRequired: false,
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 5 * 1024 * 1024,
+            message: 'Ảnh không được vượt quá 5MB',
+          }),
+          new FileTypeValidator({
+            fileType: /^image\/(jpeg|png|webp)$/,
+          }),
+        ],
+      }),
+    )
+    image?: Express.Multer.File,
   ) {
-    return this.foodService.update(id, updateFoodDto);
+    return this.foodService.update(id, updateFoodDto, image);
   }
 
   @UseGuards(AdminGuard)
@@ -86,6 +134,11 @@ export class FoodController {
       return this.foodService.findByCategoryId(categoryId);
     }
     return this.foodService.findAll();
+  }
+
+  @Get(':id/detail')
+  findDetail(@Param('id', ParseIntPipe) id: number) {
+    return this.foodService.findDetail(id);
   }
 
   @Get(':id')
