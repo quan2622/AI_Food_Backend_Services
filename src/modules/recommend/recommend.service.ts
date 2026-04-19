@@ -25,6 +25,29 @@ export class RecommendService {
       'http://localhost:8081';
   }
 
+  /**
+   * Tự động xác định bữa ăn dựa theo khung giờ Việt Nam (UTC+7):
+   * - Sáng    (BREAKFAST): 06:30 – 08:30
+   * - Trưa   (LUNCH):     11:30 – 13:00
+   * - Tối    (DINNER):    18:00 – 19:30
+   * - Bữa phụ (SNACK):   Ngoài các khung giờ trên
+   */
+  private detectMealType(isoTime?: string): 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK' {
+    const base = isoTime ? new Date(isoTime) : new Date();
+    // Chuyển sang giờ Việt Nam (UTC+7)
+    const vnTime = new Date(base.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
+    const totalMinutes = vnTime.getHours() * 60 + vnTime.getMinutes();
+
+    // 06:30 – 08:30
+    if (totalMinutes >= 390 && totalMinutes < 510) return 'BREAKFAST';
+    // 11:30 – 13:00
+    if (totalMinutes >= 690 && totalMinutes < 780) return 'LUNCH';
+    // 18:00 – 19:30
+    if (totalMinutes >= 1080 && totalMinutes < 1170) return 'DINNER';
+
+    return 'SNACK';
+  }
+
   private handleAxiosError(error: AxiosError, context: string): never {
     if (error.code === 'ECONNREFUSED') {
       this.logger.error(
@@ -90,9 +113,14 @@ export class RecommendService {
   async getRecommendations(
     query: GetRecommendationsQueryDto,
   ): Promise<RecommendationsResponse> {
+    const resolvedMealType = query.meal_type ?? this.detectMealType(query.current_time);
+    this.logger.log(
+      `meal_type: ${query.meal_type ? `'${query.meal_type}' (from client)` : `'${resolvedMealType}' (auto-detected)`}`,
+    );
+
     const params: Record<string, string | number | undefined> = {
       user_id: query.user_id,
-      meal_type: query.meal_type,
+      meal_type: resolvedMealType,
     };
 
     if (query.current_time) params.current_time = query.current_time;
@@ -119,11 +147,16 @@ export class RecommendService {
   async queryRecommendations(
     body: QueryRecommendationsBodyDto,
   ): Promise<RecommendationsResponse> {
+    const resolvedMealType = body.meal_type ?? this.detectMealType(body.current_time);
+    this.logger.log(
+      `meal_type: ${body.meal_type ? `'${body.meal_type}' (from client)` : `'${resolvedMealType}' (auto-detected)`}`,
+    );
+
     try {
       const response = await firstValueFrom(
         this.httpService.post<RecommendationsResponse>(
           `${this.baseUrl}/v1/recommendations/query`,
-          body,
+          { ...body, meal_type: resolvedMealType },
         ),
       );
       return response.data;

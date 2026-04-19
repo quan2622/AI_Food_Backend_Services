@@ -1,6 +1,6 @@
 export class GetRecommendationsQueryDto {
   user_id?: string;
-  meal_type: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
+  meal_type?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
   current_time?: string;
   limit?: number;
   exclude_food_ids?: string;
@@ -9,7 +9,7 @@ export class GetRecommendationsQueryDto {
 
 export class QueryRecommendationsBodyDto {
   user_id?: string;
-  meal_type: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
+  meal_type?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
   current_time?: string;
   limit?: number;
   exclude_food_ids?: number[];
