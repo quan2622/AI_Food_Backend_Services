@@ -28,14 +28,15 @@ export class FoodImageService {
     dto: CreateFoodImageDto,
     image: Express.Multer.File,
   ) {
-    const meal = await this.prisma.meal.findUnique({
-      where: { id: dto.mealId },
-      include: { dailyLog: { select: { userId: true } } },
+    const mealItem = await this.prisma.mealItem.findUnique({
+      where: { id: dto.mealItemId },
+      include: { meal: { include: { dailyLog: { select: { userId: true } } } } },
     });
-    if (!meal) throw new NotFoundException(`Meal #${dto.mealId} không tồn tại`);
-    if (meal.dailyLog.userId !== userId)
+    if (!mealItem)
+      throw new NotFoundException(`MealItem #${dto.mealItemId} không tồn tại`);
+    if (mealItem.meal.dailyLog.userId !== userId)
       throw new ForbiddenException(
-        'Bạn không có quyền thêm ảnh vào bữa ăn này',
+        'Bạn không có quyền thêm ảnh vào món ăn này',
       );
 
     const { url } = await this.cloudinaryService.uploadFile(image);
@@ -43,7 +44,7 @@ export class FoodImageService {
     return this.prisma.foodImage.create({
       data: {
         userId,
-        mealId: dto.mealId,
+        mealItemId: dto.mealItemId,
         imageUrl: url,
         fileName: image.originalname,
         mimeType: image.mimetype,
@@ -58,8 +59,14 @@ export class FoodImageService {
     });
     if (!meal) throw new NotFoundException(`Meal #${mealId} không tồn tại`);
 
-    return this.prisma.foodImage.findMany({
+    const mealItems = await this.prisma.mealItem.findMany({
       where: { mealId },
+      select: { id: true },
+    });
+    const mealItemIds = mealItems.map((mi) => mi.id);
+
+    return this.prisma.foodImage.findMany({
+      where: { mealItemId: { in: mealItemIds } },
       orderBy: { uploadedAt: 'desc' },
     });
   }
@@ -68,11 +75,18 @@ export class FoodImageService {
     const image = await this.prisma.foodImage.findUnique({
       where: { id },
       include: {
-        meal: {
+        mealItem: {
           select: {
             id: true,
-            mealType: true,
-            mealDateTime: true,
+            quantity: true,
+            grams: true,
+            meal: {
+              select: {
+                id: true,
+                mealType: true,
+                mealDateTime: true,
+              },
+            },
           },
         },
       },
@@ -85,11 +99,15 @@ export class FoodImageService {
     const image = await this.prisma.foodImage.findUnique({
       where: { id },
       include: {
-        meal: { include: { dailyLog: { select: { userId: true } } } },
+        mealItem: {
+          include: {
+            meal: { include: { dailyLog: { select: { userId: true } } } },
+          },
+        },
       },
     });
     if (!image) throw new NotFoundException(`FoodImage #${id} không tồn tại`);
-    if (!image.meal || image.meal.dailyLog.userId !== userId)
+    if (!image.mealItem || image.mealItem.meal.dailyLog.userId !== userId)
       throw new ForbiddenException('Bạn không có quyền xóa ảnh này');
 
     await this.prisma.foodImage.delete({ where: { id } });
@@ -109,8 +127,14 @@ export class FoodImageService {
         'Bạn không có quyền xóa ảnh của bữa ăn này',
       );
 
-    const result = await this.prisma.foodImage.deleteMany({
+    const mealItems = await this.prisma.mealItem.findMany({
       where: { mealId },
+      select: { id: true },
+    });
+    const mealItemIds = mealItems.map((mi) => mi.id);
+
+    const result = await this.prisma.foodImage.deleteMany({
+      where: { mealItemId: { in: mealItemIds } },
     });
     return { deletedCount: result.count };
   }
@@ -137,12 +161,20 @@ export class FoodImageService {
           user: {
             select: { id: true, email: true, fullName: true },
           },
-          meal: {
+          mealItem: {
             select: {
               id: true,
-              mealType: true,
-              mealDateTime: true,
-              dailyLogId: true,
+              quantity: true,
+              grams: true,
+              mealId: true,
+              meal: {
+                select: {
+                  id: true,
+                  mealType: true,
+                  mealDateTime: true,
+                  dailyLogId: true,
+                },
+              },
             },
           },
         },
@@ -151,13 +183,13 @@ export class FoodImageService {
       });
 
       const mealTypeMap = await this.allCodeLookup.mapByKeyMaps(
-        rows.map((r) => r.meal?.mealType).filter(Boolean) as string[],
+        rows.map((r) => r.mealItem?.meal?.mealType).filter(Boolean) as string[],
       );
 
       const result = rows.map((r) => ({
         ...r,
-        mealTypeInfo: r.meal?.mealType
-          ? mealTypeMap.get(r.meal.mealType) ?? null
+        mealTypeInfo: r.mealItem?.meal?.mealType
+          ? mealTypeMap.get(r.mealItem.meal.mealType) ?? null
           : null,
       }));
 

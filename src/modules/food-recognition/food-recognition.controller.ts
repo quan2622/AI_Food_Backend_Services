@@ -45,13 +45,13 @@ export class FoodRecognitionController {
     )
     image: Express.Multer.File,
     @Query('model_name') modelName?: string,
-    @Query('meal_id') mealId?: string,
+    @Query('meal_item_id') mealItemId?: string,
   ) {
     return this.foodRecognitionService.predict(
       image,
       user.id,
       modelName,
-      mealId ? parseInt(mealId, 10) : undefined,
+      mealItemId ? parseInt(mealItemId, 10) : undefined,
     );
   }
 

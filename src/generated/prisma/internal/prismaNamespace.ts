@@ -2505,7 +2505,7 @@ export const FoodImageScalarFieldEnum = {
   fileSize: 'fileSize',
   uploadedAt: 'uploadedAt',
   userId: 'userId',
-  mealId: 'mealId'
+  mealItemId: 'mealItemId'
 } as const
 
 export type FoodImageScalarFieldEnum = (typeof FoodImageScalarFieldEnum)[keyof typeof FoodImageScalarFieldEnum]

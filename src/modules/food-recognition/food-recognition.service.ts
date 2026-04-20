@@ -45,7 +45,7 @@ export class FoodRecognitionService {
     file: Express.Multer.File,
     userId: number,
     modelName?: string,
-    mealId?: number,
+    mealItemId?: number,
   ): Promise<PredictionResult> {
     const form = new FormData();
     form.append('file', file.buffer, {
@@ -83,7 +83,7 @@ export class FoodRecognitionService {
       this.prisma.foodImage.create({
         data: {
           userId,
-          mealId: mealId ?? null,
+          mealItemId: mealItemId ?? null,
           imageUrl,
           fileName: file.originalname,
           mimeType: file.mimetype,

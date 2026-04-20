@@ -230,7 +230,6 @@ export type MealWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Meal"> | Date | string
   dailyLog?: Prisma.XOR<Prisma.DailyLogScalarRelationFilter, Prisma.DailyLogWhereInput>
   mealItems?: Prisma.MealItemListRelationFilter
-  foodImages?: Prisma.FoodImageListRelationFilter
 }
 
 export type MealOrderByWithRelationInput = {
@@ -242,7 +241,6 @@ export type MealOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   dailyLog?: Prisma.DailyLogOrderByWithRelationInput
   mealItems?: Prisma.MealItemOrderByRelationAggregateInput
-  foodImages?: Prisma.FoodImageOrderByRelationAggregateInput
 }
 
 export type MealWhereUniqueInput = Prisma.AtLeast<{
@@ -257,7 +255,6 @@ export type MealWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Meal"> | Date | string
   dailyLog?: Prisma.XOR<Prisma.DailyLogScalarRelationFilter, Prisma.DailyLogWhereInput>
   mealItems?: Prisma.MealItemListRelationFilter
-  foodImages?: Prisma.FoodImageListRelationFilter
 }, "id">
 
 export type MealOrderByWithAggregationInput = {
@@ -293,7 +290,6 @@ export type MealCreateInput = {
   updatedAt?: Date | string
   dailyLog: Prisma.DailyLogCreateNestedOneWithoutMealsInput
   mealItems?: Prisma.MealItemCreateNestedManyWithoutMealInput
-  foodImages?: Prisma.FoodImageCreateNestedManyWithoutMealInput
 }
 
 export type MealUncheckedCreateInput = {
@@ -304,7 +300,6 @@ export type MealUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutMealInput
-  foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutMealInput
 }
 
 export type MealUpdateInput = {
@@ -314,7 +309,6 @@ export type MealUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLog?: Prisma.DailyLogUpdateOneRequiredWithoutMealsNestedInput
   mealItems?: Prisma.MealItemUpdateManyWithoutMealNestedInput
-  foodImages?: Prisma.FoodImageUpdateManyWithoutMealNestedInput
 }
 
 export type MealUncheckedUpdateInput = {
@@ -325,7 +319,6 @@ export type MealUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutMealNestedInput
-  foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutMealNestedInput
 }
 
 export type MealCreateManyInput = {
@@ -405,11 +398,6 @@ export type MealScalarRelationFilter = {
   isNot?: Prisma.MealWhereInput
 }
 
-export type MealNullableScalarRelationFilter = {
-  is?: Prisma.MealWhereInput | null
-  isNot?: Prisma.MealWhereInput | null
-}
-
 export type MealCreateNestedManyWithoutDailyLogInput = {
   create?: Prisma.XOR<Prisma.MealCreateWithoutDailyLogInput, Prisma.MealUncheckedCreateWithoutDailyLogInput> | Prisma.MealCreateWithoutDailyLogInput[] | Prisma.MealUncheckedCreateWithoutDailyLogInput[]
   connectOrCreate?: Prisma.MealCreateOrConnectWithoutDailyLogInput | Prisma.MealCreateOrConnectWithoutDailyLogInput[]
@@ -466,29 +454,12 @@ export type MealUpdateOneRequiredWithoutMealItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MealUpdateToOneWithWhereWithoutMealItemsInput, Prisma.MealUpdateWithoutMealItemsInput>, Prisma.MealUncheckedUpdateWithoutMealItemsInput>
 }
 
-export type MealCreateNestedOneWithoutFoodImagesInput = {
-  create?: Prisma.XOR<Prisma.MealCreateWithoutFoodImagesInput, Prisma.MealUncheckedCreateWithoutFoodImagesInput>
-  connectOrCreate?: Prisma.MealCreateOrConnectWithoutFoodImagesInput
-  connect?: Prisma.MealWhereUniqueInput
-}
-
-export type MealUpdateOneWithoutFoodImagesNestedInput = {
-  create?: Prisma.XOR<Prisma.MealCreateWithoutFoodImagesInput, Prisma.MealUncheckedCreateWithoutFoodImagesInput>
-  connectOrCreate?: Prisma.MealCreateOrConnectWithoutFoodImagesInput
-  upsert?: Prisma.MealUpsertWithoutFoodImagesInput
-  disconnect?: Prisma.MealWhereInput | boolean
-  delete?: Prisma.MealWhereInput | boolean
-  connect?: Prisma.MealWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.MealUpdateToOneWithWhereWithoutFoodImagesInput, Prisma.MealUpdateWithoutFoodImagesInput>, Prisma.MealUncheckedUpdateWithoutFoodImagesInput>
-}
-
 export type MealCreateWithoutDailyLogInput = {
   mealType: string
   mealDateTime: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemCreateNestedManyWithoutMealInput
-  foodImages?: Prisma.FoodImageCreateNestedManyWithoutMealInput
 }
 
 export type MealUncheckedCreateWithoutDailyLogInput = {
@@ -498,7 +469,6 @@ export type MealUncheckedCreateWithoutDailyLogInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutMealInput
-  foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutMealInput
 }
 
 export type MealCreateOrConnectWithoutDailyLogInput = {
@@ -545,7 +515,6 @@ export type MealCreateWithoutMealItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLog: Prisma.DailyLogCreateNestedOneWithoutMealsInput
-  foodImages?: Prisma.FoodImageCreateNestedManyWithoutMealInput
 }
 
 export type MealUncheckedCreateWithoutMealItemsInput = {
@@ -555,7 +524,6 @@ export type MealUncheckedCreateWithoutMealItemsInput = {
   dailyLogId: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  foodImages?: Prisma.FoodImageUncheckedCreateNestedManyWithoutMealInput
 }
 
 export type MealCreateOrConnectWithoutMealItemsInput = {
@@ -580,7 +548,6 @@ export type MealUpdateWithoutMealItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLog?: Prisma.DailyLogUpdateOneRequiredWithoutMealsNestedInput
-  foodImages?: Prisma.FoodImageUpdateManyWithoutMealNestedInput
 }
 
 export type MealUncheckedUpdateWithoutMealItemsInput = {
@@ -590,61 +557,6 @@ export type MealUncheckedUpdateWithoutMealItemsInput = {
   dailyLogId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutMealNestedInput
-}
-
-export type MealCreateWithoutFoodImagesInput = {
-  mealType: string
-  mealDateTime: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dailyLog: Prisma.DailyLogCreateNestedOneWithoutMealsInput
-  mealItems?: Prisma.MealItemCreateNestedManyWithoutMealInput
-}
-
-export type MealUncheckedCreateWithoutFoodImagesInput = {
-  id?: number
-  mealType: string
-  mealDateTime: Date | string
-  dailyLogId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  mealItems?: Prisma.MealItemUncheckedCreateNestedManyWithoutMealInput
-}
-
-export type MealCreateOrConnectWithoutFoodImagesInput = {
-  where: Prisma.MealWhereUniqueInput
-  create: Prisma.XOR<Prisma.MealCreateWithoutFoodImagesInput, Prisma.MealUncheckedCreateWithoutFoodImagesInput>
-}
-
-export type MealUpsertWithoutFoodImagesInput = {
-  update: Prisma.XOR<Prisma.MealUpdateWithoutFoodImagesInput, Prisma.MealUncheckedUpdateWithoutFoodImagesInput>
-  create: Prisma.XOR<Prisma.MealCreateWithoutFoodImagesInput, Prisma.MealUncheckedCreateWithoutFoodImagesInput>
-  where?: Prisma.MealWhereInput
-}
-
-export type MealUpdateToOneWithWhereWithoutFoodImagesInput = {
-  where?: Prisma.MealWhereInput
-  data: Prisma.XOR<Prisma.MealUpdateWithoutFoodImagesInput, Prisma.MealUncheckedUpdateWithoutFoodImagesInput>
-}
-
-export type MealUpdateWithoutFoodImagesInput = {
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
-  mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dailyLog?: Prisma.DailyLogUpdateOneRequiredWithoutMealsNestedInput
-  mealItems?: Prisma.MealItemUpdateManyWithoutMealNestedInput
-}
-
-export type MealUncheckedUpdateWithoutFoodImagesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  mealType?: Prisma.StringFieldUpdateOperationsInput | string
-  mealDateTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dailyLogId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutMealNestedInput
 }
 
 export type MealCreateManyDailyLogInput = {
@@ -661,7 +573,6 @@ export type MealUpdateWithoutDailyLogInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUpdateManyWithoutMealNestedInput
-  foodImages?: Prisma.FoodImageUpdateManyWithoutMealNestedInput
 }
 
 export type MealUncheckedUpdateWithoutDailyLogInput = {
@@ -671,7 +582,6 @@ export type MealUncheckedUpdateWithoutDailyLogInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mealItems?: Prisma.MealItemUncheckedUpdateManyWithoutMealNestedInput
-  foodImages?: Prisma.FoodImageUncheckedUpdateManyWithoutMealNestedInput
 }
 
 export type MealUncheckedUpdateManyWithoutDailyLogInput = {
@@ -689,12 +599,10 @@ export type MealUncheckedUpdateManyWithoutDailyLogInput = {
 
 export type MealCountOutputType = {
   mealItems: number
-  foodImages: number
 }
 
 export type MealCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mealItems?: boolean | MealCountOutputTypeCountMealItemsArgs
-  foodImages?: boolean | MealCountOutputTypeCountFoodImagesArgs
 }
 
 /**
@@ -714,13 +622,6 @@ export type MealCountOutputTypeCountMealItemsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.MealItemWhereInput
 }
 
-/**
- * MealCountOutputType without action
- */
-export type MealCountOutputTypeCountFoodImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FoodImageWhereInput
-}
-
 
 export type MealSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -731,7 +632,6 @@ export type MealSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   dailyLog?: boolean | Prisma.DailyLogDefaultArgs<ExtArgs>
   mealItems?: boolean | Prisma.Meal$mealItemsArgs<ExtArgs>
-  foodImages?: boolean | Prisma.Meal$foodImagesArgs<ExtArgs>
   _count?: boolean | Prisma.MealCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["meal"]>
 
@@ -768,7 +668,6 @@ export type MealOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type MealInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   dailyLog?: boolean | Prisma.DailyLogDefaultArgs<ExtArgs>
   mealItems?: boolean | Prisma.Meal$mealItemsArgs<ExtArgs>
-  foodImages?: boolean | Prisma.Meal$foodImagesArgs<ExtArgs>
   _count?: boolean | Prisma.MealCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MealIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -783,7 +682,6 @@ export type $MealPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     dailyLog: Prisma.$DailyLogPayload<ExtArgs>
     mealItems: Prisma.$MealItemPayload<ExtArgs>[]
-    foodImages: Prisma.$FoodImagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1188,7 +1086,6 @@ export interface Prisma__MealClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   dailyLog<T extends Prisma.DailyLogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DailyLogDefaultArgs<ExtArgs>>): Prisma.Prisma__DailyLogClient<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   mealItems<T extends Prisma.Meal$mealItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Meal$mealItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MealItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  foodImages<T extends Prisma.Meal$foodImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Meal$foodImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FoodImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1641,30 +1538,6 @@ export type Meal$mealItemsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.MealItemScalarFieldEnum | Prisma.MealItemScalarFieldEnum[]
-}
-
-/**
- * Meal.foodImages
- */
-export type Meal$foodImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FoodImage
-   */
-  select?: Prisma.FoodImageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FoodImage
-   */
-  omit?: Prisma.FoodImageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FoodImageInclude<ExtArgs> | null
-  where?: Prisma.FoodImageWhereInput
-  orderBy?: Prisma.FoodImageOrderByWithRelationInput | Prisma.FoodImageOrderByWithRelationInput[]
-  cursor?: Prisma.FoodImageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FoodImageScalarFieldEnum | Prisma.FoodImageScalarFieldEnum[]
 }
 
 /**

@@ -401,7 +401,6 @@ model Meal {
   updatedAt    DateTime   @updatedAt
 
   mealItems    MealItem[]
-  foodImages   FoodImage[]
 
   @@map("meals")
 }
@@ -422,20 +421,22 @@ model MealItem {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 
+  foodImages FoodImage[]
+
   @@map("meal_items")
 }
 
 model FoodImage {
-  id         Int      @id @default(autoincrement())
-  imageUrl   String
-  fileName   String?
-  mimeType   String?
-  fileSize   Int?
-  uploadedAt DateTime @default(now())
-  userId     Int
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  mealId     Int?
-  meal       Meal?    @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  id           Int       @id @default(autoincrement())
+  imageUrl     String
+  fileName     String?
+  mimeType     String?
+  fileSize     Int?
+  uploadedAt   DateTime  @default(now())
+  userId       Int
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mealItemId   Int?
+  mealItem     MealItem? @relation(fields: [mealItemId], references: [id], onDelete: Cascade)
 
   @@map("food_images")
 }

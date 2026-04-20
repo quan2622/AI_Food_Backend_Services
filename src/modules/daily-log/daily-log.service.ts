@@ -206,7 +206,17 @@ export class DailyLogService {
           orderBy: { mealDateTime: 'asc' },
           include: {
             mealItems: {
-              include: { food: { select: { foodName: true, imageUrl: true } } },
+              include: {
+                food: { select: { foodName: true, imageUrl: true } },
+                foodImages: {
+                  select: {
+                    id: true,
+                    imageUrl: true,
+                    fileName: true,
+                    uploadedAt: true,
+                  },
+                },
+              },
             },
           },
         },
@@ -234,7 +244,19 @@ export class DailyLogService {
         meals: {
           orderBy: { mealDateTime: 'asc' },
           include: {
-            mealItems: { include: { food: true } },
+            mealItems: {
+              include: {
+                food: true,
+                foodImages: {
+                  select: {
+                    id: true,
+                    imageUrl: true,
+                    fileName: true,
+                    uploadedAt: true,
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -366,7 +388,7 @@ export class DailyLogService {
     });
   }
 
-  /** Lấy DailyLog của user theo ngày cụ thể (YYYY-MM-DD) với đầy đủ meals, mealItems và food */
+  /** Lấy DailyLog của user theo ngày cụ thể (YYYY-MM-DD) với đầy đủ meals, mealItems, food và foodImages */
   async findByDate(userId: number, date: string) {
     const targetDate = new Date(date);
     const logDate = new Date(
@@ -389,6 +411,14 @@ export class DailyLogService {
                   select: {
                     foodName: true,
                     imageUrl: true,
+                  },
+                },
+                foodImages: {
+                  select: {
+                    id: true,
+                    imageUrl: true,
+                    fileName: true,
+                    uploadedAt: true,
                   },
                 },
               },
