@@ -91,6 +91,8 @@ const FOODS_FIXED = [
   // ── PHỞ ──────────────────────────────────────────────────────────────────
   {
     foodName: 'Phở bò tái',
+    imageUrl: 'https://vnn-imgs-a1.vgcloud.vn/danviet.mediacdn.vn/2020/6/23/9422452929815248885611441751228032535756800n-15928836781731274871886-crop-15928838303191040780325.jpg?width=0&s=YEMMkktGaCDgRlvptVJ5fQ',
+    ingredients: ["Thịt bò","Bánh phở","Hành lá","Xương ống","Gừng"],
     classKey: 'Pho',
     cat: 'Phở',
     cal: 185, pro: 18, carb: 20, fat: 4.5, fib: 0.8,
@@ -101,6 +103,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở gà',
+    imageUrl: 'https://cdn.zsoft.solutions/poseidon-web/app/media/uploaded-files/200823-cach-lam-pho-ga-buffet-poseidon.jpg',
+    ingredients: ["Thịt gà","Bánh phở","Hành lá","Gừng","Xương ống"],
     cat: 'Phở',
     cal: 165, pro: 14, carb: 20, fat: 3.5, fib: 0.8,
     allergens: [],
@@ -110,6 +114,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở bò chín',
+    imageUrl: 'https://toinayangivn.wordpress.com/wp-content/uploads/2014/12/cach-nau-pho-bo-2.jpg?w=593',
     cat: 'Phở',
     cal: 190, pro: 19, carb: 20, fat: 5.0, fib: 0.8,
     allergens: [],
@@ -119,6 +124,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở cuốn',
+    imageUrl: 'https://barona.vn/storage/meo-vat/51/cach-lam-pho-cuon-thit-bo.jpg',
+    ingredients: ["Thịt bò","Bánh phở","Rau thơm","Nước mắm","Tỏi"],
     cat: 'Phở',
     cal: 175, pro: 14, carb: 22, fat: 4.0, fib: 1.5,
     allergens: [],
@@ -129,6 +136,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở xào',
+    imageUrl: 'https://i.ytimg.com/vi/5DZzojIwuG4/maxresdefault.jpg',
     cat: 'Phở',
     cal: 310, pro: 20, carb: 38, fat: 9.0, fib: 1.5,
     allergens: ['Trứng'],
@@ -140,6 +148,8 @@ const FOODS_FIXED = [
   // ── BÚN ──────────────────────────────────────────────────────────────────
   {
     foodName: 'Bún bò Huế',
+    imageUrl: 'https://bizweb.dktcdn.net/100/603/550/articles/bun-bo-hue-anh-bia.jpg?v=1759828241660',
+    ingredients: ["Thịt bò","Bún","Sả","Mắm tôm","Xương ống"],
     cat: 'Bún',
     cal: 195, pro: 17, carb: 22, fat: 5.0, fib: 1.0,
     allergens: [],
@@ -149,6 +159,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún riêu cua',
+    imageUrl: 'https://cdn.tgdd.vn/2020/08/CookProduct/Untitled-1-1200x676-10.jpg',
+    ingredients: ["Cua","Bún","Cà chua","Đậu hũ","Hành lá"],
     cat: 'Bún',
     cal: 185, pro: 14, carb: 22, fat: 5.0, fib: 1.5,
     allergens: ['Cua'],
@@ -158,6 +170,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún thịt nướng',
+    imageUrl: 'https://quangbinhtravel.vn/wp-content/uploads/2025/02/Top-5-quan-bun-thit-nuong-Dong-Hoi-1-1.jpeg',
+    ingredients: ["Thịt lợn","Bún","Đậu phộng","Rau thơm","Nước mắm"],
     cat: 'Bún',
     cal: 365, pro: 22, carb: 48, fat: 9.5, fib: 2.5,
     allergens: [],
@@ -167,6 +181,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún mắm',
+    imageUrl: 'https://cdn.eva.vn/upload/4-2023/images/2023-10-27/cach-nau-bun-mam-chuan-vi-mien-tay-ngon-quen-sau-bun-mam-eva-005-1698393035-343-width780height567.jpg',
+    ingredients: ["Cá","Bún","Mực","Tôm","Mắm tôm"],
     cat: 'Bún',
     cal: 350, pro: 20, carb: 45, fat: 10, fib: 2.5,
     allergens: ['Cá', 'Hải sản có vỏ'],
@@ -176,6 +192,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún đậu mắm tôm',
+    imageUrl: 'https://dauhomemade.vn/apps/uploads/2021/10/da%CC%A3%CC%86c-bie%CC%A3%CC%82t-1-scaled-e1672555436164.jpg',
+    ingredients: ["Đậu hũ","Bún","Thịt lợn","Mắm tôm","Chả lụa"],
     cat: 'Bún',
     cal: 310, pro: 16, carb: 38, fat: 10, fib: 2.5,
     allergens: ['Tôm', 'Đậu nành'],
@@ -186,6 +204,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún cá',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2021/09/11/1381884/cach-nau-bun-ca-ha-noi-thom-ngon-chuan-vi-202109111452323215.jpg',
+    ingredients: ["Cá","Bún","Cà chua","Hành lá","Nước mắm"],
     cat: 'Bún',
     cal: 210, pro: 20, carb: 25, fat: 4.0, fib: 1.5,
     allergens: ['Cá'],
@@ -195,6 +215,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún ốc',
+    imageUrl: 'https://buulong.com.vn/wp-content/uploads/2026/03/quan-bun-oc-ngon-ha-noi-4.jpg',
     cat: 'Bún',
     cal: 170, pro: 12, carb: 24, fat: 3.5, fib: 1.2,
     allergens: ['Hải sản có vỏ'],
@@ -204,6 +225,8 @@ const FOODS_FIXED = [
   // ── CỐM / CƠM ────────────────────────────────────────────────────────────
   {
     foodName: 'Cơm tấm sườn bì chả',
+    imageUrl: 'https://nvhphunu.vn/wp-content/uploads/2023/10/com-tam-1.webp',
+    ingredients: ["Gạo tẻ","Thịt lợn","Trứng","Nước mắm","Hành lá"],
     classKey: 'Com tam',
     cat: 'Cơm',
     cal: 420, pro: 28, carb: 48, fat: 12, fib: 2.0,
@@ -212,6 +235,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm tấm chả trứng',
+    imageUrl: 'https://comgatrong.com/wp-content/uploads/2025/05/comsuonchatrung.jpeg',
     cat: 'Cơm',
     cal: 395, pro: 24, carb: 50, fat: 10, fib: 1.8,
     allergens: ['Trứng'],
@@ -220,6 +244,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm chiên dương châu',
+    imageUrl: 'https://www.lottemart.vn/media/catalog/product/cache/0x0/2/2/2202990000000-1.jpg.webp',
+    ingredients: ["Gạo tẻ","Trứng","Lạp xưởng","Tôm khô","Hành lá"],
     cat: 'Cơm',
     cal: 380, pro: 12, carb: 55, fat: 12, fib: 1.5,
     allergens: ['Trứng'],
@@ -227,6 +253,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm gà Hội An',
+    imageUrl: 'https://static.vinwonders.com/production/com-ga-hoi-an-ha-noi-1.jpg',
+    ingredients: ["Thịt gà","Gạo tẻ","Hành tây","Rau thơm","Nước mắm"],
     cat: 'Cơm bowl',
     cal: 440, pro: 22, carb: 62, fat: 12, fib: 2.0,
     allergens: [],
@@ -234,6 +262,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm gà xối mỡ',
+    imageUrl: 'https://file.hstatic.net/200000385717/article/com_ga_xoi_mooo_595935f004c64a898650dc9363b49785.jpg',
+    ingredients: ["Thịt gà","Gạo tẻ","Cà chua","Tỏi","Nước mắm"],
     cat: 'Cơm bowl',
     cal: 450, pro: 24, carb: 55, fat: 15, fib: 1.5,
     allergens: [],
@@ -241,6 +271,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm sườn nướng mật ong',
+    imageUrl: 'https://khachsanhungvuong.com/img_data/images/nh%C3%A0%20h%C3%A0ng/C%C6%A1m%20t%E1%BA%A5m%20s%C6%B0%E1%BB%9Dn%20n%C6%B0%E1%BB%9Bng%20m%E1%BA%ADt%20ong.jpg',
+    ingredients: ["Thịt lợn","Gạo tẻ","Nước mắm","Mật ong","Hành lá"],
     cat: 'Cơm bowl',
     cal: 430, pro: 26, carb: 52, fat: 13, fib: 1.8,
     allergens: [],
@@ -248,6 +280,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm trắng + cá kho tộ',
+    imageUrl: 'https://i.3dmodels.org/uploads/preorder/ca_kho_to/ca_kho_to_1000_0001.jpg',
     cat: 'Cơm',
     cal: 350, pro: 28, carb: 40, fat: 8.0, fib: 1.0,
     allergens: ['Cá'],
@@ -255,6 +288,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cơm trắng + thịt kho trứng',
+    imageUrl: 'https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/484848BGO/anh-mo-ta.png',
     cat: 'Món hầm & kho',
     cal: 390, pro: 24, carb: 42, fat: 13, fib: 0.8,
     allergens: ['Trứng'],
@@ -264,6 +298,8 @@ const FOODS_FIXED = [
   // ── MÌ ───────────────────────────────────────────────────────────────────
   {
     foodName: 'Mì Quảng',
+    imageUrl: 'https://cooponline.vn/tin-tuc/wp-content/uploads/2025/10/mi-quang-mon-dac-san-dam-da-thom-lung-xu-quang.png',
+    ingredients: ["Thịt gà","Bánh phở","Tôm","Đậu phộng","Bánh tráng"],
     cat: 'Mì',
     cal: 310, pro: 16, carb: 42, fat: 8.0, fib: 2.0,
     allergens: ['Gluten', 'Hải sản có vỏ'],
@@ -271,6 +307,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Hủ tiếu Nam Vang',
+    imageUrl: 'https://cooponline.vn/tin-tuc/wp-content/uploads/2025/10/hu-tieu-nam-vang-cong-thuc-nau-chuan-vi-sai-gon-nuoc-dung-ngot-thanh-dam-da-topping.png',
+    ingredients: ["Thịt lợn","Tôm","Bánh phở","Trứng cút","Hành lá"],
     cat: 'Mì',
     cal: 290, pro: 18, carb: 38, fat: 7.5, fib: 1.5,
     allergens: ['Hải sản có vỏ'],
@@ -278,6 +316,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Mì xào hải sản',
+    imageUrl: 'https://congthucgiadinh.com/storage/32/01J2FZRY300D7QSZ40NFK15V9A.jpg',
+    ingredients: ["Mực","Tôm","Bột mì","Cải thảo","Cà rốt"],
     cat: 'Mì',
     cal: 420, pro: 18, carb: 58, fat: 14, fib: 2.0,
     allergens: ['Gluten', 'Hải sản có vỏ', 'Tôm'],
@@ -285,6 +325,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cao lầu Hội An',
+    imageUrl: 'https://fvgtravel.com.vn/uploads/up/root/editor/2025/07/10/15/11/w1230/cao1752113466_1491.jpg',
+    ingredients: ["Thịt lợn","Bánh phở","Rau thơm","Nước mắm","Đậu phộng"],
     cat: 'Mì',
     cal: 340, pro: 18, carb: 46, fat: 9.0, fib: 2.2,
     allergens: ['Hải sản có vỏ'],
@@ -292,6 +334,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Mì vịt tiềm',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2019/07/23/1181315/cach-lam-mi-vit-tiem-mem-ngon-nuoc-dung-thanh-ngot-202203181728083814.jpg',
     cat: 'Mì',
     cal: 350, pro: 22, carb: 40, fat: 11, fib: 1.5,
     allergens: ['Gluten'],
@@ -301,6 +344,8 @@ const FOODS_FIXED = [
   // ── BÁNH MÌ ──────────────────────────────────────────────────────────────
   {
     foodName: 'Bánh mì thịt nguội',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2022/05/18/1433515/cach-lam-banh-mi-thit-nguoi-gion-ngon-hap-dan-nhu-ngoai-hang-202205190020168107.jpg',
+    ingredients: ["Bột mì","Thịt lợn","Chả lụa","Rau thơm","Ớt"],
     classKey: 'Banh mi',
     cat: 'Bánh mì',
     cal: 260, pro: 12, carb: 35, fat: 8.5, fib: 2.0,
@@ -309,6 +354,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh mì chả cá',
+    imageUrl: 'https://saigonesebaguette.vn/wp-content/uploads/2025/09/cha-ca-tu-ca-moi-duoc-lam-thanh-soi-dam-bao-do-tuoi-va-dai-ngon.jpg',
     cat: 'Bánh mì',
     cal: 270, pro: 14, carb: 36, fat: 7.5, fib: 1.8,
     allergens: ['Gluten', 'Cá'],
@@ -316,6 +362,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh mì chảo',
+    imageUrl: 'https://mia.vn/media/uploads/blog-du-lich/top-quan-banh-mi-chao-ngon-nhat-can-tho-diem-mat-9-dia-chi-1649779796.jpg',
     cat: 'Bánh mì',
     cal: 430, pro: 18, carb: 42, fat: 20, fib: 1.5,
     allergens: ['Gluten', 'Trứng'],
@@ -324,6 +371,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh mì gà nướng',
+    imageUrl: 'https://image-cdn.7-eleven.vn/resize?type=webp&width=900&height=900&url=https%3A%2F%2Fcdn.7-eleven.vn%2Fproduction%2Fattachment_v2s%2Ffiles%2F4134_1740468071_original.png%3F1740468071',
     cat: 'Bánh mì',
     cal: 285, pro: 20, carb: 34, fat: 7.5, fib: 2.0,
     allergens: ['Gluten'],
@@ -331,6 +379,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh bao nhân thịt',
+    imageUrl: 'https://static-images.vnncdn.net/files/publish/cach-lam-banh-bao-nhan-thit-don-gian-tai-nha-2f7c6f81c863468bbf28bd23f7b04b68.jpg?width=0&s=Chb_KoBuxImwD__9OHeg4A',
+    ingredients: ["Bột mì","Thịt lợn","Trứng cút","Nấm","Hành tây"],
     cat: 'Dimsum & Bánh',
     cal: 285, pro: 12, carb: 42, fat: 8.0, fib: 1.5,
     allergens: ['Gluten'],
@@ -338,6 +388,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh bao nhân trứng muối',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2022/01/07/1409716/cach-lam-banh-bao-nhan-thit-trung-muoi-ngon-tuyet-hao-202201072100289419.jpg',
     cat: 'Dimsum & Bánh',
     cal: 295, pro: 10, carb: 44, fat: 9.0, fib: 1.2,
     allergens: ['Gluten', 'Trứng'],
@@ -347,6 +398,8 @@ const FOODS_FIXED = [
   // ── GỎI & SALAD ──────────────────────────────────────────────────────────
   {
     foodName: 'Gỏi cuốn tôm thịt',
+    imageUrl: 'https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/4/image/News/Images/2017/03/22/963738/image5_202604141104163040.jpg',
+    ingredients: ["Tôm","Thịt lợn","Bánh tráng","Bún","Rau thơm"],
     classKey: 'Goi cuon',
     cat: 'Nem & Cuốn',
     cal: 95,  pro: 8,  carb: 14, fat: 2.0, fib: 2.5,
@@ -355,6 +408,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Gỏi cuốn chay',
+    imageUrl: 'https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/kien-thuc/cach-lam-goi-cuon-chay/cach-lam-goi-cuon-chay-7.jpg',
+    ingredients: ["Đậu hũ","Bánh tráng","Bún","Rau thơm","Cà rốt"],
     cat: 'Nem & Cuốn',
     cal: 80,  pro: 4,  carb: 14, fat: 1.5, fib: 2.8,
     allergens: [],
@@ -362,6 +417,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Nộm đu đủ bò khô',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2021/08/14/1375232/hoc-cach-lam-mon-nom-bo-kho-thom-ngon-chuan-vi-ngon-pho-co-202201060956067734.jpg',
+    ingredients: ["Thịt bò","Đu đủ","Đậu phộng","Rau thơm","Nước mắm"],
     cat: 'Gỏi & Salad',
     cal: 110, pro: 12, carb: 15, fat: 2.5, fib: 3.0,
     allergens: [],
@@ -369,6 +426,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Gỏi gà bắp cải',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2019/06/20/1174361/cach-lam-goi-ga-xe-phay-bap-cai-dam-vi-don-gian-tai-nha-202205260855059095.jpeg',
+    ingredients: ["Thịt gà","Bắp cải","Hành tây","Rau thơm","Nước mắm"],
     cat: 'Gỏi & Salad',
     cal: 120, pro: 15, carb: 10, fat: 3.5, fib: 2.5,
     allergens: [],
@@ -376,6 +435,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Gỏi ngó sen tôm thịt',
+    imageUrl: 'https://cdn.netspace.edu.vn/images/2018/10/26/cach-lam-goi-ngo-sen-ngon-khong-dung-dua-800.jpg',
+    ingredients: ["Tôm","Thịt lợn","Ngó sen","Nước mắm","Đậu phộng"],
     cat: 'Gỏi & Salad',
     cal: 130, pro: 14, carb: 16, fat: 3.0, fib: 3.5,
     allergens: ['Tôm', 'Đậu phộng'],
@@ -383,6 +444,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Gỏi bưởi tôm thịt',
+    imageUrl: 'https://i.ytimg.com/vi/uyECuIMEHcs/sddefault.jpg',
     cat: 'Gỏi & Salad',
     cal: 115, pro: 11, carb: 15, fat: 2.5, fib: 2.8,
     allergens: ['Tôm', 'Đậu phộng'],
@@ -390,6 +452,7 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Chả cá Lã Vọng',
+    imageUrl: 'https://www.cet.edu.vn/wp-content/uploads/2018/08/cha-ca-la-vong.jpg',
     cat: 'Gỏi & Salad',
     cal: 240, pro: 28, carb: 8, fat: 12, fib: 1.0,
     allergens: ['Cá', 'Mè (vừng)'],
@@ -400,6 +463,8 @@ const FOODS_FIXED = [
   // ── CANH & SÚP ───────────────────────────────────────────────────────────
   {
     foodName: 'Canh chua cá',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/canh_chua_ca_bong_lau_1_7e63517315.jpg',
+    ingredients: ["Cá","Cà chua","Bạc hà","Khóm","Hành lá"],
     cat: 'Canh & Súp',
     cal: 85,  pro: 10, carb: 10, fat: 2.0, fib: 2.8,
     allergens: ['Cá'],
@@ -407,6 +472,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Canh khổ qua dồn thịt',
+    imageUrl: 'https://assets.unileversolutions.com/recipes-v2/247232.jpg',
+    ingredients: ["Thịt lợn","Khổ qua","Hành lá","Nước mắm","Nấm"],
     cat: 'Canh & Súp',
     cal: 90,  pro: 9,  carb: 8,  fat: 3.0, fib: 3.2,
     allergens: [],
@@ -414,6 +481,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Súp bí đỏ',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2019/11/28/1222896/cach-lam-sup-bi-do-kem-tuoi-beo-ngay-chuan-vi-au-tai-nha-202208251727590660.jpg',
+    ingredients: ["Bí đỏ","Sữa","Bơ","Hành tây","Tỏi"],
     cat: 'Canh & Súp',
     cal: 70,  pro: 2,  carb: 14, fat: 1.5, fib: 2.0,
     allergens: [],
@@ -421,6 +490,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Canh rau ngót thịt bằm',
+    imageUrl: 'https://static-images.vnncdn.net/vps_images_publish/000001/000003/2025/6/24/cach-nau-canh-rau-ngot-thit-bam-tai-nha-don-gian-ai-cung-lam-duoc-118182.png?width=0&s=l30SQl5zHj_ekjDrCXeULw',
+    ingredients: ["Thịt lợn","Rau ngót","Nước mắm","Hành lá","Tỏi"],
     cat: 'Canh & Súp',
     cal: 75,  pro: 8,  carb: 7,  fat: 2.5, fib: 2.5,
     allergens: [],
@@ -428,6 +499,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Lẩu thái hải sản',
+    imageUrl: 'https://shop.vietasiafoods.com/media/wysiwyg/Rectangle_31.png',
+    ingredients: ["Tôm","Mực","Ngao (Nghêu)","Sả","Cà chua"],
     cat: 'Lẩu',
     cal: 280, pro: 24, carb: 22, fat: 10, fib: 3.0,
     allergens: ['Tôm', 'Hải sản có vỏ', 'Cá'],
@@ -435,6 +508,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Lẩu bò nhúng dấm',
+    imageUrl: 'https://cdn.eva.vn/upload/3-2023/images/2023-07-05/cach-lam-lau-bo-nhung-dam-ha-noi-nhanh-gon-thom-ngon-chuan-vi-7-1688525274-779-width780height585.jpg',
+    ingredients: ["Thịt bò","Giấm","Sả","Hành tây","Bún"],
     cat: 'Lẩu',
     cal: 320, pro: 30, carb: 18, fat: 14, fib: 2.0,
     allergens: [],
@@ -442,6 +517,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Lẩu mắm miền Tây',
+    imageUrl: 'https://daotaobeptruong.vn/wp-content/uploads/2021/03/cach-nau-lau-mam-don-gian.jpg',
+    ingredients: ["Cá","Mực","Tôm","Mắm tôm","Bún"],
     cat: 'Lẩu',
     cal: 300, pro: 22, carb: 25, fat: 12, fib: 3.5,
     allergens: ['Cá', 'Tôm'],
@@ -451,6 +528,8 @@ const FOODS_FIXED = [
   // ── MÓN NƯỚNG ────────────────────────────────────────────────────────────
   {
     foodName: 'Gà nướng lá chanh',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/ga_nuong_la_chanh_3_bc35af00c0.jpg',
+    ingredients: ["Thịt gà","Lá chanh","Tỏi","Ớt","Nước mắm"],
     cat: 'Món nướng',
     cal: 210, pro: 32, carb: 2,  fat: 8.5, fib: 0.5,
     allergens: [],
@@ -458,6 +537,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Tôm nướng muối ớt',
+    imageUrl: 'https://cdn.netspace.edu.vn/images/2020/05/01/cach-lam-tom-nuong-muoi-ot-ai-cung-ghien-800.jpg',
+    ingredients: ["Tôm","Muối","Ớt","Tỏi","Dầu ăn"],
     cat: 'Món nướng',
     cal: 135, pro: 26, carb: 3,  fat: 2.0, fib: 0.0,
     allergens: ['Tôm'],
@@ -465,6 +546,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Mực nướng sa tế',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2019/03/23/1156454/3-cach-lam-muc-nuong-sa-te-han-quoc-va-chao-thom-ngon-kho-cuong-202110301619224185.jpg',
+    ingredients: ["Mực","Sa tế","Tỏi","Dầu ăn","Hành lá"],
     cat: 'Món nướng',
     cal: 145, pro: 22, carb: 5,  fat: 4.0, fib: 0.5,
     allergens: ['Hải sản có vỏ'],
@@ -472,6 +555,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Sườn nướng mật ong',
+    imageUrl: 'https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2023/09/cach-lam-suon-nuong-mat-ong-thumb.jpg',
+    ingredients: ["Thịt lợn","Mật ong","Nước mắm","Tỏi","Hành lá"],
     cat: 'Món nướng',
     cal: 290, pro: 22, carb: 18, fat: 14, fib: 0.5,
     allergens: [],
@@ -479,6 +564,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cá nướng giấy bạc',
+    imageUrl: 'https://cdn.tgdd.vn/2021/12/CookDish/cach-lam-ca-chim-nuong-giay-bac-don-gian-hap-dan-cho-ca-nha-avt-1200x676.jpg',
+    ingredients: ["Cá","Sả","Hành lá","Ớt","Tỏi"],
     cat: 'Món nướng',
     cal: 180, pro: 26, carb: 3,  fat: 7.0, fib: 1.0,
     allergens: ['Cá'],
@@ -488,6 +575,8 @@ const FOODS_FIXED = [
   // ── MÓN XÀO ──────────────────────────────────────────────────────────────
   {
     foodName: 'Bò lúc lắc',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_bo_luc_lac_rau_cu_qua_8059aaaa3f.jpg',
+    ingredients: ["Thịt bò","Hành tây","Cà chua","Khoai tây","Tỏi"],
     cat: 'Món xào',
     cal: 280, pro: 30, carb: 8,  fat: 14, fib: 1.0,
     allergens: [],
@@ -495,6 +584,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Rau muống xào tỏi',
+    imageUrl: 'https://cdn.tgdd.vn/2020/07/CookProduct/Untitled-2-1200x676-6.jpg',
+    ingredients: ["Rau muống","Tỏi","Dầu ăn","Nước mắm","Muối"],
     cat: 'Món xào',
     cal: 55,  pro: 3,  carb: 8,  fat: 2.0, fib: 3.5,
     allergens: [],
@@ -502,6 +593,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Trứng hấp thịt bằm',
+    imageUrl: 'https://i.ytimg.com/vi/_bEEG58uoR8/maxresdefault.jpg',
+    ingredients: ["Trứng","Thịt lợn","Hành lá","Nước mắm","Nấm"],
     cat: 'Món xào',
     cal: 165, pro: 15, carb: 5,  fat: 10, fib: 0.3,
     allergens: ['Trứng'],
@@ -509,6 +602,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bắp cải xào thịt bò',
+    imageUrl: 'https://cdn11.dienmaycholon.vn/filewebdmclnew/DMCL21/Picture/News/News_expe_15715/15715.png?version=081917',
+    ingredients: ["Thịt bò","Bắp cải","Tỏi","Dầu ăn","Nước mắm"],
     cat: 'Món xào',
     cal: 145, pro: 14, carb: 10, fat: 6.0, fib: 3.0,
     allergens: [],
@@ -516,6 +611,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Đậu phụ xào sả ớt',
+    imageUrl: 'https://cdn.hstatic.net/files/200000700229/article/dau-hu-kho-sa-ot-1_4d22ad760beb494ba1ffc647a1ba1d08.jpg',
+    ingredients: ["Đậu hũ","Sả","Ớt","Dầu ăn","Nước mắm"],
     cat: 'Món xào',
     cal: 120, pro: 8,  carb: 8,  fat: 7.0, fib: 1.5,
     allergens: ['Đậu nành'],
@@ -523,6 +620,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cải thảo xào tôm',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/170671/Originals/goi-y-5-cach-lam-cai-thao-xao-gion-thom-cho-bua-com-ngon-day-du-chat-dinh-duong-4(1).jpg',
+    ingredients: ["Tôm","Cải thảo","Tỏi","Dầu ăn","Hành lá"],
     cat: 'Món xào',
     cal: 100, pro: 10, carb: 6,  fat: 4.0, fib: 2.0,
     allergens: ['Tôm'],
@@ -532,6 +631,8 @@ const FOODS_FIXED = [
   // ── CHÁO ─────────────────────────────────────────────────────────────────
   {
     foodName: 'Cháo gà',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2023_10_16_638330975408711826_chao-ga.jpg',
+    ingredients: ["Gạo tẻ","Thịt gà","Hành lá","Gừng","Tiêu"],
     cat: 'Cháo',
     cal: 120, pro: 14, carb: 18, fat: 2.5, fib: 0.5,
     allergens: [],
@@ -539,6 +640,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cháo đậu xanh',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2018/12/11/1137256/3-cach-nau-chao-dau-xanh-thom-ngon-don-gian-cho-ca-nha-7.jpg',
+    ingredients: ["Gạo tẻ","Đậu xanh","Đường","Nước cốt dừa","Muối"],
     cat: 'Cháo',
     cal: 105, pro: 5,  carb: 20, fat: 1.0, fib: 3.5,
     allergens: [],
@@ -546,6 +649,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cháo lòng',
+    imageUrl: 'https://cdn.tgdd.vn/2022/01/CookDishThumb/cong-thuc-lam-lau-chao-long-vua-thoi-vua-an-vo-cung-hap-dan-thumb-620x620.jpg',
+    ingredients: ["Gạo tẻ","Thịt lợn","Hành lá","Tiêu","Nước mắm"],
     cat: 'Cháo',
     cal: 155, pro: 12, carb: 18, fat: 5.5, fib: 0.8,
     allergens: [],
@@ -553,6 +658,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cháo cá lóc',
+    imageUrl: 'https://i.ytimg.com/vi/8SrK1K5oKBM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBKGq1dYuR9Wofqzkw-keQei-KDQQ',
+    ingredients: ["Gạo tẻ","Cá lóc","Hành lá","Gừng","Nước mắm"],
     cat: 'Cháo',
     cal: 130, pro: 16, carb: 16, fat: 3.0, fib: 0.5,
     allergens: ['Cá'],
@@ -560,6 +667,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cháo bò',
+    imageUrl: 'https://static.vinwonders.com/2022/12/chao-bo-da-nang-4.jpg',
+    ingredients: ["Gạo tẻ","Thịt bò","Hành lá","Gừng","Nước mắm"],
     cat: 'Cháo',
     cal: 140, pro: 14, carb: 17, fat: 4.0, fib: 0.5,
     allergens: [],
@@ -569,6 +678,8 @@ const FOODS_FIXED = [
   // ── BÁNH & XÔI ───────────────────────────────────────────────────────────
   {
     foodName: 'Bánh cuốn nhân thịt',
+    imageUrl: 'https://storage.googleapis.com/onelife-public/blog.onelife.vn/2021/10/cach-lam-banh-cuon-nong-nhan-thit-bam-mon-an-sang-426080617811.jpg',
+    ingredients: ["Bột gạo","Thịt lợn","Nấm","Hành lá","Nước mắm"],
     classKey: 'Banh cuon',
     cat: 'Bánh & Xôi',
     cal: 180, pro: 10, carb: 28, fat: 4.0, fib: 1.0,
@@ -577,6 +688,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Xôi gà',
+    imageUrl: 'https://monngonmoingay.com/wp-content/uploads/2021/12/xoi-ga-dau-xanh-880.jpg',
+    ingredients: ["Gạo nếp","Thịt gà","Hành phi","Mỡ hành","Nước mắm"],
     cat: 'Bánh & Xôi',
     cal: 290, pro: 18, carb: 42, fat: 6.5, fib: 1.8,
     allergens: [],
@@ -584,6 +697,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Xôi xéo',
+    imageUrl: 'https://i-giadinh.vnecdn.net/2024/10/04/Bc6Thnhphm16-1728034310-5421-1728034330.jpg',
+    ingredients: ["Gạo nếp","Đậu xanh","Hành phi","Mỡ gà","Muối"],
     classKey: 'Xoi xeo',
     cat: 'Bánh & Xôi',
     cal: 320, pro: 8,  carb: 58, fat: 7.0, fib: 2.5,
@@ -592,6 +707,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh bèo',
+    imageUrl: 'https://lalago.vn/wp-content/uploads/2025/10/banh-beo-nha-trang-2.jpg',
+    ingredients: ["Bột gạo","Tôm khô","Hành lá","Nước mắm","Mỡ hành"],
     cat: 'Bánh & Xôi',
     cal: 125, pro: 4,  carb: 22, fat: 3.0, fib: 0.8,
     allergens: ['Tôm'],
@@ -599,6 +716,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh tráng nướng',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2017/03/12/960051/cach-lam-banh-trang-nuong-ngon-bang-chao-chong-dinh-tai-nha-202205251048018113.jpg',
+    ingredients: ["Bánh tráng","Trứng","Trứng cút","Hành lá","Tép khô"],
     classKey: 'Banh trang nuong',
     cat: 'Bánh & Xôi',
     cal: 155, pro: 3,  carb: 28, fat: 4,   fib: 1.5,
@@ -607,6 +726,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh ướt',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/187828/Originals/cach-lam-banh-uot-long-ga-1.jpg',
+    ingredients: ["Bột gạo","Chả lụa","Hành lá","Nước mắm","Mỡ hành"],
     cat: 'Bánh & Xôi',
     cal: 130, pro: 4,  carb: 24, fat: 3,   fib: 0.8,
     allergens: ['Tôm'],
@@ -614,6 +735,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh khọt',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/banh_khot_mien_tay_81cb79bfd8.png',
+    ingredients: ["Bột gạo","Tôm","Nước cốt dừa","Hành lá","Nước mắm"],
     classKey: 'Banh khot',
     cat: 'Bánh & Xôi',
     cal: 185, pro: 6,  carb: 22, fat: 8,   fib: 1.0,
@@ -622,6 +745,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh xèo',
+    imageUrl: 'https://daotaobeptruong.vn/wp-content/uploads/2020/01/cach-do-banh-xeo-ngon-gion-lau.jpg',
+    ingredients: ["Bột gạo","Tôm","Thịt lợn","Giá đỗ","Nước cốt dừa"],
     classKey: 'Banh xeo',
     cat: 'Bánh & Xôi',
     cal: 230, pro: 10, carb: 26, fat: 10,  fib: 2.0,
@@ -632,6 +757,8 @@ const FOODS_FIXED = [
   // ── MÓN HẦM & KHO ───────────────────────────────────────────────────────
   {
     foodName: 'Thịt kho tàu',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_nau_thit_kho_tau_mien_bac_f471b2d853.jpg',
+    ingredients: ["Thịt lợn","Trứng","Nước dừa","Nước mắm","Hành lá"],
     cat: 'Món hầm & kho',
     cal: 320, pro: 20, carb: 15, fat: 20, fib: 0.5,
     allergens: ['Trứng'],
@@ -639,6 +766,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cá kho tộ',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_3_24_638468929514110709_10-mon-ca-kho-to-hap-dan.jpg',
+    ingredients: ["Cá","Nước mắm","Đường","Tiêu","Hành lá"],
     classKey: 'Ca kho to',
     cat: 'Món hầm & kho',
     cal: 210, pro: 28, carb: 8,  fat: 8,  fib: 0.5,
@@ -647,6 +776,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bò kho bánh mì',
+    imageUrl: 'https://i.ytimg.com/vi/KFPdOaY3wCg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCbUt_hegCxmV8fQLX3wQ2Fl5B_4A',
+    ingredients: ["Thịt bò","Bột mì","Cà rốt","Sả","Nước dừa"],
     cat: 'Món hầm & kho',
     cal: 350, pro: 26, carb: 30, fat: 14, fib: 3.0,
     allergens: ['Gluten'],
@@ -654,6 +785,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Sườn hầm củ cải',
+    imageUrl: 'https://thitheogiasi.com/upload/baiviet/canhsuonhamcuacaimonngonsuckhoe-9998.jpg',
+    ingredients: ["Thịt lợn","Củ cải trắng","Hành lá","Nước mắm","Tiêu"],
     cat: 'Món hầm & kho',
     cal: 280, pro: 20, carb: 20, fat: 13, fib: 2.5,
     allergens: [],
@@ -663,6 +796,8 @@ const FOODS_FIXED = [
   // ── MÓN CHIÊN ────────────────────────────────────────────────────────────
   {
     foodName: 'Nem rán (chả giò)',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2020/02/11/1235793/chi-dung-chia-se-cach-lam-mon-nem-ran-dung-kieu-mien-bac-202203011207287143.jpg',
+    ingredients: ["Thịt lợn","Bánh tráng","Trứng","Nấm","Hành tây"],
     cat: 'Nem & Cuốn',
     cal: 220, pro: 8,  carb: 22, fat: 11, fib: 1.5,
     allergens: ['Gluten', 'Trứng'],
@@ -670,6 +805,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Chả giò hải sản',
+    imageUrl: 'https://cooponline.vn/tin-tuc/wp-content/uploads/2025/10/cha-gio-hai-san-cong-thuc-lam-mon-khai-vi-gion-rum-thom-ngon-dam-vi-bien.png',
+    ingredients: ["Tôm","Mực","Bánh tráng","Trứng","Hành tây"],
     cat: 'Nem & Cuốn',
     cal: 235, pro: 10, carb: 22, fat: 12, fib: 1.2,
     allergens: ['Gluten', 'Tôm', 'Hải sản có vỏ'],
@@ -677,6 +814,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Tôm chiên giòn',
+    imageUrl: 'https://i.ytimg.com/vi/2nT9_j7srz8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLC2u46GosDuevcLNVmW8-mt-al8mw',
+    ingredients: ["Tôm","Bột chiên giòn","Trứng","Dầu ăn","Tương ớt"],
     cat: 'Món chiên',
     cal: 250, pro: 20, carb: 16, fat: 12, fib: 0.5,
     allergens: ['Tôm', 'Gluten', 'Trứng'],
@@ -684,6 +823,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Đậu hũ chiên',
+    imageUrl: 'https://cdn.tgdd.vn/2021/05/CookProduct/thumbcmscn-1200x676-3.jpg',
+    ingredients: ["Đậu hũ","Dầu ăn","Nước mắm","Hành lá","Cà chua"],
     cat: 'Món chiên',
     cal: 180, pro: 10, carb: 8,  fat: 12, fib: 0.8,
     allergens: ['Đậu nành'],
@@ -693,6 +834,8 @@ const FOODS_FIXED = [
   // ── CHÈ & TRÁNG MIỆNG ────────────────────────────────────────────────────
   {
     foodName: 'Chè đậu đỏ',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/cach_nau_che_dau_do_nhanh_mem_166945_2_c470d072e4.jpg',
+    ingredients: ["Đậu đỏ","Đường","Nước cốt dừa","Bột năng","Dừa nạo"],
     cat: 'Chè & Tráng miệng',
     cal: 145, pro: 4,  carb: 30, fat: 1.5, fib: 4.0,
     allergens: [],
@@ -700,6 +843,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Chè trôi nước',
+    imageUrl: 'https://file.hstatic.net/200000721249/file/cach_lam_che_troi_nuoc_truyen_thong_cdce03913e29486ea04199f58dcdd017.jpg',
+    ingredients: ["Bột nếp","Đậu xanh","Đường","Gừng","Nước cốt dừa"],
     cat: 'Chè & Tráng miệng',
     cal: 195, pro: 3,  carb: 38, fat: 4.5, fib: 2.0,
     allergens: [],
@@ -707,6 +852,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Chè bắp',
+    imageUrl: 'https://cdn.tgdd.vn/2021/09/CookProduct/1-1200x676-11.jpg',
+    ingredients: ["Bắp","Đường","Nước cốt dừa","Bột năng","Lá dứa"],
     cat: 'Chè & Tráng miệng',
     cal: 130, pro: 2,  carb: 28, fat: 1.0, fib: 1.5,
     allergens: ['Sữa'],
@@ -714,6 +861,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Chè thái',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_1_24_638416951527681371_cach-lam-che-thai.png',
+    ingredients: ["Sầu riêng","Sữa","Đường","Bột năng","Nước cốt dừa"],
     cat: 'Chè & Tráng miệng',
     cal: 220, pro: 3,  carb: 42, fat: 5.0, fib: 2.5,
     allergens: ['Sữa'],
@@ -721,6 +870,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh tráng trộn',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/cach_lam_banh_trang_tron_tac_2_6efea7dc72.png',
+    ingredients: ["Bánh tráng","Khô bò","Trứng cút","Tép khô","Rau răm"],
     cat: 'Chè & Tráng miệng',
     cal: 195, pro: 5,  carb: 32, fat: 6.5, fib: 2.0,
     allergens: ['Tôm'],
@@ -728,6 +879,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Dưa hấu & trái cây',
+    imageUrl: 'https://iv1cdn.vnecdn.net/vnexpress/images/web/2015/06/22/1106089627/lam-dia-dung-trai-cay-tu-qua-dua-hau-1434971206.jpg?w=680&h=0&q=100&dpr=2&fit=crop&s=KUii7KPJLDZ25G6Pf-quTw',
+    ingredients: ["Dưa hấu","Trái cây khác","Đường","Sữa","Đá"],
     cat: 'Chè & Tráng miệng',
     cal: 45,  pro: 1,  carb: 11, fat: 0.2, fib: 1.2,
     allergens: [],
@@ -735,6 +888,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh flan',
+    imageUrl: 'https://monngonmoingay.com/wp-content/uploads/2024/08/cach-lam-banh-flan-bang-noi-chien-khong-dau-1-1.jpg',
+    ingredients: ["Trứng","Sữa","Đường","Cà phê","Vani"],
     cat: 'Chè & Tráng miệng',
     cal: 150, pro: 5,  carb: 22, fat: 5.5, fib: 0.2,
     allergens: ['Trứng', 'Sữa'],
@@ -744,6 +899,8 @@ const FOODS_FIXED = [
   // ── NƯỚC UỐNG ────────────────────────────────────────────────────────────
   {
     foodName: 'Sinh tố bơ',
+    imageUrl: 'https://cdn.tgdd.vn/Files/2017/10/04/1030185/cach-lam-sinh-to-bo-ngon-don-gian-khong-bi-dang-202111031415543158.jpg',
+    ingredients: ["Bơ","Sữa","Đường","Đá","Sữa đặc"],
     cat: 'Nước uống',
     cal: 185, pro: 3,  carb: 15, fat: 13, fib: 5.0,
     allergens: ['Sữa'],
@@ -751,6 +908,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Nước mía',
+    imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/nuoc_mia_de_tu_lanh_duoc_bao_lau_8a6419e8f6.jpg',
+    ingredients: ["Mía","Tắc","Đá","Đường","Muối"],
     cat: 'Nước uống',
     cal: 75,  pro: 0.5,carb: 18, fat: 0.2, fib: 0.3,
     allergens: [],
@@ -758,6 +917,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Trà sữa trân châu',
+    imageUrl: 'https://www.cet.edu.vn/wp-content/uploads/2018/04/tra-sua-tu-lam.jpg',
+    ingredients: ["Trà","Sữa","Trân châu","Đường","Đá"],
     cat: 'Nước uống',
     cal: 280, pro: 4,  carb: 52, fat: 6.5, fib: 0.5,
     allergens: ['Sữa', 'Gluten'],
@@ -765,6 +926,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cà phê sữa đá',
+    imageUrl: 'https://cdn.tgdd.vn/2020/07/CookProduct/ava-1200x676-7.jpg',
+    ingredients: ["Cà phê","Sữa đặc","Đá","Đường","Nước sôi"],
     cat: 'Nước uống',
     cal: 120, pro: 2,  carb: 18, fat: 4.5, fib: 0.0,
     allergens: ['Sữa'],
@@ -772,6 +935,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Nước dừa tươi',
+    imageUrl: 'https://cdn.tgdd.vn/2021/09/CookDish/mach-ban-cach-bao-quan-nuoc-dua-dua-tuoi-got-vo-va-dua-chua-avt-1200x676.jpg',
+    ingredients: ["Dừa","Đường","Đá","Nước cốt dừa","Muối"],
     cat: 'Nước uống',
     cal: 45,  pro: 0.8,carb: 9,  fat: 0.5, fib: 1.0,
     allergens: [],
@@ -781,6 +946,8 @@ const FOODS_FIXED = [
   // ── MÓN MỚI (isNew) ──────────────────────────────────────────────────────
   {
     foodName: 'Bún hải sản Phú Quốc',
+    imageUrl: 'https://mms.img.susercontent.com/vn-11134513-7r98o-lsvbedbdg3wk52@resize_ss1242x600!@crop_w1242_h600_cT',
+    ingredients: ["Mực","Tôm","Bún","Cà chua","Sả"],
     cat: 'Bún',
     cal: 260, pro: 22, carb: 28, fat: 7.0, fib: 2.0,
     allergens: ['Tôm', 'Hải sản có vỏ', 'Cá'],
@@ -789,6 +956,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bánh căn Phan Rang',
+    imageUrl: 'https://static.vinwonders.com/production/banh-canh-phan-rang-7.jpg',
+    ingredients: ["Bột gạo","Trứng","Tôm","Nước mắm","Hành lá"],
     cat: 'Dimsum & Bánh',
     cal: 200, pro: 8,  carb: 30, fat: 6.0, fib: 1.0,
     allergens: ['Trứng', 'Tôm'],
@@ -797,6 +966,8 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Cháo hến Huế',
+    imageUrl: 'https://nethue.com.vn/uploaded/san%20pham/chao%20hen.jpg',
+    ingredients: ["Gạo tẻ","Hến","Hành lá","Nước mắm","Rau răm"],
     cat: 'Cháo',
     cal: 125, pro: 12, carb: 16, fat: 3.0, fib: 0.8,
     allergens: ['Hải sản có vỏ'],
@@ -1270,48 +1441,14 @@ async function runControlledSeed() {
     console.log('\nPhase 3: Ingredient allergen links...');
 
     // Create one ingredient per allergen type, then link to relevant foods
-    const INGREDIENT_CATALOG: { name: string; imageUrl: string | null }[] = [
-      {
-        name: 'Trứng',
-        imageUrl: 'https://cdn-www.vinid.net/1e221266-shutterstock_113786020-1.jpg',
-      },
-      {
-        name: 'Hải sản có vỏ',
-        imageUrl: 'https://bizweb.dktcdn.net/100/308/217/files/ngeu-so-oc-2658fd77-40c5-4180-a570-c2d5feae6c14.png?v=1532577721623',
-      },
-      {
-        name: 'Cá',
-        imageUrl: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/2024_3_25_638469367754094619_ca-song.jpg',
-      },
-      {
-        name: 'Gluten',
-        imageUrl: 'https://chefjob.vn/wp-content/uploads/2020/03/gluten-la-gi.jpg',
-      },
-      {
-        name: 'Sữa',
-        imageUrl: 'https://file.hstatic.net/1000276446/file/20200516_090815_108358_sua.max-800x800_3c3ab99581d1422bb25ae9a153a15706_grande.jpg',
-      },
-      {
-        name: 'Đậu phộng',
-        imageUrl: 'https://hatgiongphuongnam.com/asset/upload/image/hat-giong-dau-phong_(2).jpg?v=20190410',
-      },
-      {
-        name: 'Tôm',
-        imageUrl: 'https://product.hstatic.net/1000182631/product/resize_anh-5273-8_90c0dbcc949944738551635fe608e950.png',
-      },
-      {
-        name: 'Cua',
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Blue_crab_on_market_in_Piraeus_-_Callinectes_sapidus_Rathbun_20020819-317.jpg',
-      },
-      {
-        name: 'Mè (vừng)',
-        imageUrl: 'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2023/9/26/cong-dung-tuyet-voi-cua-hat-vung-doi-voi-suc-khoe-169570229736928962296.jpeg',
-      },
-      {
-        name: 'Đậu nành',
-        imageUrl: 'https://file.hstatic.net/200000700229/article/lam-sua-dau-nanh-edamame-1_ee4d70ee58ec4f82a7f56ce24e9d8ed1.jpg',
-      },
-    ];
+    const ingredientsPath = require('path').join(__dirname, '../../../../ingredients_output.json');
+    let INGREDIENT_CATALOG: { name: string; imageUrl: string | null }[] = [];
+    if (require('fs').existsSync(ingredientsPath)) {
+      const data = JSON.parse(require('fs').readFileSync(ingredientsPath, 'utf8'));
+      INGREDIENT_CATALOG = data.map((x: any) => ({ name: x.ingredientName, imageUrl: x.imageUrl || null }));
+    } else {
+      console.warn("ingredients_output.json not found! Skipping extended ingredients.");
+    }
 
     const INGREDIENT_ID: Record<string, number> = {};
     for (const ing of INGREDIENT_CATALOG) {
@@ -1322,9 +1459,11 @@ async function runControlledSeed() {
         existing = await prisma.ingredient.create({
           data: { ingredientName: ing.name, imageUrl: ing.imageUrl },
         });
-        await prisma.ingredientAllergen.create({
-          data: { ingredientId: existing.id, allergenId: ALLERGEN_ID[ing.name] },
-        });
+        if (ALLERGEN_ID[ing.name]) {
+            await prisma.ingredientAllergen.create({
+              data: { ingredientId: existing.id, allergenId: ALLERGEN_ID[ing.name] },
+            });
+          }
       } else {
         await prisma.ingredient.update({
           where: { id: existing.id },
@@ -1401,7 +1540,8 @@ async function runControlledSeed() {
     for (const f of FOODS_FIXED) {
       const foodId = FOOD_ID[f.foodName];
       if (!foodId) continue;
-      for (const allergenName of f.allergens) {
+      const allIngs = [...new Set([...(f.allergens || []), ...((f as any).ingredients || [])])];
+      for (const allergenName of allIngs) {
         const ingId = INGREDIENT_ID[allergenName];
         if (!ingId) continue;
         const exists = await prisma.foodIngredient.findFirst({
