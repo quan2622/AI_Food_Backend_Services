@@ -15,6 +15,7 @@ import {
 import { NutritionGoalService } from './nutrition-goal.service';
 import { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
 import { UpdateNutritionGoalDto } from './dto/update-nutrition-goal.dto.js';
+import { SmartCreateNutritionGoalDto } from './dto/smart-create-nutrition-goal.dto.js';
 import { User } from 'src/common/decorators';
 import { AdminGuard } from '@/guards/admin.guard';
 import { BulkDeleteNutritionGoalDto } from './dto/bulk-delete-nutrition-goal.dto.js';
@@ -30,6 +31,15 @@ export class NutritionGoalController {
     @Body() createNutritionGoalDto: CreateNutritionGoalDto,
   ) {
     return this.nutritionGoalService.create(user.id, createNutritionGoalDto);
+  }
+
+  @Post('smart')
+  @HttpCode(HttpStatus.CREATED)
+  smartCreate(
+    @User() user: { id: number },
+    @Body() dto: SmartCreateNutritionGoalDto,
+  ) {
+    return this.nutritionGoalService.smartCreate(user.id, dto);
   }
 
   @UseGuards(AdminGuard)

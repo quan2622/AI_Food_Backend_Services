@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -12,7 +13,32 @@ import {
 } from '../../common/utils/admin-pagination.util';
 import type { CreateNutritionGoalDto } from './dto/create-nutrition-goal.dto.js';
 import type { UpdateNutritionGoalDto } from './dto/update-nutrition-goal.dto.js';
-import { NutritionGoalStatus } from '@/generated/prisma/enums';
+import type { SmartCreateNutritionGoalDto } from './dto/smart-create-nutrition-goal.dto.js';
+import { GoalType, GenderType, NutritionGoalStatus } from '@/generated/prisma/enums';
+
+// ─── Hằng số tính toán ───────────────────────────────────────────────────────
+const KCAL_PER_KG = 7700;
+const MIN_DAYS = 30;
+const MAX_DAILY_DELTA_KCAL = 750; // tối đa cho GOAL_STRICT
+const SAFE_DAILY_DELTA_KCAL = 500; // tối đa cho GOAL_LOSS / GOAL_GAIN
+const MIN_CALORIES_MALE = 1500;
+const MIN_CALORIES_FEMALE = 1200;
+
+const ACTIVITY_FACTORS: Record<string, number> = {
+  ACT_SEDENTARY: 1.2,
+  ACT_LIGHT: 1.375,
+  ACT_MODERATE: 1.55,
+  ACT_VERY: 1.725,
+  ACT_SUPER: 1.9,
+};
+
+// Tỉ lệ macro theo goalType (protein%, carbs%, fat%, fiber_g)
+const MACRO_RATIOS: Record<GoalType, { protein: number; carbs: number; fat: number; fiber: number }> = {
+  [GoalType.GOAL_LOSS]:     { protein: 0.30, carbs: 0.40, fat: 0.30, fiber: 25 },
+  [GoalType.GOAL_GAIN]:     { protein: 0.25, carbs: 0.50, fat: 0.25, fiber: 30 },
+  [GoalType.GOAL_MAINTAIN]: { protein: 0.25, carbs: 0.50, fat: 0.25, fiber: 28 },
+  [GoalType.GOAL_STRICT]:   { protein: 0.35, carbs: 0.30, fat: 0.35, fiber: 20 },
+};
 
 // Type cho History Goal (limited fields)
 type NutritionGoalHistoryItem = {
@@ -294,11 +320,18 @@ export class NutritionGoalService {
       return { current: null, history: [] };
     }
 
-    // Goal mới nhất là current
-    const [currentGoal, ...historyGoals] = goals;
+    // Current = goal đang ONGOING hoặc PAUSED mới nhất
+    const activeStatuses: string[] = [
+      NutritionGoalStatus.NUTR_GOAL_ONGOING,
+      NutritionGoalStatus.NUTR_GOAL_PAUSED,
+    ];
+    const currentGoal = goals.find((g) => activeStatuses.includes(g.status)) ?? null;
+    const historyGoals = goals.filter((g) => g !== currentGoal);
 
     // Enrich current goal (full info)
-    const [currentEnriched] = await this.enrichGoalType([currentGoal]);
+    const currentEnriched = currentGoal
+      ? (await this.enrichGoalType([currentGoal]))[0]
+      : null;
 
     // Enrich history goals (limited fields)
     const historyEnriched = await this.enrichHistoryGoals(historyGoals);
@@ -365,6 +398,10 @@ export class NutritionGoalService {
       throw new NotFoundException(`NutritionGoal #${id} không tồn tại`);
     }
 
+    const autoSetEndDate =
+      dto.status === NutritionGoalStatus.NUTR_GOAL_COMPLETED ||
+      dto.status === NutritionGoalStatus.NUTR_GOAL_FAILED;
+
     return this.prisma.nutritionGoal.update({
       where: { id },
       data: {
@@ -387,7 +424,13 @@ export class NutritionGoalService {
         }),
 
         ...(dto.startDate != null && { startDate: new Date(dto.startDate) }),
-        ...(dto.endDate != null && { endDate: new Date(dto.endDate) }),
+        // Nếu COMPLETED hoặc FAILED, tự động cập nhật endDate = hôm nay
+        // Nếu không, dùng endDate từ dto (nếu có)
+        endDate: autoSetEndDate
+          ? new Date()
+          : dto.endDate != null
+            ? new Date(dto.endDate)
+            : undefined,
         ...(dto.status != null && { status: dto.status as any }),
       },
     });
@@ -420,5 +463,98 @@ export class NutritionGoalService {
     });
 
     return { deletedCount: result.count };
+  }
+
+  // ─── Smart Create ─────────────────────────────────────────────────────────
+
+  async smartCreate(userId: number, dto: SmartCreateNutritionGoalDto) {
+    // 1. Lấy UserProfile
+    const profile = await this.prisma.userProfile.findUnique({
+      where: { userId },
+    });
+    if (!profile) {
+      throw new BadRequestException(
+        'Bạn cần tạo hồ sơ cá nhân trước khi đặt mục tiêu',
+      );
+    }
+
+    // 2. Tính ngày
+    const startDate = new Date();
+    const endDate = new Date(dto.endDate);
+    const days = Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+    if (days < MIN_DAYS) {
+      throw new BadRequestException(
+        `Thời gian mục tiêu phải ít nhất ${MIN_DAYS} ngày`,
+      );
+    }
+
+    // 3. Tính BMR theo Mifflin-St Jeor từ profile (đã lưu sẵn)
+    // Dùng luôn bmr/tdee từ profile để nhất quán với dữ liệu hiện có
+    const tdee = profile.tdee;
+
+    // 4. Tính targetCalories theo goalType
+    const goalType = dto.goalType as GoalType;
+    let targetCalories: number;
+
+    if (goalType === GoalType.GOAL_MAINTAIN) {
+      targetCalories = tdee;
+    } else {
+      if (dto.targetWeight == null) {
+        throw new BadRequestException(
+          'Cân nặng mục tiêu không được để trống với loại mục tiêu này',
+        );
+      }
+      const weightDiff = Math.abs(profile.weight - dto.targetWeight);
+      const dailyDelta = (KCAL_PER_KG * weightDiff) / days;
+
+      const maxDelta =
+        goalType === GoalType.GOAL_STRICT
+          ? MAX_DAILY_DELTA_KCAL
+          : SAFE_DAILY_DELTA_KCAL;
+
+      if (dailyDelta > maxDelta) {
+        const minDays = Math.ceil((KCAL_PER_KG * weightDiff) / maxDelta);
+        throw new BadRequestException(
+          `Mục tiêu quá nhanh, cần ít nhất ${minDays} ngày để đạt mục tiêu an toàn`,
+        );
+      }
+
+      targetCalories =
+        goalType === GoalType.GOAL_GAIN
+          ? tdee + dailyDelta
+          : tdee - dailyDelta;
+    }
+
+    // 5. Clamp calories tối thiểu an toàn
+    const minCalories =
+      profile.gender === GenderType.MALE ? MIN_CALORIES_MALE : MIN_CALORIES_FEMALE;
+    targetCalories = Math.max(Math.round(targetCalories), minCalories);
+
+    // 6. Tính macro từ tỉ lệ theo goalType
+    const ratio = MACRO_RATIOS[goalType];
+    // Protein & Carbs: 4 kcal/g — Fat: 9 kcal/g
+    const targetProtein = Math.round((targetCalories * ratio.protein) / 4);
+    const targetCarbs = Math.round((targetCalories * ratio.carbs) / 4);
+    const targetFat = Math.round((targetCalories * ratio.fat) / 9);
+    const targetFiber = ratio.fiber;
+
+    // 7. Tạo goal
+    return this.prisma.nutritionGoal.create({
+      data: {
+        userId,
+        goalType,
+        targetWeight: dto.targetWeight ?? null,
+        targetCalories,
+        targetProtein,
+        targetCarbs,
+        targetFat,
+        targetFiber,
+        status: NutritionGoalStatus.NUTR_GOAL_ONGOING,
+        startDate,
+        endDate,
+      },
+    });
   }
 }

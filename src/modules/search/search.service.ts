@@ -297,7 +297,6 @@ export class SearchService implements OnModuleInit {
           multi_match: {
             query,
             fields: ['foodName^3', 'description', 'categoryName'],
-            fuzziness: 'AUTO',
           },
         },
         highlight: {
@@ -329,7 +328,6 @@ export class SearchService implements OnModuleInit {
           multi_match: {
             query,
             fields: ['ingredientName^3', 'description', 'allergenNames'],
-            fuzziness: 'AUTO',
           },
         },
         highlight: {

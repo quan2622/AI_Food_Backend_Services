@@ -222,12 +222,14 @@ export class DailyLogService {
       return this.finalizeDailyLogResponse(base);
     }
 
-    const newLog = await this.prisma.dailyLog.create({
-      data: {
+    const newLog = await this.prisma.dailyLog.upsert({
+      where: { userId_logDate: { userId, logDate } },
+      create: {
         userId,
         logDate,
         status: StatusType.STATUS_BELOW,
       },
+      update: {},
       include: {
         meals: {
           orderBy: { mealDateTime: 'asc' },
