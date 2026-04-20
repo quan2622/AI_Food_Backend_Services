@@ -18,9 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed:allcode": "npm run build && node dist/src/seed/allcode.seed.js",
-    "seed:controlled": "npm run build && node dist/src/seed/controlled.seed.js",
-    "seed:controlled:reset": "npm run build && node dist/src/seed/controlled.seed.reset.js"
+    "seed:allcode": "npm run build && node dist/seed/allcode.seed.js",
+    "seed:controlled": "npm run build && node dist/seed/controlled.seed.js",
+    "seed:controlled:reset": "npm run build && node dist/seed/controlled.seed.reset.js"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.19.1",

@@ -1320,7 +1320,7 @@ async function runControlledSeed() {
         status: true,
       },
     });
-    console.log('Phase 0 done — admin user seeded (admin@admin.com / 123456)');
+    console.log('Phase 0 done — admin user seeded (admin@gmail.com / 123456)');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 1: Master Data
