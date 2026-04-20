@@ -66,14 +66,13 @@ async function runReset() {
     console.log('  Users deleted');
 
     // 2. Delete food-related data (FoodIngredient → IngredientAllergen → Ingredient)
-    const seedIngredientNames = [
-      'Egg ingredient (seed)',
-      'Shellfish ingredient (seed)',
-      'Fish ingredient (seed)',
-      'Gluten ingredient (seed)',
-      'Dairy ingredient (seed)',
-      'Peanut ingredient (seed)',
-    ];
+    const ingredientsPath = require('path').join(process.cwd(), 'ingredients_output.json');
+    let INGREDIENT_CATALOG: { name: string; imageUrl: string | null }[] = [];
+    if (require('fs').existsSync(ingredientsPath)) {
+      INGREDIENT_CATALOG = JSON.parse(require('fs').readFileSync(ingredientsPath, 'utf8'));
+    }
+    const seedIngredientNames = INGREDIENT_CATALOG.map((i) => i.name);
+
     const seedIngredients = await prisma.ingredient.findMany({
       where: { ingredientName: { in: seedIngredientNames } },
       select: { id: true },

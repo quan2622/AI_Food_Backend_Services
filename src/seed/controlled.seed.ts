@@ -91,7 +91,6 @@ const FOODS_FIXED = [
   // ── PHỞ ──────────────────────────────────────────────────────────────────
   {
     foodName: 'Phở bò tái',
-    imageUrl: 'https://vnn-imgs-a1.vgcloud.vn/danviet.mediacdn.vn/2020/6/23/9422452929815248885611441751228032535756800n-15928836781731274871886-crop-15928838303191040780325.jpg?width=0&s=YEMMkktGaCDgRlvptVJ5fQ',
     ingredients: ["Thịt bò","Bánh phở","Hành lá","Xương ống","Gừng"],
     classKey: 'Pho',
     cat: 'Phở',
@@ -103,7 +102,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở gà',
-    imageUrl: 'https://cdn.zsoft.solutions/poseidon-web/app/media/uploaded-files/200823-cach-lam-pho-ga-buffet-poseidon.jpg',
     ingredients: ["Thịt gà","Bánh phở","Hành lá","Gừng","Xương ống"],
     cat: 'Phở',
     cal: 165, pro: 14, carb: 20, fat: 3.5, fib: 0.8,
@@ -114,7 +112,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở bò chín',
-    imageUrl: 'https://toinayangivn.wordpress.com/wp-content/uploads/2014/12/cach-nau-pho-bo-2.jpg?w=593',
     cat: 'Phở',
     cal: 190, pro: 19, carb: 20, fat: 5.0, fib: 0.8,
     allergens: [],
@@ -124,7 +121,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở cuốn',
-    imageUrl: 'https://barona.vn/storage/meo-vat/51/cach-lam-pho-cuon-thit-bo.jpg',
     ingredients: ["Thịt bò","Bánh phở","Rau thơm","Nước mắm","Tỏi"],
     cat: 'Phở',
     cal: 175, pro: 14, carb: 22, fat: 4.0, fib: 1.5,
@@ -136,7 +132,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Phở xào',
-    imageUrl: 'https://i.ytimg.com/vi/5DZzojIwuG4/maxresdefault.jpg',
     cat: 'Phở',
     cal: 310, pro: 20, carb: 38, fat: 9.0, fib: 1.5,
     allergens: ['Trứng'],
@@ -148,7 +143,6 @@ const FOODS_FIXED = [
   // ── BÚN ──────────────────────────────────────────────────────────────────
   {
     foodName: 'Bún bò Huế',
-    imageUrl: 'https://bizweb.dktcdn.net/100/603/550/articles/bun-bo-hue-anh-bia.jpg?v=1759828241660',
     ingredients: ["Thịt bò","Bún","Sả","Mắm tôm","Xương ống"],
     cat: 'Bún',
     cal: 195, pro: 17, carb: 22, fat: 5.0, fib: 1.0,
@@ -159,7 +153,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún riêu cua',
-    imageUrl: 'https://cdn.tgdd.vn/2020/08/CookProduct/Untitled-1-1200x676-10.jpg',
     ingredients: ["Cua","Bún","Cà chua","Đậu hũ","Hành lá"],
     cat: 'Bún',
     cal: 185, pro: 14, carb: 22, fat: 5.0, fib: 1.5,
@@ -170,7 +163,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún thịt nướng',
-    imageUrl: 'https://quangbinhtravel.vn/wp-content/uploads/2025/02/Top-5-quan-bun-thit-nuong-Dong-Hoi-1-1.jpeg',
     ingredients: ["Thịt lợn","Bún","Đậu phộng","Rau thơm","Nước mắm"],
     cat: 'Bún',
     cal: 365, pro: 22, carb: 48, fat: 9.5, fib: 2.5,
@@ -181,7 +173,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún mắm',
-    imageUrl: 'https://cdn.eva.vn/upload/4-2023/images/2023-10-27/cach-nau-bun-mam-chuan-vi-mien-tay-ngon-quen-sau-bun-mam-eva-005-1698393035-343-width780height567.jpg',
     ingredients: ["Cá","Bún","Mực","Tôm","Mắm tôm"],
     cat: 'Bún',
     cal: 350, pro: 20, carb: 45, fat: 10, fib: 2.5,
@@ -192,7 +183,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún đậu mắm tôm',
-    imageUrl: 'https://dauhomemade.vn/apps/uploads/2021/10/da%CC%A3%CC%86c-bie%CC%A3%CC%82t-1-scaled-e1672555436164.jpg',
     ingredients: ["Đậu hũ","Bún","Thịt lợn","Mắm tôm","Chả lụa"],
     cat: 'Bún',
     cal: 310, pro: 16, carb: 38, fat: 10, fib: 2.5,
@@ -204,7 +194,6 @@ const FOODS_FIXED = [
   },
   {
     foodName: 'Bún cá',
-    imageUrl: 'https://cdn.tgdd.vn/Files/2021/09/11/1381884/cach-nau-bun-ca-ha-noi-thom-ngon-chuan-vi-202109111452323215.jpg',
     ingredients: ["Cá","Bún","Cà chua","Hành lá","Nước mắm"],
     cat: 'Bún',
     cal: 210, pro: 20, carb: 25, fat: 4.0, fib: 1.5,
@@ -1441,7 +1430,7 @@ async function runControlledSeed() {
     console.log('\nPhase 3: Ingredient allergen links...');
 
     // Create one ingredient per allergen type, then link to relevant foods
-    const ingredientsPath = require('path').join(__dirname, '../../../../ingredients_output.json');
+    const ingredientsPath = require('path').join(process.cwd(), 'ingredients_output.json');
     let INGREDIENT_CATALOG: { name: string; imageUrl: string | null }[] = [];
     if (require('fs').existsSync(ingredientsPath)) {
       const data = JSON.parse(require('fs').readFileSync(ingredientsPath, 'utf8'));
