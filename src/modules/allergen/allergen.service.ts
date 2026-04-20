@@ -47,6 +47,7 @@ export class AllergenService {
           id: true,
           name: true,
           description: true,
+          imageUrl: true,
           createdAt: true,
           updatedAt: true,
         },
