@@ -1785,7 +1785,41 @@ async function runControlledSeed() {
       'Rau muống xào tỏi', 'Gỏi cuốn chay', 'Súp bí đỏ',
     ]);
 
-    console.log('Phase 4 done — special users SC01–SC10');
+    // DEMO USER — Nguyễn Quân
+    // Kịch bản: Người dùng demo test
+    const demoUser = await upsertSpecialUser({
+      email: 'demo@gmail.com',
+      fullName: 'Nguyễn Quân',
+      goalType: 'GOAL_MAINTAIN',
+      targetCalories: 2200,
+      targetProtein: 110,
+      targetCarbs: 275,
+      targetFat: 70,
+      targetFiber: 25,
+      age: 22,
+      weight: 70,
+    });
+    // Cập nhật lại chiều cao do upsertSpecialUser mặc định là 168cm
+    await prisma.userProfile.update({
+      where: { userId: demoUser.id },
+      data: { height: 170, bmi: 24.2 },
+    });
+    
+    // Seed 1 vài dữ liệu ăn uống mẫu cho user demo
+    await seedConsumedMeals(demoUser.id, 'MEAL_BREAKFAST', 500, [
+      'Phở bò tái', 'Cà phê sữa đá',
+    ]);
+    await seedConsumedMeals(demoUser.id, 'MEAL_LUNCH', 700, [
+      'Cơm tấm sườn bì chả', 'Canh khổ qua dồn thịt',
+    ]);
+    await seedConsumedMeals(demoUser.id, 'MEAL_DINNER', 600, [
+      'Bò lúc lắc', 'Rau muống xào tỏi',
+    ]);
+    await seedPastLogs(demoUser.id, 15, [
+      'Phở bò tái', 'Cơm tấm sườn bì chả', 'Bò lúc lắc', 'Bún bò Huế',
+    ]);
+
+    console.log('Phase 4 done — special users SC01–SC10 + Demo User');
 
     // ═══════════════════════════════════════════════════════════════════════
     // PHASE 5: Cluster Users (50)
